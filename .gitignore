@@ -1,0 +1,6 @@
+artisan
+guias/*
+certificados/*
+js/app/funciones.js
+sistema/public/*
+.env

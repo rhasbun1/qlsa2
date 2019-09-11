@@ -1,0 +1,244 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use SoapClient;
+use File;
+use PDF;
+use App\CondicionPago;
+use App\Notaventa;
+
+class NotaventaController extends Controller
+{
+    //
+
+    public function index()
+    {
+        //
+        $plantas=DB::table('plantas')->select('nombre', 'idPlanta')->get();
+        $formaEntrega=DB::table('formasdeentrega')->select('idFormaEntrega', 'nombre')->get();
+        $usuarios=DB::Select('call spGetUsuarioPorGrupo(?)', array( 'C' )); 
+        $condicionesPago=CondicionPago::All();
+        return view('nuevanventa')->with('Plantas', $plantas)
+                                    ->with('formaEntrega', $formaEntrega)
+                                    ->with('condicionesPago', $condicionesPago)
+                                    ->with('usuarios', $usuarios);
+    }
+
+    public function grabarNuevaNotaVenta(Request $datos){
+    	if($datos->ajax()){
+
+            $extension="";
+            $archivo=$datos->file("upload-demo");
+            if(isset($archivo)){
+                $extension = $archivo->getClientOriginalExtension();               
+            }
+
+            $detalle = json_decode($datos->input('detalle'));
+            $totalNV=0;
+            foreach ( $detalle as $item){
+                $totalNV += ($item->precio+$item->flete+$item->varios);
+            }
+
+            $idnotaventa=DB::Select('call spInsNotaVenta(?,?,?,?,?,?,?,?,?,?,?,?,?,?)', array($datos->input('cot_numero'),
+                            $datos->input('cot_año'),
+                            $datos->input('idObra'),
+                            $datos->input('observaciones'),
+                            $datos->input('contacto'),
+                            $datos->input('correo'),
+                            $datos->input('telefono'),
+                            $datos->input('ordenCompraCliente'),
+                            $datos->input('idUsuarioEncargado'),
+                            $datos->input('codigoClienteSoftland'),
+                            Session::get('idUsuario'),
+                            $datos->input('idCondicionPago'),
+                            $extension,
+                            $totalNV
+                            ) 
+                        );  
+
+
+            foreach ( $detalle as $item){
+                DB::Select("call spInsNotaVentaDetalle(?,?,?,?,?,?,?,?,?,?)", array( $idnotaventa[0]->idNotaVenta, $item->prod_codigo, $item->formula, $item->cantidad, $item->u_codigo, $item->precio, $item->flete, $item->varios, $item->idPlanta, $item->idFormaEntrega ) );
+            }
+
+            if($idnotaventa[0]->nombreArchivo!=""){
+               // $nombreArchivo= "OC".$idnotaventa[0]->idNotaVenta.".".$extension;
+                Storage::disk('ocnventa')->put($idnotaventa[0]->nombreArchivo, \File::get( $archivo) );
+            }
+
+
+            return response()->json([
+                "identificador" => $idnotaventa[0]->idNotaVenta
+            ]);
+        }
+    }
+
+    function subirOCnotaventa(Request $datos){
+        if($datos->ajax()){
+              
+            $archivo=$datos->file("upload-demo");
+            $extension = $archivo->getClientOriginalExtension();
+            $nombreArchivo= "OC".$datos->input('idNotaVenta').".".$extension;
+            if( File::exists(public_path('ocompra/nventa/'."OC".$datos->input('idNotaVenta').'.*'))){
+                File::delete(public_path('ocompra/nventa/'."OC".$datos->input('idNotaVenta').'.*'));
+            }            
+            Storage::disk('ocnventa')->put($nombreArchivo, \File::get( $archivo) );
+            $nv = Notaventa::find($datos->input('idNotaVenta'));
+            $nv->nombreArchivoOC = $nombreArchivo;
+            $nv->save();            
+            return response()->json([
+                "nombreArchivo" => $nombreArchivo
+            ]);            
+        }
+    }
+
+    public function actualizarValoresNotaVenta(Request $datos){
+        if($datos->ajax()){
+            $detalle=$datos->input('detalle');
+            $detalle= json_decode($detalle);
+            foreach ( $detalle as $item){
+                DB::Select("call spUpdValoresNotaVenta(?,?,?)", array( $item->idNotaVenta, $item->prod_codigo, $item->formula ) );
+            }
+
+            return response()->json([
+                "identificador" => 'OK'
+            ]);
+        }
+    }
+
+    public function listarNotasdeVenta(){
+
+		$listaNotasdeVenta=DB::Select('call spGetNotasdeVentas(?)', array(0) );       	
+    	return view('listanotaventa')->with('listaNotasdeVenta', $listaNotasdeVenta);
+    }
+
+    public function clienteNotasdeVenta(){
+        $listaNotasdeVenta=DB::Select('call spGetNotasdeVentas(?)', array( Session::get('empresaUsuario' ) ) );           
+        return view('cliente_notasdeventa')->with('listaNotasdeVenta', $listaNotasdeVenta);
+    }    
+
+    public function historicoNotasdeVenta(){
+        $listaNotasdeVenta=DB::Select('call spGetHistoricoNotasdeVentas(?)', array(Session::get('empresaUsuario') ));           
+        return view('historicoNotasdeVenta')->with('listaNotasdeVenta', $listaNotasdeVenta);
+    }
+
+
+    public function aprobarnota($idNotaVenta){
+        $notaventa=DB::Select('call spUpdAprobarNotaVenta(?,?)', array( $idNotaVenta, Session::get('idUsuario') ) );      
+        $listaNotasdeVenta=DB::Select('call spGetNotasdeVentas(?)', array(0) );   
+        return redirect('listarNotasdeVenta');
+    }
+
+    public function Desaprobarnota($idNotaVenta){
+        $notaventa=DB::Select('call spUpdDesaprobarNotaVenta(?,?)', array( $idNotaVenta, Session::get('idUsuario')  ) );      
+        return redirect('listarNotasdeVenta');
+    }
+
+    public function AprobarNotasdeVenta(){
+        $listaNotasdeVenta=DB::Select('call spGetAprobarNotasdeVentas');           
+        return view('aprobarnotaventa')->with('listaNotasdeVenta', $listaNotasdeVenta);
+    }
+
+
+    public function datosNotaVenta($id){
+     //   return DB::table('cotizaciones')->join('empresas','empresas.emp_codigo', '=', 'cotizaciones.emp_codigo')->
+     //   select('cotizaciones.cot_fecha_creacion', 'cotizaciones.cot_obra', 'empresas.emp_codigo',  'empresas.emp_razon_social', 'cotizaciones.cot_año')->where('cotizaciones.cot_numero', //$id)->get();        
+
+     return DB::Select('call spGetNotaVenta(?)', array($id));   
+    }
+
+    public function vernotaventa($id, $accion){
+
+        $notaventa=DB::Select('call spGetNotaVenta(?)', array($id));
+        $notaventadetalle=DB::Select('call spGetNotaVentaDetalle(?)', array($id) );
+
+        $pedidos=DB::Select('call spGetNotaVentaPedidos(?, ?, ?)', array($id, Session::get('idUsuario'), Session::get('idPerfil') ) );
+
+        $log = DB::Select('call spGetNotaVentaLog(?)', array($id) );
+        $condicionesPago=CondicionPago::All();
+        $usuarios=DB::Select('call spGetUsuarioPorGrupo(?)', array( 'C' )); 
+        return view('vernotaventa')->with('notaventa', $notaventa)
+                                   ->with('notaventadetalle', $notaventadetalle)
+                                   ->with('accion', $accion)
+                                   ->with('pedidos', $pedidos)
+                                   ->with('condicionesPago', $condicionesPago)
+                                   ->with('log', $log)
+                                   ->with('usuarios', $usuarios);
+    }
+
+    public function cerrarNotaVenta($idNotaVenta, $motivo){
+        DB::Select('call spUpdCerrarNotaVenta(?,?,?)', array($idNotaVenta, Session::get('idUsuario'), $motivo ) );
+        return redirect('listarNotasdeVenta');
+    }
+
+    public function existeArchivo(Request $datos){
+        if($datos->ajax()){
+            $exists = Storage::disk($datos->input('carpeta'))->exists($datos->input('nombreArchivo'));
+            return response()->json([
+                "existe" => $exists
+            ]);                
+        }
+    }
+
+    public function bajarOCnventa($nombreArchivo){
+      $pathtoFile = public_path().'/ocompra/nventa/'.$nombreArchivo;
+      $nombreArchivo = asset('logistica/public/ocompra/nventa/'.$nombreArchivo);
+      $result = File::exists($pathtoFile); 
+      if($result){
+            return view('verpdf')->with('nombreArchivo', $nombreArchivo);
+      }
+
+    }
+
+    public function actualizarDatosNV(Request $datos){
+        if($datos->ajax()){
+            $nv = Notaventa::find($datos->input('idNotaVenta'));
+            $nv->contacto = $datos->input('contacto');
+            $nv->correo = $datos->input('correo');
+            $nv->telefono = $datos->input('telefono');
+            $nv->observaciones = $datos->input('observaciones');
+            $nv->ordenCompraCliente = $datos->input('ordenCompraCliente');
+            $nv->idCondiciondePago = $datos->input('idCondiciondePago');
+            $nv->codigoClienteSoftland = $datos->input('codigoSoftland');
+            $nv->idUsuarioEncargado = $datos->input('idUsuarioEncargado');
+            $nv->save();
+
+            $detalle=$datos->input('detalle');
+            $detalle= json_decode($detalle);
+            foreach ( $detalle as $item){
+                DB::Select("call spUpdValoresNotaVenta(?,?)", array( $item->idNotaVentaDetalle, $item->formula ) );
+            }
+
+            return response()->json([
+                "idNotaVenta" => $datos->input('idNotaVenta')
+            ]);                          
+        }
+    }
+
+    public function imprimirNotaVenta($id)
+    {
+        $notaventa=DB::Select('call spGetNotaVenta(?)', array($id));
+        $notaventadetalle=DB::Select('call spGetNotaVentaDetalle(?)', array($id) );
+        $fecha = new \Datetime();
+
+        //var_dump($proyecto); exit();
+ 
+   
+            $data = [
+                'fecha'=>$fecha->format('d-m-Y H:i:s'),
+                'notaventa' => $notaventa,
+                'detalle'=>$notaventadetalle
+            ];
+            $pdf = PDF::loadView('plantillasPDF/notaventa', $data, [], [
+              'format' => 'Letter'
+            ]);
+            return $pdf->stream('notadeventa_'.$id.'.pdf');        
+     
+    }     
+
+}
