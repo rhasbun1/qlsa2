@@ -38,7 +38,11 @@
 	
     <script type="text/javascript" src="<?php echo e(asset('/')); ?>js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/')); ?>css/sweetalert.css"> 
-  
+ 
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+	<link href="<?php echo e(asset('/')); ?>js/syncfusion/bootstrap-theme/ej.web.all.min.css" rel="stylesheet" />
+
 	<!-- Datatable -->
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
@@ -183,7 +187,7 @@
 											<li><a href="<?php echo e(asset('/')); ?>listarNotasdeVenta"><span class="submenu-label">Notas de Venta</span></a></li>
 										<?php endif; ?>
 										<li><a href="<?php echo e(asset('/')); ?>programacion"><span class="submenu-label">Programación de Pedidos</span></a></li>
-									<?php endif; ?>		
+									<?php endif; ?>
 								</ul>							
 							</li>
 							<?php endif; ?>
@@ -228,7 +232,8 @@
 							</li>
 							<?php if( Session::get('idPerfil')!='6' and
 								Session::get('idPerfil')!='14' and
-								Session::get('idPerfil')!='15'): ?>
+								Session::get('idPerfil')!='15' and 
+								Session::get('idPerfil')!='9'): ?>
 
 								<li class="openable open">
 									<a href="#">
@@ -275,6 +280,9 @@
 									    <?php if( Session::get('idPerfil')=='1'): ?>									
 											<li><a href="<?php echo e(asset('/')); ?>parametros"><span class="submenu-label">Parámetros</span></a></li>
 										<?php endif; ?>
+										<?php if(Session::get('idPerfil')=='1' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7' or Session::get('idPerfil')=='12'): ?>
+											<li><a href="<?php echo e(asset('/')); ?>eliminacionGuiaDespacho"><span class="submenu-label">Liberar Nº de GD</span></a></li>
+										<?php endif; ?>										
 									</ul>
 								</li>
 							<?php endif; ?>

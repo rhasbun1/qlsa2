@@ -10,31 +10,10 @@
             <b>Histórico de Pedidos Despachados</b>
         </div>
         <div class="panel-body" id="panelBody" style="display: none">
-            <div class="padding-md clearfix">
-                <div style="padding-bottom:5px"> 
+
+                <div> 
                     <div class="row">
-                        <div class="col-md-5">
-                            <div class="row">
-                                <div class="col-md-4" style="padding-top: 5px">
-                                    Filtrar por Horario Salida
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group date" id="divFechaMin">
-                                        <input type="text" class="form-control input-sm" id="min">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group date" id="divFechaMax">
-                                        <input type="text" class="form-control input-sm" id="max">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-md-4">
                             <div class="row" style="padding-top: 5px">
                                 <div class="col-md-4">
                                     Cliente
@@ -75,9 +54,57 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-7">
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-4" style="padding-top: 5px">
+                                    Filtrar por Horario Salida
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="divFechaMin">
+                                        <input type="text" class="form-control input-sm" id="min">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="divFechaMax">
+                                        <input type="text" class="form-control input-sm" id="max">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-success btn-sm" onclick="obtenerHistorico(1);">Buscar</button>
+                                </div>                                
+                            </div>
+                            <div class="row" style="padding-top: 5px">  
+                                <div class="col-md-4" style="padding-top: 5px">
+                                    Filtrar por Horario Creación( Usar este filtro para ver todos los pedidos suspendidos )
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="divFechaCreacionMin">
+                                        <input type="text" class="form-control input-sm" id="fechaCreacionMin">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="divFechaCreacionMax">
+                                        <input type="text" class="form-control input-sm" id="fechaCreacionMax">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-success btn-sm" onclick="obtenerHistorico(4);">Buscar</button>
+                                </div>                                
+                            </div>                                                       
+                            <div class="row" style="padding-top: 5px">                               
+                                <div class="col-md-4">
                                     Rango por Nº de Pedido
                                 </div>
                                 <div class="col-md-3">
@@ -86,9 +113,12 @@
                                 <div class="col-md-3">
                                     <input id="txtPedidoHasta" class="form-control input-sm" id="max" maxlength="9" onkeypress="return isIntegerKey(event)">
                                 </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-success btn-sm" onclick="obtenerHistorico(2);">Buscar</button>
+                                </div>                                   
                             </div>
                             <div class="row" style="padding-top: 5px">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     Rango por Nº Guía Despacho
                                 </div>
                                 <div class="col-md-3">
@@ -97,17 +127,15 @@
                                 <div class="col-md-3">
                                     <input id="txtGuiaHasta" class="form-control input-sm" id="max" maxlength="9" onkeypress="return isIntegerKey(event)">
                                 </div>
-                            </div>
-                            <div class="row" style="padding-top:10px; text-align: right;">
-                                <div class="col-md-11">
-                                    <button class="btn btn-success btn-sm" onclick="obtenerHistorico();">Buscar Selección</button>
-                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-success btn-sm" onclick="obtenerHistorico(3);">Buscar</button>
+                                </div>                                   
                             </div>
                         </div>
                     </div>                                                                             
                 </div>
                 <hr style="color: #0056b2;" />
-                <table id="tablaDetalle" class="table table-hover table-condensed"  style="width: 100%">
+                <table id="tablaDetalle" class="table table-hover table-condensed"  style="width: 1200px">
                     <thead>
                         <th style="width: 60px">Pedido</th>
                         <th style="width: 120px"></th>
@@ -116,9 +144,9 @@
                         <th style="width: 120px">Producto</th>
                         <th style="width: 60px; text-align: right;">Cantidad<br>Real</th>
                         <th style="width: 60px">Unidad</th>
-                        <th>Fecha Entrega Solicitada</th>
+                        <th style="width: 80px">Fecha Entrega<br>Solicitada</th>
                         <th style="width: 150px">Horario de Salida</th>
-                        <th>Forma de Entrega</th>
+                        <th style="width: 80px">Forma de Entrega</th>
                         <th style="width: 80px">Planta de Origen</th>
                         <th style="width: 100px">Estado</th>
                         <th style="width: 60px; text-align: right;">Nota de Venta</th>
@@ -158,9 +186,9 @@
                                 <td style="width: 120px">{{ $item->prod_nombre }}</td>
                                 <td style="width: 60px; text-align: right;">{{$item->cantidadReal}}</td>
                                 <td style="width: 60px">{{ $item->unidad }}</td>
-                                <td>{{$item->fechaEntrega}}</td>
+                                <td style="width: 80px">{{$item->fechaEntrega}}</td>
                                 <td style="width: 150px">{{$item->fechaHoraSalida}}</td>
-                                <td>{{$item->formaEntrega}}</td>
+                                <td style="width: 80px">{{$item->formaEntrega}}</td>
                                 <td style="width: 80px">{{ $item->nombrePlanta }}</td>
                                 <td style="width: 100px">{{ $item->estadoPedido }}</td>
                                 <td style="width: 60px; text-align: right;">{{ $item->idNotaVenta }}</td>
@@ -177,7 +205,7 @@
                         @endforeach
                     </tbody>            
                 </table>      
-            </div>
+
         </div>
     </div>
     <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
@@ -193,7 +221,8 @@
       </div>
     </div>
   </div>
-</div>  
+</div>
+
 <div id="modNumeroAuxiliar" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-sm">
     <!-- Modal content-->
@@ -373,7 +402,7 @@
           });
         });
 
-        function obtenerHistorico(){
+        function obtenerHistorico(opcion){
 
 
             $("#mdProcesando").modal('show');    
@@ -382,8 +411,14 @@
 
             tabla.rows().remove();
 
-            var fechaSalidaDesde=$("#min").val().trim();
-            var fechaSalidaHasta=$("#max").val().trim();
+            if(opcion==4){
+                var fechaSalidaDesde=$("#fechaCreacionMin").val().trim();
+                var fechaSalidaHasta=$("#fechaCreacionMax").val().trim();  
+            }else{
+                var fechaSalidaDesde=$("#min").val().trim();
+                var fechaSalidaHasta=$("#max").val().trim();                
+            }
+
 
             if(fechaSalidaDesde==''){
                 fechaSalidaDesde='01/01/1900';
@@ -434,7 +469,8 @@
                         pedidoDesde: pedDesde,
                         pedidoHasta: pedHasta,
                         guiaDesde: guiaDesde,
-                        guiaHasta: guiaHasta 
+                        guiaHasta: guiaHasta,
+                        opcion: opcion 
                       },
                 success:function(dato){
                     for(var x=0;x<dato.length;x++){
@@ -468,7 +504,7 @@
                         }else{
                            celdaNumAux='<td style="width: 80px; text-align: center;">' + dato[x].numeroAuxiliar + '</td>';
                         }                        
-                        tabla.row.add( [
+                        var fila=tabla.row.add( [
                                 celdaPedido,
                                 cadena,
                                 dato[x].emp_nombre,
@@ -484,7 +520,24 @@
                                 dato[x].idNotaVenta,
                                 dato[x].numeroGuia,
                                 celdaNumAux
-                            ] );
+                            ] ).index();
+
+                        tabla.cell(fila,0).node().width=60;
+                        tabla.cell(fila,1).node().width=120;
+                        tabla.cell(fila,2).node().width=150;
+                        tabla.cell(fila,3).node().width=150;
+                        tabla.cell(fila,4).node().width=120;
+                        tabla.cell(fila,5).node().width=60;
+                        tabla.cell(fila,6).node().width=60;
+                        tabla.cell(fila,7).node().width=80;
+                        tabla.cell(fila,8).node().width=150;
+                        tabla.cell(fila,9).node().width=80;
+                        tabla.cell(fila,10).node().width=80;
+                        tabla.cell(fila,11).node().width=100;
+                        tabla.cell(fila,12).node().width=60;
+                        tabla.cell(fila,13).node().width=60;
+                        tabla.cell(fila,14).node().width=80;
+
                     }
                     tabla.draw();
                     actualizarFiltros(tabla);
@@ -746,7 +799,7 @@
                 } );
             } );
 
-        }
+        }   
 
     </script>
     

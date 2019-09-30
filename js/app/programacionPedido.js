@@ -398,12 +398,33 @@ function asignarFolio(){
                 for (var i = 1; i < tabla.rows.length; i++){
                     if(tabla.rows[i].cells[11].getElementsByTagName('input')[0]){
                         if(tabla.rows[i].cells[11].getElementsByTagName('input')[0].checked){
+
                            tabla.rows[i].cells[1].innerHTML=tabla.rows[i].cells[1].innerHTML+
                             "<span onclick='abrirGuia(1, " + dato.nuevaGuia + ", this.parentNode.parentNode);'" +  
                             "style='cursor:pointer; cursor: hand'><img src='" + urlApp + "img/iconos/guiaDespacho2.png' border='0'></span>"
+
                             tabla.rows[i].cells[11].innerHTML='';
-                            fila=i;
-                           //tabla.rows[i].cells[12].innerHTML="<button class='btn btn-success btn-xs' onclick='abrirGuia(1001);'>" + dato.nuevaGuia +"</button>";
+
+                            var planta=tabla.rows[i].cells[4].getElementsByTagName('select')[0];
+                            tabla.rows[i].cells[4].innerHTML=planta.options[planta.selectedIndex].text;
+                            
+                            if(tabla.rows[i].cells[5].innerHTML=='Retira'){
+                                tabla.rows[i].cells[6].innerHTML=tabla.rows[i].cells[6].getElementsByTagName('input')[0].value;
+                                tabla.rows[i].cells[7].innerHTML=tabla.rows[i].cells[7].getElementsByTagName('input')[0].value;
+                                tabla.rows[i].cells[8].innerHTML=tabla.rows[i].cells[8].getElementsByTagName('input')[0].value;
+                            }else{                               
+                                var emp=tabla.rows[i].cells[6].getElementsByTagName('select')[0];
+                                tabla.rows[i].cells[6].innerHTML=emp.options[emp.selectedIndex].text;
+                                var camion=tabla.rows[i].cells[7].getElementsByTagName('select')[0];
+                                tabla.rows[i].cells[7].innerHTML=camion.options[camion.selectedIndex].text;                                
+                                var conductor=tabla.rows[i].cells[8].getElementsByTagName('select')[0];
+                                tabla.rows[i].cells[8].innerHTML=conductor.options[conductor.selectedIndex].text;
+                            }
+                            tabla.rows[i].cells[9].innerHTML=tabla.rows[i].cells[9].getElementsByTagName('input')[0].value;
+                            tabla.rows[i].cells[10].innerHTML=tabla.rows[i].cells[10].getElementsByTagName('input')[0].value;
+
+                            fila=i;                        
+
                         }                         
                     }
 

@@ -153,7 +153,7 @@
                <button id="btnEmitirGuia" type="button" class="btn btn-warning btn-sm" onclick="emitirGuiaDespacho()" data-idperfil={{ Session::get('idPerfil') }}>Emitir Guía</button>
                <button id="btnSubirPdf" type="button" class="btn btn-info btn-sm" onclick="abrirSubirGuiaPdf()">Subir PDF</button>  
                <button id="btnBajar" type="button" class="btn btn-primary btn-sm" onclick="bajarGuiaPdf();">Ver Guia PDF</button> 
-               <button id="btnRegistrarSalida" type="button" class="btn btn-default btn-sm" onclick="registrarSalida();">Registrar Salida</button>        
+               <button id="btnRegistrarSalida" type="button" class="btn btn-default btn-sm" onclick="registrarSalida();">Registrar Salida</button>
                <button id="btnCerrarCajaGuia" type="button" class="btn btn-danger data-dismiss=modal btn-sm" onclick="cerrarCajaGuia()" style="width: 80px">Salir</button>
             </div>
 

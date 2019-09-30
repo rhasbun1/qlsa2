@@ -4,3 +4,5 @@ certificados/*
 js/app/funciones.js
 sistema/public/*
 .env
+.htaccess
+web.config

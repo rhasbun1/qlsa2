@@ -1,8 +1,10 @@
   function abrirGuia(tipoGuia, numeroGuia, fila, nombreTabla){
-    var tabla=$("#"+ nombreTabla).DataTable();
-    $("#rowTabla").val( tabla.row(fila).index() );
+   // var tabla=$("#"+ nombreTabla).DataTable();
+   // $("#rowTabla").val( tabla.row(fila).index() );
 
-    var datos=tabla.cell( tabla.row(fila).index(), 1).data();
+    //console.log(nombreTabla);
+
+//    var datos=tabla.cell( tabla.row(fila).index(), 1).data();
 
     document.getElementById('mensajeProceso').style.display="none";
     $.ajax({
@@ -394,5 +396,15 @@
 
         }
     )              
-  
-} 
+  }
+
+  function eliminarGuia(){
+    $("#modEliminarGuia").modal('show');
+    $("#motivoEliminacionGuia").val('');
+  }
+
+  function cerrarEliminarGuia(){
+    $("#modEliminarGuia").modal('hide');
+    $("#motivoEliminacionGuia").val('');    
+  }
+

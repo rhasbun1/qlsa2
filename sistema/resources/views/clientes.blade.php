@@ -43,7 +43,8 @@
                             <td style="text-align: center">{{ $item->emp_codigoSoftland }}</td>
                             <td>
                                 @if (Session::get('idPerfil')=='1' or Session::get('idPerfil')=='2' or
-                                    Session::get('idPerfil')=='3' or Session::get('idPerfil')=='4' or Session::get('idPerfil')=='12')
+                                    Session::get('idPerfil')=='3' or Session::get('idPerfil')=='4' or 
+                                    Session::get('idPerfil')=='12' or Session::get('idPerfil')=='18')
                                 <button class="btn btn-xs btn btn-warning" onclick="verDatosCliente( this.parentNode.parentNode );" title="Editar"><i class="fa fa-edit fa-lg"></i></button>
                                 @endif
                             </td>                                

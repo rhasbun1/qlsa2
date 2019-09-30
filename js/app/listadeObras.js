@@ -138,7 +138,6 @@
                                 $("#txtNombreObra").val(),
                                 $("#idCliente option:selected").html(),
                                 $("#txtNombreContactoObra").val(),
-                                $("#codigoSoftland").val(),
                                 cadena
                             ]).draw();
                     }else{
@@ -147,7 +146,6 @@
                         tabla.cell(fila,0).data( $("#txtNombreObra").val() );
                         tabla.cell(fila,1).data( $("#idCliente option:selected").html() );
                         tabla.cell(fila,2).data( $("#txtNombreContactoObra").val() );
-                        tabla.cell(fila,3).data( $("#codigoSoftland").val() );
 
                     }
 

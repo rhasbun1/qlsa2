@@ -513,10 +513,39 @@ class GuiaController extends Controller
     }
 
     public function modificarCertificado(){
-        $guias=DB::Select('call spGetModificarCertificado(?,?)', array( Session::get('idUsuario'), Session::get('idPerfil') ) );
+
+        
         $titulo='Gestión de certificados';
-        return view('guiasEnProceso')->with('guias', $guias)->with('titulo', $titulo);        
-    }    
+
+        return view('gestionCertificados')->with('titulo', $titulo);        
+    }
+
+    public function obtenerCertificados(Request $datos){
+        if($datos->ajax()){
+            $guias=DB::Select('call spGetModificarCertificado(?,?,?,?,?,?,?)', array( 
+                Session::get('idUsuario'), 
+                Session::get('idPerfil'),  
+                $datos->input('pedidoDesde'),
+                $datos->input('pedidoHasta'),
+                $datos->input('guiaDesde'),
+                $datos->input('guiaHasta'),
+                $datos->input('opcion')
+            ) );
+            return $guias;
+        }
+    }
+
+    public function eliminacionGuiaDespacho(){
+        $parametros=DB::table('parametros')->select('iva', 'maximo_toneladas_por_pedido', 'maximo_productos_por_pedido', 'notaPedido1', 'notaPedido2','consideracionesPedidosGranel','version')->get();        
+        return view('eliminacionGuiaDespacho')->with('parametros', $parametros);
+    }
+
+    public function eliminarGuiaDespacho(Request $datos){
+        if($datos->ajax()){
+            $guia=DB::Select('call spDelGuiaDespacho(?,?,?)', array( $datos->input('numeroGuia'), $datos->input('motivo'), Session::get('idUsuario')  ) );
+            return $guia;      
+        }            
+    } 
 
 
 }

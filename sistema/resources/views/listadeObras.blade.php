@@ -15,7 +15,6 @@
                     <th>Nombre Obra</th>
                     <th>Cliente</th>
                     <th>Nombre Contacto</th>
-                    <th>Cód.Softland</th>
                     <th style="width: 40px"></th>
                 </thead> 
                 <tbody>
@@ -24,7 +23,6 @@
                             <td>{{ $item->nombreObra }}</td>
                             <td>{{ $item->nombreCliente }}</td>
                             <td>{{ $item->nombreContacto }}</td>
-                            <td>{{ $item->codigoSoftland }}</td>
                             <td style="width: 40px">
                                 <button class="btn btn-xs btn btn-warning" onclick="editarObra( {{ $item->idObra }}, this.parentNode.parentNode )" title="Editar" ><i class="fa fa-edit fa-lg"></i></button>
                                 <button class="btn btn-xs btn btn-danger"  onclick="eliminarObra( {{ $item->idObra }}, this.parentNode.parentNode )" title="Eliminar" ><i class="fa fa-trash-o fa-lg"></i></button>

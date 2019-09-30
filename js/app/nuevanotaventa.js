@@ -266,7 +266,7 @@
         $("#idObra").empty();
         $("#idObra").append( '<option value="-2">Seleccione...</option>');
         $("#idObra").append( '<option value="-1">* RETIRA CLIENTE *</b></option>');
-        $("#idObra").append( '<option value="0">** Ingresar Nueva Obra **</b></option>');
+        $("#idObra").append( '<option value="0">** INGRESAR NUEVA OBRA **</b></option>');
         document.getElementById('idObra').selectIndex=0;
          $('#idTransaccion').prop('disabled', true); 
         var ruta= urlApp + "listarObras";

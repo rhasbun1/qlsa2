@@ -38,7 +38,11 @@
 	
     <script type="text/javascript" src="{{ asset('/') }}js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}css/sweetalert.css"> 
-  
+ 
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+	<link href="{{ asset('/') }}js/syncfusion/bootstrap-theme/ej.web.all.min.css" rel="stylesheet" />
+
 	<!-- Datatable -->
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
@@ -183,7 +187,7 @@
 											<li><a href="{{ asset('/') }}listarNotasdeVenta"><span class="submenu-label">Notas de Venta</span></a></li>
 										@endif
 										<li><a href="{{ asset('/') }}programacion"><span class="submenu-label">Programación de Pedidos</span></a></li>
-									@endif		
+									@endif
 								</ul>							
 							</li>
 							@endif
@@ -228,7 +232,8 @@
 							</li>
 							@if ( Session::get('idPerfil')!='6' and
 								Session::get('idPerfil')!='14' and
-								Session::get('idPerfil')!='15')
+								Session::get('idPerfil')!='15' and 
+								Session::get('idPerfil')!='9')
 
 								<li class="openable open">
 									<a href="#">
@@ -275,6 +280,9 @@
 									    @if ( Session::get('idPerfil')=='1')									
 											<li><a href="{{ asset('/') }}parametros"><span class="submenu-label">Parámetros</span></a></li>
 										@endif
+										@if (Session::get('idPerfil')=='1' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7' or Session::get('idPerfil')=='12')
+											<li><a href="{{ asset('/') }}eliminacionGuiaDespacho"><span class="submenu-label">Liberar Nº de GD</span></a></li>
+										@endif										
 									</ul>
 								</li>
 							@endif

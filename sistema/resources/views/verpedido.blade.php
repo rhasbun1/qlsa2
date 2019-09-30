@@ -274,7 +274,7 @@
                 @endif
             @elseif ($accion=='3')
                 @if ( ($pedido[0]->idEstadoPedido=='0' or $pedido[0]->idEstadoPedido=='1') and (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') )
-                    <a href="{{ asset('/') }}cerrarPedido/{{ $pedido[0]->idPedido }}/" class="btn btn-sm btn-danger">Pasar a Histórico</a>
+                    <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
                 @endif
             @elseif ($accion=='6')
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedidoCliente();">Aprobar</button>                                      
@@ -410,6 +410,27 @@
     <!-- Datatable -->
     <script src="{{ asset('/') }}js/jquery.dataTables.min.js"></script>
     <script>
+
+        function pasarHistorico(){
+            swal(
+                {
+                    title: 'Este pedido va a pasar al listado histórico. ¿Desea continuar?' ,
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'SI',
+                    cancelButtonText: 'NO',
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function(isConfirm)
+                {
+                    if(isConfirm){
+                        location.href= urlApp + "cerrarPedido/" + $("#idPedido").val() + "/";                  
+                    }
+                }
+            );            
+        }
 
         $('#datosGuia').on('submit', function(e) {
           // evito que propague el submit

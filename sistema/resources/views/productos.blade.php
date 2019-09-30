@@ -178,9 +178,23 @@
 
     <!-- Timepicker -->
     <script src="{{ asset('/') }}js/bootstrap-timepicker.min.js"></script>  
-
     <script src="{{ asset('/') }}js/app/funciones.js"></script>
+    <script src="js/syncfusion/ej.web.all.min.js"> </script>
+
     <script>
+        $("#precioCosto").ejNumericTextbox({
+            decimalPlaces: 0,
+           // watermarkText: "Ingrese valor",
+            minValue: 0,
+            locale: "de-DE"
+        });
+
+        $("#precioReferencia").ejNumericTextbox({
+            decimalPlaces: 0,
+           // watermarkText: "Ingrese valor",
+            minValue: 0,
+            locale: "de-DE"
+        });
 
         function nuevoProducto(){
             $("#fila").val('0');

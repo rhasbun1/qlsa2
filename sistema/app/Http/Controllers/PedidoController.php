@@ -83,9 +83,9 @@ class PedidoController extends Controller
 
 
         if( Session::get('idPerfil')=='11' ){
-            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?)', array($fecha_inicio, $fecha_termino, Session::get('empresaUsuario'), 0, 0,0,0,0, Session::get('idUsuario'), Session::get('idPerfil') ) );
+            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fecha_inicio, $fecha_termino, Session::get('empresaUsuario'), 0, 0,0,0,0, Session::get('idUsuario'), Session::get('idPerfil'), 1 ) );
         }else{
-            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?)', array($fecha_inicio, $fecha_termino, Session::get('empresaUsuario'), Session::get('idPlanta'), 0,0,0,0, Session::get('idUsuario'), Session::get('idPerfil') ) );
+            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fecha_inicio, $fecha_termino, Session::get('empresaUsuario'), Session::get('idPlanta'), 0,0,0,0, Session::get('idUsuario'), Session::get('idPerfil'), 1 ) );
         }        
         $parametros=DB::table('parametros')->select('version')->get();     
         $plantas=DB::Select('call spGetUsuarioPerfilPlantas(?,?)', array( Session::get('idUsuario'), Session::get('idPerfil') ));
@@ -105,10 +105,10 @@ class PedidoController extends Controller
         $fechaInicio = date('Y-m-d', $fechaInicio);
         $fechaTermino = date('Y-m-d', $fechaTermino);        
         if( Session::get('idPerfil')=='11' ){
-            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?)', array($fechaInicio, $fechaTermino, $datos->input("emp_codigo"), $datos->input("idPlanta"), $datos->input("pedidoDesde"), $datos->input("pedidoHasta"), $datos->input("guiaDesde"), $datos->input("guiaHasta"), Session::get('idUsuario'), Session::get('idPerfil') ) );
+            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fechaInicio, $fechaTermino, $datos->input("emp_codigo"), $datos->input("idPlanta"), $datos->input("pedidoDesde"), $datos->input("pedidoHasta"), $datos->input("guiaDesde"), $datos->input("guiaHasta"), Session::get('idUsuario'), Session::get('idPerfil'), $datos->input("opcion") ) );
         }else{
-            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?)', array($fechaInicio, $fechaTermino, $datos->input("emp_codigo"), 
-                $datos->input('idPlanta'), $datos->input("pedidoDesde"), $datos->input("pedidoHasta"), $datos->input("guiaDesde"), $datos->input("guiaHasta"), Session::get('idUsuario'), Session::get('idPerfil') ) );
+            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fechaInicio, $fechaTermino, $datos->input("emp_codigo"), 
+                $datos->input('idPlanta'), $datos->input("pedidoDesde"), $datos->input("pedidoHasta"), $datos->input("guiaDesde"), $datos->input("guiaHasta"), Session::get('idUsuario'), Session::get('idPerfil'), $datos->input("opcion") ) );
         }        
         return $pedidos; 
     }
