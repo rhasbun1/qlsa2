@@ -37,6 +37,11 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('grabarNuevaNotaVenta', 'NotaventaController@grabarNuevaNotaVenta');
 	Route::post('existeArchivo', 'NotaventaController@existeArchivo');
 	Route::post('actualizarDatosNV', 'NotaventaController@actualizarDatosNV');
+	Route::get('notaVentaVigenteCargos', 'NotaventaController@notaVentaVigenteCargos');
+	Route::get('notaVentaCerradaCargos', 'NotaventaController@notaVentaCerradaCargos');
+	Route::get('notaVentaCargosUrgente', 'NotaventaController@notaVentaCargosUrgente');
+	Route::post('actualizarNotaVentaCargos', 'NotaventaController@actualizarNotaVentaCargos');
+
 	Route::get('bajarOCnventa/{nombreArchivo}/', 'NotaventaController@bajarOCnventa');
 	Route::get('bajarOCpedido/{nombreArchivo}/', 'PedidoController@bajarOCpedido');
 	Route::post('subirOCnotaventa', 'NotaventaController@subirOCnotaventa');
@@ -89,7 +94,8 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('solicitarSessionIDSitrack', 'SitrackController@solicitarSessionIDSitrack');
 	Route::post('productosCodigosSoftland', 'ProductoController@productosCodigosSoftland');
 	Route::post('guardarDatosProductoListaPrecio', 'ProductoController@guardarDatosProductoListaPrecio');
-
+	Route::post('actualizarCostos', 'ProductoController@actualizarCostos');
+	
 	Route::post('actualizarValoresNotaVenta', 'NotaventaController@actualizarValoresNotaVenta');
 
 	Route::get('aprobarnota/{idNotaVenta}/', 'NotaventaController@aprobarnota');
@@ -112,7 +118,9 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('modificarCertificado', 'GuiaController@modificarCertificado');
 	Route::get('verPedidosDespachados', 'PedidoController@verPedidosDespachados');
 	Route::post('obtenerPedidosDespachados','PedidoController@obtenerPedidosDespachados');
-	
+	Route::post('crearCostosMensuales', 'PedidoController@crearCostosMensuales');
+	Route::post('costosMensualesProductos', 'PedidoController@costosMensualesProductos');
+
 	Route::get('aprobarnotaventa', 'NotaventaController@AprobarNotasdeVenta');
 	Route::get('aprobarpedidos', 'PedidoController@AprobarPedidos');
 	Route::get('listarNotasdeVenta', 'NotaventaController@listarNotasdeVenta');
@@ -145,8 +153,13 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('verpedidoNuevaVentana/{idPedido}/{accion}/', 'PedidoController@verpedidoNuevaVentana');
 	Route::get('clienteVerPedido/{idPedido}/{accion}/', 'PedidoController@clienteVerPedido');
 	Route::get('programarpedido/{idPedido}/{accion}/', 'PedidoController@programarpedido');
+	Route::get('costosMensuales', 'PedidoController@costosMensuales');
 	Route::get('datosEmpresaTransporte/{id}/', 'EmpresaTransporteController@datosEmpresaTransporte');
 	Route::get('registroSalida', 'GuiaController@registroSalida');
+
+	Route::get('listaRamplas', 'RamplasController@listaRamplas');
+	Route::post('guardarRampla', 'RamplasController@guardarRampla');
+	Route::post('eliminarRampla', 'RamplasController@eliminarRampla');
 	
 	Route::get('imprimirNotaVenta/{id}/', 'NotaventaController@imprimirNotaVenta');
 

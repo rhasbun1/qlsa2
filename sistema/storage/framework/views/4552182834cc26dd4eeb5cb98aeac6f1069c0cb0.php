@@ -282,7 +282,23 @@
 										<?php endif; ?>
 										<?php if(Session::get('idPerfil')=='1' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7' or Session::get('idPerfil')=='12'): ?>
 											<li><a href="<?php echo e(asset('/')); ?>eliminacionGuiaDespacho"><span class="submenu-label">Liberar Nº de GD</span></a></li>
-										<?php endif; ?>										
+										<?php endif; ?>
+
+										<?php if(Session::get('idPerfil')=='3' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='4' 
+											or Session::get('idPerfil')=='18' or Session::get('idPerfil')=='11'): ?>
+											<li><a href="<?php echo e(asset('/')); ?>costosMensuales"><span class="submenu-label">Costos Mensuales</span></a></li>
+										<?php endif; ?>	
+										<li><a href="<?php echo e(asset('/')); ?>listaRamplas"><span class="submenu-label">Ramplas</span></a></li>
+										<li class="openable">
+											<a href="#">
+												<span class="submenu-label">Fletes, Distancias y Tiempos</span>
+											</a>
+											<ul class="submenu third-level">
+												<li><a href="<?php echo e(asset('/')); ?>notaVentaVigenteCargos"><span class="submenu-label">Notas de Venta Vigentes</span></a></li>
+												<li><a href="<?php echo e(asset('/')); ?>notaVentaCerradaCargos"><span class="submenu-label">Notas de Venta Cerradas</span></a></li>
+												<li><a href="<?php echo e(asset('/')); ?>notaVentaCargosUrgente"><span class="submenu-label">Urgentes</span></a></li>
+											</ul>
+										</li>							
 									</ul>
 								</li>
 							<?php endif; ?>

@@ -96,6 +96,7 @@
                     <th style="width:70px">Entrega</th>
                     <th style="width:70px">Transporte</th>
                     <th style="width:70px">Camion</th>
+                    <th style="width:70px">Rampla</th>
                     <th style="width:70px">Conductor</th>
                     <th style="width:70px">Fecha prog. Carga</th>
                     <th style="width:70px">Hora prog. Carga</th>
@@ -183,6 +184,24 @@
                                      <input class="form-control input-sm" maxlength="20" value="{{ $item->patente }}">       
                                 @endif                                 
                             </td>
+                            <td style="width:70px">
+                                @if ( $item->nombreFormaEntrega !='Retira' )
+                                    @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
+                                        <select id="idRampla" class="form-control input-sm" @if (Session::get('idPerfil')=='7' or Session::get('idPerfil')=='8') disabled @endif >
+                                            <option value="0" selected>-</option>
+                                            @foreach($ramplas as $rampla)
+                                                @if( $rampla->numero == $item->numeroRampla) then
+                                                    <option value="{{ $rampla->numero }}" selected>{{ $rampla->numero }}</option>
+                                                @else
+                                                    <option value="{{ $rampla->numero }}">{{ $rampla->numero }}</option>
+                                                @endif
+                                            @endforeach                                             
+                                        </select>
+                                    @endif
+                                @else
+                                     <input class="form-control input-sm" maxlength="3" value="{{ $item->numero }}">       
+                                @endif                                   
+                            </td>
 
                             <td style="width:70px">
                                 @if ( $item->nombreFormaEntrega !='Retira' )
@@ -252,6 +271,7 @@
 
                             <td style="width:70px">{{ $item->nombreEmpresaTransporte }}</td>
                             <td style="width:70px">{{ $item->patente }}</td>
+                            <td style="width:70px">{{ $item->numeroRampla }}</td>
                             <td style="width:70px">{{ $item->nombreConductor }}</td>
                              @if( Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6'  )
                                 <td style="width:70px">{{ $item->fechaCarga }}</td>
@@ -590,7 +610,7 @@
                             if(tabla.rows[i].cells[5].innerHTML.trim()!='Retira' && !tabla.rows[i].cells[11].getElementsByTagName('button')[0] ){
                                 if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
                                     idEmpresa=tabla.rows[i].cells[6].getElementsByTagName('select')[0].value;
-                                    selConductor=tabla.rows[i].cells[8].getElementsByTagName('select')[0];
+                                    selConductor=tabla.rows[i].cells[9].getElementsByTagName('select')[0];
                                     idConductor=0;
                                     if(selConductor.selectedIndex>=0){
                                         idConductor=selConductor.value;

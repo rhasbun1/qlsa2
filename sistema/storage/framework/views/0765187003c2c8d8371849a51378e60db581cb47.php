@@ -180,20 +180,25 @@
     <script src="<?php echo e(asset('/')); ?>js/bootstrap-timepicker.min.js"></script>  
     <script src="<?php echo e(asset('/')); ?>js/app/funciones.js"></script>
     <script src="js/syncfusion/ej.web.all.min.js"> </script>
+    <script src="<?php echo e(asset('/')); ?>js/syncfusion/lang/ej.culture.de-DE.min.js"></script>
 
     <script>
         $("#precioCosto").ejNumericTextbox({
             decimalPlaces: 0,
            // watermarkText: "Ingrese valor",
             minValue: 0,
-            locale: "de-DE"
+            locale: "de-DE",
+            showSpinButton: false,
+            width: 120
         });
 
         $("#precioReferencia").ejNumericTextbox({
             decimalPlaces: 0,
            // watermarkText: "Ingrese valor",
             minValue: 0,
-            locale: "de-DE"
+            locale: "de-DE",
+            showSpinButton: false,
+            width: 120
         });
 
         function nuevoProducto(){
@@ -203,9 +208,16 @@
             var tabla=document.getElementById('tabla');
             $("#fila").val(0);
             $("#nombreProducto").val( '' );
-            $("#precioCosto").val( '' );
+
             $("#fechaCosto").val('');
-            $("#precioReferencia").val( '' );
+            $("#precioCosto").ejNumericTextbox({
+                value: 0
+            });
+
+            $("#precioReferencia").ejNumericTextbox({
+                value: 0
+            });
+
             $("#codigoSoftland").val('' );
             document.getElementById('selPlantas').selectedIndex=0;
             document.getElementById('selUnidades').selectedIndex=0;            
@@ -285,13 +297,17 @@
                         table.cell(fila,1).data( $("#nombreProducto").val() );
                         table.cell(fila,2).data( $("#selUnidades option:selected").html() );                 
                         table.cell(fila,3).data( $("#selPlantas option:selected").html() );
-                        table.cell(fila,4).data( $("#precioCosto").val() );
+
+                        table.cell(fila,4).data(number_format($("#precioCosto").data("ejNumericTextbox").model.value,0) );
                         table.cell(fila,5).data( dato[0].fechaCosto );
-                        table.cell(fila,6).data( $("#precioReferencia").val() );
+
+                        table.cell(fila,6).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
+
                         table.cell(fila,7).data( $("#codigoSoftland").val() );
                         table.cell(fila,8).data( $("#requiereDiseno option:selected").html() );
                         table.cell(fila,9).data( $("#granel option:selected").html() );
-                        table.cell(fila,10).data( $("#solicitaCertificado option:selected").html() );                 
+                        table.cell(fila,10).data( $("#solicitaCertificado option:selected").html() ); 
+                        table.cell(fila,10).draw();                
                     }
 
                     cerrarModProducto();
@@ -385,9 +401,15 @@
                 document.getElementById('nombreProducto').dataset.idproducto=data[0].trim();
                 $("#tituloFormProducto").html('<h5><b>Editar Datos del Producto</b></h5>');
                 $("#nombreProducto").val( data[1].trim() );
-                $("#precioCosto").val( data[4].trim().replace('.','') );
+                $("#precioCosto").ejNumericTextbox({
+                    value: data[4].trim().replace('.','')
+                });
                 $("#fechaCosto").val( data[5].trim().replace('.','') );
-                $("#precioReferencia").val( data[6].trim().replace('.','') );
+
+                $("#precioReferencia").ejNumericTextbox({
+                    value: data[6].trim().replace('.','')
+                });                
+
                 $("#codigoSoftland").val( data[7].trim() );
                 if( data[8].trim()=='NO' ){
                     document.getElementById('requiereDiseno').selectedIndex=1;

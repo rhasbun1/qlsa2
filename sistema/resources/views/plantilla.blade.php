@@ -282,7 +282,23 @@
 										@endif
 										@if (Session::get('idPerfil')=='1' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7' or Session::get('idPerfil')=='12')
 											<li><a href="{{ asset('/') }}eliminacionGuiaDespacho"><span class="submenu-label">Liberar Nº de GD</span></a></li>
-										@endif										
+										@endif
+
+										@if (Session::get('idPerfil')=='3' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='4' 
+											or Session::get('idPerfil')=='18' or Session::get('idPerfil')=='11')
+											<li><a href="{{ asset('/') }}costosMensuales"><span class="submenu-label">Costos Mensuales</span></a></li>
+										@endif	
+										<li><a href="{{ asset('/') }}listaRamplas"><span class="submenu-label">Ramplas</span></a></li>
+										<li class="openable">
+											<a href="#">
+												<span class="submenu-label">Fletes, Distancias y Tiempos</span>
+											</a>
+											<ul class="submenu third-level">
+												<li><a href="{{ asset('/') }}notaVentaVigenteCargos"><span class="submenu-label">Notas de Venta Vigentes</span></a></li>
+												<li><a href="{{ asset('/') }}notaVentaCerradaCargos"><span class="submenu-label">Notas de Venta Cerradas</span></a></li>
+												<li><a href="{{ asset('/') }}notaVentaCargosUrgente"><span class="submenu-label">Urgentes</span></a></li>
+											</ul>
+										</li>							
 									</ul>
 								</li>
 							@endif

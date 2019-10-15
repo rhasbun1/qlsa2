@@ -6,27 +6,23 @@
     <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <b>Condiciones de Pago</b>
-            <span class="badge badge-info pull-right">{{ count($condiciones) }} Condiciones</span>
+            <b>Ramplas</b>
         </div>
         <div class="padding-md clearfix" style="width:450px"> 
             <table id="tabla" class="table table-hover table-condensed" style="width:450px">
                 <thead>
-                    <th style="width:80px">ID</th>
-                    <th style="width:300px">Nombre</th>
+                    <th style="width:80px">Número</th>
+                    <th style="width:300px">Patente</th>
                     <th style="width:50px"></th>
                 </thead> 
                 <tbody>
-                    @foreach($condiciones as $item)
+                    @foreach($ramplas as $item)
                         <tr>
-                            <td style="width:80px">{{ $item->idCondiciondePago }}</td>
-                            <td style="width:300px">{{ $item->nombre }}</td>
-                            <td style="width:50px">
-                                @if (Session::get('idPerfil')=='1' or Session::get('idPerfil')=='2' or Session::get('idPerfil')=='18' or
-                                    Session::get('idPerfil')=='4')                                
-                                <button class="btn btn-xs btn btn-warning" onclick="editarCondiciondePago( {{ $item->idCondiciondePago }}, this.parentNode.parentNode.rowIndex )" title="Editar" ><i class="fa fa-edit fa-lg"></i></button>
-                                <button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarCondiciondePago(this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button>
-                                @endif
+                            <td style="width:80px">{{ $item->numero }}</td>
+                            <td style="width:300px">{{ $item->patente }}</td>
+                            <td style="width:50px">                           
+                                <button class="btn btn-xs btn btn-warning" onclick="editarRampla( {{ $item->numero }}, this.parentNode.parentNode.rowIndex )" title="Editar" ><i class="fa fa-edit fa-lg"></i></button>
+                                <button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarRampla(this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -40,32 +36,37 @@
 </div>
 
 
-        <div id="mdNuevaCondicion" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div id="mdRampla" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
           <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header" id="tituloModCondicion">
-                    <h5><b>Nueva Condicion</b></h5>
+                    <h5><b>Datos Rampla</b></h5>
                 </div>
                 <div id="bodyArea" class="modal-body">
-                    <input type="hidden" id="idCondicion">
-                    <input type="hidden" id="filaCondicion">         
+                    <input type="hidden" id="numero">
+                    <input type="hidden" id="filaRampla">         
                     <div class="row" style="padding-top: 5px">
-
                         <div class="col-sm-3">
-                            Nombre (*)
+                            Número (*)
                         </div>
-                        <div class="col-sm-6">
-                            <input type="text" id="txtNombre" class="form-control input-sm" maxlength="50">
+                        <div class="col-sm-3">
+                            <input type="text" id="numeroRampla" class="form-control input-sm" maxlength="3">
+                        </div>
+                        <div class="col-sm-3">
+                            Patente (*)
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" id="patenteRampla" class="form-control input-sm" maxlength="20">
                         </div>
                     </div>
                 </div>        
-                <div style="padding-left: 15px; padding-top: 5px">
-                    <h5><b> (*) Dato Obligatorio</b></h5>
+                <div style="padding-left: 15px; padding-top: 0px">
+                    <h6><b> (*) Dato Obligatorio</b></h6>
                 </div>              
-                <div class="col-md-offset-8" style="padding-top: 20px; padding-bottom: 20px">
-                   <button id="btnGrabarCondicion" type="button" class="btn btn-success btn-sm" onclick="grabarCondicion();" style="width: 80px">Guardar</button>
-                   <button  type="button" class="btn btn-danger data-dismiss=modal btn-sm" onclick="cerrarModCondicion()" style="width: 80px">Salir</button>
+                <div class="col-md-offset-8" style="padding-top: 0px; padding-bottom: 20px">
+                   <button id="btnGrabarCondicion" type="button" class="btn btn-success btn-sm" onclick="grabarRampla();" style="width: 80px">Guardar</button>
+                   <button  type="button" class="btn btn-danger data-dismiss=modal btn-sm" onclick="cerrarMdRampla()" style="width: 80px">Salir</button>
                 </div>
             </div>
         </div>
@@ -82,33 +83,33 @@
 
     <script>
 
-        function abrirModCondicion(){
-            $("#idCondicion").val('0');
-            $("#filaCondicion").val('0');
-            $("#txtNombre").val('');
-            document.getElementById('tituloModCondicion').innerHTML='<h5><b>Nueva Condición</b></h5>';
-            $("#mdNuevaCondicion").modal('show');
+        function abrirMdRampla(){
+            $("#numero").val('0');
+            $("#filaRampla").val('0');
+            $("#numeroRampla").val('');
+            $("#patenteRampla").val('');
+            $("#mdRampla").modal('show');
         }
 
-        function cerrarModCondicion(){
-            $("#mdNuevaCondicion").modal('hide');
+        function cerrarMdRampla(){
+            $("#mdRampla").modal('hide');
         }
 
-        function editarCondiciondePago(idCondicion, fila){
-            document.getElementById('tituloModCondicion').innerHTML='<h5><b>Editar Condición</b></h5>';
+        function editarRampla(numero, fila){
             var tabla=document.getElementById('tabla');
-            $('#txtNombre').val(tabla.rows[fila].cells[1].innerHTML.trim() ) ;
-            $("#filaCondicion").val(fila);
-            $("#idCondicion").val(tabla.rows[fila].cells[0].innerHTML.trim() );
-            $("#mdNuevaCondicion").modal('show');
+            $('#patenteRampla').val(tabla.rows[fila].cells[1].innerHTML.trim() ) ;
+            $("#filaRampla").val(fila);
+            $("#numero").val(tabla.rows[fila].cells[0].innerHTML.trim() );
+            $("#numeroRampla").val(tabla.rows[fila].cells[0].innerHTML.trim() );
+            $("#mdRampla").modal('show');
         }
 
-        function eliminarCondiciondePago(fila){
+        function eliminarRampla(fila){
             var tabla=document.getElementById('tabla');
-            var idCondicion=tabla.rows[fila].cells[0].innerHTML.trim();
+            var numeroRampla=tabla.rows[fila].cells[0].innerHTML.trim();
             swal(
                 {
-                    title: 'Elimina la Condición seleccionada?',
+                    title: 'Elimina la rampla seleccionada?',
                     text: '',
                     type: 'warning',
                     showCancelButton: true,
@@ -121,19 +122,19 @@
                 {
                     if(isConfirm){            
                         $.ajax({
-                            url: urlApp +'eliminarCondiciondePago',
+                            url: urlApp +'eliminarRampla',
                             headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
                             type: 'POST',
                             dataType: 'json',
                             data: { 
-                                    idCondiciondePago: idCondicion
+                                    numeroRampla: numeroRampla
                                   },
                             success:function(dato){
                                 tabla.deleteRow(fila);
-                                if(dato.idCondiciondePago>0){
+                                if(dato.respuesta>0){
                                     swal(
                                         {
-                                            title: 'La condición ha sido eliminada!!',
+                                            title: 'La rampla ha sido eliminada!!',
                                             text: '',
                                             type: 'warning',
                                             showCancelButton: false,
@@ -157,22 +158,22 @@
             )        
         }
 
-        function grabarCondicion(){
+        function grabarRampla(){
             $("#btnGrabarCondicion").prop("disabled", true);
             $.ajax({
-                url: urlApp +'guardarDatosCondicionPago',
+                url: urlApp +'guardarRampla',
                 headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
                 type: 'POST',
                 dataType: 'json',
                 data: { 
-                        idCondiciondePago: $("#idCondicion").val(),
-                        nombre: $("#txtNombre").val()
+                        numeroRampla: $("#numeroRampla").val(),
+                        patenteRampla: $("#patenteRampla").val()
                       },
                 success:function(dato){
-                    if(dato.idCondiciondePago==-1){
+                    if(dato.respuesta==-1){
                         swal(
                             {
-                                title: 'La condición que desea crear ya Existe!!',
+                                title: 'La patente de la rampla que desea crear ya Existe!!',
                                 text: '',
                                 type: 'warning',
                                 showCancelButton: false,
@@ -183,7 +184,8 @@
                             },
                             function(isConfirm)
                             {
-                                if(isConfirm){               
+                                if(isConfirm){ 
+                                    $("#btnGrabarCondicion").prop("disabled", false);              
                                     return;
                                 }
                             }
@@ -191,24 +193,24 @@
 
                     }else{
 
-                        if($("#idCondicion").val()=='0'){
+                        if(dato.respuesta==0){
                             var cadena="<tr>";
-                            cadena+="<td>" + dato.idCondiciondePago + "</td>";
-                            cadena+="<td>" + $("#txtNombre").val() + "</td>";
+                            cadena+="<td>" + $("#numeroRampla").val() + "</td>";
+                            cadena+="<td>" + $("#patenteRampla").val() + "</td>";
                             cadena+='<td style="width: 40px">';
-                            cadena+='<button class="btn btn-xs btn btn-warning" onclick="editarCondiciondePago(' + dato.idCondiciondePago +', this.parentNode.parentNode.rowIndex )" title="Editar" ><i class="fa fa-edit fa-lg"></i></button>';
-                            cadena+='<button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarCondiciondePago(this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button>';
+                            cadena+='<button class="btn btn-xs btn btn-warning" onclick="editarRampla(' + $("#numeroRampla").val() +', this.parentNode.parentNode.rowIndex )" title="Editar" ><i class="fa fa-edit fa-lg"></i></button>';
+                            cadena+='<button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarRampla(this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button>';
                             cadena+='</td>';
 
                             cadena+="</tr>";
                             $("#tabla").append(cadena);                            
                         }else{
-                            tabla.rows[ $("#filaCondicion").val() ].cells[0].innerHTML=dato.idCondiciondePago;
-                            tabla.rows[ $("#filaCondicion").val() ].cells[1].innerHTML=$("#txtNombre").val();
+                            tabla.rows[ $("#filaRampla").val() ].cells[0].innerHTML=$("#numeroRampla").val();
+                            tabla.rows[ $("#filaRampla").val() ].cells[1].innerHTML=$("#patenteRampla").val();
                         }
-
-                        $("#txtNombre").val('');
-                        cerrarModCondicion();
+                        $("#numeroRampla").val('');
+                        $("#patenteRampla").val('');
+                        cerrarMdRampla();
                         $("#btnGrabarCondicion").prop("disabled", false);     
                     }
 
@@ -246,36 +248,18 @@
                 dom: 'Bfrtip',
                 buttons: [
                     {
-                        text: 'Nueva Condición',
+                        text: 'Nueva Rampla',
                         action: function ( e, dt, node, config ) {
-                            abrirModCondicion(1);
+                            abrirMdRampla(1);
                         }
                     },                 
                     {
                         extend: 'excelHtml5',
-                        title: 'Listado de Condiciones de Pago',
+                        title: 'Listado de Ramplas',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
-                        }
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Listado de Condiciones de Pago',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
-                        }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Listado de Condiciones de Pago',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                            columns: [ 0, 1]
                         }
                     }
                 ],                  

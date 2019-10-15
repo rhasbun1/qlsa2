@@ -1,13 +1,13 @@
-@extends('plantilla')      
+      
 
-@section('contenedorprincipal')
+<?php $__env->startSection('contenedorprincipal'); ?>
 
 <div style="padding: 20px">
-    <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
+    <input type="hidden" id="_token" name="_token" value="<?php echo e(csrf_token()); ?>">
     <div class="panel panel-default">
         <div class="panel-heading">
             <b>Condiciones de Pago</b>
-            <span class="badge badge-info pull-right">{{ count($condiciones) }} Condiciones</span>
+            <span class="badge badge-info pull-right"><?php echo e(count($condiciones)); ?> Condiciones</span>
         </div>
         <div class="padding-md clearfix" style="width:450px"> 
             <table id="tabla" class="table table-hover table-condensed" style="width:450px">
@@ -17,25 +17,25 @@
                     <th style="width:50px"></th>
                 </thead> 
                 <tbody>
-                    @foreach($condiciones as $item)
+                    <?php $__currentLoopData = $condiciones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td style="width:80px">{{ $item->idCondiciondePago }}</td>
-                            <td style="width:300px">{{ $item->nombre }}</td>
+                            <td style="width:80px"><?php echo e($item->idCondiciondePago); ?></td>
+                            <td style="width:300px"><?php echo e($item->nombre); ?></td>
                             <td style="width:50px">
-                                @if (Session::get('idPerfil')=='1' or Session::get('idPerfil')=='2' or Session::get('idPerfil')=='18' or
-                                    Session::get('idPerfil')=='4')                                
-                                <button class="btn btn-xs btn btn-warning" onclick="editarCondiciondePago( {{ $item->idCondiciondePago }}, this.parentNode.parentNode.rowIndex )" title="Editar" ><i class="fa fa-edit fa-lg"></i></button>
+                                <?php if(Session::get('idPerfil')=='1' or Session::get('idPerfil')=='2' or Session::get('idPerfil')=='18' or
+                                    Session::get('idPerfil')=='4'): ?>                                
+                                <button class="btn btn-xs btn btn-warning" onclick="editarCondiciondePago( <?php echo e($item->idCondiciondePago); ?>, this.parentNode.parentNode.rowIndex )" title="Editar" ><i class="fa fa-edit fa-lg"></i></button>
                                 <button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarCondiciondePago(this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button>
-                                @endif
+                                <?php endif; ?>
                             </td>
                         </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>            
             </table>      
         </div>
     </div>
     <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
-        <a href="{{ asset('/') }}dashboard" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+        <a href="<?php echo e(asset('/')); ?>dashboard" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
     </div>    
 </div>
 
@@ -69,16 +69,16 @@
                 </div>
             </div>
         </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('javascript')
+<?php $__env->startSection('javascript'); ?>
     <!-- Datepicker -->
-    <script src="{{ asset('/') }}js/bootstrap-datepicker.min.js"></script>  
+    <script src="<?php echo e(asset('/')); ?>js/bootstrap-datepicker.min.js"></script>  
 
     <!-- Timepicker -->
-    <script src="{{ asset('/') }}js/bootstrap-timepicker.min.js"></script>  
+    <script src="<?php echo e(asset('/')); ?>js/bootstrap-timepicker.min.js"></script>  
 
-    <script src="{{ asset('/') }}js/app/funciones.js"></script>
+    <script src="<?php echo e(asset('/')); ?>js/app/funciones.js"></script>
 
     <script>
 
@@ -169,7 +169,7 @@
                         nombre: $("#txtNombre").val()
                       },
                 success:function(dato){
-                    if(dato.idCondiciondePago==-1){
+                    if(dato.idCentro==-1){
                         swal(
                             {
                                 title: 'La condición que desea crear ya Existe!!',
@@ -279,11 +279,12 @@
                         }
                     }
                 ],                  
-                language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                language:{url: "<?php echo e(asset('/')); ?>locales/datatables_ES.json"}
             });
 
         } );
 
     </script>
     
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('plantilla', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

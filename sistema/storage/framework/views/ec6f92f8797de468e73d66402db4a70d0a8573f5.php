@@ -96,6 +96,7 @@
                     <th style="width:70px">Entrega</th>
                     <th style="width:70px">Transporte</th>
                     <th style="width:70px">Camion</th>
+                    <th style="width:70px">Rampla</th>
                     <th style="width:70px">Conductor</th>
                     <th style="width:70px">Fecha prog. Carga</th>
                     <th style="width:70px">Hora prog. Carga</th>
@@ -185,6 +186,24 @@
                                      <input class="form-control input-sm" maxlength="20" value="<?php echo e($item->patente); ?>">       
                                 <?php endif; ?>                                 
                             </td>
+                            <td style="width:70px">
+                                <?php if( $item->nombreFormaEntrega !='Retira' ): ?>
+                                    <?php if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1): ?>
+                                        <select id="idRampla" class="form-control input-sm" <?php if(Session::get('idPerfil')=='7' or Session::get('idPerfil')=='8'): ?> disabled <?php endif; ?> >
+                                            <option value="0" selected>-</option>
+                                            <?php $__currentLoopData = $ramplas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rampla): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php if( $rampla->numero == $item->numeroRampla): ?> then
+                                                    <option value="<?php echo e($rampla->numero); ?>" selected><?php echo e($rampla->numero); ?></option>
+                                                <?php else: ?>
+                                                    <option value="<?php echo e($rampla->numero); ?>"><?php echo e($rampla->numero); ?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                                             
+                                        </select>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                     <input class="form-control input-sm" maxlength="3" value="<?php echo e($item->numero); ?>">       
+                                <?php endif; ?>                                   
+                            </td>
 
                             <td style="width:70px">
                                 <?php if( $item->nombreFormaEntrega !='Retira' ): ?>
@@ -254,6 +273,7 @@
 
                             <td style="width:70px"><?php echo e($item->nombreEmpresaTransporte); ?></td>
                             <td style="width:70px"><?php echo e($item->patente); ?></td>
+                            <td style="width:70px"><?php echo e($item->numeroRampla); ?></td>
                             <td style="width:70px"><?php echo e($item->nombreConductor); ?></td>
                              <?php if( Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6'  ): ?>
                                 <td style="width:70px"><?php echo e($item->fechaCarga); ?></td>
@@ -592,7 +612,7 @@
                             if(tabla.rows[i].cells[5].innerHTML.trim()!='Retira' && !tabla.rows[i].cells[11].getElementsByTagName('button')[0] ){
                                 if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
                                     idEmpresa=tabla.rows[i].cells[6].getElementsByTagName('select')[0].value;
-                                    selConductor=tabla.rows[i].cells[8].getElementsByTagName('select')[0];
+                                    selConductor=tabla.rows[i].cells[9].getElementsByTagName('select')[0];
                                     idConductor=0;
                                     if(selConductor.selectedIndex>=0){
                                         idConductor=selConductor.value;

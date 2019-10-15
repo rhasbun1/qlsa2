@@ -108,14 +108,19 @@
                     <div class="col-md-2">
                         Patente (máx.9 carac.)
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input class="form-control input-sm" id="guiaPatente" readonly maxlength="9">
                     </div>
-
+                    <div class="col-md-1">
+                        Rampla
+                    </div>
+                    <div class="col-md-1">
+                        <input class="form-control input-sm" id="guiaRampla" maxlength="3">
+                    </div>
                     <div class="col-md-2">
                         Retira (máx.30 carac.)
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <input class="form-control input-sm" id="guiaNombreConductor" readonly maxlength="30">
                     </div>
                 </div>

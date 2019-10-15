@@ -1,11 +1,4 @@
   function abrirGuia(tipoGuia, numeroGuia, fila, nombreTabla){
-   // var tabla=$("#"+ nombreTabla).DataTable();
-   // $("#rowTabla").val( tabla.row(fila).index() );
-
-    //console.log(nombreTabla);
-
-//    var datos=tabla.cell( tabla.row(fila).index(), 1).data();
-
     document.getElementById('mensajeProceso').style.display="none";
     $.ajax({
         url: urlApp + "datosGuiaDespacho",
@@ -46,6 +39,7 @@
               $("#direccionCliente").val(dato[0].direccionCliente);
               $("#comuna").val(dato[0].comunaCliente);
               $("#ciudad").val(dato[0].ciudadCliente);
+              $("#guiaRampla").val(dato[0].numeroRampla);
 
               if($("#comuna").val().trim()=='' || $("#ciudad").val().trim()==''){
                 $("#mensajeProceso").html("<strong>¡Advertencia!</strong> La guía no puede ser procesada si falta comuna o ciudad");
@@ -66,6 +60,7 @@
                 document.getElementById('btnBajar').style.display='inline';
                 $("#observacionDespacho").attr('readonly', true);
                 $("#guiaPatente").attr('readonly', true);
+                $("#guiaRampla").attr('readonly', true);
                 $("#guiaNombreConductor").attr('readonly', true);
                 $("#sellos").attr('readonly', true);
                 $("#nombreEmpresaTransportes").attr('readonly', true);
@@ -87,6 +82,7 @@
 
                 $("#observacionDespacho").attr('readonly', false);
                 $("#guiaPatente").attr('readonly', false);
+                $("#guiaRampla").attr('readonly', false);
                 $("#guiaNombreConductor").attr('readonly', false);
                 $("#sellos").attr('readonly', false);
                 $("#nombreEmpresaTransportes").attr('readonly', false);
@@ -297,6 +293,12 @@
       if(cadena==']'){
         return;
       }
+      var numRampla='0';
+      if($("#guiaRampla").val().trim()==''){
+        numRampla="0"
+      }else{
+        numRampla=$("#guiaRampla").val();
+      }
       $.ajax({
           async: false,
           url: urlApp + "actualizarDatosGuiaDespacho",
@@ -312,6 +314,7 @@
                   observaciones: $("#observacionDespacho").val(),
                   numeroGuiaOrigen: document.getElementById('folioDTE').dataset.numeroguia,
                   nombreEmpresaTransportes: $("#nombreEmpresaTransportes").val(),
+                  numeroRampla: numRampla,
                   detalle: cadena
                 },                
           success:function(dato){

@@ -9,6 +9,7 @@ use App\Productolistaprecio;
 use App\Unidad;
 use App\Planta;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ProductoController extends Controller
 {
@@ -73,6 +74,23 @@ class ProductoController extends Controller
         if($datos->ajax()){
             $respuesta=DB::Select('call spDelProductoListaPrecio(?)', array($datos->input('idProductoListaPrecios') ) );
             return response()->json($respuesta);
+        }
+    }
+
+    public function actualizarCostos(Request $datos){
+        if($datos->ajax()){
+            $detalle=$datos->input('detalle');
+            $detalle= json_decode($detalle);
+            foreach ( $detalle as $item){
+                DB::Select("call spUpdProductoCostoMensual(?,?,?,?,?)", array( 
+                    $datos->input('ano'),
+                    $datos->input('mes'), 
+                    $item->idProductoListaPrecio, 
+                    $item->costo, 
+                    Session::get('idUsuario') 
+                ) );
+            } 
+            return response()->json('OK');                       
         }
     }
 

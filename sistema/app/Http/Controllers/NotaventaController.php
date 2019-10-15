@@ -239,6 +239,40 @@ class NotaventaController extends Controller
             ]);
             return $pdf->stream('notadeventa_'.$id.'.pdf');        
      
+    }
+
+
+    public function notaVentaVigenteCargos(){
+        $cargos=DB::Select('call spGetNotaVentaCostos(?)', array(0) );
+        return view('notadeventaCargos')->with('cargos', $cargos)->with('subtitulo', '(Notas de Venta Vigentes)');
     }     
+
+    public function notaVentaCerradaCargos(){
+        $cargos=DB::Select('call spGetNotaVentaCostos(?)', array(1) );
+        return view('notadeventaCargos')->with('cargos', $cargos)->with('subtitulo', '(Notas de Venta Cerradas)');
+    } 
+
+    public function notaVentaCargosUrgente(){
+        $cargos=DB::Select('call spGetNotaVentasCostosUrgentes()');
+        return view('notadeventaCargos')->with('cargos', $cargos)->with('subtitulo', '(URGENTES)');        
+    }   
+
+    public function actualizarNotaVentaCargos(Request $datos){
+        if($datos->ajax()){
+            $detalle=$datos->input('detalle');
+            $detalle= json_decode($detalle);
+            foreach ( $detalle as $item){
+                DB::Select("call spUpdNotaVentaCargos(?,?,?,?,?,?)", array( 
+                    $item->idNotaVenta,
+                    $item->idPlanta,
+                    $item->flete, 
+                    $item->distancia, 
+                    $item->tiempoTraslado, 
+                    Session::get('idUsuario') 
+                ) );
+            } 
+            return response()->json('OK');                       
+        }        
+    }
 
 }

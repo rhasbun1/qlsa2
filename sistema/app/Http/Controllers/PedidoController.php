@@ -78,7 +78,7 @@ class PedidoController extends Controller
         if( Session::get('empresaUsuario')!='0' ){
             $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->where('emp_codigo',"=",Session::get('empresaUsuario') )->get();
         }else{
-            $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->orderBy('emp_nombre')->get();
+            $clientes=DB::Select('call spGetClientesPlantas(?)', array( Session::get('idUsuario') ) );
         }
 
 
@@ -291,13 +291,15 @@ class PedidoController extends Controller
         $emptransporte = DB::table('empresastransporte')->select('idEmpresaTransporte','nombre')->get();
         $plantas=DB::table('plantas')->select('idPlanta', 'nombre')->get();
         $parametros=DB::table('parametros')->select('version')->get();
+        $ramplas=DB::Select('call spGetRamplas()');
         return view('programacionPedido')->with('pedido', $pedido)
                                 ->with('listaDetallePedido', $listaDetallePedido)
                                 ->with('emptransporte', $emptransporte)
                                 ->with('log', $log)
                                 ->with('notas', $notas)
                                 ->with('plantas', $plantas)
-                                ->with('parametros', $parametros);
+                                ->with('parametros', $parametros)
+                                ->with('ramplas', $ramplas);
     }    
 
     public function grabarNuevoPedido(Request $datos){
@@ -427,7 +429,7 @@ class PedidoController extends Controller
             $detalle=$datos->input('detalle');
             $detalle= json_decode($detalle);           
             foreach ( $detalle as $item){
-                DB::Select("call spUpdPedidoProgramacion(?,?,?,?,?,?,?,?,?,?,?,?,?)", array( $datos->input('idPedido'),
+                DB::Select("call spUpdPedidoProgramacion(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", array( $datos->input('idPedido'),
                     $item->prod_codigo, 
                     $item->idEmpresaTransporte, 
                     $item->idCamion, 
@@ -439,7 +441,8 @@ class PedidoController extends Controller
                     $item->nombreEmpresaTransporte,
                     $item->patente,
                     $item->nombreConductor,
-                    $item->idPlanta
+                    $item->idPlanta,
+                    $item->numeroRampla
                 ) 
             );
             }
@@ -512,6 +515,25 @@ class PedidoController extends Controller
              DB::Select('call spUpdNumeroAuxiliar(?,?)', array($datos->input('idPedido'), $datos->input('numeroAuxiliar')) );
              return;
         }
+    }
+
+    public function costosMensuales(){
+        $costosMensuales=DB::Select('call spGetCostosMensuales()');
+        return view('costosMensuales')->with('costosMensuales', $costosMensuales);
+    }
+
+    public function costosMensualesProductos(Request $datos){
+        if($datos->ajax()){
+            $costosMensualesProductos=DB::Select('call spGetCostosMensuales_Productos(?,?)', array($datos->input('ano'), $datos->input('mes')) );
+            return $costosMensualesProductos;
+        }
+    }
+
+    public function crearCostosMensuales(Request $datos){
+        if($datos->ajax()){
+            $resp=DB::Select('call spInsCostosMensuales(?,?,?)', array($datos->input('ano'), $datos->input('mes'), Session::get('idUsuario') ) );
+            return $resp;
+        }        
     }
 
 

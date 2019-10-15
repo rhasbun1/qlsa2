@@ -5,7 +5,7 @@ var arrConductores=new Array();
 
 function cargarListas(idEmpresaTransporte, fila){
     var tabla=document.getElementById("tablaDetalle");
-    var selConductor = tabla.rows[fila].cells[8].getElementsByTagName("select")[0];
+    var selConductor = tabla.rows[fila].cells[9].getElementsByTagName("select")[0];
     selConductor.length=0; 
     var selCamion = tabla.rows[fila].cells[7].getElementsByTagName("select")[0];
     selCamion.length=0; 
@@ -125,7 +125,6 @@ function guardarDatosProgramacion(idPedido, origen){
     var tabla = document.getElementById('tablaDetalle');
     var cadena='[';
 
-
     if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=="2"){
         for (var i = 1; i < tabla.rows.length; i++){
 
@@ -144,12 +143,13 @@ function guardarDatosProgramacion(idPedido, origen){
                     fila=1;
                     idTransporte=tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value;
                     idCamion=tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value;
-                    idConductor=tabla.rows[fila].cells[8].getElementsByTagName('select')[0].value;
-                    if(tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value.trim() !='' ){
-                        fechaCarga=fechaAtexto(  tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value );
+
+                    idConductor=tabla.rows[fila].cells[9].getElementsByTagName('select')[0].value;
+                    if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim() !='' ){
+                        fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value );
                     }
-                    if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim()!=''){
-                        horaCarga=tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value;  
+                    if(tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()!=''){
+                        horaCarga=tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value;  
                     }
                 }else{
                     if(tabla.rows[i].cells[1].dataset.guia==0){
@@ -160,12 +160,13 @@ function guardarDatosProgramacion(idPedido, origen){
                         }
                         nombreEmpresaTransporte=tabla.rows[fila].cells[6].getElementsByTagName('input')[0].value;
                         patente=tabla.rows[fila].cells[7].getElementsByTagName('input')[0].value;
-                        nombreConductor=tabla.rows[fila].cells[8].getElementsByTagName('input')[0].value;
-                        if(tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value.trim() !='' ){
-                            fechaCarga=fechaAtexto(  tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value );
+
+                        nombreConductor=tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value;
+                        if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim() !='' ){
+                            fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value );
                         }
-                        if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim()!=''){
-                            horaCarga=tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value;  
+                        if(tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()!=''){
+                            horaCarga=tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value;  
                         }
                     }
 
@@ -178,6 +179,7 @@ function guardarDatosProgramacion(idPedido, origen){
                 cadena+='"idConductor":"'+  idConductor + '", ';
                 cadena+='"nombreEmpresaTransporte":"'+  nombreEmpresaTransporte + '", ';
                 cadena+='"patente":"'+  patente + '", ';
+                cadena+='"numeroRampla":"' + $("#idRampla").val() + '", ';
                 cadena+='"nombreConductor":"'+  nombreConductor + '", ';
                 cadena+='"peso":"0", ';
                 cadena+='"fechaCarga":"'+ fechaCarga  + '", ';
@@ -212,12 +214,13 @@ function guardarDatosProgramacion(idPedido, origen){
 
                     idTransporte=tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value;
                     idCamion=tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value;
-                    idConductor=tabla.rows[fila].cells[8].getElementsByTagName('select')[0].value;
-                    if(tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value.trim() !='' ){
-                        fechaCarga=fechaAtexto(  tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value );
+
+                    idConductor=tabla.rows[fila].cells[9].getElementsByTagName('select')[0].value;
+                    if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim() !='' ){
+                        fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value );
                     }
-                    if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim()!=''){
-                        horaCarga=tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value;  
+                    if(tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()!=''){
+                        horaCarga=tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value;  
                     }
                 }else{
                     if(tabla.rows[i].cells[1].dataset.guia==0){
@@ -229,12 +232,13 @@ function guardarDatosProgramacion(idPedido, origen){
                         if(tabla.rows[fila].cells[6].getElementsByTagName('input')[0]){
                             nombreEmpresaTransporte=tabla.rows[fila].cells[6].getElementsByTagName('input')[0].value;
                             patente=tabla.rows[fila].cells[7].getElementsByTagName('input')[0].value;
-                            nombreConductor=tabla.rows[fila].cells[8].getElementsByTagName('input')[0].value;
-                            if(tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value.trim() !='' ){
-                                fechaCarga=fechaAtexto(  tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value );
+
+                            nombreConductor=tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value;
+                            if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim() !='' ){
+                                fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value );
                             }
-                            if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim()!=''){
-                                horaCarga=tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value;  
+                            if(tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()!=''){
+                                horaCarga=tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value;  
                             }                            
                         }
 
@@ -249,6 +253,7 @@ function guardarDatosProgramacion(idPedido, origen){
                 cadena+='"idConductor":"'+  idConductor + '", ';
                 cadena+='"nombreEmpresaTransporte":"'+  nombreEmpresaTransporte + '", ';
                 cadena+='"patente":"'+  patente + '", ';
+                cadena+='"numeroRampla":"' + $("#idRampla").val() + '", ';
                 cadena+='"nombreConductor":"'+  nombreConductor + '", ';
                 cadena+='"peso":"0", ';
                 cadena+='"fechaCarga":"'+ fechaCarga  + '", ';

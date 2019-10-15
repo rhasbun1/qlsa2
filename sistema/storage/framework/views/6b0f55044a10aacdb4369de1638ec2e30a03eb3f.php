@@ -120,6 +120,7 @@
                     <th>Entrega</th>
                     <th>Transporte</th>
                     <th>Camion</th>
+                    <th style="text-align: center;">Rampla</th>
                     <th>Conductor</th>
                     <th style="text-align: center;">Fecha Hora Carga<br>Programada</th>
                     <th style="text-align: center;">Fecha Hora Carga<br>Real</th>
@@ -175,6 +176,7 @@
                         <td> <?php echo e($item->nombreFormaEntrega); ?> </td>
                         <td> <?php echo e($item->nombreEmpresaTransporte); ?> </td>
                         <td> <?php echo e($item->patente); ?> </td>
+                        <td style="text-align: center;"> <?php echo e($item->numeroRampla); ?> </td>
                         <td> <?php echo e($item->nombreConductor); ?> </td>
                         <td> <?php echo e($item->fechaCarga); ?> <?php echo e($item->horaCarga); ?></td>
                         <td> <?php echo e($item->fechaCargaReal); ?> </td>
@@ -196,7 +198,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>                
+                            <td></td>
+                            <td></td>             
                         </tr>
                     <?php endif; ?>                   
                     <?php if( Session::get('grupoUsuario')=='C' or Session::get('grupoUsuario')=='CL' ): ?>   
@@ -213,7 +216,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>                
+                            <td></td>  
+                            <td></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -222,6 +226,7 @@
                             <td></td>
                             <td align="right"><b>Iva $</b></td>
                             <td align="right"><b><?php echo e(number_format( $pedido[0]->montoIva, 0, ',', '.' )); ?> </b></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -243,7 +248,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>                        
+                            <td></td>
+                            <td></td>                       
                         </tr> 
                     <?php endif; ?>                     
                 </tfoot>

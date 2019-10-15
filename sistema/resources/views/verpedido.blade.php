@@ -123,6 +123,7 @@
                     <th>Entrega</th>
                     <th>Transporte</th>
                     <th>Camion</th>
+                    <th style="text-align: center;">Rampla</th>
                     <th>Conductor</th>
                     <th style="text-align: center;">Fecha Hora Carga<br>Programada</th>
                     <th style="text-align: center;">Fecha Hora Carga<br>Real</th>
@@ -177,6 +178,7 @@
                         <td> {{ $item->nombreFormaEntrega }} </td>
                         <td> {{ $item->nombreEmpresaTransporte }} </td>
                         <td> {{ $item->patente }} </td>
+                        <td style="text-align: center;"> {{ $item->numeroRampla }} </td>
                         <td> {{ $item->nombreConductor }} </td>
                         <td> {{ $item->fechaCarga }} {{ $item->horaCarga }}</td>
                         <td> {{ $item->fechaCargaReal }} </td>
@@ -198,7 +200,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>                
+                            <td></td>
+                            <td></td>             
                         </tr>
                     @endif                   
                     @if( Session::get('grupoUsuario')=='C' or Session::get('grupoUsuario')=='CL' )   
@@ -215,7 +218,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>                
+                            <td></td>  
+                            <td></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -224,6 +228,7 @@
                             <td></td>
                             <td align="right"><b>Iva $</b></td>
                             <td align="right"><b>{{ number_format( $pedido[0]->montoIva, 0, ',', '.' ) }} </b></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -245,7 +250,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>                        
+                            <td></td>
+                            <td></td>                       
                         </tr> 
                     @endif                     
                 </tfoot>

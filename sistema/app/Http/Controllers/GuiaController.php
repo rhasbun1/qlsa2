@@ -68,8 +68,10 @@ class GuiaController extends Controller
         if($datos->ajax()){
             $detalle=$datos->input('detalle');
             $detalle= json_decode($detalle);            
-            $guia=DB::Select('call spGetCompletarDatosGuiaDespacho(?,?,?,?,?,?,?,?,?,?)', array( $datos->input('tipoGuia'), $datos->input('numeroGuia'), $datos->input('nombreConductor'), $datos->input('patente'),
-                $datos->input('sellos'), $datos->input('temperaturaCarga'), $datos->input('observaciones'), Session::get('idUsuario'), $datos->input('numeroGuiaOrigen'), $datos->input('nombreEmpresaTransportes') ) );
+            $guia=DB::Select('call spGetCompletarDatosGuiaDespacho(?,?,?,?,?,?,?,?,?,?,?)', 
+                array( $datos->input('tipoGuia'), $datos->input('numeroGuia'), $datos->input('nombreConductor'), $datos->input('patente'),
+                $datos->input('sellos'), $datos->input('temperaturaCarga'), $datos->input('observaciones'), Session::get('idUsuario'), 
+                $datos->input('numeroGuiaOrigen'), $datos->input('nombreEmpresaTransportes'), $datos->input('numeroRampla') ) );
 
             foreach ( $detalle as $item){
                 DB::Select("call spUpdGuiaDespachoDetalle(?,?,?,?,?)", array($item->numeroGuia, 
@@ -242,7 +244,7 @@ class GuiaController extends Controller
                 $result = (array) $respuesta;
 
                 if($result["FolioDte"]){
-                    DB::Select('call spGetUpdFolioDTE(?,?)', array( $datos->input('numeroGuia'), $result["FolioDte"] ) ); 
+                    DB::Select('call spGetUpdFolioDTE(?,?,?)', array( $datos->input('numeroGuia'), $result["FolioDte"], Session::get('idUsuario') ) ); 
                 }
                 
                 if($result["PdfenBase64"]){
@@ -273,175 +275,6 @@ class GuiaController extends Controller
         }
 
     }
-
-
-    public function crearguiaGet($numeroGuia){
-
-            $nombreArchivo=public_path().'/guias/txt/G'.$numeroGuia.'.txt';
-            $guiaElectronica=DB::Select('call spGetFormatoGuiaElectronica(?)', array($numeroGuia) );          
-            $fh = fopen($nombreArchivo, 'w');
-            
-            foreach ( $guiaElectronica as $item){
-                $cadena='';
-                $cadena=$cadena.''.$item->bodega.''.';';
-                $cadena=$cadena.$item->numeroGuia.';';
-                $cadena=$cadena.''.$item->tipoDocumento.''.';';
-                $cadena=$cadena.''.$item->subTipoDocumento.''.';';
-                $cadena=$cadena.''.$item->fechaGeneracion.''.';';
-                $cadena=$cadena.''.$item->ConceptoSalida.''.';';
-                $cadena=$cadena.''.$item->observacion.''.';';
-                $cadena=$cadena.''.$item->codigoClienteSoftland.''.';';
-                $cadena=$cadena.''.strtoupper($item->nombreCliente).''.';';
-                $cadena=$cadena.''.strtoupper($item->rutCliente).''.';';
-                $cadena=$cadena.''.$item->giroCliente.''.';';
-                $cadena=$cadena.''.$item->direccionCliente.''.';';
-                $cadena=$cadena.''.$item->comunaCliente.''.';';
-                $cadena=$cadena.''.$item->ciudadCliente.''.';';
-                $cadena=$cadena.''.$item->centroCosto.''.';';
-                $cadena=$cadena.''.$item->codigoBodegaDestino.''.';';
-                $cadena=$cadena.''.$item->codigoListaPrecio.''.';';
-                $cadena=$cadena.$item->numeroOrdenTrabajo.';';
-                $cadena=$cadena.$item->numeroOrdenProduccion.';';
-                $cadena=$cadena.$item->OrdenCompra.';';
-                $cadena=$cadena.$item->facturaAsociada.';';
-                $cadena=$cadena.''.$item->subTipoFacturaAsociada.''.';';
-                $cadena=$cadena.$item->notaCreditoAsociada.';';
-                $cadena=$cadena.''.$item->codigoCentroCostoparaContabilizar.''.';';
-                $cadena=$cadena.''.$item->codigoVendedor.''.';';
-                $cadena=$cadena.''.$item->codigoCondiciondePago.''.';';
-                $cadena=$cadena.''.$item->codigoLugarDespacho.''.';';
-                $cadena=$cadena.''.$item->direccionDespacho.''.';';
-                $cadena=$cadena.''.$item->comunaDespacho.''.';';
-                $cadena=$cadena.''.$item->ciudadDespacho.''.';';
-                $cadena=$cadena.''.$item->paisDespacho.''.';';
-                $cadena=$cadena.''.$item->atencion.''.';';
-                $cadena=$cadena.''.$item->provincia.''.';';
-                $cadena=$cadena.''.$item->region.''.';';
-                $cadena=$cadena.$item->codigoPostalDespacho.';';
-                $cadena=$cadena.''.$item->codigoGLN.''.';';
-                $cadena=$cadena.$item->codigoVendedorWalmart.';';
-                $cadena=$cadena.''.$item->retiradoPor.''.';';
-                $cadena=$cadena.''.$item->patenteCamionDespacho.''.';';
-                $cadena=$cadena.''.$item->solicitadoPor.''.';';  
-                $cadena=$cadena.''.$item->rutTransportista.''.';';
-                $cadena=$cadena.''.$item->despachadoPor.''.';';
-                $cadena=$cadena.''.$item->rutSolicitante.''.';';
-                $cadena=$cadena.$item->tipoDespacho.';';
-                $cadena=$cadena.$item->numeroNotaVenta.';';
-                $cadena=$cadena.$item->pordentajeDescuento1.';';
-                $cadena=$cadena.$item->valorDescuento1.';';
-                $cadena=$cadena.$item->pordentajeDescuento2.';';
-                $cadena=$cadena.$item->valorDescuento2.';';
-                $cadena=$cadena.$item->pordentajeDescuento3.';';
-                $cadena=$cadena.$item->valorDescuento3.';';
-                $cadena=$cadena.$item->pordentajeDescuento4.';';
-                $cadena=$cadena.$item->valorDescuento4.';';
-                $cadena=$cadena.$item->pordentajeDescuento5.';';
-                $cadena=$cadena.$item->valorDescuento5.';';
-                $cadena=$cadena.$item->flete.';';
-                $cadena=$cadena.$item->embalaje.';';
-                $cadena=$cadena.$item->totalFinal.';';
-                $cadena=$cadena.''.$item->codigoProductoSF.''.';';
-                $cadena=$cadena.''.$item->descripcionProducto.''.';';
-                $cadena=$cadena.''.$item->codigoUnidadMedida.''.';';
-                $cadena=$cadena.''.$item->descripcionProducto1.''.';';
-                $cadena=$cadena.$item->cantidadDespachada.';';
-                $cadena=$cadena.$item->precioReferencia.';';
-                $cadena=$cadena.$item->porcentajeDescuentoLinea1.';';
-                $cadena=$cadena.$item->valorDescuentoLinea1.';';
-                $cadena=$cadena.$item->porcentajeDescuentoLinea2.';';
-                $cadena=$cadena.$item->valorDescuentoLinea2.';';
-                $cadena=$cadena.$item->porcentajeDescuentoLinea3.';';
-                $cadena=$cadena.$item->valorDescuentoLinea3.';';
-                $cadena=$cadena.$item->porcentajeDescuentoLinea4.';';
-                $cadena=$cadena.$item->valorDescuentoLinea4.';';
-                $cadena=$cadena.$item->porcentajeDescuentoLinea5.';';
-                $cadena=$cadena.$item->valorDescuentoLinea5.';';
-                $cadena=$cadena.$item->valorTotalDescuentosdeLinea.';';
-                $cadena=$cadena.''.$item->partida.''.';';
-                $cadena=$cadena.''.$item->pieza.''.';';
-                $cadena=$cadena.''.$item->fechaVencimiento.''.';';
-                $cadena=$cadena.''.$item->serie.''.';';
-                $cadena=$cadena.''.$item->cuentadeConsumodelMovimento.''.';';
-                $cadena=$cadena.''.$item->conservaFolioAsignadoalDTE.''.';';
-                $cadena=$cadena.''.$item->referencia1_TipoDocumento.''.';';
-                $cadena=$cadena.''.$item->referencia1_Descripcion.''.';';
-                $cadena=$cadena.$item->referencia1_NumeroDocumento.';';
-                $cadena=$cadena.''.$item->referencia1_FechaDocumento.''.';';
-                $cadena=$cadena.''.$item->referencia2_TipoDocumento.''.';';
-                $cadena=$cadena.''.$item->referencia2_Descripcion.''.';';
-                $cadena=$cadena.$item->referencia2_NumeroDocumento.';';
-                $cadena=$cadena.''.$item->referencia2_FechaDocumento.''.';';
-                $cadena=$cadena.''.$item->referencia3_TipoDocumento.''.';';
-                $cadena=$cadena.''.$item->referencia3_Descripcion.''.';';
-                $cadena=$cadena.$item->referencia3_NumeroDocumento.';';
-                $cadena=$cadena.''.$item->referencia3_FechaDocumento.''.';';
-                $cadena=$cadena.''.$item->referencia4_TipoDocumento.''.';';
-                $cadena=$cadena.''.$item->referencia4_Descripcion.''.';';
-                $cadena=$cadena.$item->referencia4_NumeroDocumento.';';
-                $cadena=$cadena.''.$item->referencia4_FechaDocumento.''.';';
-                $cadena=$cadena.''.$item->referencia5_TipoDocumento.''.';';
-                $cadena=$cadena.''.$item->referencia5_Descripcion.''.';';
-                $cadena=$cadena.$item->referencia5_NumeroDocumento.';';
-                $cadena=$cadena.''.$item->referencia5_FechaDocumento.''.';';
-                fwrite($fh, $cadena.chr(13).chr(10));
-            }
-            
-            fclose($fh);
-
-            $cadena = file_get_contents($nombreArchivo);
-
-            $base64File = base64_encode($cadena); 
-
-
-            $opts = array(
-                'ssl' => array('ciphers'=>'RC4-SHA', 'verify_peer'=>false, 'verify_peer_name'=>false)
-            );
-
-            $ctx_opts = array(
-                'http' => array(
-                    'header' => 'Content-Type: application/soap+xml'
-                )
-            );
-
-            $params = array ('soap_version' => SOAP_1_2 );
-            $url = "http://webservice.quimicalatinoamericana.cl/CapturaDteExterno/CapturaDteExterno.svc?wsdl";
-
-            $ruta="\\\QLSA-2012\Softland-ERP\SOFTLAND\DATOS\QLSA";
-            try{
-                $client = new SoapClient($url);
-                $respuesta = $client->CaptudaGuiaSalida( [ 
-                                'base64File'=> $base64File, 
-                                'extensionArchivo'=> 'TXT', 
-                                'areaDeDatos'=> $ruta, 
-                                'usuario'=> 'hans', 
-                                'nombreCertificadoDigital'=>'PATRICIO CLEMENTE SEGUEL  BUNSTER'
-                            ])->CaptudaGuiaSalidaResult;
-                $result = (array) $respuesta;
-
-            //    dd($result);
-                $err= (array) $result["Error"];
-
-                dd($result);
-
-                DB::Select('call spGetUpdFolioDTE(?,?)', array( $numeroGuia, $result["FolioDte"] ) ); 
-
-                // a route is created, (it must already be created in its repository(pdf)).
-                $nombrePdf=public_path().'/guias/pdf/GD'.$result["FolioDte"].'.pdf';
-
-                // decode base64
-                $pdf_b64 = base64_decode($result["PdfenBase64"]);
-
-                // you record the file in existing folder
-                file_put_contents($nombrePdf, $pdf_b64 );
-            }
-            catch(SoapFault $fault) {
-                echo '<br>'.$fault;
-            }
-
-
-    }
-
 
     public function datosGuiaDespacho(Request $datos){
         if($datos->ajax()){
