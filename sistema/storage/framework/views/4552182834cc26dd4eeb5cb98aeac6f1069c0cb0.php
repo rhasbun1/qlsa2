@@ -280,11 +280,14 @@
 									    <?php if( Session::get('idPerfil')=='1'): ?>									
 											<li><a href="<?php echo e(asset('/')); ?>parametros"><span class="submenu-label">Parámetros</span></a></li>
 										<?php endif; ?>
+									    <?php if( Session::get('idPerfil')!='0'): ?>									
+											<li><a href="<?php echo e(asset('/')); ?>registroAcciones"><span class="submenu-label">Consultar Registro de Acciones</span></a></li>
+										<?php endif; ?>										
 										<?php if(Session::get('idPerfil')=='1' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7' or Session::get('idPerfil')=='12'): ?>
 											<li><a href="<?php echo e(asset('/')); ?>eliminacionGuiaDespacho"><span class="submenu-label">Liberar Nº de GD</span></a></li>
 										<?php endif; ?>
 
-										<?php if(Session::get('idPerfil')=='3' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='4' 
+										<?php if( Session::get('idPerfil')=='2' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='4' 
 											or Session::get('idPerfil')=='18' or Session::get('idPerfil')=='11'): ?>
 											<li><a href="<?php echo e(asset('/')); ?>costosMensuales"><span class="submenu-label">Costos Mensuales</span></a></li>
 										<?php endif; ?>	

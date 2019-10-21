@@ -18,9 +18,8 @@
                         <th style="width:250px">Obra</th>
                         <th style="width:120px">Planta</th>
                         <th style="width:80px">Flete</th>
-                        <th style="width:80px">Distancia</th>
-                        <th style="width:80px">Tiempo Traslado</th>
-	                    <th style="width:40px"></th>
+                        <th style="width:80px">Distancia (km)</th>
+                        <th style="width:80px">Tiempo Traslado (horas)</th>
 	                </thead>
 	                <tbody>
 	                    @foreach($cargos as $item)
@@ -30,24 +29,21 @@
                                 <td>{{ $item->nombreObra}}</td>
                                 <td data-idplanta="{{ $item->idPlanta}}">{{ $item->nombrePlanta}}</td>
                                 <td>
-                                    <input class="form-control input-sm" value="{{ $item->flete}}" onkeypress='return isIntegerKey(event)'>
+                                    <input class="form-control input-sm" value="{{ $item->flete}}" maxlength="7" onkeypress='return isIntegerKey(event)'>
                                 </td>
                                 <td>
-                                    <input class="form-control input-sm" value="{{ $item->distancia}}" onkeypress='return isIntegerKey(event)'>
+                                    <input class="form-control input-sm" value="{{ $item->distancia}}" maxlength="5" onkeypress='return isIntegerKey(event)'>
                                 </td>
                                 <td>
-                                    <input class="form-control input-sm" value="{{ $item->tiempoTraslado}}" onkeypress='return isIntegerKey(event)'>
+                                    <input class="form-control input-sm" value="{{ $item->tiempoTraslado}}" maxlength="3" onkeypress='return isIntegerKey(event)'>
                                 </td>
-	                            <td style="width:40px">
-	                            	<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>
-	                            </td>
 	                        </tr>
 	                    @endforeach
 	                </tbody>
 	            </table>
 	        </div>
 		    <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
-                <button class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
+                <button id="btnGuardarCambios" class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
 		        <a href="{{ asset('/') }}dashboard" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
 		    </div>        
         </div>
@@ -92,7 +88,11 @@
 
             var tabla=$('#tablaNotas').DataTable({
                 orderCellsTop: true,
-                fixedHeader: true,      
+                fixedHeader: true,
+                columnDefs: [ {
+                                "targets": [4,5,6],
+                                "orderable": false
+                                } ],                    
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
                 initComplete: function () {
                     actualizarFiltros(this.api());
@@ -158,25 +158,46 @@
 
 
 		function guardarCambios(){
+            document.getElementById('btnGuardarCambios').disabled=true;
 			var tabla= $("#tablaNotas").DataTable();
 		    var cadena='[';
 		    var costo="0";
 		    for (var i = 0; i < tabla.rows().count(); i++){
-		    	if(tabla.cell(i,4).data()==''){
+		    	if(tabla.cell(i,4).node().getElementsByTagName('input')[0].value==''){
 		    		flete="0";
 		    	}else{
 		    		flete=tabla.cell(i,4).node().getElementsByTagName('input')[0].value;
 		    	}
-                if(tabla.cell(i,5).data()==''){
+
+                if(tabla.cell(i,5).node().getElementsByTagName('input')[0].value==''){
                     distancia="0";
                 }else{
                     distancia=tabla.cell(i,5).node().getElementsByTagName('input')[0].value;
                 }
-                if(tabla.cell(i,6).data()==''){
+                if(tabla.cell(i,6).node().getElementsByTagName('input')[0].value==''){
                     tiempoTraslado="0";
                 }else{
                     tiempoTraslado=tabla.cell(i,6).node().getElementsByTagName('input')[0].value;
                 }                
+
+                if( isNaN(flete) || isNaN(distancia) || isNaN(tiempoTraslado) ){
+                    $("#mdProcesando").modal('hide');
+                    document.getElementById('btnGuardarCambios').disabled=false;
+                    swal(
+                        {
+                            title: '¡Los valores ingresados deben ser solo números!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        }
+                    )
+                    return;                   
+                }
+
 
                 cadena+='{';
                 cadena+='"idNotaVenta":"'+ tabla.cell(i,0).data() + '", ';
@@ -200,6 +221,7 @@
                       },
                 success:function(dato){
                     $("#mdProcesando").modal('hide');
+                    document.getElementById('btnGuardarCambios').disabled=false;
                     swal(
                         {
                             title: '¡Los cambios han sido guardados!' ,

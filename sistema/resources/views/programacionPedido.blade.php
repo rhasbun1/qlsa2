@@ -199,7 +199,7 @@
                                         </select>
                                     @endif
                                 @else
-                                     <input class="form-control input-sm" maxlength="3" value="{{ $item->numero }}">       
+                                     <input class="form-control input-sm" maxlength="3" value="{{ $item->numeroRampla }}">       
                                 @endif                                   
                             </td>
 

@@ -429,7 +429,8 @@ class PedidoController extends Controller
             $detalle=$datos->input('detalle');
             $detalle= json_decode($detalle);           
             foreach ( $detalle as $item){
-                DB::Select("call spUpdPedidoProgramacion(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", array( $datos->input('idPedido'),
+                DB::Select("call spUpdPedidoProgramacion(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", array( 
+                    $datos->input('idPedido'),
                     $item->prod_codigo, 
                     $item->idEmpresaTransporte, 
                     $item->idCamion, 

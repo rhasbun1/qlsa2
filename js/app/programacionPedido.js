@@ -139,6 +139,8 @@ function guardarDatosProgramacion(idPedido, origen){
                 patente="";
                 idPlanta=tabla.rows[i].cells[4].getElementsByTagName('select')[0].value;
 
+                rampla=tabla.rows[i].cells[8].getElementsByTagName('input')[0].value
+
                 if( tabla.rows[i].cells[5].innerHTML.trim()!="Retira"  ){
                     fila=1;
                     idTransporte=tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value;
@@ -179,7 +181,7 @@ function guardarDatosProgramacion(idPedido, origen){
                 cadena+='"idConductor":"'+  idConductor + '", ';
                 cadena+='"nombreEmpresaTransporte":"'+  nombreEmpresaTransporte + '", ';
                 cadena+='"patente":"'+  patente + '", ';
-                cadena+='"numeroRampla":"' + $("#idRampla").val() + '", ';
+                cadena+='"numeroRampla":"' + rampla + '", ';
                 cadena+='"nombreConductor":"'+  nombreConductor + '", ';
                 cadena+='"peso":"0", ';
                 cadena+='"fechaCarga":"'+ fechaCarga  + '", ';
@@ -203,6 +205,7 @@ function guardarDatosProgramacion(idPedido, origen){
                 nombreConductor="";
                 patente="";
                 idPlanta=tabla.rows[i].cells[4].getElementsByTagName('select')[0].value;
+                rampla=tabla.rows[i].cells[8].getElementsByTagName('input')[0].value
 
                 if( tabla.rows[i].cells[5].innerHTML.trim()!="Retira"  ){
 
@@ -253,7 +256,7 @@ function guardarDatosProgramacion(idPedido, origen){
                 cadena+='"idConductor":"'+  idConductor + '", ';
                 cadena+='"nombreEmpresaTransporte":"'+  nombreEmpresaTransporte + '", ';
                 cadena+='"patente":"'+  patente + '", ';
-                cadena+='"numeroRampla":"' + $("#idRampla").val() + '", ';
+                cadena+='"numeroRampla":"' + rampla + '", ';
                 cadena+='"nombreConductor":"'+  nombreConductor + '", ';
                 cadena+='"peso":"0", ';
                 cadena+='"fechaCarga":"'+ fechaCarga  + '", ';

@@ -102,7 +102,7 @@
 		            </table>
 		        </div>
 			    <div style="text-align: right;">
-			    	<button class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
+			    	<button id="btnGuardarCambios" class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
 			        <button class="btn btn-sm btn-warning" style="width:100px" onclick="cerrarListaProductos();">Cerrar</button>
 			    </div>  	        		
 			</div>
@@ -158,17 +158,26 @@
                     $(this).html( '' );                                   
                 }
             } );
+                     
 
             // DataTable
             var table=$('#tabla').DataTable({
                 orderCellsTop: true,
-                fixedHeader: true,      
+                fixedHeader: true,
+                columnDefs: [ {
+                                "targets": [2],
+                                "orderable": false
+                                } ],                         
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}              
             });
 
             var productos=$('#tablaProductos').DataTable({
                 orderCellsTop: true,
-                fixedHeader: true,      
+                fixedHeader: true,    
+                columnDefs: [ {
+                                "targets": [3],
+                                "orderable": false
+                                } ],                  
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
                 initComplete: function () {
                     actualizarFiltros(this.api());
@@ -180,6 +189,7 @@
         function actualizarFiltros(tabla){
             tabla.columns(0).every( function () {
                 var column = this;
+
                 var select = $("#selProducto" ).empty().append( '<option value=""></option>' )
                     .on( 'change', function () {
                         var val = $.fn.dataTable.util.escapeRegex(
@@ -194,7 +204,8 @@
                 column.data().unique().sort().each( function ( d, j ) {
                     select.append( '<option value="'+d+'">'+d+'</option>' )
                 } );
-            } );
+            } ).search( '', true, false ).draw();
+
             tabla.columns(1).every( function () {
                 var column = this;
                 var select = $("#selUnidad" ).empty().append( '<option value=""></option>' )
@@ -211,7 +222,8 @@
                 column.data().unique().sort().each( function ( d, j ) {
                     select.append( '<option value="'+d+'">'+d+'</option>' )
                 } );
-            } );
+            } ).search( '', true, false ).draw();
+
             tabla.columns(2).every( function () {
                 var column = this;
                 var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
@@ -226,9 +238,10 @@
                     } );
  
                 column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );                      
+                    select.append( '<option value="'+d+'">'+d+'</option>' )                             
+                } ); 
+            } ).search( '', true, false ).draw();
+               
         }
 
 
@@ -284,6 +297,22 @@
 
 		function agregarMes(){
 			var table=$('#tabla').DataTable();
+            var ano=$("#ano").val();
+
+            if(ano.toString().trim().length <4 ){
+                swal(
+                    {
+                        title: '¡El año ingresado es incorrecto!',
+                        text: 'Debe ingresar 4 dígitos',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        cancelButtonText: 'NO',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    });
+                return;
+            }
 
 			for (var i = 0; i < table.rows().count(); i++){
 
@@ -317,7 +346,7 @@
 		            var nodo=table.row.add( [
 		                    $("#ano").val(),
 		                    $("#mes option:selected").html(),
-		                    '<td style="width:40px"><button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos"><i class="fa fa-edit fa-lg"></i></button></td>'
+		                    '<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>'
 		                    ] ).draw().node();
 
 		            nodo.dataset.nummes=$("#mes").val();
@@ -329,17 +358,34 @@
 
 
 		function guardarCostos(){
+            document.getElementById('btnGuardarCambios').disabled=true;
 			var tabla= $("#tablaProductos").DataTable();
 		    var cadena='[';
 		    var costo="0";
 		    for (var i = 0; i < tabla.rows().count(); i++){
-		    	if(tabla.cell(i,3).data()==''){
+		    	if(tabla.cell(i,3).node().getElementsByTagName('input')[0].value==''){
 		    		costo="0";
 		    	}else{
 		    		costo=tabla.cell(i,3).node().getElementsByTagName('input')[0].value;
 		    	}
 
-
+                if( isNaN(costo) ){
+                    $("#mdProcesando").modal('hide');
+                    document.getElementById('btnGuardarCambios').disabled=false;
+                    swal(
+                        {
+                            title: '¡Los valores ingresados deben ser solo números!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        }
+                    )
+                    return;                   
+                }
 
                 cadena+='{';
                 cadena+='"idProductoListaPrecio":"'+ tabla.cell(i,0).node().dataset.idproductolistaprecio  + '", ';
@@ -362,6 +408,7 @@
                       },
                 success:function(dato){
                     $("#mdProcesando").modal('hide');
+                    document.getElementById('btnGuardarCambios').disabled=false;
                     swal(
                         {
                             title: '¡Los cambios han sido guardados!' ,

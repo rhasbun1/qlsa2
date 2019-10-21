@@ -177,6 +177,9 @@ Route::group(['middleware' => 'checksession'], function () {
 
 	Route::post('obtenerHistoricoPedidos', 'PedidoController@obtenerHistoricoPedidos');
 	Route::get('clienteGestionarPedido/{idNotaVenta}/','PedidoController@clienteGestionarPedido');
+	Route::get('registroAcciones', 'AccionesController@registroAcciones');
+	Route::post('consultarProductoAcciones', 'AccionesController@consultarProductoAcciones');
+	Route::post('consultarRegistroAcciones', 'AccionesController@consultarRegistroAcciones');
 
 	Route::resource('nuevanotaventa', 'NotaventaController', ['except' => 'show']);
 	Route::resource('gestionarpedido/{idNotaVenta}', 'PedidoController', ['except' => 'show']);

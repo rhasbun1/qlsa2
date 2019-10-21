@@ -381,4 +381,10 @@ class GuiaController extends Controller
     } 
 
 
+    public function datosEtiqueta(Request $datos){
+        $guia=DB::Select('call spGetDatosEtiqueta(?)', array( $datos->input('numeroGuia') ) );
+        return $guia;
+    }
+
+
 }
