@@ -104,7 +104,7 @@ Route::group(['middleware' => 'checksession'], function () {
 
 	Route::get('desaprobarPedido/{idPedido}/', 'PedidoController@desaprobarPedido');
 	Route::post('suspenderPedido', 'PedidoController@suspenderPedido');
-	Route::get('cerrarPedido/{idPedido}/', 'PedidoController@cerrarPedido');
+	Route::post('cerrarPedido', 'PedidoController@cerrarPedido');
 	Route::get('clienteNotasdeVenta', 'NotaventaController@clienteNotasdeVenta');
 	Route::get('guiasEnProceso', 'GuiaController@guiasEnProceso');
 	Route::get('bajarCertificado/{file}/', 'GuiaController@bajarCertificado');
@@ -161,6 +161,9 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('guardarRampla', 'RamplasController@guardarRampla');
 	Route::post('eliminarRampla', 'RamplasController@eliminarRampla');
 	
+	Route::get('despachosPorMes', 'ReportesController@despachosPorMes');
+	Route::get('despachosPorAno', 'ReportesController@despachosPorAno');
+
 	Route::get('imprimirNotaVenta/{id}/', 'NotaventaController@imprimirNotaVenta');
 
 	Route::get('test', 'GuiaController@test');
@@ -180,9 +183,12 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('registroAcciones', 'AccionesController@registroAcciones');
 	Route::post('consultarProductoAcciones', 'AccionesController@consultarProductoAcciones');
 	Route::post('consultarRegistroAcciones', 'AccionesController@consultarRegistroAcciones');
+	Route::post('subirArchivoCostos', 'ProductoController@subirArchivoCostos');
 
 	Route::resource('nuevanotaventa', 'NotaventaController', ['except' => 'show']);
 	Route::resource('gestionarpedido/{idNotaVenta}', 'PedidoController', ['except' => 'show']);
+
+	
 
 });
 

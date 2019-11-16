@@ -73,6 +73,11 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'costos' => [
+            'driver' => 'local',
+            'root' => public_path('costos'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

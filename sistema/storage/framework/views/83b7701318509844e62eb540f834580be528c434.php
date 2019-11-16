@@ -412,7 +412,6 @@
                         opcion: opcion 
                       },
                 success:function(dato){
-                    console.log(dato);
                     for(var x=0;x<dato.length;x++){
                         var col0='';
                         if( dato[x].certificado=='' ){

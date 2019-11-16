@@ -67,7 +67,7 @@
         				Estado
         			</div>
          			<div class="col-lg-2 col-md-2 col-sm-3">
-        				<input class="form-control input-sm" readonly value="{{ $pedido[0]->estado }}">
+        				<input id="idEstadoPedido" class="form-control input-sm" readonly value="{{ $pedido[0]->estado }}" data-idestadopedido="{{$pedido[0]->idEstadoPedido}}">
         			</div>
                     <div class="col-lg-1 col-md-2 col-sm-2">
                         Observaciones
@@ -100,13 +100,21 @@
                     <th style="width:70px">Conductor</th>
                     <th style="width:70px">Fecha prog. Carga</th>
                     <th style="width:70px">Hora prog. Carga</th>
-                    <th style="width:70px">Select./<br>Guia</th> 
+                    <th style="width:70px">Select./<br>Guia</th>
                 </thead>
             
                 <tbody>
-                    <?php $productosSinGuia = 0; ?>
-                    <?php $ln = 1; ?>
+                    <?php 
+                        $productosSinGuia = 0;
+                        $ln = 1;
+                        $despachado=0;
+                        $sinDespachar=0;
+                    ?>
                     @foreach($listaDetallePedido as $item)
+                    <?php
+                        if($item->salida==1){$despachado++;}
+                        if($item->salida==0){$sinDespachar++;}
+                    ?>                    
                     <tr>
                         <td style="display: none">
                             {{ $item->prod_codigo }}
@@ -153,7 +161,7 @@
                             </select>
                         </td>
                         <td style="width:70px"> {{ $item->nombreFormaEntrega }} </td>
-                        @if (  $item->numeroGuia==0 )
+                        @if ( $item->numeroGuia==0 and $pedido[0]->bloqueado==0)
                             <?php $productosSinGuia+=1; ?>
                             <td style="width:70px">
                                 @if ( $item->nombreFormaEntrega !='Retira' )
@@ -170,7 +178,9 @@
                                         </select>
                                     @endif
                                 @else
-                                    <input class="form-control input-sm" maxlength="100" value="{{ $item->nombreEmpresaTransporte }}">        
+                                    @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
+                                        <input class="form-control input-sm" maxlength="100" value="{{ $item->nombreEmpresaTransporte }}">
+                                    @endif
                                 @endif                              
                             </td>
                             <td style="width:70px">
@@ -181,7 +191,9 @@
                                         </select>
                                     @endif
                                 @else
-                                     <input class="form-control input-sm" maxlength="20" value="{{ $item->patente }}">       
+                                    @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
+                                        <input class="form-control input-sm" maxlength="20" value="{{ $item->patente }}">       
+                                    @endif
                                 @endif                                 
                             </td>
                             <td style="width:70px">
@@ -199,7 +211,9 @@
                                         </select>
                                     @endif
                                 @else
-                                     <input class="form-control input-sm" maxlength="3" value="{{ $item->numeroRampla }}">       
+                                    @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
+                                        <input class="form-control input-sm" maxlength="3" value="{{ $item->numeroRampla }}">
+                                    @endif 
                                 @endif                                   
                             </td>
 
@@ -211,7 +225,9 @@
                                         </select>
                                     @endif
                                 @else
-                                   <input class="form-control input-sm" maxlength="100"  value="{{ $item->nombreConductor }}">      
+                                    @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
+                                        <input class="form-control input-sm" maxlength="100"  value="{{ $item->nombreConductor }}">
+                                    @endif
                                 @endif                               
                             </td>
 
@@ -243,7 +259,6 @@
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
                                         <input type="text" class="form-control input-sm date" id="fechaEntrega" value="{{ $item->fechaCarga }}">
                                     @endif
-
                                 </td>
                                 <td style="display: none;">
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
@@ -253,18 +268,15 @@
                             @endif    
 
                             <td>
-                                @if( $item->numeroGuia==0 )
-                                    @if( $item->existeEnListaPrecios )
-                                        @if( (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') and
-                                            (($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1) )
-                                            <label class="label-checkbox" style="display: inline;"><input type="checkbox"><span class="custom-checkbox"></span></label>
-                                        @else
-                                            <label class="label-checkbox" style="display: none;"><input type="checkbox"><span class="custom-checkbox"></span></label>    
-                                        @endif
+                                @if( $item->existeEnListaPrecios )
+                                    @if( (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') )
+                                        <label class="label-checkbox" style="display: inline;"><input type="checkbox"><span class="custom-checkbox"></span></label>
                                     @else
-                                        <p style="color:#FF0000";><b>No existe en lista de precios</b></p>
-                                    @endif    
-                                @endif                                
+                                        <label class="label-checkbox" style="display: none;"><input type="checkbox"><span class="custom-checkbox"></span></label>    
+                                    @endif
+                                @else
+                                    <p style="color:#FF0000";><b>No existe en lista de precios</b></p>
+                                @endif
                             </td>
 
                         @else    
@@ -273,7 +285,7 @@
                             <td style="width:70px">{{ $item->patente }}</td>
                             <td style="width:70px">{{ $item->numeroRampla }}</td>
                             <td style="width:70px">{{ $item->nombreConductor }}</td>
-                             @if( Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6'  )
+                            @if( Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6'  )
                                 <td style="width:70px">{{ $item->fechaCarga }}</td>
                                 <td style="width:70px">{{ $item->horaCarga }}</td>
                             @elseif ( Session::get('idPerfil')=='7' or Session::get('idPerfil')=='8' or Session::get('idPerfil')=='10'  )
@@ -295,12 +307,18 @@
 
         <div style="padding-top:10px; padding-bottom: 20px;padding-left: 20px">
             @if( Session::get('idPerfil')!='8' and $productosSinGuia>0 )
-            <button class="btn btn-sm btn-primary" style="width:80px" onclick="guardarDatosProgramacion( {{ $pedido[0]->idPedido }} , 1);">Guardar</button>
+            <button id="btnGuardarProgramacion" class="btn btn-sm btn-primary" style="width:80px" onclick="guardarDatosProgramacion( {{ $pedido[0]->idPedido }} , 1);">Guardar</button>
             @endif
-            <a href="{{ asset('/') }}programacion" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
             @if( (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') and $productosSinGuia>0 )
             <button id="btnAsignarGuia" class="btn btn-sm btn-success" onclick="asignarFolio();">Asignar Guía a elementos seleccionados</button>
             @endif
+            @if ( ( ( intval($pedido[0]->idEstadoPedido) >= 2 and intval($pedido[0]->idEstadoPedido <=5) ) or intval($pedido[0]->idEstadoPedido==0) ) and
+                (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' ) )
+                @if($despachado>0 and $sinDespachar>0)
+                    <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+                @endif
+            @endif
+            <a href="{{ asset('/') }}programacion" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>         
         </div> 
 
 
@@ -383,6 +401,32 @@
     </div>
 </div>
 
+<div id="mdDespachoParcial" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="height: 45px">
+                <h5><b>Pasar pedido a histórico</b></h5>
+            </div>
+            <div id="bodyGuia" class="modal-body">
+                Indique el motivo (máx.200 caract.)
+                <div class="row">
+                    <div class="col-md-12">
+                        <input class="form-control input-sm" id="obsDespachoParcial" maxlength="200">
+                    </div> 
+
+                </div>
+            </div>
+            <div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; text-align: right;">
+               <button type="button" class="btn btn-success btn-sm" onclick="cerrarPedido()" style="width: 80px">Aceptar</button>                
+               <button id="btnCerrarCajaSuspender" type="button" class="btn btn-danger btn-sm" onclick="cerrarDespachoParcial()" style="width: 80px">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 @include('guiaDespacho');
 
 @endsection
@@ -400,6 +444,61 @@
     <script src="{{ asset('/') }}js/app/guiaDespacho.js?{{$parametros[0]->version}}"></script>
     
     <script>
+
+        function pasarHistorico(){
+            document.getElementById('obsDespachoParcial').value='';
+            $("#mdDespachoParcial").modal('show');
+
+        }
+
+
+        function cerrarPedido(){
+            swal(
+                {
+                    title: 'Este pedido va a pasar al listado histórico. ¿Desea continuar?' ,
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'SI',
+                    cancelButtonText: 'NO',
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function(isConfirm)
+                {
+                    if(isConfirm){
+                        $.ajax({
+                            url: urlApp + "cerrarPedido",
+                            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                            type:'POST',
+                            dataType: 'json',
+                            data: { 
+                                    idPedido: document.getElementById('idPedido').value,
+                                    motivo: document.getElementById('obsDespachoParcial').value
+                                  },
+                            success:function(data){
+                                if(document.getElementById('idPerfilSession').dataset.grupo=='P'){
+                                    location.href=urlApp+"programacion";
+                                }else{
+                                    location.href=urlApp+"listarPedidos";
+                                }
+                            },
+                            error: function(jqXHR, text, error){
+                                alert('Error!,No se pudo completar la operación');
+                            }
+                        });          
+                    }
+                }
+            );            
+        }
+
+        function despachoParcialPedido(idPedido){
+
+        }
+
+        function cerrarDespachoParcial(){
+            $("#mdDespachoParcial").modal('hide');
+        }    
 
         $('#datosGuia').on('submit', function(e) {
           // evito que propague el submit
@@ -533,7 +632,9 @@
             $('.bootstrap-timepicker').timepicker({
                 showMeridian: false,
                 defaultTime: false
-            });        
+            });
+
+            var tabla=document.getElementById('tablaDetalle');        
 
             $.ajax({
                 async: true,
@@ -547,8 +648,6 @@
                         var camion = new Array(dato[x].idEmpresaTransporte, dato[x].idCamion, dato[x].patente);
                         arrCamiones.push(camion);
                     }
-
-                    var tabla=document.getElementById('tablaDetalle');
 
                     for (var i = 1; i < tabla.rows.length; i++){
                         if(tabla.rows[i].cells[1].dataset.guia=='0'){
@@ -602,8 +701,6 @@
                         arrConductores.push(conductor);
                     }
 
-                    var tabla=document.getElementById('tablaDetalle');
-
                     for (var i = 1; i < tabla.rows.length; i++){
                         if(tabla.rows[i].cells[1].dataset.guia=='0'){
                             
@@ -643,7 +740,50 @@
             })
 
 
+            for (var i = 1; i < tabla.rows.length; i++){
+                if(tipoTransporte.value==2){
+                    if(tabla.rows[i].cells[12].getElementsByTagName('input')[0]){
+                       tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked=true;
+                    }
+                }
+            }          
+            if(tipoTransporte.value==2){
+                btnAsignarGuia.innerHTML="Asignar Guía";
+                ocultarColumna(12)
+            }
+
         });
+
+        //la función recibe como parámetros el numero de la columna a ocultar
+        function ocultarColumna(num)
+        {
+          //aquí utilizamos el id de la tabla, en este caso es 'tabla'
+          fila=document.getElementById('tablaDetalle').getElementsByTagName('tr');
+
+         //mostramos u ocultamos la cabecera de la columna
+         if (fila[0].getElementsByTagName('th')[num].style.display=='none')
+            {
+            fila[0].getElementsByTagName('th')[num].style.display=''
+            }
+          else
+            {
+            fila[0].getElementsByTagName('th')[num].style.display='none'
+            }
+           //mostramos u ocultamos las celdas de la columna seleccionada
+          for(i=1;i<fila.length;i++)
+            {
+                if (fila[i].getElementsByTagName('td')[num].style.display=='none')
+                    {
+                        fila[i].getElementsByTagName('td')[num].style.display=''; 
+                     }     
+                else
+                    {
+                     fila[i].getElementsByTagName('td')[num].style.display='none'
+                    }      
+            }        
+           
+        }
+
 
     </script>
        

@@ -35,17 +35,23 @@
 	<!-- Timepicker -->
 	<link href="<?php echo e(asset('/')); ?>css/bootstrap-timepicker.css" rel="stylesheet"/>
 
-	
     <script type="text/javascript" src="<?php echo e(asset('/')); ?>js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/')); ?>css/sweetalert.css"> 
  
-    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+    <script src="http://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
     <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
 	<link href="<?php echo e(asset('/')); ?>js/syncfusion/bootstrap-theme/ej.web.all.min.css" rel="stylesheet" />
+	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
+
+   <!-- <script src="https://cdn.syncfusion.com/js/assets/external/jquery-1.10.2.min.js"></script>
+    <script src="http://cdn.syncfusion.com/js/assets/external/jsrender.min.js"></script>
+    <script src="http://cdn.syncfusion.com/17.3.0.9/js/web/ej.web.all.min.js"></script>
+	<script src="<?php echo e(asset('/')); ?>js/es/i18n/ej.culture.es-CL.js"></script> 
+	<script src="<?php echo e(asset('/')); ?>js/es/l10n/ej.localetexts.es-ES.js"></script>-->
 
 	<!-- Datatable -->
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
+	
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 	<link href="<?php echo e(asset('/')); ?>css/datatables.min.css" rel="stylesheet">    
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
@@ -96,7 +102,7 @@
 						<li>
 							<a class="clearfix" href="#">
 								<input type="hidden" id="idUsuarioSession" name="idUsuarioSession" value="<?php echo e(Session::get('idUsuario')); ?>" >
-								<input type="hidden" id="idPerfilSession" value="<?php echo e(Session::get('idPerfil')); ?>" >
+								<input type="hidden" id="idPerfilSession" value="<?php echo e(Session::get('idPerfil')); ?>" data-grupo="<?php echo e(Session::get('grupoUsuario')); ?>">
 								<img src="<?php echo e(asset('/')); ?>img/user.jpg" alt="User Avatar">
 								<div class="detail">
 									<strong><?php echo e(Session::get('nombreUsuario')); ?></strong>
@@ -227,7 +233,10 @@
 								    <?php if( Session::get('idPerfil')!='6' and Session::get('idPerfil')!='9' ): ?>
 									<li><a href="<?php echo e(asset('/')); ?>historicoNotasdeVenta"><span class="submenu-label">Histórico de Notas de Venta</span></a></li>
 									<?php endif; ?>
-									<li><a href="<?php echo e(asset('/')); ?>historicoPedidos""><span class="submenu-label">Histórico de Pedidos Despachados</span></a></li>
+									<li><a href="<?php echo e(asset('/')); ?>historicoPedidos"><span class="submenu-label">Histórico de Pedidos Despachados</span></a></li>
+
+									<li><a href="<?php echo e(asset('/')); ?>despachosPorMes"><span class="submenu-label">Despachos por mes</span></a></li>
+									<li><a href="<?php echo e(asset('/')); ?>despachosPorAno"><span class="submenu-label">Despachos por año</span></a></li>
 								</ul>								
 							</li>
 							<?php if( Session::get('idPerfil')!='6' and

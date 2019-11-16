@@ -130,7 +130,15 @@
                 </thead>
             
                 <tbody>
+                    <?php
+                        $despachado=0;
+                        $sinDespachar=0;
+                    ?>
                     @foreach($listaDetallePedido as $item)
+                    <?php
+                        if($item->salida==1){$despachado++;}
+                        if($item->salida==0){$sinDespachar++;}
+                    ?>
                     <tr>
                         <td style="display: none"> 
                             {{ $item->prod_codigo }}                         
@@ -259,14 +267,13 @@
             <br>
             <b>*</b> Precio reajustado a la fecha de despacho del pedido. Pueden existir diferencias a inicios de cada mes hasta que se actualicen los parámetros de reajuste.
         </div> 
-
         
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
             @if ( ( Session::get('idPerfil')=='2' or Session::get('idPerfil')=='11')  and $pedido[0]->idEstadoPedido==1 )
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedido({{ $pedido[0]->idPedido }});">Aprobar</button>
             @endif    
 
-            @if ( (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') and $pedido[0]->idEstadoPedido >0 )
+            @if ( (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') and $pedido[0]->idEstadoPedido>0 and $sinDespachar>0 )
                 <a href="{{ asset('/') }}editarPedido/{{ $pedido[0]->idPedido }}/" class="btn btn-sm btn-success" style="width:100px">Modificar</a>
             @endif
             @if ($accion=='1')
@@ -276,14 +283,23 @@
                     @endif
                 @endif    
                 @if ( ($pedido[0]->idEstadoPedido>0 and $pedido[0]->idEstadoPedido < 5) and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') )
-                    <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>
-                @endif
-            @elseif ($accion=='3')
-                @if ( ($pedido[0]->idEstadoPedido=='0' or $pedido[0]->idEstadoPedido=='1') and (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') )
-                    <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+                    @if($despachado==0)
+                        <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>
+                    @endif
                 @endif
             @elseif ($accion=='6')
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedidoCliente();">Aprobar</button>                                      
+            @endif
+            @if ($accion=='3' or $accion=='1')
+                @if ( ( $pedido[0]->idEstadoPedido <= '3') and 
+                    (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' or 
+                     Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') )
+
+                    @if( $pedido[0]->idEstadoPedido <= '0' or ( $despachado>0 and $sinDespachar>0) )
+                        <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+                    @endif
+
+                @endif
             @endif
             @if($plantilla=='plantilla')
                 <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
@@ -432,7 +448,26 @@
                 function(isConfirm)
                 {
                     if(isConfirm){
-                        location.href= urlApp + "cerrarPedido/" + $("#idPedido").val() + "/";                  
+                        $.ajax({
+                            url: urlApp + "cerrarPedido",
+                            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                            type:'POST',
+                            dataType: 'json',
+                            data: { 
+                                    idPedido: document.getElementById('idPedido').value,
+                                    motivo: ""
+                                  },
+                            success:function(data){
+                                if(document.getElementById('idPerfilSession').dataset.grupo=='P'){
+                                    location.href=urlApp+"programacion";
+                                }else{
+                                    location.href=urlApp+"listarPedidos";
+                                }
+                            },
+                            error: function(jqXHR, text, error){
+                                alert('Error!,No se pudo completar la operación');
+                            }
+                        });                 
                     }
                 }
             );            

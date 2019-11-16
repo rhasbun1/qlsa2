@@ -128,66 +128,69 @@ function guardarDatosProgramacion(idPedido, origen){
     if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=="2"){
         for (var i = 1; i < tabla.rows.length; i++){
 
-                fechaCarga='';
-                horaCarga='';
-                peso="0";
-                idTransporte='0';
-                idCamion="0";
-                idConductor="0";
-                nombreEmpresaTransporte="";
-                nombreConductor="";
-                patente="";
-                idPlanta=tabla.rows[i].cells[4].getElementsByTagName('select')[0].value;
+                console.log( tabla.rows[i].cells[1].dataset.guia );
 
-                rampla=tabla.rows[i].cells[8].getElementsByTagName('input')[0].value
+                if ( parseInt(tabla.rows[i].cells[1].dataset.guia)==0 ){
 
-                if( tabla.rows[i].cells[5].innerHTML.trim()!="Retira"  ){
-                    fila=1;
-                    idTransporte=tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value;
-                    idCamion=tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value;
-
-                    idConductor=tabla.rows[fila].cells[9].getElementsByTagName('select')[0].value;
-                    if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim() !='' ){
-                        fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value );
-                    }
-                    if(tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()!=''){
-                        horaCarga=tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value;  
-                    }
-                }else{
-                    if(tabla.rows[i].cells[1].dataset.guia==0){
-                        if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
-                            fila=i;
-                        }else{
-                            fila=1;
-                        }
-                        nombreEmpresaTransporte=tabla.rows[fila].cells[6].getElementsByTagName('input')[0].value;
-                        patente=tabla.rows[fila].cells[7].getElementsByTagName('input')[0].value;
-
-                        nombreConductor=tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value;
+                    fechaCarga='';
+                    horaCarga='';
+                    peso="0";
+                    idTransporte='0';
+                    idCamion="0";
+                    idConductor="0";
+                    nombreEmpresaTransporte="";
+                    nombreConductor="";
+                    patente="";
+                    idPlanta=tabla.rows[i].cells[4].getElementsByTagName('select')[0].value;
+                    if( tabla.rows[i].cells[5].innerHTML.trim()!="Retira"  ){
+                        fila=1;
+                        idTransporte=tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value;
+                        idCamion=tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value;
+                        rampla=tabla.rows[fila].cells[8].getElementsByTagName('select')[0].value
+                        idConductor=tabla.rows[fila].cells[9].getElementsByTagName('select')[0].value;
                         if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim() !='' ){
                             fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value );
                         }
                         if(tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()!=''){
                             horaCarga=tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value;  
                         }
+                    }else{
+                        if(tabla.rows[i].cells[1].dataset.guia==0){
+                            if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
+                                fila=i;
+                            }else{
+                                fila=1;
+                            }
+                            nombreEmpresaTransporte=tabla.rows[fila].cells[6].getElementsByTagName('input')[0].value;
+                            patente=tabla.rows[fila].cells[7].getElementsByTagName('input')[0].value;
+                            rampla='0';
+                            nombreConductor=tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value;
+                            if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim() !='' ){
+                                fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value );
+                            }
+                            if(tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()!=''){
+                                horaCarga=tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value;  
+                            }
+                        }
+
                     }
 
+                    cadena+='{';
+                    cadena+='"prod_codigo":"'+  tabla.rows[i].cells[0].innerHTML.trim()  + '", ';
+                    cadena+='"idEmpresaTransporte":"'+ idTransporte + '", ';
+                    cadena+='"idCamion":"'+ idCamion + '", ';
+                    cadena+='"idConductor":"'+  idConductor + '", ';
+                    cadena+='"nombreEmpresaTransporte":"'+  nombreEmpresaTransporte + '", ';
+                    cadena+='"patente":"'+  patente + '", ';
+                    cadena+='"numeroRampla":"' + rampla + '", ';
+                    cadena+='"nombreConductor":"'+  nombreConductor + '", ';
+                    cadena+='"peso":"0", ';
+                    cadena+='"fechaCarga":"'+ fechaCarga  + '", ';
+                    cadena+='"horaCarga":"'+ horaCarga + '", ';
+                    cadena+='"idPlanta":"'+ idPlanta + '"';
+                    cadena+='}, ';
                 }
 
-                cadena+='{';
-                cadena+='"prod_codigo":"'+  tabla.rows[i].cells[0].innerHTML.trim()  + '", ';
-                cadena+='"idEmpresaTransporte":"'+ idTransporte + '", ';
-                cadena+='"idCamion":"'+ idCamion + '", ';
-                cadena+='"idConductor":"'+  idConductor + '", ';
-                cadena+='"nombreEmpresaTransporte":"'+  nombreEmpresaTransporte + '", ';
-                cadena+='"patente":"'+  patente + '", ';
-                cadena+='"numeroRampla":"' + rampla + '", ';
-                cadena+='"nombreConductor":"'+  nombreConductor + '", ';
-                cadena+='"peso":"0", ';
-                cadena+='"fechaCarga":"'+ fechaCarga  + '", ';
-                cadena+='"horaCarga":"'+ horaCarga + '", ';
-                cadena+='"idPlanta":"'+ idPlanta + '"';
-                cadena+='}, ';
         }
         cadena=cadena.slice(0,-2);
         cadena+=']';
@@ -195,47 +198,44 @@ function guardarDatosProgramacion(idPedido, origen){
     }else{
         for (var i = 1; i < tabla.rows.length; i++){
 
-                fechaCarga='';
-                horaCarga='';
-                peso="0";
-                idTransporte='0';
-                idCamion="0";
-                idConductor="0";
-                nombreEmpresaTransporte="";
-                nombreConductor="";
-                patente="";
-                idPlanta=tabla.rows[i].cells[4].getElementsByTagName('select')[0].value;
-                rampla=tabla.rows[i].cells[8].getElementsByTagName('input')[0].value
+                if ( parseInt(tabla.rows[i].cells[1].dataset.guia)==0 ){            
 
-                if( tabla.rows[i].cells[5].innerHTML.trim()!="Retira"  ){
+                    fechaCarga='';
+                    horaCarga='';
+                    peso="0";
+                    idTransporte='0';
+                    idCamion="0";
+                    idConductor="0";
+                    nombreEmpresaTransporte="";
+                    nombreConductor="";
+                    patente="";
+                    idPlanta=tabla.rows[i].cells[4].getElementsByTagName('select')[0].value;
+                    
 
-                    if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
+                    if( tabla.rows[i].cells[5].innerHTML.trim()!="Retira"  ){
+
+         //               if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
+          //                  fila=i;
+          //              }else{
+          //                  fila=1;
+          //              }
                         fila=i;
-                    }else{
-                        fila=1;
-                    }
-
-                    idTransporte=tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value;
-                    idCamion=tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value;
-
-                    idConductor=tabla.rows[fila].cells[9].getElementsByTagName('select')[0].value;
-                    if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim() !='' ){
-                        fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value );
-                    }
-                    if(tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()!=''){
-                        horaCarga=tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value;  
-                    }
-                }else{
-                    if(tabla.rows[i].cells[1].dataset.guia==0){
-                        if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
-                            fila=i;
-                        }else{
-                            fila=1;
+                        idTransporte=tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value;
+                        idCamion=tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value;
+                        rampla=tabla.rows[fila].cells[8].getElementsByTagName('select')[0].value
+                        idConductor=tabla.rows[fila].cells[9].getElementsByTagName('select')[0].value;
+                        if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim() !='' ){
+                            fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value );
                         }
+                        if(tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()!=''){
+                            horaCarga=tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value;  
+                        }
+                    }else{
+                        fila=i;
                         if(tabla.rows[fila].cells[6].getElementsByTagName('input')[0]){
                             nombreEmpresaTransporte=tabla.rows[fila].cells[6].getElementsByTagName('input')[0].value;
                             patente=tabla.rows[fila].cells[7].getElementsByTagName('input')[0].value;
-
+                            rampla="0";
                             nombreConductor=tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value;
                             if(tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim() !='' ){
                                 fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value );
@@ -247,22 +247,22 @@ function guardarDatosProgramacion(idPedido, origen){
 
                     }
 
+                    cadena+='{';
+                    cadena+='"prod_codigo":"'+  tabla.rows[i].cells[0].innerHTML.trim()  + '", ';
+                    cadena+='"idEmpresaTransporte":"'+ idTransporte + '", ';
+                    cadena+='"idCamion":"'+ idCamion + '", ';
+                    cadena+='"idConductor":"'+  idConductor + '", ';
+                    cadena+='"nombreEmpresaTransporte":"'+  nombreEmpresaTransporte + '", ';
+                    cadena+='"patente":"'+  patente + '", ';
+                    cadena+='"numeroRampla":"' + rampla + '", ';
+                    cadena+='"nombreConductor":"'+  nombreConductor + '", ';
+                    cadena+='"peso":"0", ';
+                    cadena+='"fechaCarga":"'+ fechaCarga  + '", ';
+                    cadena+='"horaCarga":"'+ horaCarga + '", ';
+                    cadena+='"idPlanta":"'+ idPlanta + '"';
+                    cadena+='}, ';
                 }
 
-                cadena+='{';
-                cadena+='"prod_codigo":"'+  tabla.rows[i].cells[0].innerHTML.trim()  + '", ';
-                cadena+='"idEmpresaTransporte":"'+ idTransporte + '", ';
-                cadena+='"idCamion":"'+ idCamion + '", ';
-                cadena+='"idConductor":"'+  idConductor + '", ';
-                cadena+='"nombreEmpresaTransporte":"'+  nombreEmpresaTransporte + '", ';
-                cadena+='"patente":"'+  patente + '", ';
-                cadena+='"numeroRampla":"' + rampla + '", ';
-                cadena+='"nombreConductor":"'+  nombreConductor + '", ';
-                cadena+='"peso":"0", ';
-                cadena+='"fechaCarga":"'+ fechaCarga  + '", ';
-                cadena+='"horaCarga":"'+ horaCarga + '", ';
-                cadena+='"idPlanta":"'+ idPlanta + '"';
-                cadena+='}, ';
         }
         cadena=cadena.slice(0,-2);
         cadena+=']';        
@@ -317,9 +317,10 @@ function asignarFolio(){
     var chequeaDatosTransporte='';
     var cont=0;
     var compara='';
+
     for (var i = 1; i < tabla.rows.length; i++){
-        if(tabla.rows[i].cells[11].getElementsByTagName('input')[0]){
-            if(tabla.rows[i].cells[11].getElementsByTagName('input')[0].checked){
+        if(tabla.rows[i].cells[12].getElementsByTagName('input')[0]){
+            if(tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked){
                 if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
                     fila=i;
                 }else{
@@ -333,16 +334,17 @@ function asignarFolio(){
                     enObra=true;
                     compara = tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value.trim()+"|"+
                               tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value.trim()+"|"+
-                              tabla.rows[fila].cells[8].getElementsByTagName('select')[0].value.trim();
+                              tabla.rows[fila].cells[8].getElementsByTagName('select')[0].value.trim()+"|"+
+                              tabla.rows[fila].cells[9].getElementsByTagName('select')[0].value.trim();
                     if( chequeaDatosTransporte!=compara){
                         chequeaDatosTransporte=compara;
                         cont+=1;
                     }
 
                     if(tabla.rows[fila].cells[6].getElementsByTagName('select')[0].selectedIndex<0 || tabla.rows[fila].cells[7].getElementsByTagName('select')[0].selectedIndex<0 ||
-                        tabla.rows[fila].cells[8].getElementsByTagName('select')[0].selectedIndex<0 ){
+                        tabla.rows[fila].cells[8].getElementsByTagName('select')[0].selectedIndex<0 || tabla.rows[fila].cells[9].getElementsByTagName('select')[0].selectedIndex<0  ){
                         document.getElementById("btnAsignarGuia").disabled=false;
-                        alert('Los productos seleccionados deben tener los datos de transporte completo.');
+                        alert('Los productos seleccionados deben tener los datos de transporte completo y deben ser los mismos para todos los productos.');
                         return
                     }                    
                 }
@@ -379,8 +381,8 @@ function asignarFolio(){
 
     var cadena='[';
     for (var i = 1; i < tabla.rows.length; i++){
-        if(tabla.rows[i].cells[11].getElementsByTagName('input')[0]){
-            if(tabla.rows[i].cells[11].getElementsByTagName('input')[0].checked){
+        if(tabla.rows[i].cells[12].getElementsByTagName('input')[0]){
+            if(tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked){
                 cadena+='{';
                 cadena+='"idPedido":"'+  $("#idPedido").val()  + '", ';
                 cadena+='"prod_codigo":"'+  tabla.rows[i].cells[0].innerHTML.trim()  + '", ';
@@ -404,32 +406,44 @@ function asignarFolio(){
         success:function(dato){
                 var fila=0; 
                 for (var i = 1; i < tabla.rows.length; i++){
-                    if(tabla.rows[i].cells[11].getElementsByTagName('input')[0]){
-                        if(tabla.rows[i].cells[11].getElementsByTagName('input')[0].checked){
+                    if(tabla.rows[i].cells[12].getElementsByTagName('input')[0]){
+                        if(tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked){
 
                            tabla.rows[i].cells[1].innerHTML=tabla.rows[i].cells[1].innerHTML+
                             "<span onclick='abrirGuia(1, " + dato.nuevaGuia + ", this.parentNode.parentNode);'" +  
                             "style='cursor:pointer; cursor: hand'><img src='" + urlApp + "img/iconos/guiaDespacho2.png' border='0'></span>"
 
-                            tabla.rows[i].cells[11].innerHTML='';
+                            tabla.rows[i].cells[12].innerHTML='';
 
                             var planta=tabla.rows[i].cells[4].getElementsByTagName('select')[0];
                             tabla.rows[i].cells[4].innerHTML=planta.options[planta.selectedIndex].text;
                             
-                            if(tabla.rows[i].cells[5].innerHTML=='Retira'){
-                                tabla.rows[i].cells[6].innerHTML=tabla.rows[i].cells[6].getElementsByTagName('input')[0].value;
-                                tabla.rows[i].cells[7].innerHTML=tabla.rows[i].cells[7].getElementsByTagName('input')[0].value;
-                                tabla.rows[i].cells[8].innerHTML=tabla.rows[i].cells[8].getElementsByTagName('input')[0].value;
-                            }else{                               
-                                var emp=tabla.rows[i].cells[6].getElementsByTagName('select')[0];
-                                tabla.rows[i].cells[6].innerHTML=emp.options[emp.selectedIndex].text;
-                                var camion=tabla.rows[i].cells[7].getElementsByTagName('select')[0];
-                                tabla.rows[i].cells[7].innerHTML=camion.options[camion.selectedIndex].text;                                
-                                var conductor=tabla.rows[i].cells[8].getElementsByTagName('select')[0];
-                                tabla.rows[i].cells[8].innerHTML=conductor.options[conductor.selectedIndex].text;
+                            if(tabla.rows[i].cells[5].innerHTML.trim()=='Retira'){
+                                if(tabla.rows[i].cells[6].getElementsByTagName('input')[0]){
+                                    tabla.rows[i].cells[6].innerHTML=tabla.rows[i].cells[6].getElementsByTagName('input')[0].value;
+                                    tabla.rows[i].cells[7].innerHTML=tabla.rows[i].cells[7].getElementsByTagName('input')[0].value;
+                                    tabla.rows[i].cells[8].innerHTML=tabla.rows[i].cells[8].getElementsByTagName('input')[0].value;
+                                    tabla.rows[i].cells[9].innerHTML=tabla.rows[i].cells[9].getElementsByTagName('input')[0].value;                                    
+                                }
+
+                            }else{
+
+                                if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
+                                    var emp=tabla.rows[i].cells[6].getElementsByTagName('select')[0];
+                                    tabla.rows[i].cells[6].innerHTML=emp.options[emp.selectedIndex].text;
+                                    var camion=tabla.rows[i].cells[7].getElementsByTagName('select')[0];
+                                    tabla.rows[i].cells[7].innerHTML=camion.options[camion.selectedIndex].text;                                
+                                    var rampla=tabla.rows[i].cells[8].getElementsByTagName('select')[0];
+                                    tabla.rows[i].cells[8].innerHTML=rampla.options[rampla.selectedIndex].text;                                    
+                                    var conductor=tabla.rows[i].cells[9].getElementsByTagName('select')[0];
+                                    tabla.rows[i].cells[9].innerHTML=conductor.options[conductor.selectedIndex].text;                                    
+                                }
                             }
-                            tabla.rows[i].cells[9].innerHTML=tabla.rows[i].cells[9].getElementsByTagName('input')[0].value;
-                            tabla.rows[i].cells[10].innerHTML=tabla.rows[i].cells[10].getElementsByTagName('input')[0].value;
+
+                            if(tabla.rows[i].cells[10].getElementsByTagName('input')[0]){
+                                tabla.rows[i].cells[10].innerHTML=tabla.rows[i].cells[10].getElementsByTagName('input')[0].value;
+                                tabla.rows[i].cells[11].innerHTML=tabla.rows[i].cells[11].getElementsByTagName('input')[0].value;
+                            }
 
                             fila=i;                        
 
@@ -437,8 +451,18 @@ function asignarFolio(){
                     }
 
                 } 
-                document.getElementById("btnAsignarGuia").disabled=false;                      
-                abrirGuia(1, dato.nuevaGuia, fila );
+                if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=="2"){
+                    for (var i = 1; i < tabla.rows.length; i++){
+                        tabla.rows[i].cells[12].innerHTML='';
+                    }
+                    document.getElementById('btnGuardarProgramacion').style.display="none";
+                    document.getElementById('btnAsignarGuia').style.display="none";
+                }else{
+                    document.getElementById("btnAsignarGuia").disabled=false;                      
+                    abrirGuia(1, dato.nuevaGuia, fila );                    
+                }
+
+
         },
         error: function(xhr, ajaxOptions, thrownError) {
             document.getElementById("btnAsignarGuia").disabled=false;

@@ -394,26 +394,38 @@
            }
         }        
 
-        if ( $("#tipoCarga").val()=='1' && $("#tipoTransporte").val()=='2'){
+        if (  ($("#tipoCarga").val()=='1' && $("#tipoTransporte").val()=='2') || $("#tipoCarga").val()=='2'){
+
+            var cont1=0;
+            var plantaSel=0;
+            var cont2=0;
+            var entregaSel=0;
+
+            var mensaje='';
+
+            if($("#tipoCarga").val()=='2'){
+                mensaje='El pedido OTROS, debe tener misma Planta de origen y Forma de entrega para todos productos!!(*).';
+            }else{
+                mensaje='El pedido Granel/Mixto, debe tener misma Planta de origen y Forma de entrega para ambos productos!!(*).';
+            }
+
             for(var x=1; x<tabla.rows.length; x++){
                 if(tabla.rows[x].style.display!='none'){
-                    if(opc1!=tabla.rows[x].cells[8].getElementsByTagName('select')[0].value){
-                       opc1=tabla.rows[x].cells[8].getElementsByTagName('select')[0].value;
-                       ind1++;
+                    if(plantaSel!=tabla.rows[x].cells[8].getElementsByTagName('select')[0].value){
+                        plantaSel=tabla.rows[x].cells[8].getElementsByTagName('select')[0].value;
+                        cont1++;
                     }
-                    if(opc2!=tabla.rows[x].cells[9].getElementsByTagName('select')[0].value){
-                       opc2=tabla.rows[x].cells[9].getElementsByTagName('select')[0].value;
-                       ind2++;
-                       if(tabla.rows[x].cells[9].getElementsByTagName('select')[0].value=='2'){
-                            retiraCliente=true;
-                       }
-                    }                    
+                    if(entregaSel!=tabla.rows[x].cells[9].getElementsByTagName('select')[0].value){
+                        entregaSel=tabla.rows[x].cells[9].getElementsByTagName('select')[0].value;
+                        cont2++;
+                    }
                 }
             }
-            if(ind1>1 || ind2>1 ){
+
+            if(cont1>1 || cont2>1 ){
                 swal(
                     {
-                        title: 'El pedido Granel/Mixto, debe tener misma Planta de origen y Forma de entrega para ambos productos!!(*).',
+                        title: mensaje,
                         text: '',
                         type: 'warning',
                         showCancelButton: false,

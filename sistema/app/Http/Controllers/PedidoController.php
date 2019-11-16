@@ -134,7 +134,7 @@ class PedidoController extends Controller
 
     // Vista para Aprobar pedidos por Usuarios Comerciales  
     public function clientePedidos(){
-        $pedidos=DB::Select('call spGetProductosconPedidoPendiente(?,?)', array( Session::get('empresaUsuario' ), Session::get('idPlanta' ) ) );
+        $pedidos=DB::Select('call spGetProductosconPedidoPendiente(?,?,?)', array( Session::get('empresaUsuario' ), Session::get('idPlanta' ), Session::get('idPerfil') ) );
         return view('cliente_pedidos')->with('pedidos', $pedidos);  
     }    
 
@@ -213,15 +213,14 @@ class PedidoController extends Controller
         
     }
 
-    public function cerrarPedido($idPedido){
-        $pedido=DB::Select('call spUpdCerrarPedido(?,?)', array( $idPedido, Session::get('idUsuario') ) );
-        if (Session::get('grupoUsuario')=='P'){
-            return redirect('programacion');
-        }else{
-            return redirect('listarPedidos');
+    public function cerrarPedido(Request $datos){
+
+        if($datos->ajax()){
+
+            $pedido=DB::Select('call spUpdCerrarPedido(?,?,?)', array( $datos->input('idPedido'), Session::get('idUsuario'), $datos->input('motivo') ) ); 
+            return $pedido;
         }
-        
-    }      
+    }
 
     public function editarPedido($idPedido){
         $pedido=DB::Select('call spGetPedido(?)', array($idPedido) );
@@ -520,7 +519,9 @@ class PedidoController extends Controller
 
     public function costosMensuales(){
         $costosMensuales=DB::Select('call spGetCostosMensuales()');
-        return view('costosMensuales')->with('costosMensuales', $costosMensuales);
+        $periodo=date('Ym');
+
+        return view('costosMensuales')->with('costosMensuales', $costosMensuales)->with('periodoActual', $periodo);
     }
 
     public function costosMensualesProductos(Request $datos){

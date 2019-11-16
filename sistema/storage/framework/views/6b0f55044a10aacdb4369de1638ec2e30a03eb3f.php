@@ -127,7 +127,15 @@
                 </thead>
             
                 <tbody>
+                    <?php
+                        $despachado=0;
+                        $sinDespachar=0;
+                    ?>
                     <?php $__currentLoopData = $listaDetallePedido; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php
+                        if($item->salida==1){$despachado++;}
+                        if($item->salida==0){$sinDespachar++;}
+                    ?>
                     <tr>
                         <td style="display: none"> 
                             <?php echo e($item->prod_codigo); ?>                         
@@ -257,14 +265,13 @@
             <br>
             <b>*</b> Precio reajustado a la fecha de despacho del pedido. Pueden existir diferencias a inicios de cada mes hasta que se actualicen los parámetros de reajuste.
         </div> 
-
         
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
             <?php if( ( Session::get('idPerfil')=='2' or Session::get('idPerfil')=='11')  and $pedido[0]->idEstadoPedido==1 ): ?>
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedido(<?php echo e($pedido[0]->idPedido); ?>);">Aprobar</button>
             <?php endif; ?>    
 
-            <?php if( (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') and $pedido[0]->idEstadoPedido >0 ): ?>
+            <?php if( (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') and $pedido[0]->idEstadoPedido>0 and $sinDespachar>0 ): ?>
                 <a href="<?php echo e(asset('/')); ?>editarPedido/<?php echo e($pedido[0]->idPedido); ?>/" class="btn btn-sm btn-success" style="width:100px">Modificar</a>
             <?php endif; ?>
             <?php if($accion=='1'): ?>
@@ -274,14 +281,23 @@
                     <?php endif; ?>
                 <?php endif; ?>    
                 <?php if( ($pedido[0]->idEstadoPedido>0 and $pedido[0]->idEstadoPedido < 5) and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') ): ?>
-                    <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>
-                <?php endif; ?>
-            <?php elseif($accion=='3'): ?>
-                <?php if( ($pedido[0]->idEstadoPedido=='0' or $pedido[0]->idEstadoPedido=='1') and (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') ): ?>
-                    <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+                    <?php if($despachado==0): ?>
+                        <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>
+                    <?php endif; ?>
                 <?php endif; ?>
             <?php elseif($accion=='6'): ?>
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedidoCliente();">Aprobar</button>                                      
+            <?php endif; ?>
+            <?php if($accion=='3' or $accion=='1'): ?>
+                <?php if( ( $pedido[0]->idEstadoPedido <= '3') and 
+                    (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' or 
+                     Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') ): ?>
+
+                    <?php if( $pedido[0]->idEstadoPedido <= '0' or ( $despachado>0 and $sinDespachar>0) ): ?>
+                        <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+                    <?php endif; ?>
+
+                <?php endif; ?>
             <?php endif; ?>
             <?php if($plantilla=='plantilla'): ?>
                 <a href="<?php echo e(URL::previous()); ?>" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
@@ -430,7 +446,26 @@
                 function(isConfirm)
                 {
                     if(isConfirm){
-                        location.href= urlApp + "cerrarPedido/" + $("#idPedido").val() + "/";                  
+                        $.ajax({
+                            url: urlApp + "cerrarPedido",
+                            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                            type:'POST',
+                            dataType: 'json',
+                            data: { 
+                                    idPedido: document.getElementById('idPedido').value,
+                                    motivo: ""
+                                  },
+                            success:function(data){
+                                if(document.getElementById('idPerfilSession').dataset.grupo=='P'){
+                                    location.href=urlApp+"programacion";
+                                }else{
+                                    location.href=urlApp+"listarPedidos";
+                                }
+                            },
+                            error: function(jqXHR, text, error){
+                                alert('Error!,No se pudo completar la operación');
+                            }
+                        });                 
                     }
                 }
             );            

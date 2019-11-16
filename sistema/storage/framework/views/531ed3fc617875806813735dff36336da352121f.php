@@ -5,6 +5,7 @@
 <div style="padding: 20px">
     <div class="panel panel-default table-responsive">
         <input type="hidden" id="_token" name="_token" value="<?php echo e(csrf_token()); ?>">
+        <input type="hidden" id="periodoActual" value='<?php echo e($periodoActual); ?>'
         <div class="panel-heading">
             <b>Costos Mensuales</b>
         </div>
@@ -54,6 +55,7 @@
 	                            <td><?php echo e($item->nombreMes); ?></td>
 	                            <td style="width:40px">
 	                            	<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>
+                                    <button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>                                    
 	                            </td>
 	                        </tr>
 	                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -121,6 +123,44 @@
   </div>
 </div>
 
+<div id="mdProcesandoArchivoCostos" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body" style="text-align: center">
+          <img src="<?php echo e(asset('/')); ?>img/procesando.gif" alt="User Avatar">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modSubirArchivo" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="filaTabla" name="filaTabla">
+                <h5><b>Subir archivo de Costos</b></h5>
+            </div>
+            <div id="bodyProducto" class="modal-body">
+                <form id="datos" name="datos" enctype="multipart/form-data">                       
+                    <div class="row" style="padding: 15px">
+                        <div class="upload-file">
+                            <input type="file" id="upload-demo" name="upload-demo" class="upload-demo" style="width: 300px" accept=".csv" >
+                            <label data-title="Buscar" for="upload-demo" id="labelUpload" style="width: 400px">
+                                <span id="mensajeUpload" data-title="No ha seleccionado un archivo..." style="width: 300px"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-8" style="padding-top: 20px; padding-bottom: 20px">
+                       <button type="submit" class="btn btn-success btn-sm" style="width: 80px">Subir</button>
+                       <button type="button" class="btn btn-danger data-dismiss=modal btn-sm" onclick="cerrarModalSubirArchivo()" style="width: 80px">Salir</button>
+                    </div>                   
+                </form>     
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <?php $__env->stopSection(); ?>
 
@@ -135,13 +175,138 @@
     <script src="<?php echo e(asset('/')); ?>js/syncfusion/lang/ej.culture.de-DE.min.js"></script>
 
 	<script>
+
+        var anoSel=0;
+        var mesSel=0;
+
+        $('#datos').on('submit', function(e) {
+          // evito que propague el submit
+          e.preventDefault();
+          // agrego la data del form a formData
+          if( $("#upload-demo").val().trim()=='' ){
+            swal(
+                {
+                    title: 'No ha seleccionado un archivo para subir!!' ,
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function(isConfirm)
+                {
+                    if(isConfirm){
+                        return;                         
+                    }
+                }
+            );
+            return;
+          }
+
+          var nombreArchivo=$("#upload-demo").val().trim();
+          var extension = nombreArchivo.slice(-3).toUpperCase();
+          if( extension!='CSV'){
+            swal(            
+                {
+                    title: 'Solo se permite subir achivos CSV!' ,
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function(isConfirm)
+                {
+                    if(isConfirm){
+                        return;                         
+                    }
+                }
+            );
+            return;
+          }
+
+          var formData = new FormData( $("#datos")[0]);
+          formData.append("observaciones", "" );
+          formData.append("ano", anoSel);
+          formData.append("mes", mesSel );
+
+          $("#mdProcesandoArchivoCostos").modal('show');       
+          $.ajax({
+              url: urlApp + "subirArchivoCostos",
+              headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+              type:'POST',
+              timeout: 0,
+              data:formData,
+              cache:false,
+              contentType: false,
+              processData: false,
+              success:function(data){
+                $("#mdProcesandoArchivoCostos").modal('hide');
+                if(data.length>0){
+                  var cadena="";
+                  for(var x=0;x<data.length;x++){
+                      cadena+= data[x] + "<br>";
+                  }
+                  document.getElementById('bodyErrores').innerHTML=cadena;
+                  $("#mdErrores").modal("show");
+                }else{
+                  swal(
+                      {
+                          title: 'El archivo ha sido Procesado!!' ,
+                          text: '',
+                          type: 'warning',
+                          showCancelButton: false,
+                          confirmButtonText: 'OK',
+                          cancelButtonText: '',
+                          closeOnConfirm: true,
+                          closeOnCancel: false
+                      },
+                      function(isConfirm)
+                      {
+                          if(isConfirm){
+                            $("#modSubirArchivo").modal('hide');
+                            return;                         
+                          }
+                      }
+                  );
+                }     
+              },
+              error: function(jqXHR, text, error){
+                $("#mdProcesandoArchivoCostos").modal('hide');
+                  alert('Error!, No se pudo Añadir los datos');
+              }
+          });
+        });
+
         $('#mdProcesando').on('shown.bs.modal', function (e) {
           guardarCostos();
         })  
 
         function abrirCuadroEspera(){
             $("#mdProcesando").modal('show');
-        }      
+        }
+
+
+        function subirArchivoCostos(row){
+            var tabla=$("#tabla").DataTable();
+            var datos=tabla.row( row ).data();
+            var node=tabla.row(row).node();
+
+            anoSel=datos[0];
+            mesSel=node.dataset.nummes;
+
+            console.log(anoSel, mesSel);
+
+            $("#modSubirArchivo").modal('show');
+        }
+
+        function cerrarModalSubirArchivo(){
+            $("#modSubirArchivo").modal('hide');
+        }  
 
 		$(document).ready(function() {
 
@@ -254,6 +419,13 @@
         	$("#anoSel").val(ano);
         	$("#mesSel").val(table.cell(fila,1).data());
 
+            if(parseInt(mes)<10){ 
+                 mm='0'+mes.toString();
+            }else{
+                mm=mes.toString();
+            }
+
+            periodoSeleccionado=parseInt(ano.toString()+mm.toString());
         	document.getElementById('mesSel').dataset.numeromes=mes;
 
         	var productos=$("#tablaProductos").DataTable();
@@ -271,15 +443,24 @@
                       },
                 success:function(dato){
                     for(var x=0;x<dato.length;x++){
+                        if( (periodoSeleccionado<parseInt(document.getElementById('periodoActual').value)) && 
+                            ( document.getElementById('idPerfilSession').value=='5' || document.getElementById('idPerfilSession').value=='18')    ){
+                            elemCosto="<input class='form-control input-sm' value='" + dato[x].costo +"' style='width: 100px' readonly>";
+                        }else{
+                            elemCosto="<input class='form-control input-sm' value='" + dato[x].costo +"' style='width: 100px' onkeypress='return isIntegerKey(event)'>";
+                        }
+
                         var fila=productos.row.add( [
                                 dato[x].prod_nombre,
                                 dato[x].u_nombre,
                                 dato[x].nombrePlanta,
-                                "<input class='form-control input-sm' value='" + dato[x].costo +"' style='width: 100px' onkeypress='return isIntegerKey(event)'>", 
+                                elemCosto, 
                             ] ).index();
 
                         productos.cell(fila,0).node().dataset.idproductolistaprecio=dato[x].idProductoListaPrecio;
+
                     }
+
                     productos.draw();
                     actualizarFiltros(productos);
 

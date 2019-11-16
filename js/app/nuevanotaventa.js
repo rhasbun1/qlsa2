@@ -412,6 +412,15 @@
             )
             return;            
         }
+
+
+
+
+
+
+
+
+
         var cont=0;
 
         var tabla = document.getElementById('tablaDetalle');
@@ -439,6 +448,8 @@
             cadena+='"idPlanta":"'+  tabla.rows[i].cells[9].getElementsByTagName('select')[0].value + '", ';
             cadena+='"idFormaEntrega":"'+  tabla.rows[i].cells[10].getElementsByTagName('select')[0].value + '"';
             cadena+='}, ';
+
+
         }
 
 
@@ -462,7 +473,7 @@
                 return;
         }
 
-        if (entregaEnObra>0 && document.getElementById('idObra').selectedIndex<1){
+        if (entregaEnObra>0 && document.getElementById('idObra').selectedIndex<2){
                 swal(
                     {
                         title: 'Existe al menos un producto con entrega en obra, debe ingresar los datos de la obra o seleccionar alguna obra existente.',

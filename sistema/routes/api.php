@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('datosEtiqueta', 'GuiaController@datosEtiqueta');
+Route::post('obtenerDespachosPorMes', 'ReportesController@obtenerDespachosPorMes');
+Route::post('obtenerDespachosPorAno', 'ReportesController@obtenerDespachosPorAno');

@@ -10,6 +10,12 @@ use App\Unidad;
 use App\Planta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use SoapClient;
+use File;
+use App\Costo;
+use App\Imports\CostoImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductoController extends Controller
 {
@@ -92,6 +98,52 @@ class ProductoController extends Controller
             } 
             return response()->json('OK');                       
         }
+    }
+
+    public function subirArchivoCostos(Request $data){
+        $datos=DB::Select('call spInsRegistroUpload(?,?,?,?,?)', array( 1, Session::get('idUsuario'), $data->input("observaciones"), $data->input("ano"), $data->input("mes") ) );
+        $archivo=$data->file("upload-demo");
+        $nombreArchivo= "file_".strval($datos[0]->idRegistroUpload).".csv";
+        Storage::disk('costos')->put($nombreArchivo, \File::get( $archivo) );
+        $ruta= public_path('costos/'.$nombreArchivo);
+        $linea = 0;
+        //Abrimos nuestro archivo
+        set_time_limit(0);
+        $archivo = fopen($ruta, "r");
+        //Lo recorremos
+        $registros = array();
+        while (($costo = fgetcsv($archivo,0, ";")) == true) 
+        {
+          if($linea>0){
+            $this->cargarRegistroCosto($datos[0]->idRegistroUpload, $costo, $linea+1);
+          }
+          $linea+=1;
+
+          //if($linea==1000){break;}
+
+        }
+        //Cerramos el archivo
+        fclose($archivo); 
+        DB::Select('call spUpdEtlCostos(?,?)', array($data->input("ano"), $data->input("mes") ) );    
+    }
+
+    function cargarRegistroCosto($idRegistroUpload, $row, $linea){
+      if ($row[0]=='ERROR'){
+        $costo=new Costo([
+                   'idRegistroUpload' => $idRegistroUpload,
+                   'prod_nombre'    => $linea,
+                   'u_nombre'    => 'ERROR'
+              ]);
+      }else{
+        $costo=new Costo([
+                   'idRegistroUpload' => $idRegistroUpload,
+                   'prod_nombre'    => $row[0],
+                   'u_nombre'    => $row[1],
+                   'nombrePlanta'    => $row[2],
+                   'costo'    => $row[3]      
+                ]);
+        }
+        $costo->save();
     }
 
 }    
