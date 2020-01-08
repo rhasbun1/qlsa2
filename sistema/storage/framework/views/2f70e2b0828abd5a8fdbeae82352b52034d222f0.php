@@ -111,7 +111,7 @@
                     <h5><b> (*) Dato Obligatorio</b></h5>
                 </div>
                 <div class="col-md-offset-8" style="padding-top: 20px; padding-bottom: 20px">
-                   <button id="btnEliminarBodega" type="button" class="btn btn-success btn-sm" onclick="agregarNuevaObra();" style="width: 80px">Crear</button>
+                   <button id="btnAgregarObra" type="button" class="btn btn-success btn-sm" onclick="agregarNuevaObra();" style="width: 80px">Crear</button>
                    <button id="btnCerrarCajaBodega" type="button" class="btn btn-danger data-dismiss=modal btn-sm" onclick="cerrarNuevaObra()" style="width: 80px">Salir</button>
                 </div>
             </div>

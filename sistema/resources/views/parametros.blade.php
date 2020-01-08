@@ -76,7 +76,7 @@
 				<div class="col-md-2">
 					Usuario
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<input class="form-control input-sm" id="usuarioSitrack" value="{{ $param[0]->sitrack_usuario }}">
 				</div>
 			</div>
@@ -91,7 +91,7 @@
 			<br>
 			<B>NOTAS DE VENTAS</B>
 			<div class="row" style="padding:3px">
-				<div class="col-md-4">
+				<div class="col-md-3">
 					Tope de días para aprobación automática
 				</div>
 				<div class="col-md-2">
@@ -99,13 +99,31 @@
 				</div>
 			</div>
 			<div class="row" style="padding:3px">
-				<div class="col-md-4">
+				<div class="col-md-3">
 					Monto Tope para aprobación automática
 				</div>
 				<div class="col-md-2">
 					<input class="form-control input-sm" id="montoTopeNV" value="{{ $param[0]->monto_TopeNV }}">
 				</div>				
 			</div>
+			<br>
+			<B>USUARIO ENCARGADO DE AUTORIZAR PEDIDOS</B>
+			<div class="row" style="padding:3px">
+				<div class="col-md-2">
+					Usuario
+				</div>
+				<div class="col-md-3">
+					<select id="usuarios" class="form-control input-sm">
+                    @foreach($usuarios as $item)
+                    	@if( $item->usu_codigo==$param[0]->idUsuarioAutoriza )
+                        	<option value="{{ $item->usu_codigo }}" selected>{{ $item->usu_nombre }} {{ $item->usu_apellido }}</option>
+                        @else
+                        	<option value="{{ $item->usu_codigo }}">{{ $item->usu_nombre }} {{ $item->usu_apellido }}</option>
+                        @endif	
+                    @endforeach    
+                    </select>					
+				</div>
+			</div>			
 			<br>			
 			<br>
 			<button id="grabar" class="btn btn-sm btn-success" onclick="grabarParametros();">Grabar Cambios</button>
@@ -120,6 +138,13 @@
 
 <script>
 	function grabarParametros(){
+			var idUsuario;
+
+			if(usuarios.selectedIndex<0){
+				idUsuario=0;
+			}else{
+				idUsuario=$("#usuarios").val();
+			}
 
 	        $.ajax({
 	            url: urlApp + "grabarParametros",
@@ -138,7 +163,8 @@
 	                    sitrack_contrasena: $("#contrasenaSitrack").val(),
 	                    antiguedad_dias: $("#antiguedadDias").val(),
 	                    monto_TopeNV: $("#montoTopeNV").val(),
-	                    consideracionesPedidosGranel: $("#consideracionesPedidosGranel").val()
+	                    consideracionesPedidosGranel: $("#consideracionesPedidosGranel").val(),
+	                    idUsuarioAutoriza: idUsuario
 	                  },
 	            success:function(dato){
 

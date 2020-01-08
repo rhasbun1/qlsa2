@@ -1,6 +1,6 @@
-@extends('plantilla')      
+      
 
-@section('contenedorprincipal')
+<?php $__env->startSection('contenedorprincipal'); ?>
 
 <script>
     function aprobarPedido(idPedido, row){
@@ -28,7 +28,7 @@
 
 <div style="padding: 5px">
     <div class="panel panel-default table-responsive">
-        <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" id="_token" name="_token" value="<?php echo e(csrf_token()); ?>">
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6">
@@ -69,62 +69,62 @@
                     <th>Fecha Creación</th>
                     <th>Cliente</th>
                     <th>Obra/Planta</th>
-                    @if( Session::get('idPerfil')=='11' )
+                    <?php if( Session::get('idPerfil')=='11' ): ?>
                         <th><b>Total c/IVA</b></th>
-                    @else
+                    <?php else: ?>
                         <th style="display: none"><b>Total c/IVA</b></th>
-                    @endif    
+                    <?php endif; ?>    
                     <th>Fecha Entrega</th>
                     <th>Producto</th>
                     <th>Cantidad</th>
                 </thead>
                 <tbody>
-                    @foreach($pedidos as $item)
+                    <?php $__currentLoopData = $pedidos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td style="width: 80px" data-pedido='{{ $item->idPedido }}'>
-                                <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/6/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
-                                @if( Session::get('grupoUsuario')=='C')
-                                    <button class="btn btn-sm btn-primary" title="Aprobar pedido" onclick="aprobarPedido({{ $item->idPedido }}, this.parentNode.parentNode)"><span class="glyphicon glyphicon-ok"></span></button>
-                                @endif                                          
+                            <td style="width: 80px" data-pedido='<?php echo e($item->idPedido); ?>'>
+                                <a href="<?php echo e(asset('/')); ?>verpedido/<?php echo e($item->idPedido); ?>/6/" class="btn btn-xs btn-success"><?php echo e($item->idPedido); ?></a>
+                                <?php if( Session::get('grupoUsuario')=='C'): ?>
+                                    <button class="btn btn-sm btn-primary" title="Aprobar pedido" onclick="aprobarPedido(<?php echo e($item->idPedido); ?>, this.parentNode.parentNode)"><span class="glyphicon glyphicon-ok"></span></button>
+                                <?php endif; ?>                                          
                             </td>
                             <td style="width: 30px">
-                                @if ($item->tipoTransporte==2)
+                                <?php if($item->tipoTransporte==2): ?>
                                     <span class="badge badge-danger">M</span>
-                                @endif
+                                <?php endif; ?>
                             </td>                         
-                            <td>{{ $item->fechahora_creacion }}</td>
-                            <td>{{ $item->emp_nombre }}</td>
-                            <td>{{ $item->Obra }}</td>
-                            @if( Session::get('idPerfil')=='11' )
-                                <td align="right"><b>$ {{ number_format( $item->totalNeto + $item->montoIva, 0, ',', '.' ) }}</b></td>
-                            @else
-                                <td align="right" style="display: none"><b>$ {{ number_format( $item->totalNeto + $item->montoIva, 0, ',', '.' ) }}</b></td>
-                            @endif    
-                            <td>{{ $item->fechaEntrega }}</td>
-                            <td>{{ $item->prod_nombre }}</td>
-                            <td>{{ number_format( $item->cantidad, 0, ',', '.' ) }}</td>                           
+                            <td><?php echo e($item->fechahora_creacion); ?></td>
+                            <td><?php echo e($item->emp_nombre); ?></td>
+                            <td><?php echo e($item->Obra); ?></td>
+                            <?php if( Session::get('idPerfil')=='11' ): ?>
+                                <td align="right"><b>$ <?php echo e(number_format( $item->totalNeto + $item->montoIva, 0, ',', '.' )); ?></b></td>
+                            <?php else: ?>
+                                <td align="right" style="display: none"><b>$ <?php echo e(number_format( $item->totalNeto + $item->montoIva, 0, ',', '.' )); ?></b></td>
+                            <?php endif; ?>    
+                            <td><?php echo e($item->fechaEntrega); ?></td>
+                            <td><?php echo e($item->prod_nombre); ?></td>
+                            <td><?php echo e(number_format( $item->cantidad, 0, ',', '.' )); ?></td>                           
                         </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>            
             </table>      
         </div>
     </div>
     <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
-        <a href="{{ asset('/') }}listarPedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+        <a href="<?php echo e(asset('/')); ?>listarPedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
     </div>    
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('javascript')
+<?php $__env->startSection('javascript'); ?>
     <!-- Datepicker -->
-    <script src="{{ asset('/') }}js/bootstrap-datepicker.min.js"></script>
-    <script src="{{ asset('/') }}locales/bootstrap-datepicker.es.min.js"></script>
+    <script src="<?php echo e(asset('/')); ?>js/bootstrap-datepicker.min.js"></script>
+    <script src="<?php echo e(asset('/')); ?>locales/bootstrap-datepicker.es.min.js"></script>
 
     <!-- Timepicker -->
-    <script src="{{ asset('/') }}js/bootstrap-timepicker.min.js"></script>  
+    <script src="<?php echo e(asset('/')); ?>js/bootstrap-timepicker.min.js"></script>  
 
-    <script src="{{ asset('/') }}js/app/funciones.js"></script>
+    <script src="<?php echo e(asset('/')); ?>js/app/funciones.js"></script>
 
     <script>
 
@@ -203,7 +203,7 @@
                     { width: 100, targets: 4 },
                     { width: 100, targets: 5 }
                 ],                
-                language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                language:{url: "<?php echo e(asset('/')); ?>locales/datatables_ES.json"},
                 initComplete: function () {
                     this.api().columns(6).every( function () {
                         var column = this;
@@ -248,4 +248,6 @@
 
     </script>
     
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('plantilla', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

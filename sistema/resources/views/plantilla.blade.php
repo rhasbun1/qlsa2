@@ -38,7 +38,7 @@
     <script type="text/javascript" src="{{ asset('/') }}js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}css/sweetalert.css"> 
  
-    <script src="http://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
     <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
 	<link href="{{ asset('/') }}js/syncfusion/bootstrap-theme/ej.web.all.min.css" rel="stylesheet" />
 	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
@@ -103,7 +103,9 @@
 							<a class="clearfix" href="#">
 								<input type="hidden" id="idUsuarioSession" name="idUsuarioSession" value="{{ Session::get('idUsuario') }}" >
 								<input type="hidden" id="idPerfilSession" value="{{ Session::get('idPerfil') }}" data-grupo="{{ Session::get('grupoUsuario') }}">
-								<img src="{{ asset('/') }}img/user.jpg" alt="User Avatar">
+								<a href="{{ asset('/') }}datosUsuario">
+									<img src="{{ asset('/') }}img/user.jpg" alt="User Avatar">
+								</a>
 								<div class="detail">
 									<strong>{{ Session::get('nombreUsuario') }}</strong>
 									@if ( Session::get('empresaUsuario')!='0' )
@@ -234,9 +236,25 @@
 									<li><a href="{{ asset('/') }}historicoNotasdeVenta"><span class="submenu-label">Histórico de Notas de Venta</span></a></li>
 									@endif
 									<li><a href="{{ asset('/') }}historicoPedidos"><span class="submenu-label">Histórico de Pedidos Despachados</span></a></li>
+									@if ( Session::get('idPerfil')=='2' or
+										Session::get('idPerfil')=='3' or
+										Session::get('idPerfil')=='4' or 
+										Session::get('idPerfil')=='5' or 
+										Session::get('idPerfil')=='11' or 
+										Session::get('idPerfil')=='12' or 
+										Session::get('idPerfil')=='18')
 
-									<li><a href="{{ asset('/') }}despachosPorMes"><span class="submenu-label">Despachos por mes</span></a></li>
-									<li><a href="{{ asset('/') }}despachosPorAno"><span class="submenu-label">Despachos por año</span></a></li>
+										<li><a href="{{ asset('/') }}despachosPorMes"><span class="submenu-label">Despachos por mes</span></a></li>
+										<li><a href="{{ asset('/') }}despachosPorAno"><span class="submenu-label">Despachos por año</span></a></li>
+
+									@endif
+									@if ( Session::get('idPerfil')=='2' or
+										Session::get('idPerfil')=='4' or
+										Session::get('idPerfil')=='18')
+
+										<li><a href="{{ asset('/') }}notasdeVentaMargenes"><span class="submenu-label">Notas de Venta y Márgenes</span></a></li>
+
+									@endif
 								</ul>								
 							</li>
 							@if ( Session::get('idPerfil')!='6' and
@@ -299,8 +317,11 @@
 										@if ( Session::get('idPerfil')=='2' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='4' 
 											or Session::get('idPerfil')=='18' or Session::get('idPerfil')=='11')
 											<li><a href="{{ asset('/') }}costosMensuales"><span class="submenu-label">Costos Mensuales</span></a></li>
-										@endif	
-										<li><a href="{{ asset('/') }}listaRamplas"><span class="submenu-label">Ramplas</span></a></li>
+										@endif
+										@if ( Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7' or Session::get('idPerfil')=='8' 
+											or Session::get('idPerfil')=='10' )
+											<li><a href="{{ asset('/') }}listaRamplas"><span class="submenu-label">Ramplas</span></a></li>
+										@endif
 										<li class="openable">
 											<a href="#">
 												<span class="submenu-label">Fletes, Distancias y Tiempos</span>
@@ -308,7 +329,7 @@
 											<ul class="submenu third-level">
 												<li><a href="{{ asset('/') }}notaVentaVigenteCargos"><span class="submenu-label">Notas de Venta Vigentes</span></a></li>
 												<li><a href="{{ asset('/') }}notaVentaCerradaCargos"><span class="submenu-label">Notas de Venta Cerradas</span></a></li>
-												<li><a href="{{ asset('/') }}notaVentaCargosUrgente"><span class="submenu-label">Urgentes</span></a></li>
+												<li><a href="{{ asset('/') }}notaVentaCargosUrgente"><span class="submenu-label">Asignaciones Pendientes</span></a></li>
 											</ul>
 										</li>							
 									</ul>

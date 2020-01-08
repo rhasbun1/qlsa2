@@ -170,7 +170,12 @@
                             <td style="width: 150px"> <?php echo e($item->prod_nombre); ?> </td>
                             <td style="width: 80px">
                                 <?php if( $item->requiere_diseno==1 ): ?>
-                                    <input class="form-control input-sm" value="<?php echo e($item->formula); ?>" maxlength="20"> 
+                                    <?php if( Session::get('grupoUsuario')=='C' and Session::get('idPerfil')!='12'): ?>
+                                        <input class="form-control input-sm" value="<?php echo e($item->formula); ?>" maxlength="20"> 
+                                    <?php else: ?>
+                                        <?php echo e($item->formula); ?>
+
+                                    <?php endif; ?>    
                                 <?php endif; ?>    
                             </td>
                             <td style="width: 50px;text-align:right;"> <?php echo e(number_format( $item->cantidad, 0, ',', '.' )); ?> </td>
@@ -256,6 +261,14 @@
                 <th style="width:350px">Motivo</th>
             </thead>
             <tbody>
+                <?php if($notaventa[0]->fechaCierreSistema!='' ): ?>
+                <tr>
+                    <td style="width:200px"> <?php echo e($notaventa[0]->fechaCierreSistema); ?> </td>
+                    <td style="width:200px">QL Now</td>
+                    <td style="width:100px">Cierre</td>
+                    <td style="width:350px">Cerrada automáticamente por no haber movimientos.</td>
+                </tr>                
+                <?php endif; ?>
                 <?php $__currentLoopData = $log; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
                     <td style="width:200px"> <?php echo e($item->fechaHora); ?> </td>

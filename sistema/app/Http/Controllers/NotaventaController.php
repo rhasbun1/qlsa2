@@ -41,7 +41,7 @@ class NotaventaController extends Controller
             $detalle = json_decode($datos->input('detalle'));
             $totalNV=0;
             foreach ( $detalle as $item){
-                $totalNV += ($item->precio+$item->flete+$item->varios);
+                $totalNV += ($item->precio);
             }
 
             $idnotaventa=DB::Select('call spInsNotaVenta(?,?,?,?,?,?,?,?,?,?,?,?,?,?)', array($datos->input('cot_numero'),
@@ -63,7 +63,7 @@ class NotaventaController extends Controller
 
 
             foreach ( $detalle as $item){
-                DB::Select("call spInsNotaVentaDetalle(?,?,?,?,?,?,?,?,?,?)", array( $idnotaventa[0]->idNotaVenta, $item->prod_codigo, $item->formula, $item->cantidad, $item->u_codigo, $item->precio, $item->flete, $item->varios, $item->idPlanta, $item->idFormaEntrega ) );
+                DB::Select("call spInsNotaVentaDetalle(?,?,?,?,?,?,?,?)", array( $idnotaventa[0]->idNotaVenta, $item->prod_codigo, $item->formula, $item->cantidad, $item->u_codigo, $item->precio, $item->idPlanta, $item->idFormaEntrega ) );
             }
 
             if($idnotaventa[0]->nombreArchivo!=""){
@@ -112,7 +112,7 @@ class NotaventaController extends Controller
     }
 
     public function listarNotasdeVenta(){
-
+        DB::Select('call spPasarNVvencidaHistorico()');
 		$listaNotasdeVenta=DB::Select('call spGetNotasdeVentas(?)', array(0) );       	
     	return view('listanotaventa')->with('listaNotasdeVenta', $listaNotasdeVenta);
     }
@@ -123,9 +123,53 @@ class NotaventaController extends Controller
     }    
 
     public function historicoNotasdeVenta(){
-        $listaNotasdeVenta=DB::Select('call spGetHistoricoNotasdeVentas(?)', array(Session::get('empresaUsuario') ));           
-        return view('historicoNotasdeVenta')->with('listaNotasdeVenta', $listaNotasdeVenta);
+        $fecha_termino = date('Y-m-d'); 
+        $fecha_inicio = date("Y-m-d",strtotime($fecha_termino."- 1 year"));
+        if(Session::get('empresaUsuario')=='0'){
+            $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->orderBy('emp_nombre')->get();
+        }else{
+            $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->where('emp_codigo',"=",Session::get('empresaUsuario') )->get();
+        }
+        $parametros=DB::table('parametros')->select('version')->get();     
+        $listaNotasdeVenta=DB::Select('call spGetHistoricoNotasdeVentas(?,?,?,?,?,?,?,?)', 
+            array( 
+                $fecha_inicio, 
+                $fecha_termino,
+                0,
+                0,
+                0,
+                Session::get('idUsuario'),
+                Session::get('idPerfil') ,
+                1
+            ) 
+        );
+        return view('historicoNotasdeVenta')->with('listaNotasdeVenta', $listaNotasdeVenta)
+                                    ->with('parametros', $parametros)
+                                    ->with('clientes', $clientes)
+                                    ->with('fecInicio', $fecha_inicio)
+                                    ->with('fecTermino', $fecha_termino);        
     }
+
+    public function obtenerHistoricoNotaVentas(Request $datos){
+        $fechaInicio=strtotime( str_replace('/', '-', $datos->input("fechaCreacionDesde") ) );
+        $fechaTermino=strtotime( str_replace('/', '-', $datos->input("fechaCreacionHasta") ) );
+        $fechaInicio = date('Y-m-d', $fechaInicio);
+        $fechaTermino = date('Y-m-d', $fechaTermino);
+
+        $listaNotasdeVenta=DB::Select('call spGetHistoricoNotasdeVentas(?,?,?,?,?,?,?,?)', 
+            array( 
+                $fechaInicio, 
+                $fechaTermino,
+                $datos->input('emp_codigo'),
+                $datos->input('nvDesde'),
+                $datos->input('nvHasta'),
+                Session::get('idUsuario'),
+                Session::get('idPerfil') ,
+                $datos->input('opcion')
+            ) 
+        );
+        return $listaNotasdeVenta;
+    }    
 
 
     public function aprobarnota($idNotaVenta){
@@ -254,7 +298,7 @@ class NotaventaController extends Controller
 
     public function notaVentaCargosUrgente(){
         $cargos=DB::Select('call spGetNotaVentasCostosUrgentes()');
-        return view('notadeventaCargos')->with('cargos', $cargos)->with('subtitulo', '(URGENTES)');        
+        return view('notadeventaCargos')->with('cargos', $cargos)->with('subtitulo', '(Asignaciones Pendientes)');        
     }   
 
     public function actualizarNotaVentaCargos(Request $datos){

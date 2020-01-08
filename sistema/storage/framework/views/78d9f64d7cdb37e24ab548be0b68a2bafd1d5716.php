@@ -32,6 +32,7 @@
                                 <td style="width:50px" data-numguia="<?php echo e($item->numeroGuia); ?>" data-prodcodigo="<?php echo e($item->prod_codigo); ?>">
                                     <?php if( $item->certificado=='' ): ?>
                                         <button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1, <?php echo e($item->prod_codigo); ?> );" title="Subir Certificado"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                        <button class="btn btn-danger btn-xs" onclick="productoSinCertificado(this.parentNode.parentNode, <?php echo e($item->prod_codigo); ?> );" title="Producto Sin Certificado"><span class="glyphicon glyphicon-arrow-down"></span></button>                                        
                                     <?php else: ?>
                                         <a target="_blank" href="<?php echo e(asset('/')); ?>bajarCertificado/<?php echo e($item->certificado); ?>">
                                             <img src="<?php echo e(asset('/')); ?>img/iconos/certificado.png" border="0">
@@ -160,7 +161,30 @@
     </div>
 </div>
 
+<div id="mdProductoSinCertificado" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="height: 45px">
+                <h5><b>Producto sin certificado</b></h5>
+            </div>
+            <div id="bodyGuia" class="modal-body">
+                Indique el motivo (máx.200 caract.)
+                <div class="row">
+                    <div class="col-md-12">
+                        <input class="form-control input-sm" id="obsProductoSinCertificado" maxlength="200" data-numguia="0" data-codproducto="0" data-fila="0">
+                    </div> 
 
+                </div>
+            </div>
+            <div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; text-align: right;">
+               <button type="button" class="btn btn-success btn-sm" onclick="sacarProductodeLista()" style="width: 80px">Aceptar</button>                
+               <button id="btnCerrarCajaSuspender" type="button" class="btn btn-danger btn-sm" onclick="cerrarProductoSinCertificado()" style="width: 80px">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <?php $__env->stopSection(); ?>
 
@@ -172,6 +196,66 @@
     <script src="https://cdn.datatables.net/fixedcolumns/3.2.5/js/dataTables.fixedColumns.min.js"></script>
 
     <script>
+        
+        function productoSinCertificado(row, codProducto){
+            var tabla=$("#tablaAprobados").DataTable();
+            var fila=tabla.row(row).index();
+
+            obsProductoSinCertificado.value="";
+            obsProductoSinCertificado.dataset.numguia=tabla.cell(fila,0).node().dataset.numguia;
+            obsProductoSinCertificado.dataset.codproducto=codProducto;
+            obsProductoSinCertificado.dataset.fila=fila;
+            $("#mdProductoSinCertificado").modal('show');
+            obsProductoSinCertificado.focus();
+        }
+
+
+        function sacarProductodeLista(){
+
+            if(obsProductoSinCertificado.value.trim()==''){
+                swal(
+                    {
+                        title: '¡Debe ingresar el motivo!',
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    }
+                )
+                return;
+            }
+
+          $.ajax({
+              url: urlApp + "productoSinCertificado",
+              headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+              type:'POST',
+              dataType: 'json',
+              data:{
+                    codigoTipoGuia: 1,
+                    numeroGuiaCertificado: obsProductoSinCertificado.dataset.numguia,
+                    codigoProducto: obsProductoSinCertificado.dataset.codproducto,
+                    motivo: obsProductoSinCertificado.value
+              },
+              success:function(dato){
+                    var tabla=$('#tablaAprobados').DataTable();
+                    tabla
+                        .row( obsProductoSinCertificado.dataset.fila )
+                        .remove()
+                        .draw();
+                    cerrarProductoSinCertificado();
+              },
+              error: function(jqXHR, text, error){
+                  alert('Error!, No se pudo Añadir los datos');
+              }
+          });
+        }
+
+        function cerrarProductoSinCertificado(){
+            $("#mdProductoSinCertificado").modal('hide');
+        }
 
         function abrirModalSubirArchivo(fila, tipoGuia, codProducto){
             var tabla=document.getElementById('tablaAprobados');

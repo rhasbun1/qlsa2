@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use SoapClient;
 use File;
+use \Mailjet\Resources;
+
 
 class GuiaController extends Controller
 {
@@ -58,6 +60,7 @@ class GuiaController extends Controller
     public function registrarSalidaDespacho(Request $datos){
         if($datos->ajax()){
             $guia=DB::Select('call spGetRegistrarSalidaDespacho(?,?, ?)', array( $datos->input('tipoGuia'), $datos->input('numeroGuia'), Session::get('idUsuario') ) );
+            $this->avisoRegistrodeSalida($datos->input('numeroGuia'));
             return response()->json([
                 "numroGuia" => $guia[0]->numeroGuia
             ]);            
@@ -295,9 +298,17 @@ class GuiaController extends Controller
         $nombreArchivo= $data->input("codigoTipoGuia")."_".$data->input("numeroGuiaCertificado")."_".$data->input("codigoProducto").".pdf";
         Storage::disk('certificados')->put($nombreArchivo, \File::get( $archivo) );
 
-        DB::Select('call spUpdArchivoCertificado(?,?,?,?,?)', array( $data->input('codigoTipoGuia'), $data->input('numeroGuiaCertificado'), $data->input("codigoProducto"), $nombreArchivo, Session::get('idUsuario') ) );
+        DB::Select('call spUpdArchivoCertificado(?,?,?,?,?,?)', array( $data->input('codigoTipoGuia'), $data->input('numeroGuiaCertificado'), $data->input("codigoProducto"), $nombreArchivo, Session::get('idUsuario'), '' ) );
 
         return $nombreArchivo; 
+    }
+
+    public function productoSinCertificado(Request $data){
+        $nombreArchivo= "S/C";
+        DB::Select('call spUpdArchivoCertificado(?,?,?,?,?,?)', array( $data->input('codigoTipoGuia'), $data->input('numeroGuiaCertificado'), $data->input("codigoProducto"), $nombreArchivo, Session::get('idUsuario'), $data->input('motivo') ) );
+        return response()->json([
+            "numeroGuia" => $data->input('numeroGuiaCertificado')
+        ]);    
     }
 
     public function subirGuiaDespachoPdf(Request $data){
@@ -386,5 +397,45 @@ class GuiaController extends Controller
         return $guia;
     }
 
+    public function avisoRegistrodeSalida($numeroGuia){
+
+        $guia=DB::Select('call spGetGuiaDespacho(?, ?)', array(1, $numeroGuia));
+
+        $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
+
+        //$correoDestinatario='daviddiaz1402@gmail.com';
+        $correoDestinatario='rlazo@qlsa.cl';
+
+        $mensaje="<h3>AVISO DE SALIDA DE DESPACHO</h3><br><br>";
+        $mensaje=$mensaje."Estimado Usuario,<br><br>";
+        $mensaje=$mensaje."Se ha registrado la salida del Pedido Nº ".strval($guia[0]->idPedido).", con la guía de despacho Nº ".strval($numeroGuia). 
+        " perteneciente al cliente ".$guia[0]->nombreCliente.".";
+
+        $body = [
+            'Messages' => [
+              [
+                'From' => [
+                  'Email' => "no-reply@soporteportal.cl",
+                  'Name' => "no-reply@soporteportal.cl"
+                ],
+                'To' => [
+                  [
+                    'Email' => $correoDestinatario,
+                    'Name' => $correoDestinatario
+                  ]
+                ],
+                'Subject' => "AVISO DE SALIDA DE DESPACHO",
+                'TextPart' => "",
+                'HTMLPart' => $mensaje,
+                'CustomID' => "AppGettingStartedTest"
+              ]
+            ]
+        ];
+
+        $response = $mj->post(Resources::$Email, ['body' => $body]);
+        $response->success();       
+        $response->getData();
+        return;
+    }
 
 }

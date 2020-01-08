@@ -41,7 +41,12 @@
                 <tbody>
                     @foreach($pedidos as $item)
                         <tr>
-                            <td>{{ $item->idPedido }}</td>
+                            <td style="width: 80px" data-pedido='{{ $item->idPedido }}'>
+                                <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/1/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
+                                @if( Session::get('grupoUsuario')=='C')
+                                    <button class="btn btn-sm btn-primary" title="Aprobar pedido" onclick="aprobarPedido({{ $item->idPedido }}, this)"><span class="glyphicon glyphicon-ok"></span></button>
+                                @endif                                          
+                            </td>
                             <td>{{ $item->fechahora_creacion }}</td>
                             <td>{{ $item->emp_nombre }}</td>
                             <td>{{ $item->Obra }}</td>

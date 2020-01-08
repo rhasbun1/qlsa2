@@ -23,6 +23,12 @@ class UsuarioController extends Controller
         return view('usuarios')->with('listaUsuarios', $listaUsuarios)->with('plantas', $plantas);
     }
 
+    public function datosUsuario()
+    {
+      $datos=DB::Select('call spGetDatosUsuario(?)', array( Session::get('idUsuario') ) );
+      return view('datosUsuario')->with('datosUsuario', $datos);
+    }
+
 
     public function verificarusuario(Request $datos)
     {
@@ -99,6 +105,13 @@ class UsuarioController extends Controller
            $plantas=DB::Select('call spGetUsuarioPerfilPlantas(?, ?)', array($datos->idUsuario, -1) );
            return $plantas;
         }
+    }
+
+    public function usuarioAvisosCorreo( Request $datos){
+        if($datos->ajax()){ 
+           $usuario=DB::Select('call spUpdUsuarioAvisosCorreo(?,?,?)', array(Session::get('idUsuario'), $datos->despacho, $datos->novedades ) );
+           return $usuario;
+        }      
     }
 
 

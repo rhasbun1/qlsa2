@@ -40,7 +40,8 @@ class Controller extends BaseController
 
     public function parametros(){
         $param=Parametro::All();
-        return view('parametros')->with('param', $param);
+        $usuarios=DB::Select('call spGetUsuarios()');
+        return view('parametros')->with('param', $param)->with('usuarios', $usuarios);
     }
 
     public function obtenerParametros(){
@@ -49,7 +50,7 @@ class Controller extends BaseController
     }
 
     public function grabarParametros(Request $datos){
-        $param=DB::Select('call spUpdParametros(?,?,?, ?,?,?,?,?,?,?,?,?)', array( $datos->input('iva'), $datos->input('numeroGuia'), $datos->input('cmgttn'), $datos->input('cmgttm1'), $datos->input('cmgttm2'), $datos->input('notaPedido1'), $datos->input('notaPedido2'), $datos->input('sitrack_usuario'), $datos->input('sitrack_contrasena'), $datos->input('antiguedad_dias'), $datos->input('monto_TopeNV'), $datos->input('consideracionesPedidosGranel') ) );
+        $param=DB::Select('call spUpdParametros(?,?,?,?,?,?,?,?,?,?,?,?,?)', array( $datos->input('iva'), $datos->input('numeroGuia'), $datos->input('cmgttn'), $datos->input('cmgttm1'), $datos->input('cmgttm2'), $datos->input('notaPedido1'), $datos->input('notaPedido2'), $datos->input('sitrack_usuario'), $datos->input('sitrack_contrasena'), $datos->input('antiguedad_dias'), $datos->input('monto_TopeNV'), $datos->input('consideracionesPedidosGranel'), $datos->input('idUsuarioAutoriza')  ) );
 
         return response()->json([
                 "mensaje" => $param[0]->mensaje

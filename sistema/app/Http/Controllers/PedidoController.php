@@ -6,13 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\PedidoAprobado;
-use App\Mail\PedidoSuspendido;
 use App\Pedido;
 use SoapClient;
 use File;
-
+use \Mailjet\Resources;
 
 class PedidoController extends Controller
 {
@@ -203,9 +200,8 @@ class PedidoController extends Controller
     public function suspenderPedido(Request $datos){
         if($datos->ajax()){
             $pedido=DB::Select('call spUpdSuspenderPedido(?,?,?)', array( $datos->input('idPedido'), $datos->input('motivo'), Session::get('idUsuario') ) );
+            $this->correoPedidoSuspendido( $datos->input('idPedido'), $datos->input('motivo'), $pedido[0]->usu_correo );
 
-            // $destinatarios= DB::Select('call spGetListaDestinatarios(?)', array( 'P' ));        
-            // Mail::to($destinatarios)->send(new PedidoSuspendido($pedido) );
             return response()->json([ 
                         "url" => asset('/').'listarPedidos'
                     ]);
@@ -218,8 +214,12 @@ class PedidoController extends Controller
         if($datos->ajax()){
 
             $pedido=DB::Select('call spUpdCerrarPedido(?,?,?)', array( $datos->input('idPedido'), Session::get('idUsuario'), $datos->input('motivo') ) ); 
+
+            $this->correoPedidoSuspendido( $datos->input('idPedido'), $datos->input('motivo'), $pedido[0]->usu_correo );
+
             return $pedido;
         }
+
     }
 
     public function editarPedido($idPedido){
@@ -312,7 +312,16 @@ class PedidoController extends Controller
             //$detalle = json_decode($datos->input('detalle'));
             $detalle=$datos->input('detalle');
             $detalle= json_decode($detalle);
-            
+
+            $fechaEntrega=$datos->input('fechaEntrega');
+
+            $parametros=DB::Select('call spGetParametros');
+
+            $fechaActual = date('Y-m-d'); 
+            $datetime1 = date_create($fechaEntrega);
+            $datetime2 = date_create($fechaActual);
+            $diff = ($datetime2->diff($datetime1));
+
             $idPedido=DB::Select('call spInsPedido(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? )', array(
                             $datos->input('idNotaVenta'),
                             $datos->input('fechaEntrega'),
@@ -363,6 +372,11 @@ class PedidoController extends Controller
                 }
             }
 
+            
+            if($diff->days<=$parametros[0]->cantidadMinimadeDiasparaEntrega){
+                $this->correoAutorizacionPedidoUrgente($idPedido[0]->idPedido, Session::get('idUsuario') );
+            }
+
             return response()->json([
                 "identificador" => $idPedido[0]->idPedido,
                 "nombreArchivo" => $idPedido[0]->nombreArchivo
@@ -388,7 +402,7 @@ class PedidoController extends Controller
                         );  
 
             foreach ( $detalle as $item){
-                DB::Select("call spUpdPedidoDetalle(?,?,?,?,?)", array( $idPedido[0]->idPedido, $item->prod_codigo,  $item->cantidad, $item->idPlanta, $item->idFormaEntrega ) );
+                DB::Select("call spUpdPedidoDetalle(?,?,?,?,?,?)", array( $idPedido[0]->idPedido, $item->prod_codigo,  $item->cantidad, $item->idPlanta, $item->idFormaEntrega, Session::get('idUsuario') ) );
             }
 
             return response()->json([
@@ -538,5 +552,159 @@ class PedidoController extends Controller
         }        
     }
 
+    public function correoPedidoSuspendido($idPedido, $motivo, $correoDestinatario){
+        $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
+
+        //$correoDestinatario='daviddiaz1402@gmail.com';
+        $correoDestinatario='rlazo@qlsa.cl';
+
+        $mensaje="<h3>AVISO DE PEDIDO SUSPENDIDO</h3><br><br>";
+        $mensaje=$mensaje."Estimado Usuario,<br><br>";
+        $mensaje=$mensaje."Se ha suspendido el pedido Nº ".strVal($idPedido).".";
+        $mensaje=$mensaje."Motivo: ".$motivo."<br><br>";
+
+        $body = [
+            'Messages' => [
+              [
+                'From' => [
+                  'Email' => "no-reply@soporteportal.cl",
+                  'Name' => "no-reply@soporteportal.cl"
+                ],
+                'To' => [
+                  [
+                    'Email' => $correoDestinatario,
+                    'Name' => $correoDestinatario
+                  ]
+                ],
+                'Subject' => "AVISO DE PEDIDO SUSPENDIDO",
+                'TextPart' => "My first Mailjet email",
+                'HTMLPart' => $mensaje,
+                'CustomID' => "AppGettingStartedTest"
+              ]
+            ]
+        ];
+
+        $response = $mj->post(Resources::$Email, ['body' => $body]);
+        $response->success();       
+        return $response->getData();
+    }
+
+    public function correoAutorizacionPedidoUrgente( $idPedido, $idUsuario){
+        $accion=1; 
+        //accion 1 indica que corresponde a una solicitud de autorización de un pedido urgente
+        $datos=DB::Select('call spInsSolicitudCorreo(?,?,?)', array( $idUsuario, $idPedido, $accion ) );
+
+        $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
+
+        //$correoDestinatario='daviddiaz1402@gmail.com';
+        $correoDestinatario='rlazo@qlsa.cl';
+
+        $url=asset('/')."autorizarPedidoUrgente/".$datos[0]->token."/";
+
+        $mensaje="<h3>SOLICITUD DE AUTORIZACION DE PEDIDO URGENTE</h3><br><br>";
+        $mensaje=$mensaje."Estimado Usuario,<br><br>";
+        $mensaje=$mensaje."Se ha creado el Pedido Nº ".strval($idPedido).", el cual debe ser despachado con urgencia, se solicita su autorización por medio del siguiente link <a href='".$url."'>Autorizar</a>" ;
+
+        $body = [
+            'Messages' => [
+              [
+                'From' => [
+                  'Email' => "no-reply@soporteportal.cl",
+                  'Name' => "no-reply@soporteportal.cl"
+                ],
+                'To' => [
+                  [
+                    'Email' => $correoDestinatario,
+                    'Name' => $correoDestinatario
+                  ]
+                ],
+                'Subject' => "Solicitud de Autorización de Pedido",
+                'TextPart' => "",
+                'HTMLPart' => $mensaje,
+                'CustomID' => "AppGettingStartedTest"
+              ]
+            ]
+        ];
+
+        $response = $mj->post(Resources::$Email, ['body' => $body]);
+        $response->success();       
+        return $response->getData();
+    }
+
+    public function autorizarPedidoUrgente($token){
+        $datos=DB::Select('call spUpdAutorizaPedidoUrgente(?)', array( $token ) );
+
+        $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
+
+        //$correoDestinatario='daviddiaz1402@gmail.com';
+
+        $correoDestinatario='rlazo@qlsa.cl';
+
+        $mensaje="<h3>AVISO DE PEDIDO URGENTE</h3><br><br>";
+        $mensaje=$mensaje."Estimado Usuario,<br><br>";
+        $mensaje=$mensaje."Se ha autorizado el Pedido Nº ".strval($datos[0]->idPedido).", el cual debe ser despachado con urgencia.";
+
+        $body = [
+            'Messages' => [
+              [
+                'From' => [
+                  'Email' => "no-reply@soporteportal.cl",
+                  'Name' => "no-reply@soporteportal.cl"
+                ],
+                'To' => [
+                  [
+                    'Email' => $correoDestinatario,
+                    'Name' => $correoDestinatario
+                  ]
+                ],
+                'Subject' => "AVISO DE PEDIDO URGENTE",
+                'TextPart' => "",
+                'HTMLPart' => $mensaje,
+                'CustomID' => "AppGettingStartedTest"
+              ]
+            ]
+        ];
+
+        $response = $mj->post(Resources::$Email, ['body' => $body]);
+        $response->success();       
+        $response->getData();      
+        return $datos;
+    }
+
+
+    public function correoResumenActividad(){
+        $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
+        //$correoDestinatario='daviddiaz1402@gmail.com';
+        $correoDestinatario='rlazo@qlsa.cl';
+
+        $mensaje="<h3>EJEMPLO DE CORREO RESUMEN DE ACTIVIDAD</h3><br><br>";
+        $mensaje=$mensaje."Estimado Usuario,<br><br>";
+        $mensaje=$mensaje."Se ha creado el Pedido Nº , el cual debe ser despachado con urgencia, se solicita su autorización por medio del siguiente link";
+
+        $body = [
+            'Messages' => [
+              [
+                'From' => [
+                  'Email' => "no-reply@soporteportal.cl",
+                  'Name' => "no-reply@soporteportal.cl"
+                ],
+                'To' => [
+                  [
+                    'Email' => $correoDestinatario,
+                    'Name' => $correoDestinatario
+                  ]
+                ],
+                'Subject' => "RESUMEN DE ACTIVIDAD QLNOW",
+                'TextPart' => "",
+                'HTMLPart' => $mensaje,
+                'CustomID' => "AppGettingStartedTest"
+              ]
+            ]
+        ];
+
+        $response = $mj->post(Resources::$Email, ['body' => $body]);
+        $response->success();       
+        return $response->getData();
+    }
 
 }

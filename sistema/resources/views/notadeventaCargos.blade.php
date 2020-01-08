@@ -15,9 +15,9 @@
 	                <thead>
 	                    <th style="width:80px">Nº Nota Venta</th>
 	                    <th style="width:300px">Cliente</th>
-                        <th style="width:250px">Obra</th>
-                        <th style="width:120px">Planta</th>
-                        <th style="width:80px">Flete</th>
+                        <th style="width:250px">Obra/Planta</th>
+                        <th style="width:120px">Planta QLSA</th>
+                        <th style="width:80px">Costo Flete ($/ton)</th>
                         <th style="width:80px">Distancia (km)</th>
                         <th style="width:80px">Tiempo Traslado (horas)</th>
 	                </thead>
@@ -28,6 +28,7 @@
 	                            <td>{{ $item->nombreCliente}}</td>
                                 <td>{{ $item->nombreObra}}</td>
                                 <td data-idplanta="{{ $item->idPlanta}}">{{ $item->nombrePlanta}}</td>
+                                @if(Session::get('idPerfil')=='5' or Session::get('idPerfil')=='10' or Session::get('idPerfil')=='18')
                                 <td>
                                     <input class="form-control input-sm" value="{{ $item->flete}}" maxlength="7" onkeypress='return isIntegerKey(event)'>
                                 </td>
@@ -37,6 +38,17 @@
                                 <td>
                                     <input class="form-control input-sm" value="{{ $item->tiempoTraslado}}" maxlength="3" onkeypress='return isIntegerKey(event)'>
                                 </td>
+                                @else
+                                <td style="text-align: right;">
+                                    {{number_format( $item->flete, 0, ',', '.' )}} 
+                                </td>
+                                <td style="text-align: right;">
+                                    {{number_format( $item->distancia, 0, ',', '.' )}}
+                                </td>
+                                <td style="text-align: right;">
+                                    {{number_format( $item->tiempoTraslado, 0, ',', '.' )}}
+                                </td>                                
+                                @endif
 	                        </tr>
 	                    @endforeach
 	                </tbody>

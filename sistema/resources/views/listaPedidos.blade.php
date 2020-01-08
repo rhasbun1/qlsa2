@@ -13,7 +13,7 @@
                     <b>Pedidos en Proceso</b>
                 </div>
                 <div class="col-md-9" style="text-align: right;">
-                    @if ($cantidadIngresoCliente>0)
+                    @if ($cantidadIngresoCliente>0 and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='12'))
                          <a href="{{ asset('/') }}listaIngresosClienteporAprobar" class="btn btn-danger btn-sm">EXISTEN {{ $cantidadIngresoCliente }} PEDIDOS INGRESADOS POR CLIENTE EN ESPERA DE PRE-APROBACION</a>
                     @endif
                 </div>
@@ -49,6 +49,7 @@
 
                 @if( Session::get('idPerfil')=='11' ) <!-- Ejecutivo de Crédito -->
                     <div style="width: 100%">
+                        <div id="Grid"></div>
                         <table id="tablaDetalle" class="table table-hover table-condensed" style="width: 100%">
                             <thead>
                                 <th style="width: 80px">Pedido Nº</th>
@@ -347,7 +348,7 @@
           });
         });
 
-        $(document).ready(function() {
+        $(document).ready(function(){
             var tablaDetalle="#tablaDetalle";
             // Setup - add a text input to each footer cell
             $('#tablaDetalle thead tr').clone(true).appendTo( '#tablaDetalle thead' );
@@ -679,8 +680,7 @@
 
                 }                  
             });
-          
-            
+                 
             $('.date').datepicker({
                 todayHighlight: true,
                 format: "dd/mm/yyyy",
@@ -688,7 +688,6 @@
                 language: "es",
                 autoclose: true
             }) 
-
 
   //          $("#min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
   //          $("#max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
@@ -699,7 +698,7 @@
             }); 
 
 
-        } );
+        });
 
     </script>
     

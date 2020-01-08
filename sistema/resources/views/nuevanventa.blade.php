@@ -104,8 +104,6 @@
                         <th style="width:50px">Unidad</th>
                         <th style="width:50px;text-align: right;">Precio Base ($)</th>
                         <th style="width:250px">Glosa de Reajuste</th>
-                        <th style="width:70px">Flete ($)</th>
-                        <th style="width:70px">Varios ($)</th>
                         <th style="width:150px">Planta de Origen</th>
                         <th style="width:120px">Entrega</th>                        
                     </thead>

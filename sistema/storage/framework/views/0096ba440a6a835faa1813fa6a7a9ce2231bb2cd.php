@@ -5,7 +5,7 @@
 	<input type="hidden" id="_token" name="_token" value="<?php echo e(csrf_token()); ?>">
     <div class="panel panel-default" id="contenedor3">
         <div class="panel-heading">
-        	<h4>Eliminar Guía de Despacho</h4>
+        	<h4>Liberar Nº de Guía de Despacho</h4>
         </div> 
         <div class="panel-body" id="panelBody">
 			<div class="row">
@@ -56,7 +56,7 @@
 				</div>	
 				<div class="row" style="padding-top: 15px">
 					<div class="col-md-4" style="display: inline;">
-						<button class="btn btn-success btn-sm" style="display: inline;" onclick="eliminarGuia();">Eliminar Guía</button>
+						<button class="btn btn-success btn-sm" style="display: inline;" onclick="eliminarGuia();">Liberar Nº de GD</button>
 						<button class="btn btn-warning btn-sm" style="display: inline;" onclick="limpiar();">Limpiar</button>
 					</div>					
 				</div>				
@@ -160,7 +160,7 @@
             success:function(dato){
                 swal(
                     {
-                        title: "¡La guía de despacho ha sido eliminada!" ,
+                        title: "¡El Nº de Guía de Despacho ha sido liberado!" ,
                         text: '',
                         type: 'warning',
                         showCancelButton: false,

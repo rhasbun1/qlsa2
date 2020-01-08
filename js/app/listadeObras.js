@@ -1,4 +1,5 @@
     function nuevaObra(){
+        btnAgregarObra.innerHTML="Crear";
         $("#idObra").val("0");
         $("#filaObra").val("0");
         $("#txtNombreObra").val('');
@@ -16,6 +17,7 @@
     }
 
     function editarObra(idObra, row){
+        btnAgregarObra.innerHTML="Guardar";
         $("#idObra").val(idObra);
         var tabla=$("#tabla").DataTable();
 
@@ -93,24 +95,47 @@
             return
         }        
 
+        var tabla=$("#tabla").DataTable();
+        var fila = $("#filaObra").val();
+
+        for (var i = 0; i < tabla.rows().count(); i++){
+            if( (tabla.cell(i,0).data().trim().toUpperCase()==$("#txtNombreObra").val().trim().toUpperCase()) && (fila!=i) ){
+                swal(
+                    {
+                        title: 'El nombre de obra ingresado ya existe, no puede repetirlo!',
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    }
+                );               
+                return;
+            }
+        }
+
+
 
         var ruta= urlApp + "agregarObra";
         var cont=0;
         var cadena='[';
-        var tabla=document.getElementById('tabDistancias');
 
-        for (var i = 1; i < tabla.rows.length; i++){
-            if(tabla.rows[i].cells[1].getElementsByTagName('input')[0].value!=""){
+        var tablaDistancias=document.getElementById('tabDistancias');
+
+        for (var i = 1; i < tablaDistancias.rows.length; i++){
+            if(tablaDistancias.rows[i].cells[1].getElementsByTagName('input')[0].value!=""){
                 cadena+='{';
-                cadena+='"idPlanta":"'+  tabla.rows[i].cells[1].getElementsByTagName('input')[0].dataset.idplanta + '", ';
-                cadena+='"tiempoTraslado":"'+  tabla.rows[i].cells[1].getElementsByTagName('input')[0].value + '"';
+                cadena+='"idPlanta":"'+  tablaDistancias.rows[i].cells[1].getElementsByTagName('input')[0].dataset.idplanta + '", ';
+                cadena+='"tiempoTraslado":"'+  tablaDistancias.rows[i].cells[1].getElementsByTagName('input')[0].value + '"';
                 cadena+='}, ';                
             }
         }
 
         cadena=cadena.slice(0,-2);
         cadena+=']';
-        var fila = $("#filaObra").val();
+        
 
         $.ajax({
             url: ruta,
@@ -129,7 +154,7 @@
                     distanciaplantas: cadena
                   },
             success:function(dato){
-                    var tabla=$("#tabla").DataTable();
+                    
                     var cadena='';
                     if($("#idObra").val()=="0"){
                         cadena="<button class='btn btn-xs btn btn-warning' onclick='editarObra(" + dato.idObra +  ", this.parentNode.parentNode )' title='Editar'><i class='fa fa-edit fa-lg'></i></button>";
@@ -142,7 +167,6 @@
                             ]).draw();
                     }else{
                         //obra editada
-
                         tabla.cell(fila,0).data( $("#txtNombreObra").val() );
                         tabla.cell(fila,1).data( $("#idCliente option:selected").html() );
                         tabla.cell(fila,2).data( $("#txtNombreContactoObra").val() );

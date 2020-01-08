@@ -69,6 +69,9 @@
         .e-grid .e-headercell {
             height:70px !important;
         }
+        .e-grid .e-headercelldiv{ /* grid headercell font styles*/ 
+		    font-size: 10px; 
+		}         
     </style>  
     <script>
 		//this.default = function () {
@@ -81,7 +84,7 @@
 		anoTermino.value=fecha.getFullYear().toString();
 
 		ej.base.L10n.load({
-		    'de-ES': {
+		    'en-US': {
 		        'grid': {
 		            'EmptyRecord': 'No hay información para mostrar',
 		            'GroupDropArea': 'Arrastre columna aquí para agrupar',
@@ -92,10 +95,12 @@
                     "Print": "Imprimir",
                     "Pdfexport": "Exportar a PDF",
                     "Excelexport": "Exportar a Excel",
+                    "Csvexport": "Exportar a CSV",
                     "FilterButton": "Filtrar",
                     "ClearButton": "Quitar",                    	            
                     "SelectAll": "Seleccionar todo",
                     "Search": "Buscar",
+                    "Blanks": "Vacío",
 		        },
 		        'pager': {
 		            'currentPageInfo': '{0} de {1}',
@@ -129,47 +134,104 @@
 
 		function renderGrid(data){
 			var columnas;
+			var columnasAgregado;
+
 			if(tipo.value==2){
 				columnaTotal={ field: 'TotalDespachado2', headerText: 'Total Despachado', width: 120, textAlign: 'Right' };
 				columnas=[
 		            { field: 'mesAno', headerText: 'Mes/Año', width: 100, textAlign: 'Right' },
-		            { field: 'nombrePlanta', headerText: 'Planta', width: 150 },
+		            { field: 'nombrePlanta', headerText: 'Planta QLSA', width: 150 },
 		            { field: 'nombreCliente', headerText: 'Cliente', width: 200, textAlign: 'Left' },
-		            { field: 'nombreObra', headerText: 'Obra', width: 200, textAlign: 'Left', format: 'C2' },
+		            { field: 'nombreObra', headerText: 'Obra/Planta Destino', width: 200, textAlign: 'Left'},
 		            { field: 'nombreProducto', headerText: 'Producto', width: 150, textAlign: 'Left' },
-					{ field: 'TotalDespachado', headerText: 'Total Despachado Mensual (Tambores)', width: 150, textAlign: 'Right' },		       
-					{ field: 'TotalDespachado2', headerText: 'Total Despachado Mensual (Kg)', width: 150, textAlign: 'Right' },	
-		        ];				
+					{ field: 'TotalDespachado', headerText: 'Total Despachado Mensual (Tambores)', width: 150, textAlign: 'Right', format: "N" },		       
+					{ field: 'TotalDespachado2', headerText: 'Total Despachado Mensual aprox. (kg)', width: 150, textAlign: 'Right', format: "N"},	
+		        ];
+	            columnasAgregado= [
+	            	{
+		                type: 'Sum',
+		                field: 'TotalDespachado',
+		                format: 'N',
+		                footerTemplate: '<b>${Sum}</b>'
+	            	},
+	            	{
+		                type: 'Sum',
+		                field: 'TotalDespachado2',
+		                format: 'N',
+		                footerTemplate: '<b>${Sum}</b>'
+	            	}	            	
+	            ];		        				
 			}else{
 				columnas=[
 		            { field: 'mesAno', headerText: 'Mes/Año', width: 100, textAlign: 'Right' },
-		            { field: 'nombrePlanta', headerText: 'Planta', width: 150 },
+		            { field: 'nombrePlanta', headerText: 'Planta QLSA', width: 150 },
 		            { field: 'nombreCliente', headerText: 'Cliente', width: 200, textAlign: 'Left' },
-		            { field: 'nombreObra', headerText: 'Obra', width: 200, textAlign: 'Left', format: 'C2' },
+		            { field: 'nombreObra', headerText: 'Obra/Planta Destino', width: 200, textAlign: 'Left'},
 		            { field: 'nombreProducto', headerText: 'Producto', width: 150, textAlign: 'Left' },
-					{ field: 'TotalDespachado', headerText: 'Total Despachado Mensual', width: 130, textAlign: 'Right' },		
+					{ field: 'TotalDespachado', headerText: 'Total Despachado Mensual', width: 130, textAlign: 'Right', format: "N"},		
 		            { field: 'unidad', headerText: 'Unidad', width: 120, textAlign: 'Center' },
 		        ];
+
+
+	            columnasAgregado= [
+	            	{
+		                type: 'Sum',
+		                field: 'TotalDespachado',
+		                format: 'N',
+		                footerTemplate: '<b>${Sum}</b>'
+	            	}
+	            ];
+
+
 			}
 		    
 
-		    var grid = new ej.grids.Grid({
-		        dataSource: data,
-		        locale: 'de-ES',
-		        allowPaging: true,
-		        allowSorting: true,
-		        allowGrouping: false,
-		        gridLines: 'Vertical',
-		        allowFiltering: true,
-		        allowTextWrap: true,
-		        filterSettings: { type: 'CheckBox' },
-		        allowExcelExport: true,
-		        allowPdfExport: true,
-		        height: 500,		        
-		        toolbar: ['ExcelExport', 'PdfExport', 'Print'],
-		        columns: columnas,
-		        pageSettings: { pageCount: 5, pageSize: 15 }
-		    });
+            if(tipo.value==3){
+			    var grid = new ej.grids.Grid({
+			        dataSource: data,
+			        locale: 'en-US',
+			        allowPaging: true,
+			        allowSorting: true,
+			        allowGrouping: false,
+			        gridLines: 'Vertical',
+			        allowFiltering: true,
+			        allowTextWrap: true,
+			        filterSettings: { type: 'CheckBox' },
+			        allowExcelExport: true,
+			        allowPdfExport: true,
+			        allowCsvExport: true,
+			        height: 500,
+			        rowHeight: 20,       
+			        toolbar: ['ExcelExport', 'PdfExport', 'CsvExport', 'Print'],
+			        columns: columnas,
+			        pageSettings: { pageCount: 5, pageSize: 10, pageSizes: ['10', '50', 'All'] }	        
+			    });  
+            }else{
+			    var grid = new ej.grids.Grid({
+			        dataSource: data,
+			        locale: 'en-US',
+			        allowPaging: true,
+			        allowSorting: true,
+			        allowGrouping: false,
+			        gridLines: 'Vertical',
+			        allowFiltering: true,
+			        allowTextWrap: true,
+			        filterSettings: { type: 'CheckBox' },
+			        allowExcelExport: true,
+			        allowPdfExport: true,
+			        allowCsvExport: true,
+			        height: 500,
+			        rowHeight: 20,       
+			        toolbar: ['ExcelExport', 'PdfExport', 'CsvExport', 'Print'],
+			        columns: columnas,
+			        pageSettings: { pageCount: 5, pageSize: 10, pageSizes: ['10', '50', 'All'] },
+			        aggregates: [{
+			            columns: columnasAgregado
+			        }]		        
+			    });            	
+            }
+
+
 
 		    document.getElementById('Grid').innerHTML='';
 		    grid.appendTo('#Grid');
@@ -182,7 +244,7 @@
 			            grid.excelExport(getExcelExportProperties());
 			        }
 			        if (args.item.id === 'Grid_csvexport') {
-			            grid.csvExport();
+			            grid.csvExport(getCsvExportProperties());
 			        }
 			    };		    		
 		}	
@@ -331,6 +393,11 @@
 	        };
 	    }
 
+		function getCsvExportProperties() {
+	        return {           
+	            fileName: "despachosAnual.csv"
+	        };
+	    }
     </script>
 
 <?php $__env->stopSection(); ?>    

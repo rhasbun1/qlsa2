@@ -20,6 +20,10 @@ class ReportesController extends Controller
                         $datos->input('idPlanta')
                         ) 
                     );
+        foreach ($despachos as $d) {
+           $d->TotalDespachado=floatval($d->TotalDespachado);
+           $d->TotalDespachado2=floatval($d->TotalDespachado2);
+        }        
         return $despachos;        
     }
 
@@ -42,5 +46,19 @@ class ReportesController extends Controller
         }
 
         return $despachos;        
-    }    
+    }
+
+    public function notasdeVentaMargenes(){
+        return view('informes.notasdeventaMargenes');
+    }
+
+    public function obtenerNotasdeVentaMargenes(){
+        $notas=DB::Select('call spGetNotasdeVentasMargenes()');
+        foreach ($notas as $d) {
+           $d->saldo=floatval($d->saldo);
+        }        
+        return $notas;     
+    }
+
+
 }

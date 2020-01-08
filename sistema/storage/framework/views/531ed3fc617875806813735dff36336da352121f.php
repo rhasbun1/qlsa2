@@ -55,7 +55,7 @@
 	                            <td><?php echo e($item->nombreMes); ?></td>
 	                            <td style="width:40px">
 	                            	<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>
-                                    <button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>                                    
+                                <button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>                                    
 	                            </td>
 	                        </tr>
 	                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -98,6 +98,7 @@
 		                    <th style="width:60px">Unidad</th>
 		                    <th style="width:80px">Planta</th>
 		                    <th style="width:80px">Costo ($)</th>
+                        <th style="width:0px"></th>
 		                </thead>
 		                <tbody>
 		                </tbody>
@@ -178,6 +179,19 @@
 
         var anoSel=0;
         var mesSel=0;
+        var titulo="Esta es una prueba";
+
+        var btnExcel={
+                        extend: 'excelHtml5',
+                        title: function(){
+                          return titulo;
+                        },
+                        text: '<i class="fa fa-file-excel-o"></i>',
+                        titleAttr: 'Excel',                           
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 4 ]
+                        }
+                    };
 
         $('#datos').on('submit', function(e) {
           // evito que propague el submit
@@ -299,8 +313,7 @@
             anoSel=datos[0];
             mesSel=node.dataset.nummes;
 
-            console.log(anoSel, mesSel);
-
+            document.getElementById('mensajeUpload').dataset.title="No ha seleccionado un archivo...";
             $("#modSubirArchivo").modal('show');
         }
 
@@ -332,7 +345,7 @@
                 columnDefs: [ {
                                 "targets": [2],
                                 "orderable": false
-                                } ],                         
+                                } ],                                        
                 language:{url: "<?php echo e(asset('/')); ?>locales/datatables_ES.json"}              
             });
 
@@ -342,7 +355,26 @@
                 columnDefs: [ {
                                 "targets": [3],
                                 "orderable": false
-                                } ],                  
+                                },
+                              {
+                                  "targets": [ 4 ],
+                                  "visible": false,
+                                  "searchable": false
+                              } 
+                            ],
+                dom: 'Bfrtip',
+                buttons: [
+                    btnExcel,
+                    {
+                        extend: 'csvHtml5',
+                        title: 'Pedidos en Proceso',
+                        text:      '<i class="fa fa-file-text-o"></i>',
+                        titleAttr: 'CSV',                           
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3 ]
+                        }
+                    },                
+                ],                                                
                 language:{url: "<?php echo e(asset('/')); ?>locales/datatables_ES.json"},
                 initComplete: function () {
                     actualizarFiltros(this.api());
@@ -419,15 +451,16 @@
         	$("#anoSel").val(ano);
         	$("#mesSel").val(table.cell(fila,1).data());
 
-            if(parseInt(mes)<10){ 
-                 mm='0'+mes.toString();
-            }else{
-                mm=mes.toString();
-            }
+          if(parseInt(mes)<10){ 
+               mm='0'+mes.toString();
+          }else{
+              mm=mes.toString();
+          }
 
-            periodoSeleccionado=parseInt(ano.toString()+mm.toString());
+          periodoSeleccionado=parseInt(ano.toString()+mm.toString());
         	document.getElementById('mesSel').dataset.numeromes=mes;
 
+          titulo="Lista de Costos " + table.cell(fila,1).data() + " " + ano;
         	var productos=$("#tablaProductos").DataTable();
 
         	productos.rows().remove().draw();
@@ -455,9 +488,11 @@
                                 dato[x].u_nombre,
                                 dato[x].nombrePlanta,
                                 elemCosto, 
+                                dato[x].costo
                             ] ).index();
 
                         productos.cell(fila,0).node().dataset.idproductolistaprecio=dato[x].idProductoListaPrecio;
+                        productos.cell(fila,0).node().style.width="0px";
 
                     }
 
@@ -527,7 +562,8 @@
 		            var nodo=table.row.add( [
 		                    $("#ano").val(),
 		                    $("#mes option:selected").html(),
-		                    '<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>'
+		                    '<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>' + 
+                        '<button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>'                       
 		                    ] ).draw().node();
 
 		            nodo.dataset.nummes=$("#mes").val();

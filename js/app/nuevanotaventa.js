@@ -224,9 +224,7 @@
                         }
                         
                         cadena+="<td style='width:50px; text-align:right;'>"+number_format(data[x].cp_precio,0)+"</td>";
-                        cadena+="<td style='width:250px'>"+data[x].cp_glosa_reajuste+"</td>";
-                        cadena+="<td style='width:70px; text-align:right;'>"+number_format(data[x].cp_costo_flete,0)+"</td>";
-                        cadena+="<td style='width:70px; text-align:right;'>"+number_format(data[x].cp_varios,0)+"</td>";                 
+                        cadena+="<td style='width:250px'>"+data[x].cp_glosa_reajuste+"</td>";            
                         cadena+="<td style='width:150px'>" + cadenaPlantas + "</td>";
                         cadena+="<td style='width:120px'>" + cadenaFormaEntrega + "</td>";
                         cadena+="</tr>";
@@ -413,14 +411,6 @@
             return;            
         }
 
-
-
-
-
-
-
-
-
         var cont=0;
 
         var tabla = document.getElementById('tablaDetalle');
@@ -430,11 +420,11 @@
         var entregaEnObra=0;
 
         for (var i = 1; i < tabla.rows.length; i++){
-            if (tabla.rows[i].cells[9].getElementsByTagName('select')[0].value=='0' || tabla.rows[i].cells[10].getElementsByTagName('select')[0].value=='0' ) {
+            if (tabla.rows[i].cells[7].getElementsByTagName('select')[0].value=='0' || tabla.rows[i].cells[8].getElementsByTagName('select')[0].value=='0' ) {
                 errorPlantaFormaEntrega=true;
                 break;
             }
-            if (tabla.rows[i].cells[10].getElementsByTagName('select')[0].value=='1') {
+            if (tabla.rows[i].cells[8].getElementsByTagName('select')[0].value=='1') {
                 entregaEnObra++;
             }
             cadena+='{';
@@ -443,10 +433,8 @@
             cadena+='"formula":"'+  tabla.rows[i].cells[1].getElementsByTagName('input')[0].value + '", ';
             cadena+='"u_codigo":"'+  tabla.rows[i].cells[4].innerHTML  + '", ';
             cadena+='"precio":"'+  tabla.rows[i].cells[5].innerHTML.replace('.','')  + '", ';
-            cadena+='"flete":"'+  tabla.rows[i].cells[7].innerHTML.replace('.','')  + '", ';
-            cadena+='"varios":"'+  tabla.rows[i].cells[8].innerHTML.replace('.','')  + '", ';
-            cadena+='"idPlanta":"'+  tabla.rows[i].cells[9].getElementsByTagName('select')[0].value + '", ';
-            cadena+='"idFormaEntrega":"'+  tabla.rows[i].cells[10].getElementsByTagName('select')[0].value + '"';
+            cadena+='"idPlanta":"'+  tabla.rows[i].cells[7].getElementsByTagName('select')[0].value + '", ';
+            cadena+='"idFormaEntrega":"'+  tabla.rows[i].cells[8].getElementsByTagName('select')[0].value + '"';
             cadena+='}, ';
 
 

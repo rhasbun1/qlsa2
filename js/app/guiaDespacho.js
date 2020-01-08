@@ -74,9 +74,11 @@
                   document.getElementById('btnEmitirGuia').dataset.idperfil=='7'){
                   document.getElementById('btnGuardarDatosGuia').style.display='inline';
                   document.getElementById('btnEmitirGuia').style.display='inline';
+                  document.getElementById('btnAnularGuiaTemporal').style.display='inline';
                 }else{
                   document.getElementById('btnGuardarDatosGuia').style.display='none';
                   document.getElementById('btnEmitirGuia').style.display='none';
+                  document.getElementById('btnAnularGuiaTemporal').style.display='none';
                 }
                 document.getElementById('btnBajar').style.display='none';
 
@@ -409,5 +411,69 @@
   function cerrarEliminarGuia(){
     $("#modEliminarGuia").modal('hide');
     $("#motivoEliminacionGuia").val('');    
+  }
+
+  function abrirModalAnularGuia(){
+    var folioGuia=document.getElementById('folioDTE').value.trim();
+    var numeroGuia=document.getElementById('folioDTE').dataset.numeroguia;
+
+    if(folioGuia!=''){
+      swal(
+          {
+              title: "Guía no puede ser anulada" ,
+              text: 'La guía ya fue emitida y se le ha asignado un número definitivo',
+              type: 'warning',
+              showCancelButton: false,
+              confirmButtonText: 'Entendido',
+              cancelButtonText: '',
+              closeOnConfirm: true,
+              closeOnCancel: false
+          }
+        ) 
+        return;     
+    }
+
+    $("#obsAnulacion").val('');
+    $("#mdAnularGuiaTemporal").modal('show');
+  }
+
+  function cerrarAnularGuia(){
+    $("#obsAnulacion").val('');
+    $("#mdAnularGuiaTemporal").modal('hide');
+  }
+
+  function anularGuiaTemporal(){
+    if(obsAnulacion.value.trim()==''){
+      swal(
+          {
+              title: "¡Debe ingresar el motivo!" ,
+              text: '',
+              type: 'warning',
+              showCancelButton: false,
+              confirmButtonText: 'Ok',
+              cancelButtonText: '',
+              closeOnConfirm: true,
+              closeOnCancel: false
+          }
+        ) 
+        return;        
+    }
+
+    $.ajax({
+        url: urlApp + "eliminarGuiaDespacho",
+        headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+                numeroGuia: document.getElementById('folioDTE').dataset.numeroguia,
+                motivo: obsAnulacion.value
+              },
+        success:function(dato){
+          cerrarAnularGuia();
+          cerrarCajaGuia();
+        }
+    })                
+    return;                        
+    
   }
 

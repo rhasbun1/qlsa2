@@ -312,12 +312,19 @@
             @if( (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') and $productosSinGuia>0 )
             <button id="btnAsignarGuia" class="btn btn-sm btn-success" onclick="asignarFolio();">Asignar Guía a elementos seleccionados</button>
             @endif
-            @if ( ( ( intval($pedido[0]->idEstadoPedido) >= 2 and intval($pedido[0]->idEstadoPedido <=5) ) or intval($pedido[0]->idEstadoPedido==0) ) and
-                (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' ) )
-                @if($despachado>0 and $sinDespachar>0)
-                    <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+            @if( ($pedido[0]->tipoCarga==1 or $pedido[0]->tipoCarga==2 ) and $pedido[0]->idFormaEntrega==2 and (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7') )
+                <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+            @else
+                @if ( ( ( intval($pedido[0]->idEstadoPedido) >= 2 and intval($pedido[0]->idEstadoPedido <=5) ) or intval($pedido[0]->idEstadoPedido==0) ) and
+                    (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' ) )
+
+                    @if($despachado>0 and $sinDespachar>0)
+                        <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+                    @endif
+
                 @endif
-            @endif
+            @endif    
+
             <a href="{{ asset('/') }}programacion" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>         
         </div> 
 
@@ -453,6 +460,22 @@
 
 
         function cerrarPedido(){
+
+            if(document.getElementById('obsDespachoParcial').value.trim()==''){
+                swal(
+                    {
+                        title: '¡Debe ingresar el motivo!' ,
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    })
+                return;              
+            }
+            
             swal(
                 {
                     title: 'Este pedido va a pasar al listado histórico. ¿Desea continuar?' ,
@@ -748,8 +771,10 @@
                 }
             }          
             if(tipoTransporte.value==2){
-                btnAsignarGuia.innerHTML="Asignar Guía";
-                ocultarColumna(12)
+                if( document.getElementById('btnAsignarGuia') ){
+                    btnAsignarGuia.innerHTML="Asignar Guía";
+                    ocultarColumna(12);
+                }
             }
 
         });

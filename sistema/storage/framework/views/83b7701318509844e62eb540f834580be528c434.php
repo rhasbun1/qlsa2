@@ -39,6 +39,9 @@
                 <br>
             
             <input type="hidden" id="_token" name="_token" value="<?php echo e(csrf_token()); ?>">
+        
+            <b>NOTA: Los productos en los cuales aparezca la sigla S/C, significa que fueron informados como productos despachados Sin Certificado</b>
+            <br><br>
             <div class="table-responsive">
                 <table id="tablaAprobados" class="table table-condensed">
                     <thead>                      
@@ -61,7 +64,8 @@
                             <?php $__currentLoopData = $guias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>                                    
                                     <td style="width:50px" data-numguia="<?php echo e($item->numeroGuia); ?>" data-prodcodigo="<?php echo e($item->prod_codigo); ?>">
-                                        <?php if( $item->certificado=='' ): ?>
+                                        <?php if( $item->certificado=='' || $item->certificado=='S/C' ): ?>
+                                            S/C
                                             <button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1, <?php echo e($item->prod_codigo); ?> );" title="Subir Certificado"><span class="glyphicon glyphicon-arrow-up"></span></button>
                                         <?php else: ?>
                                             <a target="_blank" href="<?php echo e(asset('/')); ?>bajarCertificado/<?php echo e($item->certificado); ?>">
@@ -414,7 +418,8 @@
                 success:function(dato){
                     for(var x=0;x<dato.length;x++){
                         var col0='';
-                        if( dato[x].certificado=='' ){
+                        if( dato[x].certificado=='' || dato[x].certificado=='S/C' ){
+                            col0+='S/C';
                             col0+='<button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1, ' +  dato[x].prod_codigo + ');" title="Subir Certificado"><span class="glyphicon glyphicon-arrow-up"></span></button>';
                         }else{
                             col0+='<a target="_blank" href="' + urlApp + 'bajarCertificado/' + dato[x].certificado + '">';

@@ -170,7 +170,11 @@
                             <td style="width: 150px"> {{ $item->prod_nombre }} </td>
                             <td style="width: 80px">
                                 @if( $item->requiere_diseno==1 )
-                                    <input class="form-control input-sm" value="{{ $item->formula }}" maxlength="20"> 
+                                    @if( Session::get('grupoUsuario')=='C' and Session::get('idPerfil')!='12')
+                                        <input class="form-control input-sm" value="{{ $item->formula }}" maxlength="20"> 
+                                    @else
+                                        {{ $item->formula }}
+                                    @endif    
                                 @endif    
                             </td>
                             <td style="width: 50px;text-align:right;"> {{ number_format( $item->cantidad, 0, ',', '.' ) }} </td>
@@ -256,6 +260,14 @@
                 <th style="width:350px">Motivo</th>
             </thead>
             <tbody>
+                @if ($notaventa[0]->fechaCierreSistema!='' )
+                <tr>
+                    <td style="width:200px"> {{ $notaventa[0]->fechaCierreSistema }} </td>
+                    <td style="width:200px">QL Now</td>
+                    <td style="width:100px">Cierre</td>
+                    <td style="width:350px">Cerrada automáticamente por no haber movimientos.</td>
+                </tr>                
+                @endif
                 @foreach($log as $item)
                 <tr>
                     <td style="width:200px"> {{ $item->fechaHora }} </td>

@@ -68,10 +68,7 @@
                 $("#notificaciones").append(notificacion);
                 $("#btnCrearPedido").attr("disabled", true);
             }           
-        }
-
-
-                    
+        }           
                 
     });    
 
@@ -784,7 +781,7 @@
             cache:false,
             contentType: false,
             processData: false,            
-            success:function(dato){          
+            success:function(dato){
                     swal(
                         {
                             title: 'Se ha creado el Pedido Nº ' + dato.identificador +" ¿Desea crear otro pedido para la misma nota de venta?",
@@ -817,7 +814,6 @@
                     )                   
             }
         })
-
 
     }
 
