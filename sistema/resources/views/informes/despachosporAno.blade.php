@@ -87,38 +87,6 @@
 	    anoInicio.value=fecha.getFullYear().toString();
 		anoTermino.value=fecha.getFullYear().toString();
 
-		ej.base.L10n.load({
-		    'en-US': {
-		        'grid': {
-		            'EmptyRecord': 'No hay información para mostrar',
-		            'GroupDropArea': 'Arrastre columna aquí para agrupar',
-		            'UnGroup': 'Ungroup',
-		            'Item': 'Item',
-		            'Items': 'Items',
-		            'ClearFilter': 'Borrar filtro',
-                    "Print": "Imprimir",
-                    "Pdfexport": "Exportar a PDF",
-                    "Excelexport": "Exportar a Excel",
-                    "Csvexport": "Exportar a CSV",
-                    "FilterButton": "Filtrar",
-                    "ClearButton": "Quitar",                    	            
-                    "SelectAll": "Seleccionar todo",
-                    "Search": "Buscar",
-                    "Blanks": "Vacío",
-		        },
-		        'pager': {
-		            'currentPageInfo': '{0} de {1}',
-		            'totalItemsInfo': '({0} Items)',
-		            'firstPageTooltip': 'Ir a primera página',
-		            'lastPageTooltip': 'Ir a última página',
-		            'nextPageTooltip': 'Siguiente página',
-		            'previousPageTooltip': 'Página anterior',
-		            'nextPagerTooltip': 'nextPagerTooltip',
-		            'previousPagerTooltip': 'previousPagerTooltip'
-		        },
-		    }
-		});
-
 		function bloquear(){
 			if( checkTodo.checked ){
 				anoInicio.readOnly=true;
@@ -181,10 +149,42 @@
 	        
 			}
 		    
+			ej.base.L10n.load({
+			    'en-US': {
+			        'grid': {
+			            'EmptyRecord': 'No hay información para mostrar',
+			            'GroupDropArea': 'Arrastre columna aquí para agrupar',
+			            'UnGroup': 'Ungroup',
+			            'Item': 'Item',
+			            'Items': 'Items',
+			            'ClearFilter': 'Borrar filtro',
+	                    "Print": "Imprimir",
+	                    "Pdfexport": "Exportar a PDF",
+	                    "Excelexport": "Exportar a Excel",
+	                    "Csvexport": "Exportar a CSV",
+	                    "FilterButton": "Filtrar",
+	                    "ClearButton": "Quitar",                    	            
+	                    "SelectAll": "Seleccionar todo",
+	                    "Search": "Buscar",
+	                    "Blanks": "Vacío",
+			        },
+			        'pager': {
+			            'currentPageInfo': '{0} de {1}',
+			            'totalItemsInfo': '({0} Items)',
+			            'firstPageTooltip': 'Ir a primera página',
+			            'lastPageTooltip': 'Ir a última página',
+			            'nextPageTooltip': 'Siguiente página',
+			            'previousPageTooltip': 'Página anterior',
+			            'nextPagerTooltip': 'nextPagerTooltip',
+			            'previousPagerTooltip': 'previousPagerTooltip'
+			        },
+			    }
+			});
+
 			if(tipo.value==3){
 			    var grid = new ej.grids.Grid({
 			        dataSource: data,
-			        locale: 'en-US',
+			        locale: 'es-CL',
 			        allowPaging: true,
 			        allowSorting: true,
 			        allowGrouping: false,
@@ -205,7 +205,7 @@
 			}else{
 			    var grid = new ej.grids.Grid({
 			        dataSource: data,
-			        locale: 'en-US',
+			        locale: 'es-CL',
 			        allowPaging: true,
 			        allowSorting: true,
 			        allowGrouping: false,

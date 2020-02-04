@@ -77,7 +77,11 @@
                     Nombre (*)
                 </div>
                 <div class="col-md-7">
-                    <input class="form-control input-sm" id="nombreProducto" data-idproducto="0">
+                    <select class="form-control input-sm" id="selProductos">
+                        @foreach($productos as $item)
+                            <option value="{{ $item->prod_codigo }}">{{ $item->prod_nombre }}</option>
+                        @endforeach 
+                    </select>  
                 </div>
             </div>
             <div class="row" style="padding-top: 5px">
@@ -183,6 +187,7 @@
     <script src="{{ asset('/') }}js/syncfusion/lang/ej.culture.de-DE.min.js"></script>
 
     <script>
+        var productoListaPrecioID;
         $("#precioCosto").ejNumericTextbox({
             decimalPlaces: 0,
            // watermarkText: "Ingrese valor",
@@ -203,11 +208,10 @@
 
         function nuevoProducto(){
             $("#fila").val('0');
-            document.getElementById('nombreProducto').dataset.idproducto="0";
+            document.getElementById('selProductos').selectedIndex=0;
             $("#tituloFormProducto").html('<h5><b>Nuevo Producto</b></h5>');
             var tabla=document.getElementById('tabla');
             $("#fila").val(0);
-            $("#nombreProducto").val( '' );
 
             $("#fechaCosto").val('');
             $("#precioCosto").ejNumericTextbox({
@@ -236,7 +240,7 @@
             var fila=$("#fila").val();
             var idPrecio='0';
             var table=$('#tabla').DataTable();
-            var buscar=$("#nombreProducto").val().trim()+$("#selUnidades option:selected").html().trim()+$("#selPlantas option:selected").html().trim();
+            var buscar=$("#selProductos option:selected").html().trim()+$("#selUnidades option:selected").html().trim()+$("#selPlantas option:selected").html().trim();
 
             for (var i = 0; i < table.rows().count(); i++){
                 if( (buscar==table.cell(i,1).data().trim()+table.cell(i,2).data().trim()+table.cell(i,3).data().trim()) && fila!=i ){
@@ -254,16 +258,15 @@
                     return;
                 }
             }
-
-
             $.ajax({
                 url: urlApp + "guardarDatosProductoListaPrecio",
                 headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
                 type: 'POST',
                 dataType: 'json',
                 data: { 
-                        idProductoListaPrecios: document.getElementById('nombreProducto').dataset.idproducto,                          
-                        nombreProducto: $("#nombreProducto").val(),
+                        idProductoListaPrecios: productoListaPrecioID,    
+                        codigoProducto: $("#selProductos").val(),
+                        nombreProducto: $("#selProductos option:selected").text(),
                         unidad: $("#selUnidades option:selected").html(),
                         idPlanta: $("#selPlantas").val(),
                         costo: $("#precioCosto").val(),
@@ -276,10 +279,10 @@
                 success:function(dato){
                     var table = $('#tabla').DataTable();
                     if(fila=='0'){
-                        
-                        table.row.add( [
+                       //ff=table.row.add( [ 
+                       table.row.add( [
                                 dato[0].idProductoListaPrecios,
-                                $("#nombreProducto").val(),
+                                $("#selProductos option:selected").html(),
                                 $("#selUnidades option:selected").html(),
                                 $("#selPlantas option:selected").html() ,
                                 $("#precioCosto").val(),
@@ -291,14 +294,19 @@
                                 $("#solicitaCertificado option:selected").html(),
                                 '<td style="width:40px"><button class="btn btn-xs btn btn-warning btnEditar" title="Editar"><i class="fa fa-edit fa-lg"></i></button>' + 
                                 '<button class="btn btn-xs btn btn-danger btnEliminar" title="Eliminar"><i class="fa fa-trash-o fa-lg"></i></button></td>'
-                                ] ).draw();                                          
+                                ] ).draw();
+                                //] ).draw().index();
+                        //celda=table.cell(ff,4).node();
+                        //ejemplo: listabodega de proyecto datamart
+                        //celda.style.textalign="right";
+                                                                          
                     }else{
 
-                        table.cell(fila,1).data( $("#nombreProducto").val() );
+                        table.cell(fila,1).data( $("#selProductos option:selected").html() );
                         table.cell(fila,2).data( $("#selUnidades option:selected").html() );                 
                         table.cell(fila,3).data( $("#selPlantas option:selected").html() );
 
-                        table.cell(fila,4).data(number_format($("#precioCosto").data("ejNumericTextbox").model.value,0) );
+                        table.cell(fila,4).data(number_format($("#precioCosto").data("ejNumericTextbox").model.value) );
                         table.cell(fila,5).data( dato[0].fechaCosto );
 
                         table.cell(fila,6).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
@@ -315,7 +323,6 @@
                 }
 
             })
-
         }
 
         function eliminarProductoPrecio(fila){
@@ -398,12 +405,18 @@
             $('#tabla tbody').on( 'click', '.btnEditar', function () {
                 var data=table.row( $(this).parents('tr') ).data();
                 $("#fila").val(table.row( $(this).parents('tr') ).index() );
-                document.getElementById('nombreProducto').dataset.idproducto=data[0].trim();
                 $("#tituloFormProducto").html('<h5><b>Editar Datos del Producto</b></h5>');
-                $("#nombreProducto").val( data[1].trim() );
-                $("#precioCosto").ejNumericTextbox({
-                    value: data[4].trim().replace('.','')
-                });
+                productoListaPrecioID = data[0];
+                if (data[4] == 0){
+                    $("#precioCosto").ejNumericTextbox({
+                        value: data[4]
+                    });
+                }
+                else{
+                    $("#precioCosto").ejNumericTextbox({
+                        value: data[4].trim().replace('.','')
+                    });
+                }
                 $("#fechaCosto").val( data[5].trim().replace('.','') );
 
                 $("#precioReferencia").ejNumericTextbox({
@@ -426,6 +439,15 @@
                     document.getElementById('solicitaCertificado').selectedIndex=1;
                 }else{
                     document.getElementById('solicitaCertificado').selectedIndex=0;
+                }
+
+                var lista=document.getElementById('selProductos');
+                for (var i = 0; i < lista.length; i++){
+                    var opt=lista.options[i];
+                    if( opt.text==data[1].trim() ){
+                        lista.selectedIndex=i;
+                        break;
+                    }
                 }
 
                 var lista=document.getElementById('selPlantas');

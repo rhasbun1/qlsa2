@@ -2,138 +2,211 @@
 
 @section('contenedorprincipal')
 
+
 <div style="padding: 5px">
     <div class="panel panel-default table-responsive">
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         <div class="panel-heading">
             <b>Histórico de Pedidos Despachados</b>
         </div>
-        <div class="panel-body" id="panelBody">
-            <div> 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="row" style="padding-top: 5px">
-                            <div class="col-md-4">
-                                Cliente
+        <div class="panel-body" id="panelBody" style="display: none">
+
+                <div> 
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row" style="padding-top: 5px">
+                                <div class="col-md-4">
+                                    Cliente
+                                </div>
+                                <div class="col-md-8">
+                                    @if ( Session::get('empresaUsuario')!='0' )
+                                        <select id="idCliente" class="form-control input-sm" readonly>
+                                            <option value="{{ $clientes[0]->emp_codigo }}">{{ $clientes[0]->emp_nombre }}</option>
+                                    @else
+                                        <select id="idCliente" class="form-control input-sm">
+                                            <option value="0">Todos los clientes</option>
+                                            @foreach($clientes as $item)
+                                                <option value="{{ $item->emp_codigo }}">{{ $item->emp_nombre }}</option>
+                                            @endforeach
+                                     @endif    
+                                    </select>
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                @if ( Session::get('empresaUsuario')!='0' )
-                                    <select id="idCliente" class="form-control input-sm" readonly>
-                                        <option value="{{ $clientes[0]->emp_codigo }}">{{ $clientes[0]->emp_nombre }}</option>
-                                @else
-                                    <select id="idCliente" class="form-control input-sm">
-                                        <option value="0">Todos los clientes</option>
-                                        @foreach($clientes as $item)
-                                            <option value="{{ $item->emp_codigo }}">{{ $item->emp_nombre }}</option>
-                                        @endforeach
-                                 @endif    
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row" style="padding-top: 5px">
-                            <div class="col-md-4">
-                                Planta QLSA
-                            </div>
-                            <div class="col-md-8">
-                                <select id="idPlanta" class="form-control input-sm">
-                                    @if ( Session::get('idPlanta')=='0' )
-                                        <option value="0">Todas las plantas</option>
-                                        @foreach($plantas as $item)
-                                            <option value="{{ $item->idPlanta }}">{{ $item->nombre }}</option>
-                                        @endforeach
-                                    @else    
-                                        @foreach($plantas as $item)
-                                            @if ( Session::get('idPlanta')==$item->idPlanta)
+                            <div class="row" style="padding-top: 5px">
+                                <div class="col-md-4">
+                                    Planta QLSA
+                                </div>
+                                <div class="col-md-8">
+                                    <select id="idPlanta" class="form-control input-sm">
+                                        @if ( Session::get('idPlanta')=='0' )
+                                            <option value="0">Todas las plantas</option>
+                                            @foreach($plantas as $item)
                                                 <option value="{{ $item->idPlanta }}">{{ $item->nombre }}</option>
-                                            @endif    
-                                        @endforeach
-                                    @endif                                            
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-7">
-                        <div class="row">
-                            <div class="col-md-4" style="padding-top: 5px">
-                                Filtrar por Horario Salida
-                            </div>
-                            <div class="col-md-3">
-                                <div class="input-group date" id="divFechaMin">
-                                    <input type="text" class="form-control input-sm" id="min">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
+                                            @endforeach
+                                        @else    
+                                            @foreach($plantas as $item)
+                                                @if ( Session::get('idPlanta')==$item->idPlanta)
+                                                    <option value="{{ $item->idPlanta }}">{{ $item->nombre }}</option>
+                                                @endif    
+                                            @endforeach
+                                        @endif                                            
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="input-group date" id="divFechaMax">
-                                    <input type="text" class="form-control input-sm" id="max">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-4" style="padding-top: 5px">
+                                    Filtrar por Horario Salida
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="divFechaMin">
+                                        <input type="text" class="form-control input-sm" id="min">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-1">
-                                <button class="btn btn-success btn-sm" onclick="obtenerHistorico(1);">Buscar</button>
-                            </div>                                
-                        </div>
-                        <div class="row" style="padding-top: 5px">  
-                            <div class="col-md-4" style="padding-top: 5px">
-                                Filtrar por Horario Creación( Usar este filtro para ver todos los pedidos suspendidos )
-                            </div>
-                            <div class="col-md-3">
-                                <div class="input-group date" id="divFechaCreacionMin">
-                                    <input type="text" class="form-control input-sm" id="fechaCreacionMin">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="divFechaMax">
+                                        <input type="text" class="form-control input-sm" id="max">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-success btn-sm" onclick="obtenerHistorico(1);">Buscar</button>
+                                </div>                                
                             </div>
-                            <div class="col-md-3">
-                                <div class="input-group date" id="divFechaCreacionMax">
-                                    <input type="text" class="form-control input-sm" id="fechaCreacionMax">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
+                            <div class="row" style="padding-top: 5px">  
+                                <div class="col-md-4" style="padding-top: 5px">
+                                    Filtrar por Horario Creación( Usar este filtro para ver todos los pedidos suspendidos )
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="divFechaCreacionMin">
+                                        <input type="text" class="form-control input-sm" id="fechaCreacionMin">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="input-group date" id="divFechaCreacionMax">
+                                        <input type="text" class="form-control input-sm" id="fechaCreacionMax">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-success btn-sm" onclick="obtenerHistorico(4);">Buscar</button>
+                                </div>                                
+                            </div>                                                       
+                            <div class="row" style="padding-top: 5px">                               
+                                <div class="col-md-4">
+                                    Rango por Nº de Pedido
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="txtPedidoDesde" class="form-control input-sm" id="min" maxlength="9" onkeypress="return isIntegerKey(event)">
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="txtPedidoHasta" class="form-control input-sm" id="max" maxlength="9" onkeypress="return isIntegerKey(event)">
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-success btn-sm" onclick="obtenerHistorico(2);">Buscar</button>
+                                </div>                                   
                             </div>
-                            <div class="col-md-1">
-                                <button class="btn btn-success btn-sm" onclick="obtenerHistorico(4);">Buscar</button>
-                            </div>                                
-                        </div>                                                       
-                        <div class="row" style="padding-top: 5px">                               
-                            <div class="col-md-4">
-                                Rango por Nº de Pedido
+                            <div class="row" style="padding-top: 5px">
+                                <div class="col-md-4">
+                                    Rango por Nº Guía Despacho
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="txtGuiaDesde" class="form-control input-sm" id="min" maxlength="9" onkeypress="return isIntegerKey(event)">
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="txtGuiaHasta" class="form-control input-sm" id="max" maxlength="9" onkeypress="return isIntegerKey(event)">
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-success btn-sm" onclick="obtenerHistorico(3);">Buscar</button>
+                                </div>                                   
                             </div>
-                            <div class="col-md-3">
-                                <input id="txtPedidoDesde" class="form-control input-sm" id="min" maxlength="9" onkeypress="return isIntegerKey(event)">
-                            </div>
-                            <div class="col-md-3">
-                                <input id="txtPedidoHasta" class="form-control input-sm" id="max" maxlength="9" onkeypress="return isIntegerKey(event)">
-                            </div>
-                            <div class="col-md-1">
-                                <button class="btn btn-success btn-sm" onclick="obtenerHistorico(2);">Buscar</button>
-                            </div>                                   
                         </div>
-                        <div class="row" style="padding-top: 5px">
-                            <div class="col-md-4">
-                                Rango por Nº Guía Despacho
-                            </div>
-                            <div class="col-md-3">
-                                <input id="txtGuiaDesde" class="form-control input-sm" id="min" maxlength="9" onkeypress="return isIntegerKey(event)">
-                            </div>
-                            <div class="col-md-3">
-                                <input id="txtGuiaHasta" class="form-control input-sm" id="max" maxlength="9" onkeypress="return isIntegerKey(event)">
-                            </div>
-                            <div class="col-md-1">
-                                <button class="btn btn-success btn-sm" onclick="obtenerHistorico(3);">Buscar</button>
-                            </div>                                   
-                        </div>
-                    </div>
-                </div>                                                                             
-            </div>
+                    </div>                                                                             
+                </div>
+                <hr style="color: #0056b2;" />
+                <table id="tablaDetalle" class="table table-hover table-condensed"  style="width: 1200px">
+                    <thead>
+                        <th style="width: 60px">Pedido</th>
+                        <th style="width: 120px"></th>
+                        <th style="width: 150px">Cliente</th>
+                        <th style="width: 150px">Obra/Planta</th>
+                        <th style="width: 120px">Producto</th>
+                        <th style="width: 60px; text-align: right;">Cantidad<br>Real</th>
+                        <th style="width: 60px">Unidad</th>
+                        <th style="width: 80px">Fecha Entrega<br>Solicitada</th>
+                        <th style="width: 150px">Horario de Salida</th>
+                        <th style="width: 80px">Forma de Entrega</th>
+                        <th style="width: 80px">Planta de Origen</th>
+                        <th style="width: 100px">Estado</th>
+                        <th style="width: 60px; text-align: right;">Nota de Venta</th>
+                        <th style="width: 60px; text-align: right;">Nº de guía</th>
+                        <th style="width: 80px; text-align: right;">Nº Aux.</th>
+                    </thead>
+                    <tbody>
+                        @foreach($pedidos as $item)
+                            <tr>
+                                <td style="width: 60px">
+                                    <a target="_blank" href="{{ asset('/') }}verpedidoNuevaVentana/{{ $item->idPedido }}/1/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
+                                </td>
+                                <td style="width: 120px">
+                                    @if ($item->modificado>0)
+                                        <span class="badge badge-primary">{{$item->modificado}}</span>
+                                    @endif                                        
+                                    @if ($item->tipoTransporte==2)
+                                        <span class="badge badge-danger">M</span>
+                                    @endif
+                                    @if ( $item->formula!='' )
+                                        <span><img src="{{ asset('/') }}img/iconos/matraz.png" border="0" title="{{ $item->formula }}" width="15px" height="15pxs"></span>
+                                    @endif   
+                                    @if ( $item->numeroGuia>0 )
+                                        <span onclick='abrirGuia(1, {{ $item->numeroGuia }}, this.parentNode.parentNode);' style="cursor:pointer; cursor: hand"><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0"></span>
+                                    @endif
+                                    @if ( $item->certificado!='' )  
+                                        <a target="_blank" href="{{ asset('/') }}bajarCertificado/{{$item->certificado}}/">    
+                                            <img src="{{ asset('/') }}img/iconos/certificado.png" border="0">
+                                        </a>
+                                    @endif
+                                    @if ( $item->salida==1 )
+                                    <span><img src="{{ asset('/') }}img/iconos/enTransporte.png" border="0" onclick="verUbicacionGmaps('{{ $item->Patente }}');" style="cursor:pointer; cursor: hand"></span>                                      
+                                    @endif                              
+                                </td>
+                                <td style="width: 150px">{{ $item->emp_nombre }}</td>
+                                <td style="width: 150px">{{ $item->nombreObra }}</td>
+                                <td style="width: 120px">{{ $item->prod_nombre }}</td>
+                                <td style="width: 60px; text-align: right;">{{$item->cantidadReal}}</td>
+                                <td style="width: 60px">{{ $item->unidad }}</td>
+                                <td style="width: 80px">{{$item->fechaEntrega}}</td>
+                                <td style="width: 150px">{{$item->fechaHoraSalida}}</td>
+                                <td style="width: 80px">{{$item->formaEntrega}}</td>
+                                <td style="width: 80px">{{ $item->nombrePlanta }}</td>
+                                <td style="width: 100px">{{ $item->estadoPedido }}</td>
+                                <td style="width: 60px; text-align: right;">{{ $item->idNotaVenta }}</td>
+                                <td style="width: 60px; text-align: right;">{{ $item->numeroGuia }}</td>
+                                <td style="width: 80px; text-align: right;">
+                                    @if( Session::get('idPerfil')>='5' and Session::get('idPerfil')<='7' )
+                                        <a class="btn btn-xs btn-default" style="height: 25px;width:100px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );">{{ $item->numeroAuxiliar }}</a>
+                                    @else
+                                        {{ $item->numeroAuxiliar }}
+                                    @endif
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    </tbody>            
+                </table>      
+
         </div>
-        <div id="Grid"></div>   
     </div>
     <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
         <a href="{{ asset('/') }}dashboard" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
@@ -181,131 +254,7 @@
 
     <script src="{{ asset('/') }}js/app/funciones.js?{{$parametros[0]->version}}"></script>
     <script src="{{ asset('/') }}js/app/guiaDespacho.js?{{$parametros[0]->version}}"></script>
-
-    <script src="{{ asset('/') }}js/syncfusion/jquery.globalize.js"></script>
-    <script src="{{ asset('/') }}js/syncfusion/lang/globalize.culture.en-US.min.js"></script>
-    <style>
-        .e-grid .e-headercell {
-            height:70px !important;
-        }
-        .e-grid .e-headercelldiv{ /* grid headercell font styles*/ 
-            font-size: 10px; 
-        }         
-    </style>
-
-    <script id="template" type="text/x-template">
-        <div class="imagenes">
-            ${colEstado}
-        </div>
-    </script>    
-
-    <script id="template-pedido" type="text/x-template">
-        <div class="numPedido" style="text-align=center">
-            ${idPedido}
-        </div>
-    </script>
-
-</script>
-
     <script>
-
-        ej.base.L10n.load({
-            'en-US': {
-                'grid': {
-                    'EmptyRecord': 'No hay información para mostrar',
-                    'GroupDropArea': 'Arrastre columna aquí para agrupar',
-                    'UnGroup': 'Ungroup',
-                    'Item': 'Item',
-                    'Items': 'Items',
-                    'ClearFilter': 'Borrar filtro',
-                    "Print": "Imprimir",
-                    "Pdfexport": "Exportar a PDF",
-                    "Excelexport": "Exportar a Excel",
-                    "Csvexport": "Exportar a CSV",
-                    "FilterButton": "Filtrar",
-                    "ClearButton": "Quitar",                                    
-                    "SelectAll": "Seleccionar todo",
-                    "Search": "Buscar",
-                    "Blanks": "Vacío",
-                },
-                'pager': {
-                    'currentPageInfo': '{0} de {1}',
-                    'totalItemsInfo': '({0} Items)',
-                    'firstPageTooltip': 'Ir a primera página',
-                    'lastPageTooltip': 'Ir a última página',
-                    'nextPageTooltip': 'Siguiente página',
-                    'previousPageTooltip': 'Página anterior',
-                    'nextPagerTooltip': 'nextPagerTooltip',
-                    'previousPagerTooltip': 'previousPagerTooltip'
-                },
-            }
-        });
-
-
-
-        function renderGrid(data){
-            var columnas;
-            columnas=[
-                { field: 'idPedido', headerText: 'Pedido', width: 100, textAlign: 'center',  template: '#template-pedido' },            
-                { field: 'colEstado', headerText: '', width: 80, template: '#template' },
-                { field: 'emp_nombre', headerText: 'Cliente', width: 120, textAlign: 'Left' },
-                { field: 'nombreObra', headerText: 'Obra/Planta', width: 120, textAlign: 'Left' },
-                { field: 'prod_nombre', headerText: 'Producto', width: 120, textAlign: 'Left' },
-                { field: 'cantidadReal', headerText: 'Cant.Real', width: 100, textAlign: 'Right', format: "N" },            
-                { field: 'unidad', headerText: 'Unidad', width: 90, textAlign: 'left' },  
-                { field: 'fechaEntrega', headerText: 'Fecha Entrega Solicitada', width: 100, textAlign: 'left' },
-                { field: 'fechaHoraSalida', headerText: 'Horario de Salida', width: 100, textAlign: 'left' },   
-                { field: 'formaEntrega', headerText: 'Forma de Entrega', width: 100, textAlign: 'left' }, 
-                { field: 'nombrePlanta', headerText: 'Planta de Origen', width: 100, textAlign: 'left' }, 
-                { field: 'estadoPedido', headerText: 'Estado', width: 100, textAlign: 'left' }, 
-                { field: 'idNotaVenta', headerText: 'Nota de Venta', width: 100, textAlign: 'Right', format: "N"  }, 
-                { field: 'numeroGuia', headerText: 'Nº de guía', width: 100, textAlign: 'Right', format: "N"  }, 
-                { field: 'numeroAuxiliar', headerText: 'Nº Aux.', width: 100, textAlign: 'Right', format: "N"  }, 
-            ];
-
-            var grid = new ej.grids.Grid({
-                dataSource: data,
-                locale: 'en-US',
-                allowPaging: true,
-                allowSorting: true,
-                allowGrouping: false,
-                gridLines: 'Vertical',
-                allowFiltering: true,
-                allowTextWrap: true,
-                filterSettings: { type: 'CheckBox' },
-                allowExcelExport: true,
-                allowPdfExport: true,
-                allowCsvExport: true,
-                allowScrolling : true,
-                height: 500,
-                toolbar: ['ExcelExport', 'Print'],
-                columns: columnas,
-                gridLines: 'Both',
-                pageSettings: { pageCount: 5, pageSize: 10, pageSizes: ['10', '50', 'All'] },
-              //  queryCellInfo: queryCellInfo   
-            });
-            document.getElementById('Grid').innerHTML='';
-            grid.appendTo('#Grid');
-
-            grid.toolbarClick = function (args) {
-                    if (args.item.id === 'Grid_pdfexport') {
-                        grid.pdfExport(getPdfExportProperties());
-                    }
-                    if (args.item.id === 'Grid_excelexport') {
-                        grid.excelExport(getExcelExportProperties());
-                    }
-                    if (args.item.id === 'Grid_csvexport') {
-                        grid.csvExport(getCsvExportProperties());
-                    }
-                };                  
-        }   
-
-        function queryCellInfo(args) {
-            if (args.column.field === 'colEstado') {
-                console.log("pasa por aqui");
-                args.cell.querySelector('.imagenes').innerHTML="<button class='btn btn-sm btn-success'>Test</button>";        
-            }
-        }
 
         $('#datosGuia').on('submit', function(e) {
           // evito que propague el submit
@@ -454,8 +403,13 @@
         });
 
         function obtenerHistorico(opcion){
+
+
             $("#mdProcesando").modal('show');    
 
+            var tabla=$("#tablaDetalle").DataTable();
+
+            tabla.rows().remove();
 
             if(opcion==4){
                 var fechaSalidaDesde=$("#fechaCreacionMin").val().trim();
@@ -533,7 +487,7 @@
                         if( dato[x].numeroGuia>0 ){
                             cadena+='<span onclick="abrirGuia(1, ' + dato[x].numeroGuia + ', this.parentNode.parentNode);" style="cursor:pointer; cursor: hand"><img src="'+ urlApp + 'img/iconos/guiaDespacho2.png" border="0"></span>';
                         }
-                        if( dato[x].certificado!='' ){  
+                        if( dato[x].certificado!='' && dato[x].certificado!='S/C' ){  
                             cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/'+ dato[x].certificado +'">';
                             cadena+='<img src="'+ urlApp + 'img/iconos/certificado.png" border="0"></a>';
                         }
@@ -541,14 +495,52 @@
                             cadena+='<span><img src="' + urlApp + 'img/iconos/enTransporte.png" border="0" onclick="verUbicacionGmaps(' + dato[x].Patente + ');" style="cursor:pointer; cursor: hand"></span>';    
                         }
 
-                        celdaPedido='<a target="_blank" href="'+urlApp+'verpedidoNuevaVentana/'+ dato[x].idPedido + '/1/" class="btn btn-xs btn-success" style="width:60px">' + dato[x].idPedido +'</a>';
-
-                        dato[x].colEstado=cadena;
-                        dato[x].idPedido=celdaPedido;
-                    } 
+                        celdaPedido='<a target="_blank" href="'+urlApp+'verpedidoNuevaVentana/'+ dato[x].idPedido + '/1/" class="btn btn-xs btn-success">' + dato[x].idPedido +'</a>';
 
 
-                    renderGrid(dato);
+                        celdaNumAux="";
+                        if(document.getElementById('idPerfilSession').value>=5 && document.getElementById('idPerfilSession').value<=7 ){
+                            celdaNumAux='<a class="btn btn-xs btn-default" style="height: 25px;width:100px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );">' + dato[x].numeroAuxiliar + '</a>';                                   
+                        }else{
+                           celdaNumAux='<td style="width: 80px; text-align: center;">' + dato[x].numeroAuxiliar + '</td>';
+                        }                        
+                        var fila=tabla.row.add( [
+                                celdaPedido,
+                                cadena,
+                                dato[x].emp_nombre,
+                                dato[x].nombreObra,
+                                dato[x].prod_nombre,
+                                dato[x].cantidadReal,
+                                dato[x].unidad,
+                                dato[x].fechaEntrega,
+                                dato[x].fechaHoraSalida,
+                                dato[x].formaEntrega,
+                                dato[x].nombrePlanta,
+                                dato[x].estadoPedido,
+                                dato[x].idNotaVenta,
+                                dato[x].numeroGuia,
+                                celdaNumAux
+                            ] ).index();
+
+                        tabla.cell(fila,0).node().width=60;
+                        tabla.cell(fila,1).node().width=120;
+                        tabla.cell(fila,2).node().width=150;
+                        tabla.cell(fila,3).node().width=150;
+                        tabla.cell(fila,4).node().width=120;
+                        tabla.cell(fila,5).node().width=60;
+                        tabla.cell(fila,6).node().width=60;
+                        tabla.cell(fila,7).node().width=80;
+                        tabla.cell(fila,8).node().width=150;
+                        tabla.cell(fila,9).node().width=80;
+                        tabla.cell(fila,10).node().width=80;
+                        tabla.cell(fila,11).node().width=100;
+                        tabla.cell(fila,12).node().width=60;
+                        tabla.cell(fila,13).node().width=60;
+                        tabla.cell(fila,14).node().width=80;
+
+                    }
+                    tabla.draw();
+                    actualizarFiltros(tabla);
                     $("#mdProcesando").modal('hide');
                 },
                 error: function(jqXHR, text, error){
@@ -623,7 +615,87 @@
             if (mm < 10) {mm = '0' + mm; }
             $("#min").val(dd + '/' + mm + '/' + yyyy);
 
+
+            var tablaDetalle="#tablaDetalle";
+            
+            // Setup - add a text input to each footer cell
+            $('#tablaDetalle thead tr').clone(true).appendTo( '#tablaDetalle thead' );
+            $('#tablaDetalle thead tr:eq(1) th').each( function (i) {
+                var title = $(this).text();
+                if(title.trim()!='' && title.trim()=='Estado Pedido' ){
+                    $(this).html( '<select id="selEstado" class="form-control input-sm"></select>' );
+                }else if(title.trim()!='' && title.trim()=='Planta de Origen' ){
+                    $(this).html( '<select id="selPlanta" class="form-control input-sm"></select>' );
+                }else if(title.trim()!='' && title.trim()=='Producto' ){
+                    $(this).html( '<select id="selProducto" class="form-control input-sm"></select>' );                    
+                }else if(title.trim()!='' && title.trim()=='Forma de Entrega' ){
+                    $(this).html( '<select id="selFormaEntrega" class="form-control input-sm"></select>' );
+                }else if(title.trim()!='' && title.trim()=='Estado' ){
+                    $(this).html( '<select id="selEstado" class="form-control input-sm"></select>' );                                                 
+                }else if(title.trim()!='' ){
+                    $(this).html( '<input type="text" class="form-control input-sm" placeholder="Buscar..." />' );
+                    $( 'input', this ).on( 'keyup change', function () {
+                        if ( table.column(i).search() !== this.value ) {
+                            table
+                                .column(i)
+                                .search( this.value )
+                                .draw();
+                        }
+                    } );                    
+                }       
+            } );
+
+
            var tituloArchivo='Histórico de Pedidos Despachados'
+
+            // DataTable
+            var table=$('#tablaDetalle').DataTable({
+                orderCellsTop: true,
+                fixedHeader: true,
+                lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                "scrollX": true,                
+                dom: 'Bfrtip',                
+                buttons: [
+                    'pageLength', 
+                    {
+                        extend: 'excelHtml5',
+                        title: tituloArchivo,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: tituloArchivo,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: tituloArchivo,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+                        }
+                    }
+                ],                
+                "order": [[ 0, "desc" ]],
+                columnDefs: [
+                    { width: 75, targets: 0 },
+                    { width: 100, targets: 1 },
+                    { width: 200, targets: 2 },
+                    { width: 100, targets: 4 },
+                    { width: 100, targets: 5 }
+                ],                          
+                language:{ url: "{{ asset('/') }}locales/datatables_ES.json",
+                           "decimal": ","},
+                preDrawCallback: function( settings ) {
+                    document.getElementById('panelBody').style.display="block";
+                  },
+                initComplete: function () {
+                    actualizarFiltros(this.api());
+                }                  
+            });
 
             $('.date').datepicker({
                 todayHighlight: true,
@@ -635,11 +707,99 @@
 
             $('#wrapper').toggleClass('sidebar-hide');
             $('.main-menu').find('.openable').removeClass('open');
-            $('.main-menu').find('.submenu').removeAttr('style');
-
-            obtenerHistorico(1);
+            $('.main-menu').find('.submenu').removeAttr('style'); 
 
         } );
+
+        function actualizarFiltros(tabla){
+            tabla.columns(10).every( function () {
+                var column = this;
+                var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+
+            tabla.columns(4).every( function () {
+                var column = this;
+                var select = $("#selProducto" ).empty().append( '<option value=""></option>' )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+            tabla.columns(6).every( function () {
+                var column = this;
+                var select = $("#selUnidad" ).empty().append( '<option value=""></option>' )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+            tabla.columns(9).every( function () {
+                var column = this;
+                var select = $("#selFormaEntrega" ).empty().append( '<option value=""></option>' )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );                        
+            tabla.columns(11).every( function () {
+                var column = this;
+                var select = $("#selEstado" ).empty().append( '<option value=""></option>' )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+
+        }   
 
     </script>
     

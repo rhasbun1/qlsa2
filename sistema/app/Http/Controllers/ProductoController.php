@@ -27,8 +27,9 @@ class ProductoController extends Controller
         $listaProductos=DB::Select('call spGetProductosPrecios()' );
         $unidades=Unidad::All();
         $plantas=Planta::All();
-
-        return view('productos')->with('listaProductos', $listaProductos)->with('unidades', $unidades)->with('plantas', $plantas);
+        $productos=Producto::All();
+        return view('productos')->with('listaProductos', $listaProductos)->with('unidades', $unidades)->with('plantas', $plantas)
+            ->with('productos', $productos);
     }
 
     public function guardarDatosProducto(Request $datos){
@@ -58,7 +59,7 @@ class ProductoController extends Controller
 
     public function guardarDatosProductoListaPrecio(Request $datos){
         if($datos->ajax()){
-            $respuesta=DB::Select('call spInsProductoListaPrecio(?,?,?,?,?,?,?,?,?,?)', array(
+            $respuesta=DB::Select('call spInsProductoListaPrecio(?,?,?,?,?,?,?,?,?,?,?)', array(
                             $datos->input('idProductoListaPrecios'),
                             $datos->input('nombreProducto'),
                             $datos->input('unidad'),
@@ -68,10 +69,10 @@ class ProductoController extends Controller
                             $datos->input('codigoSoftland'),
                             $datos->input('requiereDiseno'),
                             $datos->input('granel'),
-                            $datos->input('solicitaCertificado')
+                            $datos->input('solicitaCertificado'),
+                            $datos->input('codigoProducto'),
                             ) 
-                        );  
-
+                        );
             return response()->json($respuesta);
         }         
     }

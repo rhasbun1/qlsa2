@@ -596,15 +596,46 @@ class PedidoController extends Controller
 
         $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
 
+        $correoDestinatario=$datos[0]->correoUsuarioAutoriza;
         //$correoDestinatario='daviddiaz1402@gmail.com';
-        $correoDestinatario='rlazo@qlsa.cl';
 
         $url=asset('/')."autorizarPedidoUrgente/".$datos[0]->token."/";
-
-        $mensaje="<h3>SOLICITUD DE AUTORIZACION DE PEDIDO URGENTE</h3><br><br>";
+        $mensaje="<div style='width:80%'>";
+        $mensaje=$mensaje."<h3>SOLICITUD DE AUTORIZACION DE PEDIDO URGENTE</h3><br><br>";
         $mensaje=$mensaje."Estimado Usuario,<br><br>";
-        $mensaje=$mensaje."Se ha creado el Pedido Nº ".strval($idPedido).", el cual debe ser despachado con urgencia, se solicita su autorización por medio del siguiente link <a href='".$url."'>Autorizar</a>" ;
+        $mensaje=$mensaje."Se ha creado el Pedido Nº <b>".strval($idPedido)."</b>, para el cliente <b>".$datos[0]->nombreCliente."</b>, el cual debe ser despachado con urgencia. Se solicita su autorización.<br><br>" ;
 
+        $mensaje=$mensaje."<div style='padding-top:20px;'>";
+        $mensaje=$mensaje."<b>DETALLE DE PRODUCTOS INCLUIDOS EN EL PEDIDO</b>";
+        $mensaje=$mensaje."<table border='1' cellspacing='0'>";
+        $mensaje=$mensaje."<thead>";
+        $mensaje=$mensaje."<th>Producto</th>";
+        $mensaje=$mensaje."<th>Cantidad</th>";
+        $mensaje=$mensaje."<th>Unidad</th>";
+        $mensaje=$mensaje."<th>Precio unit.($)</th>";
+        $mensaje=$mensaje."<th>Total ($)</th>";
+        $mensaje=$mensaje."</thead>";
+        $mensaje=$mensaje."<tbody>";
+        $total=0;
+        foreach ( $datos as $item){
+            $mensaje=$mensaje."<tr>";
+            $mensaje=$mensaje."<td style='width: 100px;'>".$item->prod_nombre."</td>";
+            $mensaje=$mensaje."<td style='width: 80px;text-align: right'>".number_format( $item->cantidad, 0 , "," , "." )."</td>";
+            $mensaje=$mensaje."<td style='width: 100px;'>".$item->unidad."</td>";
+            $mensaje=$mensaje."<td style='width: 80px;text-align: right'>".number_format( $item->precio, 0 , "," , "." )."</td>";
+            $mensaje=$mensaje."<td style='width: 80px;text-align: right'>".number_format( $item->subtotal, 0 , "," , "." )."</td>";
+            $total=$total+$item->subtotal;
+            $mensaje=$mensaje."</tr>";
+        }
+
+        $mensaje=$mensaje."</tbody>";       
+        $mensaje=$mensaje."</table><br>";
+        $mensaje=$mensaje."<b>Total del pedido $ ".number_format( $total, 0 , "," , "." )."</b>";
+        $mensaje=$mensaje."</div><br><br>";
+        $mensaje=$mensaje."<div>";
+        $mensaje=$mensaje."<a href='".$url."'><img src='".asset('/')."img/aprobar3.png' border='0' style='cursor:pointer; cursor: hand' width='70' height='72'></a>";
+        $mensaje=$mensaje."</div>";
+        $mensaje=$mensaje."</div><br><br>";
         $body = [
             'Messages' => [
               [
@@ -632,17 +663,29 @@ class PedidoController extends Controller
     }
 
     public function autorizarPedidoUrgente($token){
+        
         $datos=DB::Select('call spUpdAutorizaPedidoUrgente(?)', array( $token ) );
 
         $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
 
-        //$correoDestinatario='daviddiaz1402@gmail.com';
+        $correoDestinatario='daviddiaz1402@gmail.com';
 
-        $correoDestinatario='rlazo@qlsa.cl';
+        $perfilesNotificacion='5, 7';
+        $usuariosDestinatarios=DB::Select('call spGetDestinatariosNotificacion(?,?)', array( $datos[0]->idPedido, $perfilesNotificacion ) ) ;
+
+        $destinatarios=[];
+        foreach ( $usuariosDestinatarios as $usuario){
+            $destinatarios[]=[ 
+                                'Email' => $correoDestinatario,
+                                'Name' => $correoDestinatario
+                            ];
+        }
+
+        //$correoDestinatario='rlazo@qlsa.cl';
 
         $mensaje="<h3>AVISO DE PEDIDO URGENTE</h3><br><br>";
         $mensaje=$mensaje."Estimado Usuario,<br><br>";
-        $mensaje=$mensaje."Se ha autorizado el Pedido Nº ".strval($datos[0]->idPedido).", el cual debe ser despachado con urgencia.";
+        $mensaje=$mensaje."Se ha autorizado el Pedido Nº  ".strval($datos[0]->idPedido).", para el cliente ".$datos[0]->nombreCliente.", destino ".$datos[0]->nombreObra." , el cual debe ser despachado con urgencia. Ingresa a <a href='https://qlnow.quimicalatinoamericana.cl'>QlNow</a> para gestionarlos.";
 
         $body = [
             'Messages' => [
@@ -651,12 +694,7 @@ class PedidoController extends Controller
                   'Email' => "no-reply@soporteportal.cl",
                   'Name' => "no-reply@soporteportal.cl"
                 ],
-                'To' => [
-                  [
-                    'Email' => $correoDestinatario,
-                    'Name' => $correoDestinatario
-                  ]
-                ],
+                'To' => $destinatarios,
                 'Subject' => "AVISO DE PEDIDO URGENTE",
                 'TextPart' => "",
                 'HTMLPart' => $mensaje,
@@ -668,7 +706,7 @@ class PedidoController extends Controller
         $response = $mj->post(Resources::$Email, ['body' => $body]);
         $response->success();       
         $response->getData();      
-        return $datos;
+        return view('pedidoAutorizado');
     }
 
 

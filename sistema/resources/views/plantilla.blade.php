@@ -314,8 +314,7 @@
 											<li><a href="{{ asset('/') }}eliminacionGuiaDespacho"><span class="submenu-label">Liberar Nº de GD</span></a></li>
 										@endif
 
-										@if ( Session::get('idPerfil')=='2' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='4' 
-											or Session::get('idPerfil')=='18' or Session::get('idPerfil')=='11')
+										@if ( Session::get('idPerfil')=='1' or Session::get('idPerfil')=='2' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='4' or Session::get('idPerfil')=='18' or Session::get('idPerfil')=='11')
 											<li><a href="{{ asset('/') }}costosMensuales"><span class="submenu-label">Costos Mensuales</span></a></li>
 										@endif
 										@if ( Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7' or Session::get('idPerfil')=='8' 

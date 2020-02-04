@@ -146,6 +146,7 @@ class GuiaController extends Controller
                 $cadena=$cadena.''.$item->region.''.';';
                 $cadena=$cadena.$item->codigoPostalDespacho.';';
                 $cadena=$cadena.''.$item->codigoGLN.''.';';
+                /*$cadena=$cadena.''.$item->.''.';';*/
                 $cadena=$cadena.$item->codigoVendedorWalmart.';';
                 $cadena=$cadena.''.$item->retiradoPor.''.';';
                 $cadena=$cadena.''.$item->patenteCamionDespacho.''.';';

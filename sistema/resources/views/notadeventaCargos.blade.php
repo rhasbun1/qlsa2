@@ -55,7 +55,9 @@
 	            </table>
 	        </div>
 		    <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
-                <button id="btnGuardarCambios" class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
+                @if(Session::get('idPerfil')=='5' or Session::get('idPerfil')=='10' or Session::get('idPerfil')=='18')
+                    <button id="btnGuardarCambios" class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
+                @endif
 		        <a href="{{ asset('/') }}dashboard" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
 		    </div>        
         </div>

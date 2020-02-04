@@ -177,7 +177,11 @@
         }
         document.getElementById("divPedidoProductosaGranel").style.display="block";
         document.getElementById("divPedidoProductosporUnidad").style.display="none";
-        document.getElementById("divPiePedido").style.display="block";      
+        document.getElementById("divPiePedido").style.display="block";
+        var tabla=document.getElementById('tablaDetallePedidoGranel'); 
+        for(var x=1; x<tabla.rows.length; x++){
+            tabla.rows[x].style.display='none';
+        }  
     }
 
     function vernota(){

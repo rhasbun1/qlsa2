@@ -11,36 +11,39 @@
         </div>
 
         <div class="padding-md clearfix" id="cuadro1">
-	        <div class="row" style="padding-bottom: 15px">
-	        	<div class="col-md-1">
-	        		Año
-	        	</div>
-	        	<div class="col-md-1">
-	        		<input id="ano" class="form-control input-sm" maxlength="4">
-	        	</div>
-	        	<div class="col-md-1">
-	        		Mes
-	        	</div>
-	        	<div class="col-md-2">
-	        		<select id="mes" class="form-control input-sm">
-	        			<option value="1">Enero</option>
-	        			<option value="2">Febrero</option>
-	        			<option value="3">Marzo</option>
-	        			<option value="4">Abril</option>
-	        			<option value="5">Mayo</option>
-	        			<option value="6">Junio</option>
-	        			<option value="7">Julio</option>
-	        			<option value="8">Agosto</option>
-	        			<option value="9">Septiembre</option>
-	        			<option value="10">Octubre</option>
-	        			<option value="11">Noviembre</option>
-	        			<option value="12">Diciembre</option>
-	        		</select>
-	        	</div>
-	        	<div class="col-md-1">
-	        		<button class="btn btn-success btn-sm" onclick="agregarMes()">Agregar</button>
-	        	</div>        	
-	        </div>
+          @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
+  	        <div class="row" style="padding-bottom: 15px">
+              
+  	        	<div class="col-md-1">
+  	        		Año
+  	        	</div>
+  	        	<div class="col-md-1">
+  	        		<input id="ano" class="form-control input-sm" maxlength="4">
+  	        	</div>
+  	        	<div class="col-md-1">
+  	        		Mes
+  	        	</div>
+  	        	<div class="col-md-2">
+  	        		<select id="mes" class="form-control input-sm">
+  	        			<option value="1">Enero</option>
+  	        			<option value="2">Febrero</option>
+  	        			<option value="3">Marzo</option>
+  	        			<option value="4">Abril</option>
+  	        			<option value="5">Mayo</option>
+  	        			<option value="6">Junio</option>
+  	        			<option value="7">Julio</option>
+  	        			<option value="8">Agosto</option>
+  	        			<option value="9">Septiembre</option>
+  	        			<option value="10">Octubre</option>
+  	        			<option value="11">Noviembre</option>
+  	        			<option value="12">Diciembre</option>
+  	        		</select>
+  	        	</div>
+  	        	<div class="col-md-1">
+  	        		<button class="btn btn-success btn-sm" onclick="agregarMes()">Agregar</button>
+  	        	</div>        	
+  	        </div>
+          @endif
 	        <div style="width: 50%">        
 	            <table id="tabla" class="table table-hover table-condensed table-responsive" style="width: 100%">
 	                <thead>
@@ -55,7 +58,9 @@
 	                            <td>{{ $item->nombreMes}}</td>
 	                            <td style="width:40px">
 	                            	<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>
-                                <button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>                                    
+                                @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
+                                  <button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>                                    
+                                @endif
 	                            </td>
 	                        </tr>
 	                    @endforeach
@@ -98,15 +103,17 @@
 		                    <th style="width:60px">Unidad</th>
 		                    <th style="width:80px">Planta</th>
 		                    <th style="width:80px">Costo ($)</th>
-                        <th style="width:0px"></th>
+                        <th style="width:0px">Costo</th>
 		                </thead>
 		                <tbody>
 		                </tbody>
 		            </table>
 		        </div>
 			    <div style="text-align: right;">
-			    	<button id="btnGuardarCambios" class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
-			        <button class="btn btn-sm btn-warning" style="width:100px" onclick="cerrarListaProductos();">Cerrar</button>
+            @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
+			    	    <button id="btnGuardarCambios" class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
+            @endif
+			      <button class="btn btn-sm btn-warning" style="width:100px" onclick="cerrarListaProductos();">Cerrar</button>
 			    </div>  	        		
 			</div>
 	      </div>
@@ -143,8 +150,11 @@
                 <h5><b>Subir archivo de Costos</b></h5>
             </div>
             <div id="bodyProducto" class="modal-body">
-                <form id="datos" name="datos" enctype="multipart/form-data">                       
-                    <div class="row" style="padding: 15px">
+                <form id="datos" name="datos" enctype="multipart/form-data">
+                    <div class="row" style="padding-top: 15px;padding-left: 15px">
+                      <b>El archivo a subir debe ser CSV, y los datos que debe contener son: Producto, Unidad, Planta y Costo.</b>
+                    </div>
+                    <div class="row" style="padding-top: 10px;padding-left: 15px">
                         <div class="upload-file">
                             <input type="file" id="upload-demo" name="upload-demo" class="upload-demo" style="width: 300px" accept=".csv" >
                             <label data-title="Buscar" for="upload-demo" id="labelUpload" style="width: 400px">
@@ -152,6 +162,7 @@
                             </label>
                         </div>
                     </div>
+                    <br>
                     <div class="col-md-offset-8" style="padding-top: 20px; padding-bottom: 20px">
                        <button type="submit" class="btn btn-success btn-sm" style="width: 80px">Subir</button>
                        <button type="button" class="btn btn-danger data-dismiss=modal btn-sm" onclick="cerrarModalSubirArchivo()" style="width: 80px">Salir</button>
@@ -183,9 +194,6 @@
 
         var btnExcel={
                         extend: 'excelHtml5',
-                        title: function(){
-                          return titulo;
-                        },
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                           
                         exportOptions: {
@@ -369,10 +377,13 @@
                         extend: 'csvHtml5',
                         title: 'Pedidos en Proceso',
                         text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                           
+                        titleAttr: 'CSV',
+                        fieldSeparator: ';',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3 ]
-                        }
+                            columns: [ 0, 1, 2, 4 ]
+                        }, 
+                        charset: 'UTF-8',
+                        bom: true
                     },                
                 ],                                                
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
@@ -477,10 +488,12 @@
                 success:function(dato){
                     for(var x=0;x<dato.length;x++){
                         if( (periodoSeleccionado<parseInt(document.getElementById('periodoActual').value)) && 
-                            ( document.getElementById('idPerfilSession').value=='5' || document.getElementById('idPerfilSession').value=='18')    ){
-                            elemCosto="<input class='form-control input-sm' value='" + dato[x].costo +"' style='width: 100px' readonly>";
-                        }else{
+                            ( document.getElementById('idPerfilSession').value=='2' ||
+                              document.getElementById('idPerfilSession').value=='5' || 
+                              document.getElementById('idPerfilSession').value=='18')    ){
                             elemCosto="<input class='form-control input-sm' value='" + dato[x].costo +"' style='width: 100px' onkeypress='return isIntegerKey(event)'>";
+                        }else{
+                            elemCosto="<input class='form-control input-sm' value='" + dato[x].costo +"' style='width: 100px' readonly>";
                         }
 
                         var fila=productos.row.add( [

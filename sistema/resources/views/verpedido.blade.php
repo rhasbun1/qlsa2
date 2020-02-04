@@ -291,7 +291,7 @@
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedidoCliente();">Aprobar</button>                                      
             @endif
             @if ($accion=='3' or $accion=='1')
-                @if ( ( $pedido[0]->idEstadoPedido <= '3') and 
+                @if ( ( $pedido[0]->cerrada==0 and $pedido[0]->idEstadoPedido <= '3') and 
                     (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' or 
                      Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') )
 
