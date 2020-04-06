@@ -14,11 +14,7 @@
                 <div> 
                     <div class="row">
                         <div class="col-md-4">
-                            @if( Session::get('idPerfil')=='14' or Session::get('idPerfil')=='15')
-                                <div class="row" style="padding-top: 5px;display: none">
-                            @else
-                                <div class="row" style="padding-top: 5px">
-                            @endif                             
+                            <div class="row" style="padding-top: 5px">
                                 <div class="col-md-4">
                                     Cliente
                                 </div>
@@ -36,11 +32,7 @@
                                     </select>
                                 </div>
                             </div>
-                            @if( Session::get('idPerfil')=='14' or Session::get('idPerfil')=='15')
-                                <div class="row" style="padding-top: 5px;display: none">
-                            @else
-                                <div class="row" style="padding-top: 5px">
-                            @endif 
+                            <div class="row" style="padding-top: 5px">
                                 <div class="col-md-4">
                                     Planta QLSA
                                 </div>
@@ -89,7 +81,7 @@
                             </div>
                             <div class="row" style="padding-top: 5px">  
                                 <div class="col-md-4" style="padding-top: 5px">
-                                    Filtrar por Horario de Creación (filtro para <b>ver todos los pedidos suspendidos</b>)
+                                    Filtrar por Horario Creación( Usar este filtro para ver todos los pedidos suspendidos )
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group date" id="divFechaCreacionMin">
@@ -495,7 +487,7 @@
                         if( dato[x].numeroGuia>0 ){
                             cadena+='<span onclick="abrirGuia(1, ' + dato[x].numeroGuia + ', this.parentNode.parentNode);" style="cursor:pointer; cursor: hand"><img src="'+ urlApp + 'img/iconos/guiaDespacho2.png" border="0"></span>';
                         }
-                        if( dato[x].certificado!='' && dato[x].certificado!='S/C' ){  
+                        if( dato[x].certificado!='' ){  
                             cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/'+ dato[x].certificado +'">';
                             cadena+='<img src="'+ urlApp + 'img/iconos/certificado.png" border="0"></a>';
                         }
@@ -665,13 +657,6 @@
                 dom: 'Bfrtip',                
                 buttons: [
                     'pageLength', 
-                    {
-                        text: 'Actualizar',
-                        action: function ( e, dt, node, config ) {
-                            this.disable();    
-                            location.reload(true);                        
-                        }
-                    },                      
                     {
                         extend: 'excelHtml5',
                         title: tituloArchivo,

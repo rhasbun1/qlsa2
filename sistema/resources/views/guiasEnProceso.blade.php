@@ -261,14 +261,14 @@
             $("#filaTabla").val(fila);
             $("#numeroGuiaCertificado").val( tabla.rows[fila].cells[0].dataset.numguia);
             $("#codigoTipoGuia").val(tipoGuia);
-            $("#nombreCliente").val(tabla.rows[fila].cells[3].innerHTML.trim() );
-            $("#nombreObra").val(tabla.rows[fila].cells[4].innerHTML.trim() );
-            $("#nombreProducto").val(tabla.rows[fila].cells[5].innerHTML.trim() );
-            $("#cantidad").val( tabla.rows[fila].cells[6].innerHTML.trim() + " " + tabla.rows[fila].cells[7].innerHTML.trim() );
-            $("#diseno").val(tabla.rows[fila].cells[8].innerHTML.trim() );
+            $("#nombreCliente").val(tabla.rows[fila].cells[4].innerHTML.trim() );
+            $("#nombreObra").val(tabla.rows[fila].cells[5].innerHTML.trim() );
+            $("#nombreProducto").val(tabla.rows[fila].cells[6].innerHTML.trim() );
+            $("#cantidad").val( tabla.rows[fila].cells[7].innerHTML.trim() + " " + tabla.rows[fila].cells[8].innerHTML.trim() );
+            $("#diseno").val(tabla.rows[fila].cells[9].innerHTML.trim() );
             $("#codigoProducto").val(codProducto);
-            $("#nombreConductor").val(tabla.rows[fila].cells[9].innerHTML.trim());
-            $("#patente").val(tabla.rows[fila].cells[10].innerHTML.trim() );
+            $("#nombreConductor").val(tabla.rows[fila].cells[10].innerHTML.trim());
+            $("#patente").val(tabla.rows[fila].cells[11].innerHTML.trim() );
             $("#miArchivo").val('');
             $("#modSubirArchivo").modal('show');
         }
@@ -300,7 +300,8 @@
                             type: 'POST',
                             dataType: 'json',
                             data: {
-                                    nombreCertificado: btn.dataset.archivo 
+                                    nombreCertificado: btn.dataset.archivo,
+                                    opcion: 1
                                   },                    
                             success:function(dato){
                                 btn.parentNode.innerHTML='<button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1,' + btn.parentNode.dataset.prodcodigo + ');"><span class="glyphicon glyphicon-arrow-up"></span></button>';

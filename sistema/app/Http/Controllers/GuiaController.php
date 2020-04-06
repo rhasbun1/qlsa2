@@ -60,7 +60,10 @@ class GuiaController extends Controller
     public function registrarSalidaDespacho(Request $datos){
         if($datos->ajax()){
             $guia=DB::Select('call spGetRegistrarSalidaDespacho(?,?, ?)', array( $datos->input('tipoGuia'), $datos->input('numeroGuia'), Session::get('idUsuario') ) );
-            $this->avisoRegistrodeSalida($datos->input('numeroGuia'));
+
+
+            //$this->avisoRegistrodeSalida($datos->input('numeroGuia'));
+
             return response()->json([
                 "numroGuia" => $guia[0]->numeroGuia
             ]);            
@@ -296,10 +299,20 @@ class GuiaController extends Controller
 
     public function subirCertificado(Request $data){
         $archivo=$data->file("miArchivo");
-        $nombreArchivo= $data->input("codigoTipoGuia")."_".$data->input("numeroGuiaCertificado")."_".$data->input("codigoProducto").".pdf";
+        $nombreArchivo= $data->input("codigoTipoGuia")."_".$data->input("numeroGuiaCertificado").
+        "_".$data->input("codigoProducto")."_RND".strval(random_int(1,100000)).".pdf";
+
         Storage::disk('certificados')->put($nombreArchivo, \File::get( $archivo) );
 
         DB::Select('call spUpdArchivoCertificado(?,?,?,?,?,?)', array( $data->input('codigoTipoGuia'), $data->input('numeroGuiaCertificado'), $data->input("codigoProducto"), $nombreArchivo, Session::get('idUsuario'), '' ) );
+
+ /*       dd(
+            $data->input('codigoTipoGuia'), 
+            $data->input('numeroGuiaCertificado'), 
+            $data->input("codigoProducto"),
+            $nombreArchivo
+        );
+*/
 
         return $nombreArchivo; 
     }
@@ -352,7 +365,7 @@ class GuiaController extends Controller
 
     public function eliminarCertificado(Request $datos){
         if($datos->ajax()){
-            $guia=DB::Select('call spUpdCertificado(?)', array( $datos->input('nombreCertificado') ) );
+            $guia=DB::Select('call spUpdCertificado(?)', array( $datos->input('nombreCertificado'), $datos->input('opcion')  ) );
             return $guia;      
         }        
     }
@@ -404,8 +417,7 @@ class GuiaController extends Controller
 
         $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
 
-        //$correoDestinatario='daviddiaz1402@gmail.com';
-        $correoDestinatario='rlazo@qlsa.cl';
+        $correoDestinatario=$guia[0]->usu_correo;
 
         $mensaje="<h3>AVISO DE SALIDA DE DESPACHO</h3><br><br>";
         $mensaje=$mensaje."Estimado Usuario,<br><br>";
@@ -421,6 +433,10 @@ class GuiaController extends Controller
                 ],
                 'To' => [
                   [
+                    'Email' => 'daviddiaz1402@gmail.com',
+                    'Name' => 'David Diaz'
+                  ],
+                   [
                     'Email' => $correoDestinatario,
                     'Name' => $correoDestinatario
                   ]

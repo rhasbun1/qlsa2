@@ -115,8 +115,9 @@
                         Rampla
                     </div>
                     <div class="col-md-1">
-                        <input class="form-control input-sm" id="guiaRampla" maxlength="3">
-                    </div>
+                            <input class="form-control input-sm" id="guiaRampla" readonly maxlength="3">
+                        </div>
+                    
                     <div class="col-md-2">
                         Retira (máx.30 carac.)
                     </div>

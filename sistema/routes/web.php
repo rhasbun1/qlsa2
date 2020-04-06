@@ -16,6 +16,7 @@ Route::get('/', function () {
 });	
 Route::post('verificarusuario', 'UsuarioController@verificarusuario');
 Route::post('validarUsuario', 'UsuarioController@validarUsuario');
+Route::get('autorizarPedidoUrgente/{token}/', 'PedidoController@autorizarPedidoUrgente');
 
 /* Cambiar Version */
 Route::get('nuevaVersion', 'Controller@nuevaVersion');
@@ -53,6 +54,7 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('eliminarPlanta', 'PlantaController@eliminarPlanta');
 	Route::post('grabarUsuario', 'UsuarioController@grabarUsuario');
 	Route::post('eliminarProductoListaPrecio', 'ProductoController@eliminarProductoListaPrecio');
+	Route::post('verificarProductoEnListadePrecios', 'ProductoController@verificarProductoEnListadePrecios');
 
 	Route::post('grabarNuevoPedido',  'PedidoController@grabarNuevoPedido');
 	Route::post('aprobarPedido',  'PedidoController@aprobarPedido');
@@ -76,6 +78,10 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('guardarDatosProducto', 'ProductoController@guardarDatosProducto');
 	Route::post('agregarNota', 'PedidoController@agregarNota');
 	Route::post('eliminarNota', 'PedidoController@eliminarNota');
+	Route::post('buscarTiempoProduccion', 'PedidoController@buscarTiempoProduccion');
+	Route::post('buscarTiempoTraslado', 'PedidoController@buscarTiempoTraslado');
+	Route::post('guardarAcciones', 'PedidoController@guardarAcciones');
+	Route::post('buscarFeriados', 'PedidoController@buscarFeriados');
 	Route::post('crearGuiaDespachoElectronica', 'GuiaController@crearGuiaDespachoElectronica');
 	Route::post('registrarSalidaDespacho', 'GuiaController@registrarSalidaDespacho');
 	Route::post('actualizarDatosGuiaDespacho', 'GuiaController@actualizarDatosGuiaDespacho');
@@ -105,6 +111,10 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('aprobarnota/{idNotaVenta}/', 'NotaventaController@aprobarnota');
 	Route::get('Desaprobarnota/{idNotaVenta}/', 'NotaventaController@Desaprobarnota');
 	Route::get('cerrarNotaVenta/{idNotaVenta}/{motivo}/', 'NotaventaController@cerrarNotaVenta');
+	Route::get('clienteNotaVentas', 'NotaventaController@clienteNotaVentas');
+	Route::post('agregarUsuarioNotaVenta', 'NotaventaController@agregarUsuarioNotaVenta');
+	Route::post('usuarioNotasdeVenta', 'NotaventaController@usuarioNotasdeVenta');
+	Route::post('eliminarUsuarioNotaVenta', 'NotaventaController@eliminarUsuarioNotaVenta');
 
 	Route::get('desaprobarPedido/{idPedido}/', 'PedidoController@desaprobarPedido');
 	Route::post('suspenderPedido', 'PedidoController@suspenderPedido');
@@ -124,7 +134,8 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('obtenerPedidosDespachados','PedidoController@obtenerPedidosDespachados');
 	Route::post('crearCostosMensuales', 'PedidoController@crearCostosMensuales');
 	Route::post('costosMensualesProductos', 'PedidoController@costosMensualesProductos');
-
+	Route::post('obtenerIdProductoListaPrecio', 'PedidoController@obtenerIdProductoListaPrecio');
+	Route::post('guardarProductoListaPrecio', 'PedidoController@guardarProductoListaPrecio');
 	Route::get('aprobarnotaventa', 'NotaventaController@AprobarNotasdeVenta');
 	Route::get('aprobarpedidos', 'PedidoController@AprobarPedidos');
 	Route::get('listarNotasdeVenta', 'NotaventaController@listarNotasdeVenta');
@@ -136,8 +147,6 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('editarPedido/{idPedido}/', 'PedidoController@editarPedido');
 	Route::get('verResumenGranel', 'PedidoController@verResumenGranel');
 	Route::post('resumenGranel', 'PedidoController@resumenGranel');
-	
-	Route::get('autorizarPedidoUrgente/{token}/', 'PedidoController@autorizarPedidoUrgente');
 	
 	Route::get('correoAutorizacionPedidoUrgente/{idPedido}/{idUsuario}/', 'PedidoController@correoAutorizacionPedidoUrgente');
 
@@ -154,6 +163,10 @@ Route::group(['middleware' => 'checksession'], function () {
 
 	Route::get('listaPlantas', 'PlantaController@listaPlantas');
 	Route::get('listaProductos', 'ProductoController@listaProductos');
+	Route::get('listaFeriados', 'FeriadosController@listaFeriados');
+	Route::post('guardarDatosFeriado', 'FeriadosController@guardarDatosFeriado');
+	Route::post('eliminarFeriado', 'FeriadosController@eliminarFeriado');
+	Route::post('filtrarFeriados', 'FeriadosController@filtrarFeriados');
 	Route::get('listaUsuarios', 'UsuarioController@listaUsuarios');
 	Route::get('listadeObras', 'ObraController@listadeObras');
 	Route::get('listaEmpresasTransporte', 'EmpresaTransporteController@listaEmpresas');

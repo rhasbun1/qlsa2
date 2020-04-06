@@ -34,27 +34,25 @@
 	
 	<!-- Timepicker -->
 	<link href="{{ asset('/') }}css/bootstrap-timepicker.css" rel="stylesheet"/>
-
     <script type="text/javascript" src="{{ asset('/') }}js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}css/sweetalert.css"> 
- 
-    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
-    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
-	<link href="{{ asset('/') }}js/syncfusion/bootstrap-theme/ej.web.all.min.css" rel="stylesheet" />
-	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
-
-   <!-- <script src="https://cdn.syncfusion.com/js/assets/external/jquery-1.10.2.min.js"></script>
-    <script src="http://cdn.syncfusion.com/js/assets/external/jsrender.min.js"></script>
-    <script src="http://cdn.syncfusion.com/17.3.0.9/js/web/ej.web.all.min.js"></script>
-	<script src="{{ asset('/') }}js/es/i18n/ej.culture.es-CL.js"></script> 
-	<script src="{{ asset('/') }}js/es/l10n/ej.localetexts.es-ES.js"></script>-->
 
 	<!-- Datatable -->
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-	
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-	<link href="{{ asset('/') }}css/datatables.min.css" rel="stylesheet">    
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">    
+	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	<link href="{{ asset('/') }}css/datatables.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
+
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+    <link href="{{ asset('/') }}js/syncfusion/bootstrap-theme/ej.web.all.min.css" rel="stylesheet" />
+
+    <script src="{{ asset('/') }}js/ca-gregorian.json"></script>
+    <script src="{{ asset('/') }}js/numbers.json"></script>
+    <script src="{{ asset('/') }}js/timeZoneNames.json"></script>
+    <script src="{{ asset('/') }}js/weekData.json"></script>  
+	
 	<style>
 		.dt-button.red {
 	        color: red;
@@ -280,7 +278,10 @@
 											Session::get('idPerfil')=='18')
 										    <li><a href="{{ asset('/') }}listaCondicionesdePago"><span class="submenu-label">Condiciones de Pago</span></a></li>
 										@endif
-										<li><a href="{{ asset('/') }}listadeObras"><span class="submenu-label">Obras y Plantas (Clientes)</span></a></li>
+										@if ( Session::get('idPerfil')!='5' and Session::get('idPerfil')!='7' and Session::get('idPerfil')!='8' and Session::get('idPerfil')!='10' and Session::get('idPerfil')!='11')
+											<li><a href="{{ asset('/') }}listadeObras"><span class="submenu-label">Obras y Plantas (Clientes)</span></a></li>
+										@endif
+
 										@if ( Session::get('idPerfil')=='1' or Session::get('idPerfil')=='18')
 											<li><a href="{{ asset('/') }}listaPlantas"><span class="submenu-label">Plantas QLSA</span></a></li>
 										@endif
@@ -292,10 +293,7 @@
 											Session::get('idPerfil')=='18')
 											<li><a href="{{ asset('/') }}listaProductos"><span class="submenu-label">Productos</span></a></li>
 										@endif
-										@if ( Session::get('idPerfil')=='1' or
-											Session::get('idPerfil')=='2' or
-											Session::get('idPerfil')=='3' or
-											Session::get('idPerfil')=='18' )																				
+										@if ( Session::get('idPerfil')=='1' )																				
 											<li><a href="{{ asset('/') }}listaUsuarios"><span class="submenu-label">Usuarios</span></a></li>
 										@endif
 
@@ -321,6 +319,7 @@
 											or Session::get('idPerfil')=='10' )
 											<li><a href="{{ asset('/') }}listaRamplas"><span class="submenu-label">Ramplas</span></a></li>
 										@endif
+										@if ( Session::get('idPerfil')!='11' and Session::get('idPerfil')!='12')										
 										<li class="openable">
 											<a href="#">
 												<span class="submenu-label">Fletes, Distancias y Tiempos</span>
@@ -330,7 +329,11 @@
 												<li><a href="{{ asset('/') }}notaVentaCerradaCargos"><span class="submenu-label">Notas de Venta Cerradas</span></a></li>
 												<li><a href="{{ asset('/') }}notaVentaCargosUrgente"><span class="submenu-label">Asignaciones Pendientes</span></a></li>
 											</ul>
-										</li>							
+										</li>
+										@endif
+										<li><a href="{{ asset('/') }}listaFeriados"><span class="submenu-label">Feriados</span></a></li>
+										<li><a href="{{ asset('/') }}clienteNotaVentas"><span class="submenu-label">Cliente/Nota Venta</span></a></li>		
+
 									</ul>
 								</li>
 							@endif

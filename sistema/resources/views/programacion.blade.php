@@ -76,7 +76,7 @@
                         <thead>
                             <th style="width:80px">Pedido</th>
                             <th style="width:120px"></th>
-                            <th style="width:100px">Nº Auxiliar</th>
+                            <th style="width:70px">Nº Auxiliar</th>
                             <th style="width:50px">Estado</th>
                             <th style="width:200px">Cliente</th>
                             <th style="width:200px">Obra/Planta</th>
@@ -153,9 +153,9 @@
                                             <span><img src="{{ asset('/') }}img/iconos/enTransporte.png" border="0" onclick="verUbicacionGmaps('{{ $item->Patente }}');" style="cursor:pointer; cursor: hand"></span>                                      
                                             @endif    
                                         </td> 
-                                        <td style="width:100px; text-align: center">
+                                        <td style="width:70px; text-align: center">
                                             @if( Session::get('idPerfil')>='5' and Session::get('idPerfil')<='7' )
-                                                <a class="btn btn-xs btn-default" style="height: 25px;width:100px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );">{{ $item->numeroAuxiliar }}</a>
+                                                <a class="btn btn-xs btn-default" style="height: 25px;width:70px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );">{{ $item->numeroAuxiliar }}</a>
                                             @else
                                                 {{ $item->numeroAuxiliar }}
                                             @endif
@@ -563,7 +563,7 @@
                         celdaNumAux="";
 
                         if(document.getElementById('idPerfilSession').value>=5 && document.getElementById('idPerfilSession').value<=7 ){
-                            celdaNumAux='<a class="btn btn-xs btn-default" style="height: 25px;width:100px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );">' + dato[x].numeroAuxiliar + '</a>';                                   
+                            celdaNumAux='<a class="btn btn-xs btn-default" style="height: 25px;width:70px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );">' + dato[x].numeroAuxiliar + '</a>';                                   
                         }else{
                            celdaNumAux='<td style="width: 80px; text-align: center;">' + dato[x].numeroAuxiliar + '</td>';
                         }   
@@ -768,6 +768,7 @@
         });
         
         $(document).ready(function() {
+            
             var idPerfil={{ Session::get('idPerfil')}};
             var tablaDetalle="#tablaAprobados";
             // Setup - add a text input to each footer cell
@@ -1044,7 +1045,7 @@
             $('.main-menu').find('.submenu').removeAttr('style');             
         } );
 
-
+        
     </script>
 
 @endsection

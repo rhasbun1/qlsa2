@@ -30,7 +30,7 @@
 	            	    password: $("#password").val()
 	                  },
 	            success:function(dato){
-	            	    if(dato[0].usu_codigo){
+	            	    if(dato[0].usu_codigo==-1){
 	            	    	document.getElementById('divErrorAcceso').innerHTML="<strong>Advertencia!</strong> Los datos ingresados no son correctos.</strong>";
 	            	    	document.getElementById('divErrorAcceso').style.display="block";
 	            	    	$("#email").val('');

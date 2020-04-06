@@ -117,7 +117,7 @@
                     <th>Unidad</th>
                     @if( Session::get('grupoUsuario')=='C' )   
                         <th>Precio ($) <b>*</b></th>
-                        <th>Total ($)</th>
+                        <th>Total ($) **</th>
                     @endif
                     <th>Planta de Origen</th>
                     <th>Entrega</th>
@@ -265,7 +265,8 @@
                 </tfoot>
             </table>
             <br>
-            <b>*</b> Precio reajustado a la fecha de despacho del pedido. Pueden existir diferencias a inicios de cada mes hasta que se actualicen los parámetros de reajuste.
+            <b>*</b> Precio indicado es el reajustado a la fecha de creación del pedido. Pueden existir diferencias con el precio final de facturación si el despacho se realiza en un mes distinto.<br>
+            <b>**</b> El total facturado podrá ser distinto ya que se considerarán las cantidades efectivamente despachadas y los precios reajustados al mes durante el cual se realiza efectivamente el despacho.
         </div> 
         
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
@@ -273,7 +274,7 @@
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedido({{ $pedido[0]->idPedido }});">Aprobar</button>
             @endif    
 
-            @if ( (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') and $pedido[0]->idEstadoPedido>0 and $sinDespachar>0 )
+            @if ( (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='4') and $pedido[0]->idEstadoPedido>0 and $sinDespachar>0 )
                 <a href="{{ asset('/') }}editarPedido/{{ $pedido[0]->idPedido }}/" class="btn btn-sm btn-success" style="width:100px">Modificar</a>
             @endif
             @if ($accion=='1')
@@ -282,7 +283,8 @@
                         <a href="{{ asset('/') }}desaprobarPedido/{{ $pedido[0]->idPedido }}/" class="btn btn-sm btn-primary" style="width:100px">Desaprobar</a>
                     @endif
                 @endif    
-                @if ( ($pedido[0]->idEstadoPedido>0 and $pedido[0]->idEstadoPedido < 5) and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') )
+                @if ( ($pedido[0]->idEstadoPedido>0 and $pedido[0]->idEstadoPedido < 5) and 
+                (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='18') )
                     @if($despachado==0)
                         <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>
                     @endif

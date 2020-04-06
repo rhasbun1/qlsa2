@@ -55,7 +55,7 @@
                        Ejecutivo&nbspQL
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4">
-                        <select id="idUsuarioEncargado" name="idUsuarioEncargado" class="selectpicker" data-live-search="true" title="Seleccione..." data-width="100%" @if(Session::get('grupoUsuario')!='C') disabled @endif>
+                        <select id="idUsuarioEncargado" name="idUsuarioEncargado" class="selectpicker" data-live-search="true" title="Seleccione..." data-width="100%" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11' ) disabled @endif>
                             @foreach($usuarios as $item)
                                @if($notaventa[0]->usuario_encargado==$item->usu_nombre.' '.$item->usu_apellido )
                                     <option value="{{ $item->usu_codigo }}" selected>{{ $item->usu_nombre }} {{ $item->usu_apellido }}</option>
@@ -78,11 +78,11 @@
                     </div>
                     <div class="col-lg-2 col-sm-4 col-md-3">
                         <div class="input-group">                           
-                            <input id="txtOrdenCompra" class="form-control input-sm" value="{{ $notaventa[0]->ordenCompraCliente }}" data-ocarchivo="{{ $notaventa[0]->nombreArchivoOC }}" @if(Session::get('grupoUsuario')!='C') readonly @endif>
-                            @if (Session::get('grupoUsuario')=='C')
+                            <input id="txtOrdenCompra" class="form-control input-sm" value="{{ $notaventa[0]->ordenCompraCliente }}" data-ocarchivo="{{ $notaventa[0]->nombreArchivoOC }}" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11') readonly @endif>
+                            @if (Session::get('grupoUsuario')=='C' or Session::get('idPerfil')=='11')
                                 <span class="input-group-addon glyphicon glyphicon-cloud-download" title="Bajar Orden de Compra" onclick="bajarOC();"></span>
                             @endif
-                            @if (Session::get('grupoUsuario')=='C')
+                            @if (Session::get('grupoUsuario')=='C' or Session::get('idPerfil')=='11')
                                 <span class="input-group-addon glyphicon glyphicon-cloud-upload" onclick="subirArchivoOc();" title="Subir Orden de Compra"></span>
                             @endif
                         </div>                            
@@ -92,7 +92,7 @@
                             Cond.Pago
                         </div>
                         <div class="col-lg-3 col-sm-2 col-md-3">                    
-                            <select id="idCondicionPago" name="idCondicionPago" class="selectpicker" data-live-search="true" title="Seleccione..." data-width="100%" @if(Session::get('grupoUsuario')!='C') disabled @endif>
+                            <select id="idCondicionPago" name="idCondicionPago" class="selectpicker" data-live-search="true" title="Seleccione..." data-width="100%" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11') disabled @endif>
                                 @foreach($condicionesPago as $item)
                                    @if( $notaventa[0]->idCondiciondePago==$item->idCondiciondePago  )
                                         <option value="{{ $item->idCondiciondePago }}" selected>{{ $item->nombre }} </option>
@@ -109,19 +109,19 @@
                         Contacto
                     </div>
                     <div class="col-lg-3 col-sm-4 col-md-3">                        
-                        <input id="txtNombreContacto" class="form-control input-sm" value="{{ $notaventa[0]->nombreContacto }}" @if(Session::get('grupoUsuario')!='C') readonly @endif>
+                        <input id="txtNombreContacto" class="form-control input-sm" value="{{ $notaventa[0]->nombreContacto }}" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11') readonly @endif>
                     </div> 
                     <div class="col-lg-1 col-sm-2 col-md-1">
                         Teléfono
                     </div>
                     <div class="col-lg-3 col-sm-4 col-md-5">                        
-                        <input id="txtTelefonoContacto" class="form-control input-sm" value="{{ $notaventa[0]->telefonoContacto }}" @if(Session::get('grupoUsuario')!='C') readonly @endif>
+                        <input id="txtTelefonoContacto" class="form-control input-sm" value="{{ $notaventa[0]->telefonoContacto }}" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11') readonly @endif>
                     </div>                    
                     <div class="col-lg-1 col-sm-2 col-md-1">
                         Email
                     </div>
                     <div class="col-lg-3 col-sm-4 col-md-3">                        
-                        <input id="txtCorreoContacto" class="form-control input-sm" value="{{ $notaventa[0]->correoContacto }}" @if(Session::get('grupoUsuario')!='C') readonly @endif>
+                        <input id="txtCorreoContacto" class="form-control input-sm" value="{{ $notaventa[0]->correoContacto }}" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11') readonly @endif>
                     </div>         
                 </div>
                 <div class="row" style="padding-top: 5px">
@@ -129,7 +129,7 @@
                         Observaciones <font size="1px">(máx.255 carac)</font>
                     </div>
                     <div class="col-lg-7 col-md-10 col-sm-10">                            
-                        <textarea id="txtObservaciones" maxlength="255" rows="3" class="form-control input-sm" @if(Session::get('grupoUsuario')!='C') readonly @endif>{{ $notaventa[0]->observaciones }}</textarea>
+                        <textarea id="txtObservaciones" maxlength="255" rows="3" class="form-control input-sm" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11') readonly @endif>{{ $notaventa[0]->observaciones }}</textarea>
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-2">
                         <b>Cotización</b>
@@ -227,7 +227,7 @@
                 @if( Session::get('grupoUsuario')=='C' and $notaventa[0]->aprobada==1 and $notaventa[0]->TienePedidos==0 and $accion!='3' ) 
                     <a href="{{ asset('/') }}Desaprobarnota/{{ $notaventa[0]->idNotaVenta }}/" class="btn btn-sm btn-primary" style="width:90px">Desaprobar</a>
                 @endif
-                @if( Session::get('grupoUsuario')=='C')
+                @if( Session::get('grupoUsuario')=='C' and Session::get('idPerfil')!='11' )
                     <button class="btn btn-sm btn-success" onclick="guardarCambiosNV();">Guardar Cambios</button>
                     @if( $notaventa[0]->cerrada==0 and $notaventa[0]->aprobada==1 and Session::get('grupoUsuario')=='C' and Session::get("idPerfil")!=11 )
                         <a href="{{ asset('/') }}gestionarpedido/{{ $notaventa[0]->idNotaVenta }}/" class="btn btn-sm btn-primary">Crear Pedido</a>

@@ -150,6 +150,9 @@
                         <td style="width:30px; text-align: right;"> {{ $item->cantidad }} </td>
                         <td style="width:40px"> {{ $item->u_nombre }} </td>
                         <td style="width:100px">
+                            @if( Session::get('idPerfil')=='8' )
+                                {{ $item->nombrePlanta }}
+                            @else
                             <select id="idPlanta" class="form-control input-sm">  
                                 @foreach($plantas as $planta)
                                     @if( $item->nombrePlanta==$planta->nombre )
@@ -159,6 +162,7 @@
                                     @endif    
                                 @endforeach
                             </select>
+                            @endif
                         </td>
                         <td style="width:70px"> {{ $item->nombreFormaEntrega }} </td>
                         @if ( $item->numeroGuia==0 and $pedido[0]->bloqueado==0)
@@ -166,7 +170,7 @@
                             <td style="width:70px">
                                 @if ( $item->nombreFormaEntrega !='Retira' )
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
-                                        <select id="idEmpresaTransporte" class="form-control input-sm" onchange="cargarListas(this.value, this.parentNode.parentNode.rowIndex);" @if (Session::get('idPerfil')=='7' or Session::get('idPerfil')=='8') disabled @endif >
+                                        <select id="idEmpresaTransporte" class="form-control input-sm" onchange="cargarListas(this.value, this.parentNode.parentNode.rowIndex);" @if (Session::get('idPerfil')=='8') disabled @endif >
                                           <option value="0"></option>  
                                           @foreach($emptransporte as $empresa)
                                             @if( $empresa->idEmpresaTransporte == $item->idEmpresaTransporte) then
@@ -186,7 +190,7 @@
                             <td style="width:70px">
                                 @if ( $item->nombreFormaEntrega !='Retira' )
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
-                                        <select id="idCamion" class="form-control input-sm" @if (Session::get('idPerfil')=='7' or Session::get('idPerfil')=='8') disabled @endif >
+                                        <select id="idCamion" class="form-control input-sm" @if ( Session::get('idPerfil')=='8') disabled @endif >
                                             <option value="{{ $item->idCamion }}" selected>{{ $item->patente }}</option>
                                         </select>
                                     @endif
@@ -199,7 +203,7 @@
                             <td style="width:70px">
                                 @if ( $item->nombreFormaEntrega !='Retira' )
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
-                                        <select id="idRampla" class="form-control input-sm" @if (Session::get('idPerfil')=='7' or Session::get('idPerfil')=='8') disabled @endif >
+                                        <select id="idRampla" class="form-control input-sm" @if (Session::get('idPerfil')=='8') disabled @endif >
                                             <option value="0" selected>-</option>
                                             @foreach($ramplas as $rampla)
                                                 @if( $rampla->numero == $item->numeroRampla) then
@@ -212,7 +216,7 @@
                                     @endif
                                 @else
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
-                                        <input class="form-control input-sm" maxlength="3" value="{{ $item->numeroRampla }}">
+                                        <input class="form-control input-sm" maxlength="3" value="{{ $item->numeroRampla }}" readonly="true">
                                     @endif 
                                 @endif                                   
                             </td>
@@ -220,7 +224,7 @@
                             <td style="width:70px">
                                 @if ( $item->nombreFormaEntrega !='Retira' )
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
-                                        <select id="idConductor" class="form-control input-sm" @if (Session::get('idPerfil')=='7' or Session::get('idPerfil')=='8') disabled @endif>
+                                        <select id="idConductor" class="form-control input-sm" @if (Session::get('idPerfil')=='8') disabled @endif>
                                             <option value="{{ $item->idConductor }}" selected>{{ $item->nombreConductor }}</option>
                                         </select>
                                     @endif
@@ -231,7 +235,7 @@
                                 @endif                               
                             </td>
 
-                            @if( Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6'  )
+                            @if( Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' )
 
                                 <td style="width:70px">
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
@@ -243,7 +247,7 @@
                                         <input id="horaEntrega" type="text" class="form-control input-sm bootstrap-timepicker" value="{{ $item->horaCarga }}">
                                     @endif
                                 </td>
-                            @elseif ( Session::get('idPerfil')=='7' or Session::get('idPerfil')=='8' or Session::get('idPerfil')=='10'  )
+                            @elseif ( Session::get('idPerfil')=='8' or Session::get('idPerfil')=='10'  )
                                 <td style="width:70px">
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
                                         <input type="text" class="form-control input-sm" id="fechaEntrega" value="{{ $item->fechaCarga }}" readonly>

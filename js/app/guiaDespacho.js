@@ -39,6 +39,13 @@
               $("#direccionCliente").val(dato[0].direccionCliente);
               $("#comuna").val(dato[0].comunaCliente);
               $("#ciudad").val(dato[0].ciudadCliente);
+              console.log(dato[0].lugarDeEntrega);
+              if (dato[0].lugarDeEntrega == ''){
+                $("#guiaRampla").attr('disabled', true);
+              }
+              else{
+                $("#guiaRampla").attr('disabled', false); 
+              }
               $("#guiaRampla").val(dato[0].numeroRampla);
 
               if($("#comuna").val().trim()=='' || $("#ciudad").val().trim()==''){
@@ -83,11 +90,11 @@
                 document.getElementById('btnBajar').style.display='none';
 
                 $("#observacionDespacho").attr('readonly', false);
-                $("#guiaPatente").attr('readonly', false);
-                $("#guiaRampla").attr('readonly', false);
-                $("#guiaNombreConductor").attr('readonly', false);
+                $("#guiaPatente").attr('readonly', true);
+                $("#guiaRampla").attr('readonly', true);
+                $("#guiaNombreConductor").attr('readonly', true);
                 $("#sellos").attr('readonly', false);
-                $("#nombreEmpresaTransportes").attr('readonly', false);
+                $("#nombreEmpresaTransportes").attr('readonly', true);
                 $("#temperatura").attr('readonly', false);
                 document.getElementById('btnEmitirGuia').onclick = function() { emitirGuiaDespacho(true); }     
               }

@@ -221,14 +221,14 @@
             $("#filaTabla").val(fila);
             $("#numeroGuiaCertificado").val( tabla.rows[fila].cells[0].dataset.numguia);
             $("#codigoTipoGuia").val(tipoGuia);
-            $("#nombreCliente").val(tabla.rows[fila].cells[3].innerHTML.trim() );
-            $("#nombreObra").val(tabla.rows[fila].cells[4].innerHTML.trim() );
-            $("#nombreProducto").val(tabla.rows[fila].cells[5].innerHTML.trim() );
-            $("#cantidad").val( tabla.rows[fila].cells[6].innerHTML.trim() + " " + tabla.rows[fila].cells[7].innerHTML.trim() );
-            $("#diseno").val(tabla.rows[fila].cells[8].innerHTML.trim() );
+            $("#nombreCliente").val(tabla.rows[fila].cells[4].innerHTML.trim() );
+            $("#nombreObra").val(tabla.rows[fila].cells[5].innerHTML.trim() );
+            $("#nombreProducto").val(tabla.rows[fila].cells[6].innerHTML.trim() );
+            $("#cantidad").val( tabla.rows[fila].cells[7].innerHTML.trim() + " " + tabla.rows[fila].cells[8].innerHTML.trim() );
+            $("#diseno").val(tabla.rows[fila].cells[9].innerHTML.trim() );
             $("#codigoProducto").val(codProducto);
-            $("#nombreConductor").val(tabla.rows[fila].cells[9].innerHTML.trim());
-            $("#patente").val(tabla.rows[fila].cells[10].innerHTML.trim() );
+            $("#nombreConductor").val(tabla.rows[fila].cells[10].innerHTML.trim());
+            $("#patente").val(tabla.rows[fila].cells[11].innerHTML.trim() );
             $("#miArchivo").val('');
             $("#modSubirArchivo").modal('show');
         }
@@ -260,7 +260,8 @@
                             type: 'POST',
                             dataType: 'json',
                             data: {
-                                    nombreCertificado: btn.dataset.archivo 
+                                    nombreCertificado: btn.dataset.archivo,
+                                    opcion: 2 
                                   },                    
                             success:function(dato){
                                 btn.parentNode.innerHTML='<button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1,' + btn.parentNode.dataset.prodcodigo + ');"><span class="glyphicon glyphicon-arrow-up"></span></button>';
@@ -417,9 +418,9 @@
                 success:function(dato){
                     for(var x=0;x<dato.length;x++){
                         var col0='';
-                        if( dato[x].certificado=='' || dato[x].certificado=='S/C' ){
+                        if( dato[x].certificado=='S/C' ){
                             col0+='S/C';
-                            col0+='<button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1, ' +  dato[x].prod_codigo + ');" title="Subir Certificado"><span class="glyphicon glyphicon-arrow-up"></span></button>';
+                            col0+='<button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this);" data-archivo="' + dato[x].certificado +'"><span class="glyphicon glyphicon-remove"></span></button>';                            
                         }else{
                             col0+='<a target="_blank" href="' + urlApp + 'bajarCertificado/' + dato[x].certificado + '">';
                             col0+='<img src="' + urlApp + 'img/iconos/certificado.png" border="0"></a>';
@@ -451,6 +452,9 @@
                                 dato[x].patenteCamionDespacho,
                                 dato[x].fechaHoraCarga
                             ] ).index();
+
+                        tabla.cell(fila,0).node().dataset.numguia=dato[x].numeroGuia;
+                        tabla.cell(fila,0).node().dataset.prodcodigo=dato[x].prod_codigo;
 
                      //   tabla.cell(fila,0).node().width=60;
                     }

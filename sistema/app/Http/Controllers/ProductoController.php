@@ -59,18 +59,17 @@ class ProductoController extends Controller
 
     public function guardarDatosProductoListaPrecio(Request $datos){
         if($datos->ajax()){
-            $respuesta=DB::Select('call spInsProductoListaPrecio(?,?,?,?,?,?,?,?,?,?,?)', array(
+            $respuesta=DB::Select('call spInsProductoListaPrecio(?,?,?,?,?,?,?,?,?,?)', array(
                             $datos->input('idProductoListaPrecios'),
                             $datos->input('nombreProducto'),
                             $datos->input('unidad'),
                             $datos->input('idPlanta'),
-                            $datos->input('costo'),
                             $datos->input('precioReferencia'), 
                             $datos->input('codigoSoftland'),
                             $datos->input('requiereDiseno'),
                             $datos->input('granel'),
                             $datos->input('solicitaCertificado'),
-                            $datos->input('codigoProducto'),
+                            $datos->input('tiempoProduccion')
                             ) 
                         );
             return response()->json($respuesta);
@@ -145,6 +144,31 @@ class ProductoController extends Controller
                 ]);
         }
         $costo->save();
+    }
+
+    public function verificarProductoEnListadePrecios(Request $datos){
+        if($datos->ajax()){
+            $detalle=$datos->input('productos');
+            $detalle= json_decode($detalle);
+            $arrProducto=array();
+            foreach ( $detalle as $item){
+
+                $producto=DB::Select("call spGetVerificarExistenciaProductoListaPrecio(?,?,?)", array( 
+                            $item->prod_codigo,
+                            $item->u_codigo,
+                            $item->idPlanta
+                        ));
+
+                if($producto[0]->existe==0){
+                    $arrProducto[]= [
+                                        $producto[0]->nombreProducto,
+                                        $producto[0]->unidad,
+                                        $producto[0]->nombrePlanta
+                                    ];
+                }
+            }
+            return response()->json($arrProducto);    
+        }
     }
 
 }    

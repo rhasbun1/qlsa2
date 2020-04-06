@@ -10,6 +10,9 @@ use App\Pedido;
 use SoapClient;
 use File;
 use \Mailjet\Resources;
+use App\Producto;
+use App\Unidad;
+use App\Planta;
 
 class PedidoController extends Controller
 {
@@ -78,12 +81,18 @@ class PedidoController extends Controller
             $clientes=DB::Select('call spGetClientesPlantas(?)', array( Session::get('idUsuario') ) );
         }
 
+        if( Session::get('idPerfil')=='14' or Session::get('idPerfil')=='15' ){
+            $pedidos=DB::Select('call spGetHistoricoPedidoDetalleCliente(?,?,?,?,?,?,?,?,?,?,?)', array($fecha_inicio, $fecha_termino, 0,0,0,0,0,0, Session::get('idUsuario'), Session::get('idPerfil'), 1 ) );
+         }else {
 
-        if( Session::get('idPerfil')=='11' ){
-            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fecha_inicio, $fecha_termino, Session::get('empresaUsuario'), 0, 0,0,0,0, Session::get('idUsuario'), Session::get('idPerfil'), 1 ) );
-        }else{
-            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fecha_inicio, $fecha_termino, Session::get('empresaUsuario'), Session::get('idPlanta'), 0,0,0,0, Session::get('idUsuario'), Session::get('idPerfil'), 1 ) );
-        }        
+            if( Session::get('idPerfil')=='11' ){
+                $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fecha_inicio, $fecha_termino, Session::get('empresaUsuario'), 0, 0,0,0,0, Session::get('idUsuario'), Session::get('idPerfil'), 1 ) );
+            }else{
+                $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fecha_inicio, $fecha_termino, Session::get('empresaUsuario'), Session::get('idPlanta'), 0,0,0,0, Session::get('idUsuario'), Session::get('idPerfil'), 1 ) );
+            }    
+
+        }   
+
         $parametros=DB::table('parametros')->select('version')->get();     
         $plantas=DB::Select('call spGetUsuarioPerfilPlantas(?,?)', array( Session::get('idUsuario'), Session::get('idPerfil') ));
 
@@ -100,13 +109,18 @@ class PedidoController extends Controller
         $fechaInicio=strtotime( str_replace('/', '-', $datos->input("salidaDesde") ) );
         $fechaTermino=strtotime( str_replace('/', '-', $datos->input("salidaHasta") ) );
         $fechaInicio = date('Y-m-d', $fechaInicio);
-        $fechaTermino = date('Y-m-d', $fechaTermino);        
-        if( Session::get('idPerfil')=='11' ){
-            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fechaInicio, $fechaTermino, $datos->input("emp_codigo"), $datos->input("idPlanta"), $datos->input("pedidoDesde"), $datos->input("pedidoHasta"), $datos->input("guiaDesde"), $datos->input("guiaHasta"), Session::get('idUsuario'), Session::get('idPerfil'), $datos->input("opcion") ) );
-        }else{
-            $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fechaInicio, $fechaTermino, $datos->input("emp_codigo"), 
-                $datos->input('idPlanta'), $datos->input("pedidoDesde"), $datos->input("pedidoHasta"), $datos->input("guiaDesde"), $datos->input("guiaHasta"), Session::get('idUsuario'), Session::get('idPerfil'), $datos->input("opcion") ) );
-        }        
+        $fechaTermino = date('Y-m-d', $fechaTermino); 
+
+        if( Session::get('idPerfil')=='14' or Session::get('idPerfil')=='15' ){
+            $pedidos=DB::Select('call spGetHistoricoPedidoDetalleCliente(?,?,?,?,?,?,?,?,?,?,?)', array($fechaInicio, $fechaTermino, 0, 0, $datos->input("pedidoDesde"), $datos->input("pedidoHasta"), $datos->input("guiaDesde"), $datos->input("guiaHasta"), Session::get('idUsuario'), Session::get('idPerfil'), $datos->input("opcion") ) );
+         }else {               
+            if( Session::get('idPerfil')=='11' ){
+                $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fechaInicio, $fechaTermino, $datos->input("emp_codigo"), $datos->input("idPlanta"), $datos->input("pedidoDesde"), $datos->input("pedidoHasta"), $datos->input("guiaDesde"), $datos->input("guiaHasta"), Session::get('idUsuario'), Session::get('idPerfil'), $datos->input("opcion") ) );
+            }else{
+                $pedidos=DB::Select('call spGetHistoricoPedidoDetalle(?,?,?,?,?,?,?,?,?,?,?)', array($fechaInicio, $fechaTermino, $datos->input("emp_codigo"), 
+                    $datos->input('idPlanta'), $datos->input("pedidoDesde"), $datos->input("pedidoHasta"), $datos->input("guiaDesde"), $datos->input("guiaHasta"), Session::get('idUsuario'), Session::get('idPerfil'), $datos->input("opcion") ) );
+            }
+        }      
         return $pedidos; 
     }
 
@@ -131,7 +145,8 @@ class PedidoController extends Controller
 
     // Vista para Aprobar pedidos por Usuarios Comerciales  
     public function clientePedidos(){
-        $pedidos=DB::Select('call spGetProductosconPedidoPendiente(?,?,?)', array( Session::get('empresaUsuario' ), Session::get('idPlanta' ), Session::get('idPerfil') ) );
+
+        $pedidos=DB::Select('call spGetProductosconPedidoPendienteCliente(?)', array( Session::get('idUsuario') ) );
         return view('cliente_pedidos')->with('pedidos', $pedidos);  
     }    
 
@@ -215,7 +230,10 @@ class PedidoController extends Controller
 
             $pedido=DB::Select('call spUpdCerrarPedido(?,?,?)', array( $datos->input('idPedido'), Session::get('idUsuario'), $datos->input('motivo') ) ); 
 
-            $this->correoPedidoSuspendido( $datos->input('idPedido'), $datos->input('motivo'), $pedido[0]->usu_correo );
+            if($pedido[0]->cancelado==1){
+                $this->correoPedidoSuspendido( $datos->input('idPedido'), $datos->input('motivo'), $pedido[0]->usu_correo );
+            }
+            
 
             return $pedido;
         }
@@ -301,6 +319,7 @@ class PedidoController extends Controller
                                 ->with('ramplas', $ramplas);
     }    
 
+
     public function grabarNuevoPedido(Request $datos){
         if($datos->ajax()){
             $extension="";
@@ -313,6 +332,7 @@ class PedidoController extends Controller
             $detalle=$datos->input('detalle');
             $detalle= json_decode($detalle);
 
+
             $fechaEntrega=$datos->input('fechaEntrega');
 
             $parametros=DB::Select('call spGetParametros');
@@ -322,7 +342,7 @@ class PedidoController extends Controller
             $datetime2 = date_create($fechaActual);
             $diff = ($datetime2->diff($datetime1));
 
-            $idPedido=DB::Select('call spInsPedido(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? )', array(
+            $idPedido=DB::Select('call spInsPedido(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', array(
                             $datos->input('idNotaVenta'),
                             $datos->input('fechaEntrega'),
                             $datos->input('observaciones'),
@@ -342,12 +362,16 @@ class PedidoController extends Controller
                             $datos->input('incluyeFleteFalso'),
                             $datos->input('valorFleteFalso'),
                             $datos->input('cantidadFleteFalso'),
+                            $datos->input('atrasado')
                             ) 
-                        );  
+                        ); 
 
-            foreach ( $detalle as $item){
-                DB::Select("call spInsPedidoDetalle(?,?,?,?,?,?,?,?)", array( $idPedido[0]->idPedido, $item->idNotaVenta, $item->prod_codigo, $item->u_codigo, $item->cantidad, $item->precio, $item->idPlanta, $item->idFormaEntrega) );
+            if ($detalle != null){
+                foreach ( $detalle as $item){
+                    DB::Select("call spInsPedidoDetalle(?,?,?,?,?,?,?,?)", array( $idPedido[0]->idPedido, $item->idNotaVenta, $item->prod_codigo, $item->u_codigo, $item->cantidad, $item->precio, $item->idPlanta, $item->idFormaEntrega) );
+                }
             }
+            
 
             if(!isset($archivo)){
                 if($idPedido[0]->nombreArchivo<>''){
@@ -372,14 +396,15 @@ class PedidoController extends Controller
                 }
             }
 
-            
-            if($diff->days<=$parametros[0]->cantidadMinimadeDiasparaEntrega){
+           
+            if($datos->input('atrasado')==1){
                 $this->correoAutorizacionPedidoUrgente($idPedido[0]->idPedido, Session::get('idUsuario') );
             }
 
             return response()->json([
                 "identificador" => $idPedido[0]->idPedido,
-                "nombreArchivo" => $idPedido[0]->nombreArchivo
+                "nombreArchivo" => $idPedido[0]->nombreArchivo,
+                "atrasado" => $datos->input('atrasado')
             ]);
         }
     }
@@ -389,7 +414,7 @@ class PedidoController extends Controller
             $detalle=$datos->input('detalle');
             $detalle= json_decode($detalle);
             
-            $idPedido=DB::Select('call spUpdPedido(?,?,?,?,?,?,?,?)', array(
+            $idPedido=DB::Select('call spUpdPedido(?,?,?,?,?,?,?,?,?)', array(
                             $datos->input('idPedido'),
                             $datos->input('fechaEntrega'),
                             $datos->input('horarioEntrega'),
@@ -397,7 +422,8 @@ class PedidoController extends Controller
                             $datos->input('totalNeto'),
                             Session::get('idUsuario'),
                             $datos->input('motivo'),
-                            $datos->input('ordenCompraCliente')
+                            $datos->input('ordenCompraCliente'),
+                            $datos->input('atrasado')
                             ) 
                         );  
 
@@ -534,8 +560,16 @@ class PedidoController extends Controller
     public function costosMensuales(){
         $costosMensuales=DB::Select('call spGetCostosMensuales()');
         $periodo=date('Ym');
+        $unidades=Unidad::All();
+        $plantas=Planta::All();
 
-        return view('costosMensuales')->with('costosMensuales', $costosMensuales)->with('periodoActual', $periodo);
+        $productos=Producto::orderBy('prod_nombre', 'ASC')->get();
+
+        return view('costosMensuales')->with('costosMensuales', $costosMensuales)
+            ->with('periodoActual', $periodo)
+            ->with('unidades', $unidades)
+            ->with('plantas', $plantas)
+            ->with('productos', $productos);
     }
 
     public function costosMensualesProductos(Request $datos){
@@ -555,13 +589,25 @@ class PedidoController extends Controller
     public function correoPedidoSuspendido($idPedido, $motivo, $correoDestinatario){
         $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
 
-        //$correoDestinatario='daviddiaz1402@gmail.com';
-        $correoDestinatario='rlazo@qlsa.cl';
-
         $mensaje="<h3>AVISO DE PEDIDO SUSPENDIDO</h3><br><br>";
         $mensaje=$mensaje."Estimado Usuario,<br><br>";
         $mensaje=$mensaje."Se ha suspendido el pedido Nº ".strVal($idPedido).".";
         $mensaje=$mensaje."Motivo: ".$motivo."<br><br>";
+
+        $perfilesNotificacion='5, 7';
+        $usuariosDestinatarios=DB::Select('call spGetDestinatariosNotificacion(?,?)', array( $idPedido, $perfilesNotificacion ) ) ;
+
+        $destinatarios=[];
+        foreach ( $usuariosDestinatarios as $usuario){
+            $destinatarios[]=[ 
+                                'Email' => $usuario->usu_correo,
+                                'Name' => $usuario->usu_correo
+                            ];
+        }
+        $destinatarios[]=[ 
+                            'Email' => 'daviddiaz1402@gmail.com',
+                            'Name' => 'David Diaz'
+                        ];
 
         $body = [
             'Messages' => [
@@ -570,12 +616,7 @@ class PedidoController extends Controller
                   'Email' => "no-reply@soporteportal.cl",
                   'Name' => "no-reply@soporteportal.cl"
                 ],
-                'To' => [
-                  [
-                    'Email' => $correoDestinatario,
-                    'Name' => $correoDestinatario
-                  ]
-                ],
+                'To' => $destinatarios,
                 'Subject' => "AVISO DE PEDIDO SUSPENDIDO",
                 'TextPart' => "My first Mailjet email",
                 'HTMLPart' => $mensaje,
@@ -597,13 +638,12 @@ class PedidoController extends Controller
         $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
 
         $correoDestinatario=$datos[0]->correoUsuarioAutoriza;
-        //$correoDestinatario='daviddiaz1402@gmail.com';
 
         $url=asset('/')."autorizarPedidoUrgente/".$datos[0]->token."/";
         $mensaje="<div style='width:80%'>";
         $mensaje=$mensaje."<h3>SOLICITUD DE AUTORIZACION DE PEDIDO URGENTE</h3><br><br>";
         $mensaje=$mensaje."Estimado Usuario,<br><br>";
-        $mensaje=$mensaje."Se ha creado el Pedido Nº <b>".strval($idPedido)."</b>, para el cliente <b>".$datos[0]->nombreCliente."</b>, el cual debe ser despachado con urgencia. Se solicita su autorización.<br><br>" ;
+        $mensaje=$mensaje."Se ha creado el Pedido Nº <b>".strval($idPedido)."</b>, para el cliente <b>".$datos[0]->nombreCliente."</b>, el cual debe ser despachado con urgencia. Se solicita tu aprobación de crédito, la cual puedes realizar a traves link que esta a continuación del detalle del pedido.<br><br>" ;
 
         $mensaje=$mensaje."<div style='padding-top:20px;'>";
         $mensaje=$mensaje."<b>DETALLE DE PRODUCTOS INCLUIDOS EN EL PEDIDO</b>";
@@ -613,7 +653,7 @@ class PedidoController extends Controller
         $mensaje=$mensaje."<th>Cantidad</th>";
         $mensaje=$mensaje."<th>Unidad</th>";
         $mensaje=$mensaje."<th>Precio unit.($)</th>";
-        $mensaje=$mensaje."<th>Total ($)</th>";
+        $mensaje=$mensaje."<th>Total Neto ($)</th>";
         $mensaje=$mensaje."</thead>";
         $mensaje=$mensaje."<tbody>";
         $total=0;
@@ -644,10 +684,10 @@ class PedidoController extends Controller
                   'Name' => "no-reply@soporteportal.cl"
                 ],
                 'To' => [
-                  [
-                    'Email' => $correoDestinatario,
-                    'Name' => $correoDestinatario
-                  ]
+                    [
+                        'Email' => $correoDestinatario,
+                        'Name' => $correoDestinatario
+                    ]
                 ],
                 'Subject' => "Solicitud de Autorización de Pedido",
                 'TextPart' => "",
@@ -658,7 +698,8 @@ class PedidoController extends Controller
         ];
 
         $response = $mj->post(Resources::$Email, ['body' => $body]);
-        $response->success();       
+        $response->success(); 
+
         return $response->getData();
     }
 
@@ -668,20 +709,20 @@ class PedidoController extends Controller
 
         $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
 
-        $correoDestinatario='daviddiaz1402@gmail.com';
-
         $perfilesNotificacion='5, 7';
         $usuariosDestinatarios=DB::Select('call spGetDestinatariosNotificacion(?,?)', array( $datos[0]->idPedido, $perfilesNotificacion ) ) ;
 
         $destinatarios=[];
         foreach ( $usuariosDestinatarios as $usuario){
             $destinatarios[]=[ 
-                                'Email' => $correoDestinatario,
-                                'Name' => $correoDestinatario
+                                'Email' => $usuario->usu_correo,
+                                'Name' => $usuario->usu_correo
                             ];
         }
-
-        //$correoDestinatario='rlazo@qlsa.cl';
+        $destinatarios[]=[ 
+                            'Email' => 'daviddiaz1402@gmail.com',
+                            'Name' => 'David Diaz'
+                        ];
 
         $mensaje="<h3>AVISO DE PEDIDO URGENTE</h3><br><br>";
         $mensaje=$mensaje."Estimado Usuario,<br><br>";
@@ -712,8 +753,8 @@ class PedidoController extends Controller
 
     public function correoResumenActividad(){
         $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
-        //$correoDestinatario='daviddiaz1402@gmail.com';
-        $correoDestinatario='rlazo@qlsa.cl';
+
+        $correoDestinatario='nbastias@spsgroup.cl';
 
         $mensaje="<h3>EJEMPLO DE CORREO RESUMEN DE ACTIVIDAD</h3><br><br>";
         $mensaje=$mensaje."Estimado Usuario,<br><br>";
@@ -728,6 +769,10 @@ class PedidoController extends Controller
                 ],
                 'To' => [
                   [
+                    'Email' => 'daviddiaz1402@gmail.com',
+                    'Name' => 'David Diaz'
+                  ],
+                   [
                     'Email' => $correoDestinatario,
                     'Name' => $correoDestinatario
                   ]
@@ -744,5 +789,88 @@ class PedidoController extends Controller
         $response->success();       
         return $response->getData();
     }
+/*
+    public function obtenerIdProductoListaPrecio($codigo_prod, $nombre_unidad, $codigo_planta) {
+        dd($codigo_prod);
+        $idProductoListaPrecio=DB::Select('call spGetIdProductoListaPrecios(?,?,?)', array($codigo_prod), array($nombre_unidad), array($codigo_planta) );
 
+        return $idProductoListaPrecio;
+        
+        $idProductoListaPrecio= DB::Select('call spGetIdProductoListaPrecios(?,?,?)', array( 
+                    $datos->input('codigo_prod'), 
+                    $datos->input('nombre_unidad'), 
+                    $datos->input('codigo_planta')  
+                ));
+            var_dump($idProductoListaPrecio);
+            return $idProductoListaPrecio;
+
+        
+    }*/ 
+
+    public function obtenerIdProductoListaPrecio(Request $datos) {
+        if ($datos->ajax()){
+            $idProductoListaPrecio= DB::Select('call spGetIdProductoListaPrecios(?,?,?)', array( 
+                    $datos->input('codigo_prod'), 
+                    $datos->input('nombre_unidad'), 
+                    $datos->input('codigo_planta'),
+                ));
+            return $idProductoListaPrecio;
+        }
+    }
+
+    public function guardarProductoListaPrecio(Request $datos) {
+        if ($datos->ajax()){
+            DB::Select('call spInsCostosMensualesProductos(?,?,?,?)', array( 
+                    $datos->input('ano'), 
+                    $datos->input('mes'), 
+                    $datos->input('idproductolistaprecio'),
+                    $datos->input('costo'),
+                ));
+            return;
+        }
+    }
+
+    public function buscarTiempoProduccion(Request $datos){
+        if($datos->ajax()){
+            $respuesta=DB::Select('call spGetTiempoProduccion(?,?,?)', array(
+                            $datos->input('nombreProducto'),
+                            $datos->input('idPlanta'),
+                            $datos->input('nombre')
+                            ) 
+                        );
+            return response()->json($respuesta);
+        }         
+    }
+
+    public function buscarFeriados(Request $datos){
+        if($datos->ajax()){
+            $respuesta=DB::Select('call spGetFeriadosFiltro(?)', array(
+                            $datos->input('ano')
+                            ) 
+                        );
+            return response()->json($respuesta);
+        }         
+    }
+
+    public function buscarTiempoTraslado(Request $datos){
+        if($datos->ajax()){
+            $respuesta=DB::Select('call spGetTiempoTraslado(?,?)', array(
+                            $datos->input('notaVenta'),
+                            $datos->input('idPlanta')
+                            ) 
+                        );
+            return response()->json($respuesta);
+        }         
+    }
+
+    public function guardarAcciones(Request $datos){
+        if($datos->ajax()){
+            $respuesta=DB::Select('call spInsAcciones(?,?)', array(
+                            Session::get('idUsuario'),
+                            $datos->input('idPedido')
+                            ) 
+                        );
+            return response()->json($respuesta);
+        }         
+    }
 }

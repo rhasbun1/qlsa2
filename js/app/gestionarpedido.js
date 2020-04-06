@@ -3,6 +3,8 @@
     var cmttem1=0;
     var cmttem2=0;
     var valorFleteFalso;
+    var tiempoProduccion_val =new Array();
+    var arrFeriados =new Array();
 
     $(document).ready(function() {
         // Datepicker      
@@ -346,6 +348,7 @@
 
 
     function crearPedido(Origen){
+
         $("#btnCrearPedido").attr("disabled", true);
         if($("#txtFechaEntrega").val().trim()=='' ){
             swal(
@@ -377,7 +380,7 @@
             var tabla=document.getElementById('tablaDetallePedidoGranel');             
         }else{
             var tabla=document.getElementById('tablaDetallePedidoNormal'); 
-        }     
+        }
         
         var ind1=0;
         var ind2=0;
@@ -741,9 +744,8 @@
                 cadena+='}, ';                
             }
         }
-
         cadena=cadena.slice(0,-2);
-        cadena+=']';
+        cadena=cadena+="]";
 
         var noExceder=0;
 
@@ -751,6 +753,195 @@
             noExceder=1;
         }
 
+        //Validar la Fecha Entrega
+        var fechaCreacionPedido = new Date();
+        //console.log("fecha creacion al tiro: ", fechaCreacionPedido);
+        var fechaEntrega = $("#txtFechaEntrega").val();
+        var fechaEntregaMaxima;
+        if ($("#horario option:selected").html() == "AM"){
+            fechaEntregaMaxima = new Date(fechaEntrega.split('/')[2], fechaEntrega.split('/')[1]-1, fechaEntrega.split('/')[0], 11, 59, 0, 0);
+        }
+        else{
+            fechaEntregaMaxima = new Date(fechaEntrega.split('/')[2], fechaEntrega.split('/')[1]-1, fechaEntrega.split('/')[0], 23, 59, 0, 0);   
+        }
+        //console.log("Fecha Creacion Pedido: ", fechaCreacionPedido);
+        //console.log("Fecha Entrega Maximo: ", fechaEntregaMaxima);
+        var listTiempoPlanta = [];
+        for (var j=1; j<tabla.rows.length; j++){
+            $.ajax({
+                async:false,
+                url: urlApp + "buscarTiempoProduccion",
+                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                type: 'POST',
+                dataType: 'json',
+                data: { 
+                        nombreProducto: tabla.rows[j].cells[1].innerHTML.trim(),
+                        idPlanta: tabla.rows[j].cells[8].getElementsByTagName('select')[0].value,
+                        nombre: tabla.rows[j].cells[5].innerHTML.trim()
+                },
+                success:function(dato){
+                    console.log(dato);
+                    if (dato.length > 0){
+                        if (dato[0].tiempoProduccion == null)
+                        { 
+                            dato[0].tiempoProduccion = 0;  
+                            
+                        }
+                        tiempoProduccion_val.push(dato[0].tiempoProduccion);
+                        listTiempoPlanta.push(dato);
+                    }
+                }
+            });
+        }
+        fechaCreacionPedido.setHours(fechaCreacionPedido.getHours() + Math.max.apply(Math, tiempoProduccion_val));
+        //console.log("fecha que lleva despues del tiempo de produccion: ", fechaCreacionPedido);
+        var mayorTiempoP = Math.max.apply(Math, tiempoProduccion_val);
+        var auxTiempo = 0;
+        var id_planta_val;
+        for(var i=0; i<listTiempoPlanta.length; i++){
+            if (listTiempoPlanta[i][0].tiempoProduccion > auxTiempo){
+                auxTiempo = listTiempoPlanta[i][0].tiempoProduccion;
+                id_planta_val = listTiempoPlanta[i][0].idPlanta;
+            }
+        }
+        $.ajax({
+            async:false,
+            url: urlApp + "buscarFeriados",
+            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+            type: 'POST',
+            dataType: 'json',
+            data: { 
+                ano: fechaCreacionPedido.getFullYear()
+            },
+            success:function(dato){
+                arrFeriados = dato;
+
+            }
+        });
+        //console.log("Feriados: ", arrFeriados);
+        if (fechaCreacionPedido.getHours() >= 17 && fechaCreacionPedido.getMinutes() >= 0){
+            fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 1);
+            fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), 8, 0, 0, 0);    
+        }
+        //console.log("fecha que lleva despues del primer: ", fechaCreacionPedido);
+        var weekday = ["Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"];
+        if (weekday[fechaCreacionPedido.getDay()] == "Sabado"){
+            fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 2);
+            fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), 8, 0, 0, 0);
+        }
+        //console.log("fecha que lleva despues del segundo: ", fechaCreacionPedido);
+        if (weekday[fechaCreacionPedido.getDay()] == "Domingo"){
+            fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 1);
+            fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), 8, 0, 0, 0);
+        }
+        //console.log("fecha que lleva despues del tercero: ", fechaCreacionPedido);
+        var feriado_val;
+        $.each(arrFeriados, function (i, item) {
+            feriado_val = new Date(item.fecha.split('/')[2], item.fecha.split('/')[1]-1, item.fecha.split('/')[0], 0, 0, 0, 0);
+            if (fechaCreacionPedido.getFullYear() == feriado_val.getFullYear() 
+                && fechaCreacionPedido.getMonth() == feriado_val.getMonth()
+                && fechaCreacionPedido.getDate() == feriado_val.getDate())
+            {
+                fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 1);
+                fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), 8, 0, 0, 0);    
+            }
+        });
+        //console.log("fecha que lleva despues de los feriados: ", fechaCreacionPedido);
+        if (weekday[fechaCreacionPedido.getDay()] == "Sabado"){
+            fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 2);
+            fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), 8, 0, 0, 0);
+        }
+        //console.log("fecha que lleva despues del cuarto: ", fechaCreacionPedido);
+        if (weekday[fechaCreacionPedido.getDay()] == "Domingo"){
+            fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 1);
+            fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), 8, 0, 0, 0);
+        }
+        //console.log("fecha que lleva despues del quinto: ", fechaCreacionPedido);
+        $.each(arrFeriados, function (i, item) {
+            feriado_val = new Date(item.fecha.split('/')[2], item.fecha.split('/')[1]-1, item.fecha.split('/')[0], 0, 0, 0, 0);
+            if (fechaCreacionPedido.getFullYear() == feriado_val.getFullYear() 
+                && fechaCreacionPedido.getMonth() == feriado_val.getMonth()
+                && fechaCreacionPedido.getDate() == feriado_val.getDate())
+            {
+                fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 1);
+                fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), 8, 0, 0, 0);    
+            }
+        });
+        //console.log("fecha que lleva despues del feridos 2: ", fechaCreacionPedido);
+        if (weekday[fechaCreacionPedido.getDay()] == "Sabado"){
+            fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 2);
+            fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), 8, 0, 0, 0);
+        }
+        //console.log("fecha que lleva despues del sexto: ", fechaCreacionPedido);
+        if (weekday[fechaCreacionPedido.getDay()] == "Domingo"){
+            fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 1);
+            fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), 8, 0, 0, 0);
+        }
+        //console.log("fecha que lleva despues del septirmo: ", fechaCreacionPedido);
+        $.each(arrFeriados, function (i, item) {
+            feriado_val = new Date(item.fecha.split('/')[2], item.fecha.split('/')[1]-1, item.fecha.split('/')[0], 0, 0, 0, 0);
+            if (fechaCreacionPedido.getFullYear() == feriado_val.getFullYear() 
+                && fechaCreacionPedido.getMonth() == feriado_val.getMonth()
+                && fechaCreacionPedido.getDate() == feriado_val.getDate())
+            {
+                fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 1);
+                fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), 8, 0, 0, 0);    
+            }
+        });
+        //console.log("fecha que lleva despues del feriados 3: ", fechaCreacionPedido);
+        fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), fechaCreacionPedido.getHours(), 0, 0, 0);    
+        //console.log("fecha que lleva antes del traslado: ", fechaCreacionPedido);
+        $.ajax({
+            async:false,
+            url: urlApp + "buscarTiempoTraslado",
+            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+            type: 'POST',
+            dataType: 'json',
+            data: { 
+                notaVenta: $("#txtNumeroNotaVenta").val(),
+                idPlanta: id_planta_val
+            },
+            success:function(dato){
+                if (dato.length > 0){
+                    if (dato[0].tiempoTraslado == null)
+                    { 
+                        dato[0].tiempoTraslado = 0;  
+                    }
+                    fechaCreacionPedido.setHours(fechaCreacionPedido.getHours() + dato[0].tiempoTraslado);
+                    fechaCreacionPedido = new Date(fechaCreacionPedido.getFullYear(), fechaCreacionPedido.getMonth(), fechaCreacionPedido.getDate(), fechaCreacionPedido.getHours(), 0, 0, 0);
+                }
+            }
+        });
+        var atrasado = 0;
+        var grabar = true;
+        if (new Date(fechaCreacionPedido) >= new Date(fechaEntregaMaxima)){
+            swal(
+                {
+                    title: 'Está creando un pedido fuera de plazo, ¿Desea continuar con la creación del pedido?',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'SI',
+                    cancelButtonText: 'NO',
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function(isConfirm)
+                {
+                    if (isConfirm){
+                        atrasado = 1;
+                        grabarPedido(total, cadena, noExceder, incluyeFleteFalso, cantFleteFalso, valFleteFalso, Origen, atrasado);
+                    }
+                });
+                $("#btnCrearPedido").attr("disabled", false);
+        }
+        else{
+            grabarPedido(total, cadena, noExceder, incluyeFleteFalso, cantFleteFalso, valFleteFalso, Origen, atrasado);
+        }
+        //Fin Validar la Fecha Entrega
+    }
+
+    function grabarPedido(total, cadena, noExceder, incluyeFleteFalso, cantFleteFalso, valFleteFalso, Origen, Atrasado){
         var formData = new FormData( $("#datos")[0] );
 
         formData.append("idNotaVenta", $("#txtNumeroNotaVenta").val() );
@@ -773,6 +964,7 @@
         formData.append("incluyeFleteFalso", incluyeFleteFalso );
         formData.append("cantidadFleteFalso", cantFleteFalso );
         formData.append("valorFleteFalso", valFleteFalso );
+        formData.append("atrasado", Atrasado );
 
         var ruta= urlApp + "grabarNuevoPedido";
         $("#btnCrearPedido").attr("disabled", true);
@@ -818,11 +1010,10 @@
                     )                   
             }
         })
-
     }
 
     function actualizarDetalleNotaVenta(){
-
+        console.log("SI LLEGA");
         var cadenaPlantas="<select class='form-control input-sm'>";
         var cadenaFormaEntrega="<select class='form-control input-sm'>";
         $.ajax({

@@ -321,6 +321,10 @@ function asignarFolio(){
     for (var i = 1; i < tabla.rows.length; i++){
         if(tabla.rows[i].cells[12].getElementsByTagName('input')[0]){
             if(tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked){
+
+
+
+
                 if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
                     fila=i;
                 }else{
@@ -330,7 +334,51 @@ function asignarFolio(){
                 if(tabla.rows[fila].cells[5].innerHTML.trim()=='Retira'){
                     retira=true;
                     cont=1;
+
+                    if( tabla.rows[fila].cells[6].getElementsByTagName('input')[0].value.trim()=='' ||
+                                  tabla.rows[fila].cells[7].getElementsByTagName('input')[0].value.trim()=='' ||
+                                  tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value.trim()=='' ){
+
+                        swal(
+                            {
+                                title: 'Debe completar todos los datos de transporte' ,
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            });
+                        document.getElementById("btnAsignarGuia").disabled=false;
+                        return;
+
+                    }
+
+
                 }else{
+
+                    if( tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value.trim()=='0' ||
+                                  tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value.trim()=='0' ||
+                                  tabla.rows[fila].cells[9].getElementsByTagName('select')[0].value.trim()=='0' ) {
+
+                        swal(
+                            {
+                                title: 'Debe completar todos los datos de transporte' ,
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            });
+                        document.getElementById("btnAsignarGuia").disabled=false;
+                        return;
+
+                    }
+
+
                     enObra=true;
                     compara = tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value.trim()+"|"+
                               tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value.trim()+"|"+

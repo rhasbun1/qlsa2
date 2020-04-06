@@ -12,7 +12,11 @@
             <div> 
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="row" style="padding-top: 5px">
+                        @if( Session::get('idPerfil')=='14' or Session::get('idPerfil')=='15')
+                            <div class="row" style="padding-top: 5px;display: none">
+                        @else
+                            <div class="row" style="padding-top: 5px">
+                        @endif    
                             <div class="col-md-4">
                                 Cliente
                             </div>
@@ -25,6 +29,7 @@
                                 </select>
                             </div>
                         </div>
+
                     </div>
                     <div class="col-md-7">
                         <div class="row">
@@ -137,11 +142,10 @@
             if (mm < 10) {mm = '0' + mm; }
             $("#max").val(dd + '/' + mm + '/' + yyyy);
 
-
             hoy.setMonth(hoy.getMonth() - 12);
             var dd = hoy.getDate();
             var mm = hoy.getMonth()+1;
-            var yyyy = hoy.getFullYear();
+            var yyyy = hoy.getFullYear()+1;
             if (dd < 10) {dd = '0' + dd; }
             if (mm < 10) {mm = '0' + mm; }
             $("#min").val(dd + '/' + mm + '/' + yyyy);
@@ -174,7 +178,14 @@
                 lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
                 dom: 'Bfrtip',
                 buttons: [
-                    'pageLength', 
+                    'pageLength',
+                    {
+                        text: 'Actualizar',
+                        action: function ( e, dt, node, config ) {
+                            this.disable();    
+                            location.reload(true);                        
+                        }
+                    },                       
                     {
                         extend: 'excelHtml5',
                         title: tituloArchivo,
@@ -299,9 +310,11 @@
                         }else{
                             cadena="Pendiente de Aprobación";
                         }
+
+                        nv='<a href="vernotaventa/' + dato[x].idNotaVenta + '/3/" class="btn btn-xs btn-info" title="Ver Nota Venta" style="width:100%">' + dato[x].idNotaVenta + '</a>';
                                           
                         var fila=tabla.row.add( [
-                                dato[x].idNotaVenta,
+                                nv,
                                 dato[x].fecha_hora_creacion,
                                 dato[x].emp_nombre,
                                 dato[x].Obra,

@@ -19,7 +19,8 @@
                 </div>
             </div>       
         </div>
-        <div class="panel-body" id="panelBody" style="display: block">
+        <!--<div class="panel-body" id="panelBody" style="display: block">-->
+        <div id="contenidoPrincipal" style="display: block">    
             <div class="padding-md clearfix">
                 <div style="padding-bottom: 15px">  
                     <div class="row">
@@ -82,13 +83,13 @@
                     <div>   
                 @else
 
-                    <table id="tablaDetalle" class="table table-hover" style="width:1320px">
+                    <table id="tablaDetalle" class="table table-hover" style="width:100%">
                         <thead>
                             <th style="width:20px;text-align: center;">Pedido</th>
                             <th style="width: 60px;text-align: left;"></th>
                             <th style="width: 50px;text-align: center;">Estado</th>
-                            <th style="width: 150px">Cliente</th>
-                            <th style="width: 150px">Obra/Planta</th>
+                            <th style="width: 120px">Cliente</th>
+                            <th style="width: 120px">Obra/Planta</th>
                             <th style="width: 70px">Producto</th>
                             <th style="width: 30px;text-align: right;">Cant.</th>
                             <th style="width: 30px;text-align: center">Unidad</th>
@@ -149,8 +150,8 @@
                                         @endif
                                     </td>                                        
                                     <td style="width: 50px">{{ $item->estadoPedido }}</td>
-                                    <td style="width: 150px">{{ $item->nombreCliente }}</td>
-                                    <td style="width: 150px">{{ $item->nombreObra }}</td>
+                                    <td style="width: 120px">{{ $item->nombreCliente }}</td>
+                                    <td style="width: 120px">{{ $item->nombreObra }}</td>
                                     <td style="width: 70px">
                                         {{ $item->prod_nombre }}                                   
                                     </td>
@@ -494,7 +495,7 @@
                 "order": [[ 0, "desc" ]],             
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
                 preDrawCallback: function( settings ) {
-                    document.getElementById('panelBody').style.display="block";
+                    document.getElementById('contenidoPrincipal').style.display="block";
                   },                
                 initComplete: function () {
                     if( $("#idPerfil").val() == '11' ){
@@ -678,7 +679,8 @@
                     }
                                   
 
-                }                  
+                }
+
             });
                  
             $('.date').datepicker({
@@ -697,7 +699,7 @@
                 table.draw();
             }); 
 
-
+            table.draw();
         });
 
     </script>

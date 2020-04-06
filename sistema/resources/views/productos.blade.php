@@ -15,13 +15,12 @@
                     <th style="width:150px">Producto</th>
                     <th style="width:70px">Unidad</th>
                     <th style="width:70px">Planta</th>
-                    <th style="text-align: right;">Costo ($)</th>
-                    <th style="text-align: right;">Fecha Costo</th>
                     <th style="text-align: right;">Precio Ref. ($)</th>
                     <th>Cód.Softland</th>
                     <th style="text-align: center;">Requiere Diseño</th>
                     <th style="text-align: center;">Granel</th>
                     <th style="text-align: center;">Certificado</th>
+                    <th>Tiempo Producción (Horas)</th>
                     <th style="width:40px"></th>
                 </thead>
                 <tbody>
@@ -31,8 +30,6 @@
                             <td style="width:150px">{{ $item->prod_nombre }}</td>
                             <td style="width:70px">{{ $item->u_nombre }}</td>
                             <td style="width:70px">{{ $item->nombrePlanta }}</td>
-                            <td style="text-align: right;">{{ number_format( $item->costo, 0, ',', '.' ) }}</td>
-                            <td style="text-align: right;">{{ $item->fechaCosto }}</td>
                             <td style="text-align: right;">{{ number_format( $item->precioReferencia, 0, ',', '.' ) }}</td>
                             <td>{{ $item->codigoSoftland }}</td>
                             <td style="text-align: center;">
@@ -41,7 +38,8 @@
                             <td style="text-align: center;">
                                 @if($item->granel==1) SI @else NO @endif
                             </td>    
-                            <td style="text-align: center;">@if($item->solicitaCertificado==1) SI @else NO @endif</td>                       
+                            <td style="text-align: center;">@if($item->solicitaCertificado==1) SI @else NO @endif</td>
+                            <td>{{ $item->tiempoProduccion }}</td>
                             <td style="width:40px">
                                 @if ( Session::get('idPerfil')=='1' or
                                     Session::get('idPerfil')=='2' or
@@ -120,20 +118,6 @@
                     <input class="form-control input-sm" id="precioReferencia" onkeypress='return isNumberKey(event)'>
                 </div>                
             </div>
-            <div class="row" style="padding-top: 5px">
-                <div class="col-md-3">
-                    Costo (*)
-                </div>
-                <div class="col-md-3">
-                    <input class="form-control input-sm" id="precioCosto" onkeypress='return isNumberKey(event)'>
-                </div>
-                <div class="col-md-3">
-                    Fecha
-                </div>
-                <div class="col-md-3">
-                    <input class="form-control input-sm" id="fechaCosto" readonly>
-                </div>                
-            </div>
             <div class="row" style="padding-top: 20px">
                 <div class="col-md-3">
                     Requiere Diseño
@@ -154,7 +138,7 @@
                     </select>
                 </div>
             </div>
-            <div class="row" style="padding-top: 5px">
+            <div class="row" style="padding-top: 20px">
                 <div class="col-md-3">
                     Solicita Certificado
                 </div>
@@ -163,6 +147,18 @@
                         <option value="1">SI</option>
                         <option value="0">NO</option>
                     </select>
+                </div>
+                <div class="col-md-3">
+                    Tiempo de Producción (Horas)
+                </div>
+                <div class="col-md-3">
+                    @if ( Session::get('idPerfil')=='3' or
+                        Session::get('idPerfil')=='5' or
+                        Session::get('idPerfil')=='1')
+                        <input class="form-control input-sm" id="tiempoProduccion" onkeypress='return isNumberKey(event)'>
+                    @else
+                        <input class="form-control input-sm" id="tiempoProduccion" onkeypress='return isNumberKey(event)' readonly="true">
+                    @endif
                 </div>
             </div>                            
         </div>
@@ -207,12 +203,10 @@
         });
 
         function nuevoProducto(){
-            $("#fila").val('0');
+            $("#fila").val('-1');
             document.getElementById('selProductos').selectedIndex=0;
             $("#tituloFormProducto").html('<h5><b>Nuevo Producto</b></h5>');
             var tabla=document.getElementById('tabla');
-            $("#fila").val(0);
-
             $("#fechaCosto").val('');
             $("#precioCosto").ejNumericTextbox({
                 value: 0
@@ -269,57 +263,46 @@
                         nombreProducto: $("#selProductos option:selected").text(),
                         unidad: $("#selUnidades option:selected").html(),
                         idPlanta: $("#selPlantas").val(),
-                        costo: $("#precioCosto").val(),
                         precioReferencia: $("#precioReferencia").val(),
                         requiereDiseno: $("#requiereDiseno").val(),
                         granel: $("#granel").val(),
                         solicitaCertificado: $("#solicitaCertificado").val(),
-                        codigoSoftland: $("#codigoSoftland").val()
+                        codigoSoftland: $("#codigoSoftland").val(),
+                        tiempoProduccion: $("#tiempoProduccion").val()
                       },
                 success:function(dato){
                     var table = $('#tabla').DataTable();
-                    if(fila=='0'){
+                    if(fila.toString()=='-1'){
                        //ff=table.row.add( [ 
                        table.row.add( [
                                 dato[0].idProductoListaPrecios,
                                 $("#selProductos option:selected").html(),
                                 $("#selUnidades option:selected").html(),
                                 $("#selPlantas option:selected").html() ,
-                                $("#precioCosto").val(),
-                                dato[0].fechaCosto,
                                 $("#precioReferencia").val(),
                                 $("#codigoSoftland").val(),
                                 $("#requiereDiseno option:selected").html(),
                                 $("#granel option:selected").html(),
                                 $("#solicitaCertificado option:selected").html(),
+                                $("#tiempoProduccion").val(),
                                 '<td style="width:40px"><button class="btn btn-xs btn btn-warning btnEditar" title="Editar"><i class="fa fa-edit fa-lg"></i></button>' + 
                                 '<button class="btn btn-xs btn btn-danger btnEliminar" title="Eliminar"><i class="fa fa-trash-o fa-lg"></i></button></td>'
                                 ] ).draw();
-                                //] ).draw().index();
-                        //celda=table.cell(ff,4).node();
-                        //ejemplo: listabodega de proyecto datamart
-                        //celda.style.textalign="right";
                                                                           
                     }else{
 
                         table.cell(fila,1).data( $("#selProductos option:selected").html() );
                         table.cell(fila,2).data( $("#selUnidades option:selected").html() );                 
                         table.cell(fila,3).data( $("#selPlantas option:selected").html() );
-
-                        table.cell(fila,4).data(number_format($("#precioCosto").data("ejNumericTextbox").model.value) );
-                        table.cell(fila,5).data( dato[0].fechaCosto );
-
-                        table.cell(fila,6).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
-
-                        table.cell(fila,7).data( $("#codigoSoftland").val() );
-                        table.cell(fila,8).data( $("#requiereDiseno option:selected").html() );
-                        table.cell(fila,9).data( $("#granel option:selected").html() );
-                        table.cell(fila,10).data( $("#solicitaCertificado option:selected").html() ); 
+                        table.cell(fila,4).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
+                        table.cell(fila,5).data( $("#codigoSoftland").val() );
+                        table.cell(fila,6).data( $("#requiereDiseno option:selected").html() );
+                        table.cell(fila,7).data( $("#granel option:selected").html() );
+                        table.cell(fila,8).data( $("#solicitaCertificado option:selected").html() ); 
+                        table.cell(fila,9).data( $("#tiempoProduccion").val() );
                         table.cell(fila,10).draw();                
                     }
-
                     cerrarModProducto();
-
                 }
 
             })
@@ -404,42 +387,32 @@
 
             $('#tabla tbody').on( 'click', '.btnEditar', function () {
                 var data=table.row( $(this).parents('tr') ).data();
-                $("#fila").val(table.row( $(this).parents('tr') ).index() );
+                $("#fila").val( table.row( $(this).parents('tr') ).index() );
                 $("#tituloFormProducto").html('<h5><b>Editar Datos del Producto</b></h5>');
                 productoListaPrecioID = data[0];
-                if (data[4] == 0){
-                    $("#precioCosto").ejNumericTextbox({
-                        value: data[4]
-                    });
-                }
-                else{
-                    $("#precioCosto").ejNumericTextbox({
-                        value: data[4].trim().replace('.','')
-                    });
-                }
-                $("#fechaCosto").val( data[5].trim().replace('.','') );
-
                 $("#precioReferencia").ejNumericTextbox({
-                    value: data[6].trim().replace('.','')
+                    value: data[4].trim().replace('.','')
                 });                
 
-                $("#codigoSoftland").val( data[7].trim() );
-                if( data[8].trim()=='NO' ){
+                $("#codigoSoftland").val( data[5].trim() );
+                if( data[6].trim()=='NO' ){
                     document.getElementById('requiereDiseno').selectedIndex=1;
                 }else{
                     document.getElementById('requiereDiseno').selectedIndex=0;
                 }
-                if( data[9].trim()=='NO' ){
+                if( data[7].trim()=='NO' ){
                     document.getElementById('granel').selectedIndex=1;
                 }else{
                     document.getElementById('granel').selectedIndex=0;
                 }
 
-                if( data[10].trim()=='NO' ){
+                if( data[8].trim()=='NO' ){
                     document.getElementById('solicitaCertificado').selectedIndex=1;
                 }else{
                     document.getElementById('solicitaCertificado').selectedIndex=0;
                 }
+
+                $("#tiempoProduccion").val( data[9].trim() );
 
                 var lista=document.getElementById('selProductos');
                 for (var i = 0; i < lista.length; i++){
@@ -497,29 +470,29 @@
                     },                
                     {
                         extend: 'excelHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Listado de Productos',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
                         }
                     },
                     {
                         extend: 'csvHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Listado de Productos',
                         text:      '<i class="fa fa-file-text-o"></i>',
                         titleAttr: 'CSV',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
                         }
                     },
                     {
                         extend: 'pdfHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Listado de Productos',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF', 
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
                         }
                     }
                 ],                  

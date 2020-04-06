@@ -36,6 +36,7 @@ class UsuarioController extends Controller
         if($datos->ajax()){
            $usuario=DB::Select('call validarUsuario(?, ?)', array($datos->input("email"), $datos->input("password")) );
            if($usuario[0]->usu_codigo!='-1'){
+
                $perfiles=DB::Select('call spGetUsuarioPerfiles(?)', array($usuario[0]->usu_codigo) );
                Session::put('idUsuario', $usuario[0]->usu_codigo);
                Session::put('nombreUsuario', $usuario[0]->nombreUsuario);
@@ -46,8 +47,13 @@ class UsuarioController extends Controller
                Session::put('idPlanta', $usuario[0]->idPlanta);
                Session::put('idPerfil', $usuario[0]->per_codigo);
                return $perfiles;           
+
            }else{
-                return $usuario;   
+               /*Session::put('idUsuario', $usuario[0]->usu_codigo);
+   /*            Session::put('nombreUsuario', $usuario[0]->nombreUsuario);
+               Session::put('correoUsuario', $usuario[0]->usu_correo);
+               Session::put('idPerfil', $usuario[0]->per_codigo);           */
+               return $usuario;   
            }
 
            
@@ -113,6 +119,5 @@ class UsuarioController extends Controller
            return $usuario;
         }      
     }
-
 
 }

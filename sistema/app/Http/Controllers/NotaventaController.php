@@ -118,31 +118,49 @@ class NotaventaController extends Controller
     }
 
     public function clienteNotasdeVenta(){
-        $listaNotasdeVenta=DB::Select('call spGetNotasdeVentas(?)', array( Session::get('empresaUsuario' ) ) );           
+        $listaNotasdeVenta=DB::Select('call spGetNotasdeVentasCliente(?)', array( Session::get('idUsuario') ) );           
         return view('cliente_notasdeventa')->with('listaNotasdeVenta', $listaNotasdeVenta);
     }    
 
     public function historicoNotasdeVenta(){
         $fecha_termino = date('Y-m-d'); 
-        $fecha_inicio = date("Y-m-d",strtotime($fecha_termino."- 1 year"));
+        $fecha_inicio = date("Y-m-d",strtotime($fecha_termino));
         if(Session::get('empresaUsuario')=='0'){
             $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->orderBy('emp_nombre')->get();
         }else{
             $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->where('emp_codigo',"=",Session::get('empresaUsuario') )->get();
         }
-        $parametros=DB::table('parametros')->select('version')->get();     
-        $listaNotasdeVenta=DB::Select('call spGetHistoricoNotasdeVentas(?,?,?,?,?,?,?,?)', 
-            array( 
-                $fecha_inicio, 
-                $fecha_termino,
-                0,
-                0,
-                0,
-                Session::get('idUsuario'),
-                Session::get('idPerfil') ,
-                1
-            ) 
-        );
+        $parametros=DB::table('parametros')->select('version')->get();
+
+        if(Session::get('idPerfil') == 14 or Session::get('idPerfil') ==15){
+            $listaNotasdeVenta=DB::Select('call spGetHistoricoNotasdeVentasCliente(?,?,?,?,?,?,?,?)', 
+                array( 
+                    $fecha_inicio, 
+                    $fecha_termino,
+                    0,
+                    0,
+                    0,
+                    Session::get('idUsuario'),
+                    Session::get('idPerfil') ,
+                    1
+                ) 
+            );
+
+        }else{
+            $listaNotasdeVenta=DB::Select('call spGetHistoricoNotasdeVentas(?,?,?,?,?,?,?,?)', 
+                array( 
+                    $fecha_inicio, 
+                    $fecha_termino,
+                    0,
+                    0,
+                    0,
+                    Session::get('idUsuario'),
+                    Session::get('idPerfil') ,
+                    1
+                ) 
+            );            
+        }       
+
         return view('historicoNotasdeVenta')->with('listaNotasdeVenta', $listaNotasdeVenta)
                                     ->with('parametros', $parametros)
                                     ->with('clientes', $clientes)
@@ -156,18 +174,37 @@ class NotaventaController extends Controller
         $fechaInicio = date('Y-m-d', $fechaInicio);
         $fechaTermino = date('Y-m-d', $fechaTermino);
 
-        $listaNotasdeVenta=DB::Select('call spGetHistoricoNotasdeVentas(?,?,?,?,?,?,?,?)', 
-            array( 
-                $fechaInicio, 
-                $fechaTermino,
-                $datos->input('emp_codigo'),
-                $datos->input('nvDesde'),
-                $datos->input('nvHasta'),
-                Session::get('idUsuario'),
-                Session::get('idPerfil') ,
-                $datos->input('opcion')
-            ) 
-        );
+
+       
+        if(Session::get('idPerfil') == 14 or Session::get('idPerfil') ==15){
+
+            $listaNotasdeVenta=DB::Select('call spGetHistoricoNotasdeVentasCliente(?,?,?,?,?,?,?,?)', 
+                array( 
+                    $fechaInicio, 
+                    $fechaTermino,
+                    $datos->input('emp_codigo'),
+                    $datos->input('nvDesde'),
+                    $datos->input('nvHasta'),
+                    Session::get('idUsuario'),
+                    Session::get('idPerfil') ,
+                    $datos->input('opcion')
+                ) 
+            );
+        }else{
+            $listaNotasdeVenta=DB::Select('call spGetHistoricoNotasdeVentas(?,?,?,?,?,?,?,?)', 
+                array( 
+                    $fechaInicio, 
+                    $fechaTermino,
+                    $datos->input('emp_codigo'),
+                    $datos->input('nvDesde'),
+                    $datos->input('nvHasta'),
+                    Session::get('idUsuario'),
+                    Session::get('idPerfil') ,
+                    $datos->input('opcion')
+                ) 
+            );            
+        }    
+
         return $listaNotasdeVenta;
     }    
 
@@ -317,6 +354,39 @@ class NotaventaController extends Controller
             } 
             return response()->json('OK');                       
         }        
+    }
+
+    public function clienteNotaVentas(){
+      $listaUsuarios=DB::Select('call spGetUsuariosCliente()');
+      $listaEmpresas=DB::Select('call spGetEmpresas()');
+      return view('clienteNotaVenta')->with('listaUsuarios', $listaUsuarios)->with('listaEmpresas', $listaEmpresas);
+    }
+
+    public function agregarUsuarioNotaVenta(Request $datos){
+        if($datos->ajax()){
+            $usuario=DB::Select('call spInsUsuarioNotaVenta(?,?,?)', 
+                array($datos->input('usu_codigo'), $datos->input('emp_codigo'), $datos->input('idNotaVenta') ) );
+
+            return $usuario;
+        }
+    }
+
+    public function usuarioNotasdeVenta(Request $datos){
+        if($datos->ajax()){
+            $notas=DB::Select('call spGetUsuarioNotasdeVenta(?)', 
+                array($datos->input('usu_codigo') ) );
+
+            return $notas;
+        }
+    }
+
+    public function eliminarUsuarioNotaVenta(Request $datos){
+        if($datos->ajax()){
+            $notas=DB::Select('call spDelUsuarioNotaVenta(?,?)', 
+                array($datos->input('usu_codigo'), $datos->input('idNotaVenta') ) );
+
+            return $notas;
+        }
     }
 
 }

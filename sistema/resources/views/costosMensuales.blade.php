@@ -77,49 +77,114 @@
  
 </div>
 
-<div id="mdCostos" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-  	<div class="modal-dialog modal-lg">
-	    <div class="modal-content">
-	      	<div class="modal-body">
-				<div class="row">
-					<div class="col-md-1">
-						Año
-					</div>
-					<div class="col-md-2">
-						<input id="anoSel" class="form-control input-sm" readonly>
-					</div>
-					<div class="col-md-1">
-						Mes
-					</div>
-					<div class="col-md-2">
-						<input id="mesSel" class="form-control input-sm" readonly data-numeromes="0">
-					</div>				
-				</div>
-				<br>
-		        <div style="width: 80%">        
-		            <table id="tablaProductos" class="table table-hover table-condensed table-responsive" style="width: 100%">
-		                <thead>
-		                    <th style="width:120px">Producto</th>
-		                    <th style="width:60px">Unidad</th>
-		                    <th style="width:80px">Planta</th>
-		                    <th style="width:80px">Costo ($)</th>
+
+<div id="mdCostos" class="modal fade" role="dialog" style="z-index: 1400;">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-1">
+            Año
+          </div>
+          <div class="col-md-2">
+            <input id="anoSel" class="form-control input-sm" readonly>
+          </div>
+          <div class="col-md-1">
+            Mes
+          </div>
+          <div class="col-md-2">
+            <input id="mesSel" class="form-control input-sm" readonly data-numeromes="0">
+          </div>        
+        </div>
+        <br>
+            <div style="width: 80%">        
+                <table id="tablaProductos" class="table table-hover table-condensed table-responsive" style="width: 100%">
+                    <thead>
+                        <th style="width:120px">Producto</th>
+                        <th style="width:60px">Unidad</th>
+                        <th style="width:80px">Planta</th>
+                        <th style="width:80px">Costo ($)</th>
                         <th style="width:0px">Costo</th>
-		                </thead>
-		                <tbody>
-		                </tbody>
-		            </table>
-		        </div>
-			    <div style="text-align: right;">
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+          <div style="text-align: right;">
             @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
-			    	    <button id="btnGuardarCambios" class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
+                <button id="btnGuardarCambios" class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
+                <button id="btnAgregarCosto" class="btn btn-sm btn-primary" style="width:120px" onclick="abrirAgregarCosto();">Agregar otro costo</button>
             @endif
-			      <button class="btn btn-sm btn-warning" style="width:100px" onclick="cerrarListaProductos();">Cerrar</button>
-			    </div>  	        		
-			</div>
-	      </div>
-	    </div>
-  	</div>
+            <button class="btn btn-sm btn-warning" style="width:100px" onclick="cerrarListaProductos();">Cerrar</button>
+          </div>  
+        
+      </div>      
+    </div>
+  </div>
 </div>
+
+<div id="mdAgregarCosto" class="modal fade" role="dialog" style="z-index: 1600;">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+          <div class="row" style="padding-top: 20px">
+            <div class="col-md-2">
+              Producto
+            </div>
+            <div class="col-md-4">
+              <select class="form-control input-sm" id="selProductos">
+                  @foreach($productos as $item)
+                      <option value="{{ $item->prod_codigo }}">{{ $item->prod_nombre }}</option>
+                  @endforeach 
+              </select>  
+            </div>
+            <div class="col-md-2">
+              Unidad
+            </div>
+            <div class="col-md-4">
+              <select class="form-control input-sm" id="selUnidades">
+                  @foreach($unidades as $item)
+                      <option value="{{ $item->u_codigo }}">{{ $item->u_nombre }}</option>
+                  @endforeach 
+              </select>
+            </div> 
+          </div><br>      
+          <div class="row">
+              <div class="col-md-2">
+                Planta
+              </div>
+              <div class="col-md-4">
+                <select class="form-control input-sm" id="selPlantas">
+                  @foreach($plantas as $item)
+                      <option value="{{ $item->idPlanta }}">{{ $item->nombre }}</option>
+                  @endforeach 
+              </select>
+              </div>        
+              <div class="col-md-2">
+                Costo
+              </div>
+              <div class="col-md-4">
+                <input id="txtCosto" class="form-control input-sm" onkeypress="return isIntegerKey(event);">
+              </div>        
+          </div>
+          <br>
+          <div style="text-align: right;">
+            @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
+                <button id="btnGuardarAgregarCosto" class="btn btn-sm btn-success" style="width:120px" onclick="guardarAgregarCostos();">Agregar</button>
+            @endif
+            <button class="btn btn-sm btn-warning" style="width:100px" onclick="cerrarAgregarCosto();">Cerrar</button>
+          </div> 
+          <div class="row" style="padding: 10px">
+            <p>Debe seleccionar un producto NO EXISTENTE en el listado de costos del mes seleccionado. Si no encuentra aquí el producto deseado, debe solicitar primero que se agregue a la base de datos de productos.</p>
+          </div>
+      </div>      
+    </div>
+  </div>
+</div>
+
 
 <div id="mdProcesando" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
@@ -177,13 +242,13 @@
 @endsection
 
 @section('javascript')
-    <!-- Datepicker -->
-    <script src="{{ asset('/') }}js/bootstrap-datepicker.min.js"></script>  
+    <!-- Datepicker 
+     <script src="{{ asset('/') }}js/bootstrap-datepicker.min.js"></script>  -->
 
-    <!-- Timepicker -->
-    <script src="{{ asset('/') }}js/bootstrap-timepicker.min.js"></script>  
+    <!-- Timepicker 
+    <script src="{{ asset('/') }}js/bootstrap-timepicker.min.js"></script>  -->
     <script src="{{ asset('/') }}js/app/funciones.js"></script>
-    <script src="js/syncfusion/ej.web.all.min.js"> </script>
+    <script src="{{ asset('/') }}js/syncfusion/ej.web.all.min.js"> </script>
     <script src="{{ asset('/') }}js/syncfusion/lang/ej.culture.de-DE.min.js"></script>
 
 	<script>
@@ -191,10 +256,13 @@
         var anoSel=0;
         var mesSel=0;
         var titulo="Esta es una prueba";
+        var objCajaNumero;
+     
 
         var btnExcel={
                         extend: 'excelHtml5',
                         text: '<i class="fa fa-file-excel-o"></i>',
+                        title: 'Costos',
                         titleAttr: 'Excel',                           
                         exportOptions: {
                             columns: [ 0, 1, 2, 4 ]
@@ -331,6 +399,7 @@
 
 		$(document).ready(function() {
 
+
             // Setup - add a text input to each footer cell
             $('#tablaProductos thead tr').clone(true).appendTo( '#tablaProductos thead' );
             $('#tablaProductos thead tr:eq(1) th').each( function (i) {
@@ -375,7 +444,7 @@
                     btnExcel,
                     {
                         extend: 'csvHtml5',
-                        title: 'Pedidos en Proceso',
+                        title: 'Costos',
                         text:      '<i class="fa fa-file-text-o"></i>',
                         titleAttr: 'CSV',
                         fieldSeparator: ';',                         
@@ -487,13 +556,14 @@
                       },
                 success:function(dato){
                     for(var x=0;x<dato.length;x++){
-                        if( (periodoSeleccionado<parseInt(document.getElementById('periodoActual').value)) && 
+                        if( 
                             ( document.getElementById('idPerfilSession').value=='2' ||
                               document.getElementById('idPerfilSession').value=='5' || 
-                              document.getElementById('idPerfilSession').value=='18')    ){
-                            elemCosto="<input class='form-control input-sm' value='" + dato[x].costo +"' style='width: 100px' onkeypress='return isIntegerKey(event)'>";
+                              document.getElementById('idPerfilSession').value=='18')    
+                            ){
+                            elemCosto="<input class='cajaNumero' value='" + new Intl.NumberFormat("de-DE").format(dato[x].costo) +"' style='width: 100px' onkeypress='return isIntegerKey(event)' onblur='formatoNumero(this);'>";
                         }else{
-                            elemCosto="<input class='form-control input-sm' value='" + dato[x].costo +"' style='width: 100px' readonly>";
+                            elemCosto="<input class='cajaNumero' input-sm' value='" + new Intl.NumberFormat("de-DE").format(dato[x].costo) +"' style='width: 100px' readonly>";
                         }
 
                         var fila=productos.row.add( [
@@ -510,6 +580,16 @@
                     }
 
                     productos.draw();
+                    
+           /*         $(".cajaNumero").ejNumericTextbox({
+                        decimalPlaces: 0,
+                       // watermarkText: "Ingrese valor",
+                        minValue: 0,
+                        locale: "de-DE",
+                        showSpinButton: false,
+                        width: 120
+                    });*/
+
                     actualizarFiltros(productos);
 
                     $("#mdCostos").modal('show');
@@ -521,6 +601,11 @@
 
         function cerrarListaProductos(){
         	$("#mdCostos").modal('hide');
+        }
+
+        function formatoNumero(texto){
+
+          texto.value=new Intl.NumberFormat("de-DE").format( texto.value.replace('.','') );
         }
 
 
@@ -587,7 +672,7 @@
 
 
 		function guardarCostos(){
-            document.getElementById('btnGuardarCambios').disabled=true;
+      document.getElementById('btnGuardarCambios').disabled=true;
 			var tabla= $("#tablaProductos").DataTable();
 		    var cadena='[';
 		    var costo="0";
@@ -595,36 +680,35 @@
 		    	if(tabla.cell(i,3).node().getElementsByTagName('input')[0].value==''){
 		    		costo="0";
 		    	}else{
-		    		costo=tabla.cell(i,3).node().getElementsByTagName('input')[0].value;
+		    		costo=tabla.cell(i,3).node().getElementsByTagName('input')[0].value.replace('.','');
 		    	}
 
-                if( isNaN(costo) ){
-                    $("#mdProcesando").modal('hide');
-                    document.getElementById('btnGuardarCambios').disabled=false;
-                    swal(
-                        {
-                            title: '¡Los valores ingresados deben ser solo números!' ,
-                            text: '',
-                            type: 'warning',
-                            showCancelButton: false,
-                            confirmButtonText: 'OK',
-                            cancelButtonText: '',
-                            closeOnConfirm: true,
-                            closeOnCancel: false
-                        }
-                    )
-                    return;                   
+          if( isNaN(costo) ){
+            $("#mdProcesando").modal('hide');
+            document.getElementById('btnGuardarCambios').disabled=false;
+            swal(
+                {
+                    title: '¡Los valores ingresados deben ser solo números!' ,
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
                 }
+            )
+            return;                   
+          }
 
-                cadena+='{';
-                cadena+='"idProductoListaPrecio":"'+ tabla.cell(i,0).node().dataset.idproductolistaprecio  + '", ';
-                cadena+='"costo":"' + costo + '"';
-                cadena+='}, ';
+          cadena+='{';
+          cadena+='"idProductoListaPrecio":"'+ tabla.cell(i,0).node().dataset.idproductolistaprecio  + '", ';
+          cadena+='"costo":"' + costo + '"';
+          cadena+='}, ';
 
 		    }
 		    cadena=cadena.slice(0,-2);
 		    cadena+=']';
-
             $.ajax({
                 url: urlApp + "actualizarCostos",
                 headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
@@ -657,6 +741,113 @@
 
 		}
 
+    function abrirAgregarCosto(){
+      $("#mdAgregarCosto").modal('show');
+    }
+
+    function cerrarAgregarCosto(){
+      $("#selProductos").val(1);
+      $("#selUnidades").val(1);
+      $("#selPlantas").val(1);
+      $("#txtCosto").val("");
+      $("#mdAgregarCosto").modal('hide'); 
+    }
+
+    function guardarAgregarCostos(){
+      var table=$('#tablaProductos').DataTable();
+      var buscar=$("#selProductos option:selected").html().trim()+$("#selUnidades option:selected").html().trim()+$("#selPlantas option:selected").html().trim();
+
+      for (var i = 0; i < table.rows().count(); i++){
+          if( (buscar==table.cell(i,0).data().trim()+table.cell(i,1).data().trim()+table.cell(i,2).data()) ){
+              swal(
+                  {
+                      title: '¡Producto existente!',
+                      text: 'El producto ya se encuentra en la lista',
+                      type: 'warning',
+                      showCancelButton: false,
+                      confirmButtonText: 'OK',
+                      cancelButtonText: 'NO',
+                      closeOnConfirm: true,
+                      closeOnCancel: false
+                  });
+              return;
+          }
+      }
+      $.ajax({
+        url: urlApp + "obtenerIdProductoListaPrecio",
+        headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+        type: 'post',
+        dataType: 'json',
+        data: {                      
+                codigo_prod: $("#selProductos").val(),
+                nombre_unidad: $("#selUnidades option:selected").text(),
+                codigo_planta: $("#selPlantas").val()
+              },
+        success:function(dato){
+          if (dato.length == 0){
+            swal(
+                {
+                    title: 'Se debe agregar el producto a la lista de precios' ,
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                }
+            ) 
+          }
+          else{
+            var costo = 0;
+            if ($("#txtCosto").val() != ""){
+              costo = $("#txtCosto").val();
+            }
+            $.ajax({
+              url: urlApp + "guardarProductoListaPrecio",
+              headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+              type: 'post',
+              dataType: 'json',
+              data: {     
+                      ano: $("#anoSel").val(),
+                      mes: document.getElementById('mesSel').dataset.numeromes,
+                      idproductolistaprecio: dato[0].idProductoListaPrecios,
+                      costo: costo,
+                    },
+              success:function(dato){
+                swal(
+                {
+                    title: 'Costo agregado correctamente' ,
+                    text: '',
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                }) 
+              } 
+            });
+
+            elemCosto="<input class='form-control input-sm' value='" + $("#txtCosto").val() +"' style='width: 100px' onkeypress='return isIntegerKey(event)'>";
+
+            var fila=table.row.add( [
+                    $("#selProductos option:selected").html(),
+                    $("#selUnidades option:selected").html(),
+                    $("#selPlantas option:selected").html() ,
+                    elemCosto,
+                    $("#txtCosto").val()
+                ] ).index();
+
+            table.cell(fila,0).node().dataset.idproductolistaprecio=dato[0].idProductoListaPrecios;
+            table.cell(fila,0).node().style.width="0px";
+            table.draw();
+            actualizarFiltros(table);
+            cerrarAgregarCosto();
+          }
+        } 
+      });
+    }
 	</script>
 
 @endsection        	

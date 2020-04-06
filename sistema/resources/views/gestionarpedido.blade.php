@@ -143,15 +143,25 @@
                                         </select>                                    
                                     </td>
                                     <td>
-                                        <select class="form-control input-sm">
-                                            @foreach($FormasdeEntrega as $formaEntrega)
-                                                @if( $item->idFormaEntrega==$formaEntrega->idFormaEntrega )
-                                                    <option value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>
-                                                @else
-                                                    <option value="{{ $formaEntrega->idFormaEntrega }}">{{ $formaEntrega->nombre }}</option>
-                                                @endif
-                                            @endforeach 
-                                        </select>                                    
+                                        @if($item->idFormaEntrega==2)
+                                            <select class="form-control input-sm">
+                                                @foreach($FormasdeEntrega as $formaEntrega)
+                                                    @if( $item->idFormaEntrega==$formaEntrega->idFormaEntrega )
+                                                        <option value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>
+                                                    @endif
+                                                @endforeach 
+                                            </select>                                            
+                                        @else
+                                            <select class="form-control input-sm">
+                                                @foreach($FormasdeEntrega as $formaEntrega)
+                                                    @if( $item->idFormaEntrega==$formaEntrega->idFormaEntrega )
+                                                        <option value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>
+                                                    @else
+                                                        <option value="{{ $formaEntrega->idFormaEntrega }}">{{ $formaEntrega->nombre }}</option>
+                                                    @endif
+                                                @endforeach 
+                                            </select>
+                                        @endif                               
                                     </td>
                                 </tr>
                             @endif
