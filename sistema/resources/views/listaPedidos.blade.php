@@ -420,7 +420,7 @@
                                     id: 'btnNuevoPedido'
                                 },
                         action: function ( e, dt, node, config ) {
-                            if( uPerfil==11  ){
+                            if( uPerfil==11 || uPerfil==19 ){
                                 swal(
                                     {
                                         title: 'Este perfil no tiene acceso a Crear Pedidos' ,

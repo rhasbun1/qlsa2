@@ -128,8 +128,6 @@ function guardarDatosProgramacion(idPedido, origen){
     if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=="2"){
         for (var i = 1; i < tabla.rows.length; i++){
 
-                console.log( tabla.rows[i].cells[1].dataset.guia );
-
                 if ( parseInt(tabla.rows[i].cells[1].dataset.guia)==0 ){
 
                     fechaCarga='';
@@ -209,8 +207,11 @@ function guardarDatosProgramacion(idPedido, origen){
                     nombreEmpresaTransporte="";
                     nombreConductor="";
                     patente="";
-                    idPlanta=tabla.rows[i].cells[4].getElementsByTagName('select')[0].value;
-                    
+                    if(tabla.rows[i].cells[4].getElementsByTagName('select')[0]){
+                        idPlanta=tabla.rows[i].cells[4].getElementsByTagName('select')[0].value;  
+                    }else{
+                        idPlanta=tabla.rows[i].cells[4].dataset.idplanta;
+                    } 
 
                     if( tabla.rows[i].cells[5].innerHTML.trim()!="Retira"  ){
 
@@ -243,6 +244,13 @@ function guardarDatosProgramacion(idPedido, origen){
                             if(tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()!=''){
                                 horaCarga=tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value;  
                             }                            
+                        }else{
+                            nombreEmpresaTransporte=tabla.rows[fila].cells[6].innerHTML;
+                            patente=tabla.rows[fila].cells[7].innerHTML;
+                            rampla="0";
+                            nombreConductor=tabla.rows[fila].cells[9].innerHTML;
+                            fechaCarga=fechaAtexto(  tabla.rows[fila].cells[10].innerHTML );
+                            horaCarga=tabla.rows[fila].cells[11].innerHTML;                      
                         }
 
                     }
@@ -322,22 +330,14 @@ function asignarFolio(){
         if(tabla.rows[i].cells[12].getElementsByTagName('input')[0]){
             if(tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked){
 
+                if(tabla.rows[i].cells[5].innerHTML.trim()=='Retira'){
 
-
-
-                if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
-                    fila=i;
-                }else{
-                    fila=1;
-                }
-
-                if(tabla.rows[fila].cells[5].innerHTML.trim()=='Retira'){
                     retira=true;
                     cont=1;
 
-                    if( tabla.rows[fila].cells[6].getElementsByTagName('input')[0].value.trim()=='' ||
-                                  tabla.rows[fila].cells[7].getElementsByTagName('input')[0].value.trim()=='' ||
-                                  tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value.trim()=='' ){
+                    if( tabla.rows[i].cells[6].getElementsByTagName('input')[0].value.trim()=='' ||
+                                  tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim()=='' ||
+                                  tabla.rows[i].cells[9].getElementsByTagName('input')[0].value.trim()=='' ){
 
                         swal(
                             {
@@ -357,6 +357,12 @@ function asignarFolio(){
 
 
                 }else{
+
+                    if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
+                        fila=i;
+                    }else{
+                        fila=1;
+                    }                    
 
                     if( tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value.trim()=='0' ||
                                   tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value.trim()=='0' ||

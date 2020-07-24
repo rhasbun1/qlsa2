@@ -25,7 +25,7 @@
             			Rut
             		</div>
             		<div class="col-sm-2">
-            			<input id="rut" class="form-control input-sm" value="@isset( $empresa[0]->rut ) {{ $empresa[0]->rut }} @endisset">
+            			<input id="rut" class="form-control input-sm" value="@isset( $empresa[0]->rut ){{$empresa[0]->rut}}@endisset">
             		</div>        		 		
             	</div>
             	<div class="row" style="padding-top: 5px">
@@ -94,6 +94,13 @@
                 Session::get('idPerfil')=='5' or 
                 Session::get('idPerfil')=='7')          
                 <button class="btn btn-sm btn-success" onclick="guardarDatos();">Guardar</button>
+                @if( isset( $empresa[0]->habilitada ) )
+                    @if($empresa[0]->habilitada==1)
+                        <button class="btn btn-sm btn-warning" onclick="deshabilitar();">Deshabilitar</button>
+                    @else
+                        <button class="btn btn-sm btn-warning" onclick="habilitar();">Habilitar</button>
+                    @endif
+                @endif    
             @endif
         </div>        	
     </div>
@@ -346,6 +353,75 @@
 			$("#modCamion").modal("hide");
 		}
 
+        function deshabilitar(){
+            swal(
+                {
+                    title: 'Deshabilita la empresa de transporte ?',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Deshabilitar',
+                    cancelButtonText: 'Cancelar',
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function(isConfirm)
+                {
+                    if(isConfirm){
+                        $.ajax({
+                            url: urlApp + "deshabilitaEmpresaTransporte",
+                            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { 
+                                    idEmpresaTransporte: $("#idEmpresaTransporte").val()
+                                  },
+                            success:function(dato){
+                               location.href= urlApp + "listaEmpresasTransporte";
+                            }
+
+                        })
+                        
+                    }
+                }                
+
+            )               
+        }
+
+        function habilitar(){
+            swal(
+                {
+                    title: 'Habilita la empresa de transporte ?',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Habilitar',
+                    cancelButtonText: 'Cancelar',
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function(isConfirm)
+                {
+                    if(isConfirm){
+                        $.ajax({
+                            url: urlApp + "habilitaEmpresaTransporte",
+                            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { 
+                                    idEmpresaTransporte: $("#idEmpresaTransporte").val()
+                                  },
+                            success:function(dato){
+                               location.href= urlApp + "listaEmpresasTransporte";
+                            }
+
+                        })
+                        
+                    }
+                }                
+
+            )               
+        }
 		function formConductor(){
             $("#idConductor").val("0");
             $("#idFilaConductor").val('0');
@@ -380,6 +456,42 @@
 
         function guardarDatos(){
 
+            rut.value=rut.value.trim();
+
+            if(rut.value.trim()==''){
+                swal(
+                    {
+                        title: 'El rut es un dato obligatorio!',
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    }
+                )
+                return;  
+            }
+
+
+            if(!checkRut(rut)){
+                swal(
+                    {
+                        title: 'El rut ingresado no es válido!',
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    }
+                )
+                return;  
+            }
+
+
             if( $("#nombre").val().trim()==""){
                 swal(
                     {
@@ -411,6 +523,23 @@
                         nombreContacto: $("#nombreContacto").val()
                       },
                 success:function(dato){
+
+                    if(dato.identificador==-1){
+                        swal(
+                            {
+                                title: 'El rut ingresado lo tiene otra empresa de transporte creada anteriormente!',
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            }
+                        ) 
+                        return;   
+                    }
+
                     edicion=false;
                     if( $("#idEmpresaTransporte").val() != "0" ){
                         edicion=true;

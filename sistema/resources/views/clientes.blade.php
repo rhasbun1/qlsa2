@@ -21,6 +21,7 @@
                     <th>Ciudad</th>
                     <th style="text-align: center">Solicita OC</th>
                     <th style="text-align: center">Cód. Softland</th>
+                    <th style="text-align: center">Ingresar Cód.Soft.<br>al crear la NV</th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -41,6 +42,13 @@
                                 @endif    
                             </td>
                             <td style="text-align: center">{{ $item->emp_codigoSoftland }}</td>
+                            <td style="text-align: center">
+                                @if ( $item->notaVentaSolicitaCodigo==1)
+                                    SI
+                                @else
+                                    NO
+                                @endif                                  
+                            </td>
                             <td>
                                 @if (Session::get('idPerfil')=='1' or Session::get('idPerfil')=='2' or
                                     Session::get('idPerfil')=='3' or Session::get('idPerfil')=='4' or 
@@ -129,12 +137,23 @@
             </div>
             <div class="row" style="padding-top: 5px">
                 <div class="col-md-3">
-                    Código Softland
+                    Cód.Softland (CS)
                 </div>
                 <div class="col-md-3">
                     <input class="form-control input-sm" id="codigoSoftland" maxlength="10">
                 </div>
-            </div>        
+            </div>
+            <div class="row" style="padding-top: 5px">
+                <div class="col-md-3">
+                    Ingresar CS al crear nota de venta
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control input-sm" id="crearEnNotaVenta">
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
+                    </select>
+                </div>
+            </div>                  
         </div>
         <div class="col-md-offset-8" style="padding-top: 20px; padding-bottom: 20px">
            <button id="btnEliminarBodega" type="button" class="btn btn-success btn-sm" onclick="guardarDatosCliente();" style="width: 80px">Guardar</button>
@@ -169,12 +188,26 @@
             $("#direccion").val( data[4].trim() );
             $("#comuna").val( data[5].trim() );
             $("#ciudad").val( data[6].trim() );
-            if( data[7].trim()=='NO' ){
-                document.getElementById('solicitaOC').selectedIndex=1;
-            }else{
+            if( data[7].trim()=='SI' ){
                 document.getElementById('solicitaOC').selectedIndex=0;
+            }else{
+                document.getElementById('solicitaOC').selectedIndex=1;
             }
-            $("#codigoSoftland").val( data[8].trim() );
+
+            if (data[8].trim() ==''){
+                var codsoft=rutCliente.value.split(".").join("");
+                codsoft=codsoft.slice(0, -2);
+                $("#codigoSoftland").val(codsoft);
+            }else{
+              $("#codigoSoftland").val( data[8].trim() );  
+            }
+
+            if( data[9].trim()=='SI' ){
+                document.getElementById('crearEnNotaVenta').selectedIndex=0;
+            }else{
+                document.getElementById('crearEnNotaVenta').selectedIndex=1;
+            }            
+            
             $("#modCliente").modal("show");
         }
 
@@ -186,37 +219,99 @@
             var tabla=$('#tabla').DataTable();
             var fila=$("#fila").val();
 
-            $.ajax({
-                url: urlApp + "guardarDatosCliente",
-                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
-                type: 'POST',
-                dataType: 'json',
-                data: { 
-                        emp_codigo: tabla.cell(fila,0).data().trim(),
-                        rutEmpresa: $("#rutCliente").val(),
-                        razonSocial: $("#razonSocial").val(),
-                        nombre: $("#nombre").val(),
-                        direccion: $("#direccion").val(),
-                        comuna: $("#comuna").val(),
-                        ciudad: $("#ciudad").val(),
-                        solicitaOC: $("#solicitaOC").val(),
-                        codigoSoftland: $("#codigoSoftland").val()
-                      },
-                success:function(dato){
-                    tabla.cell(fila,1).data( $("#rutCliente").val() );
-                    tabla.cell(fila,2).data( $("#nombre").val() );
-                    tabla.cell(fila,3).data( $("#razonSocial").val() );
-                    tabla.cell(fila,4).data( $("#direccion").val() );
-                    tabla.cell(fila,5).data( $("#comuna").val() );
-                    tabla.cell(fila,6).data( $("#ciudad").val() );
-                    tabla.cell(fila,7).data( $("#solicitaOC option:selected").html() );
-                    tabla.cell(fila,8).data( $("#codigoSoftland").val() );
-                    tabla.row(fila).draw();
-                    cerrarModCliente();
+            var codsoft=rutCliente.value.split(".").join("");
+            codsoft=codsoft.slice(0, -2);
 
-                }
+            if ($("#crearEnNotaVenta").val()==0 && codsoft!=codigoSoftland.value){
+                swal(
+                    {
+                        title: 'El código softland no cumple con el formato esperado (se esperaba '+codsoft+'), ¿Continúa grabando los datos?',
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Si',
+                        cancelButtonText: 'No',
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function(isConfirm)
+                    {
+                        if(isConfirm){
 
-            })
+                            $.ajax({
+                                url: urlApp + "guardarDatosCliente",
+                                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                                type: 'POST',
+                                dataType: 'json',
+                                data: { 
+                                        emp_codigo: tabla.cell(fila,0).data().trim(),
+                                        rutEmpresa: $("#rutCliente").val(),
+                                        razonSocial: $("#razonSocial").val(),
+                                        nombre: $("#nombre").val(),
+                                        direccion: $("#direccion").val(),
+                                        comuna: $("#comuna").val(),
+                                        ciudad: $("#ciudad").val(),
+                                        solicitaOC: $("#solicitaOC").val(),
+                                        codigoSoftland: $("#codigoSoftland").val(),
+                                        crearEnNotaVenta: $("#crearEnNotaVenta").val()
+                                      },
+                                success:function(dato){
+                                    tabla.cell(fila,1).data( $("#rutCliente").val() );
+                                    tabla.cell(fila,2).data( $("#nombre").val() );
+                                    tabla.cell(fila,3).data( $("#razonSocial").val() );
+                                    tabla.cell(fila,4).data( $("#direccion").val() );
+                                    tabla.cell(fila,5).data( $("#comuna").val() );
+                                    tabla.cell(fila,6).data( $("#ciudad").val() );
+                                    tabla.cell(fila,7).data( $("#solicitaOC option:selected").html() );
+                                    tabla.cell(fila,8).data( $("#codigoSoftland").val() );
+                                    tabla.cell(fila,9).data( $("#crearEnNotaVenta option:selected").html() );
+                                    tabla.row(fila).draw();
+                                    cerrarModCliente();
+
+                                }
+                            })                                
+
+                        }else{
+
+                            return;
+
+                        }
+                    }
+                )
+            }else{
+                $.ajax({
+                    url: urlApp + "guardarDatosCliente",
+                    headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 
+                            emp_codigo: tabla.cell(fila,0).data().trim(),
+                            rutEmpresa: $("#rutCliente").val(),
+                            razonSocial: $("#razonSocial").val(),
+                            nombre: $("#nombre").val(),
+                            direccion: $("#direccion").val(),
+                            comuna: $("#comuna").val(),
+                            ciudad: $("#ciudad").val(),
+                            solicitaOC: $("#solicitaOC").val(),
+                            codigoSoftland: $("#codigoSoftland").val(),
+                            crearEnNotaVenta: $("#crearEnNotaVenta").val()
+                          },
+                    success:function(dato){
+                        tabla.cell(fila,1).data( $("#rutCliente").val() );
+                        tabla.cell(fila,2).data( $("#nombre").val() );
+                        tabla.cell(fila,3).data( $("#razonSocial").val() );
+                        tabla.cell(fila,4).data( $("#direccion").val() );
+                        tabla.cell(fila,5).data( $("#comuna").val() );
+                        tabla.cell(fila,6).data( $("#ciudad").val() );
+                        tabla.cell(fila,7).data( $("#solicitaOC option:selected").html() );
+                        tabla.cell(fila,8).data( $("#codigoSoftland").val() );
+                        tabla.cell(fila,9).data( $("#crearEnNotaVenta option:selected").html() );
+                        tabla.row(fila).draw();
+                        cerrarModCliente();
+
+                    }
+                })                
+            }         
 
         }
 
@@ -253,7 +348,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
                         }
                     },
                     {
@@ -262,7 +357,7 @@
                         text:      '<i class="fa fa-file-text-o"></i>',
                         titleAttr: 'CSV',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
                         }
                     },
                     {
@@ -271,7 +366,7 @@
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
                         }
                     }
                 ],                  

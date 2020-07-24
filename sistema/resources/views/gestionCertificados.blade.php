@@ -63,15 +63,20 @@
                         @if(1==3)
                             @foreach($guias as $item)
                                 <tr>                                    
-                                    <td style="width:50px" data-numguia="{{ $item->numeroGuia }}" data-prodcodigo="{{ $item->prod_codigo }}">
+                                    <td style="width:50px" 
+                                        data-numguia="{{ $item->numeroGuia }}" 
+                                        data-prodcodigo="{{ $item->prod_codigo }}" 
+                                        data-ucodigo="{{ $item->u_codigo }}" 
+                                        data-idplanta="{{ $item->idPlanta }}"
+                                        >
                                         @if( $item->certificado=='' || $item->certificado=='S/C' )
                                             S/C
-                                            <button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1, {{ $item->prod_codigo }} );" title="Subir Certificado"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                            <button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this, this.parentNode.parentNode);" data-archivo="{{$item->certificado}}">                                            
                                         @else
                                             <a target="_blank" href="{{ asset('/') }}bajarCertificado/{{ $item->certificado }}">
                                                 <img src="{{ asset('/') }}img/iconos/certificado.png" border="0">
                                             </a>
-                                            <button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this);" data-archivo="{{$item->certificado}}">
+                                            <button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this, this.parentNode.parentNode);" data-archivo="{{$item->certificado}}">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </button> 
                                         @endif                                    
@@ -238,14 +243,26 @@
             $("#modSubirArchivo").modal("hide");
         }
 
-        function eliminarCertificado(btn){
+        function eliminarCertificado(btn, row){
+            var tabla=$("#tablaAprobados").DataTable();
+            var fila=tabla.row(row).index();
+            var titulo="";
+            var textoBoton="";
+            if(btn.dataset.archivo=='S/C'){
+                titulo="¿Desea dejar este certificado como pendiente?";
+                textoBoton='Aceptar';
+            }else{
+                titulo='¿Elimina el certificado de este producto?';
+                textoBoton='Eliminar';
+            }
+
             swal(
                 {
-                    title: '¿Elimina el certificado de este producto?' ,
+                    title: titulo,
                     text: '',
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Eliminar',
+                    confirmButtonText: textoBoton,
                     cancelButtonText: 'Cancelar',
                     closeOnConfirm: true,
                     closeOnCancel: true
@@ -261,7 +278,11 @@
                             dataType: 'json',
                             data: {
                                     nombreCertificado: btn.dataset.archivo,
-                                    opcion: 2 
+                                    opcion: 2,
+                                    numeroGuia: tabla.cell(row,0).node().dataset.numguia,
+                                    prodcodigo: tabla.cell(row,0).node().dataset.prodcodigo,
+                                    ucodigo: tabla.cell(row,0).node().dataset.ucodigo,
+                                    idPlanta: tabla.cell(row,0).node().dataset.idplanta,
                                   },                    
                             success:function(dato){
                                 btn.parentNode.innerHTML='<button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1,' + btn.parentNode.dataset.prodcodigo + ');"><span class="glyphicon glyphicon-arrow-up"></span></button>';
@@ -294,7 +315,7 @@
                   var tabla=document.getElementById('tablaAprobados');
                   var fila= $("#filaTabla").val();
                   cerrarModalSubirArchivo();
-                  tabla.rows[fila].cells[0].innerHTML="<a target='_blank' href='"+ urlApp + "bajarCertificado/" + data + "'><img src='{{ asset('/') }}img/iconos/certificado.png' border='0'></a><button class='btn btn-danger btn-xs' onclick='eliminarCertificado(this)' data-archivo='"+ data + "'><span class='glyphicon glyphicon-remove'></span></button>";  
+                  tabla.rows[fila].cells[0].innerHTML="<a target='_blank' href='"+ urlApp + "bajarCertificado/" + data + "'><img src='{{ asset('/') }}img/iconos/certificado.png' border='0'></a><button class='btn btn-danger btn-xs' onclick='eliminarCertificado(this, this.parentNode.parentNode)' data-archivo='"+ data + "'><span class='glyphicon glyphicon-remove'></span></button>";  
               },
               error: function(jqXHR, text, error){
                   alert('Error!, No se pudo Añadir los datos');
@@ -420,12 +441,12 @@
                         var col0='';
                         if( dato[x].certificado=='S/C' ){
                             col0+='S/C';
-                            col0+='<button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this);" data-archivo="' + dato[x].certificado +'"><span class="glyphicon glyphicon-remove"></span></button>';                            
+                            col0+='<button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this, this.parentNode.parentNode);" data-archivo="' + dato[x].certificado +'"><span class="glyphicon glyphicon-remove"></span></button>';                            
                         }else{
                             col0+='<a target="_blank" href="' + urlApp + 'bajarCertificado/' + dato[x].certificado + '">';
                             col0+='<img src="' + urlApp + 'img/iconos/certificado.png" border="0"></a>';
 
-                            col0+='<button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this);" data-archivo="' + dato[x].certificado +'"><span class="glyphicon glyphicon-remove"></span></button>';
+                            col0+='<button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this, this.parentNode.parentNode);" data-archivo="' + dato[x].certificado +'"><span class="glyphicon glyphicon-remove"></span></button>';
                         }                                                          
 
                         var col1='';
@@ -455,6 +476,8 @@
 
                         tabla.cell(fila,0).node().dataset.numguia=dato[x].numeroGuia;
                         tabla.cell(fila,0).node().dataset.prodcodigo=dato[x].prod_codigo;
+                        tabla.cell(fila,0).node().dataset.ucodigo=dato[x].u_codigo;
+                        tabla.cell(fila,0).node().dataset.idplanta=dato[x].idPlanta;
 
                      //   tabla.cell(fila,0).node().width=60;
                     }

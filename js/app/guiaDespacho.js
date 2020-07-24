@@ -39,7 +39,7 @@
               $("#direccionCliente").val(dato[0].direccionCliente);
               $("#comuna").val(dato[0].comunaCliente);
               $("#ciudad").val(dato[0].ciudadCliente);
-              console.log(dato[0].lugarDeEntrega);
+
               if (dato[0].lugarDeEntrega == ''){
                 $("#guiaRampla").attr('disabled', true);
               }
@@ -56,6 +56,7 @@
               if(dato[0].folioDTE>0){
                 document.getElementById('btnRegistrarSalida').style.display='none';
                 document.getElementById('btnGuardarDatosGuia').style.display='none';
+
                 if(document.getElementById('btnEmitirGuia').dataset.idperfil=='5' || 
                   document.getElementById('btnEmitirGuia').dataset.idperfil=='6' || 
                   document.getElementById('btnEmitirGuia').dataset.idperfil=='7'){
@@ -63,8 +64,11 @@
                     document.getElementById('btnRegistrarSalida').style.display='inline';
                   }
                 }
+                
                 document.getElementById('btnEmitirGuia').style.display='none';
                 document.getElementById('btnBajar').style.display='inline';
+                document.getElementById('btnAnularGuiaTemporal').style.display='none';
+
                 $("#observacionDespacho").attr('readonly', true);
                 $("#guiaPatente").attr('readonly', true);
                 $("#guiaRampla").attr('readonly', true);
@@ -228,12 +232,28 @@
               },                    
         success:function(dato){
           $("#folioDTE").val(dato.FolioDte);
+
+
           if(dato.Error.trim()!=''){
             $("#mensajeProceso").html("<strong>¡Advertencia!</strong> " + dato.Error);
             document.getElementById('mensajeProceso').style.display="block";
             cerrarModEmitirGuia();
           }
           if(dato.FolioDte.trim()!=''){
+
+            if(document.getElementById('btnHistorico')){
+              if(dato.despachoCompleto==1){
+
+                document.getElementById("btnHistorico").style.display='none';
+                document.getElementById("btnAsignarGuia").style.display='none';
+
+              }
+            }
+            if(document.getElementById('btnAnularGuiaTemporal')){
+              document.getElementById('btnAnularGuiaTemporal').style.display='none';
+            }
+            
+
             document.getElementById('btnGuardarDatosGuia').style.display='none';
             document.getElementById('btnEmitirGuia').style.display='none';
             document.getElementById('btnBajar').style.display='inline';
@@ -435,7 +455,7 @@
               cancelButtonText: '',
               closeOnConfirm: true,
               closeOnCancel: false
-          }
+          }          
         ) 
         return;     
     }
@@ -476,11 +496,30 @@
                 motivo: obsAnulacion.value
               },
         success:function(dato){
-          cerrarAnularGuia();
-          cerrarCajaGuia();
+            swal(
+                 {
+                    title: "¡Proceso realizado con éxito!" ,
+                    text: 'A continuación de actualizará la pantalla anterior con los cambios realizados',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'Entendido',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function(isConfirm)
+                {
+                    if(isConfirm){
+                      location.reload(true);
+                    }
+                }
+            );                 
+            //  cerrarAnularGuia();
+            //  cerrarCajaGuia();
         }
-    })                
-    return;                        
+      }
+    );
+                    
     
   }
 

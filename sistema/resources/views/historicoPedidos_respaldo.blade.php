@@ -143,26 +143,75 @@
             </div>
             <hr style="color: #0056b2;" />
         </div>
-        <div id="divTabla" style="width:100%;">
-                <table id="tablaDetalle" class="display">
+        <div style="width:100%">
+                <table id="tablaDetalle" class="display nowrap" style="width: 800px">
                     <thead>
-                        <th style="width: 60px">Pedido</th>
-                        <th style="width: 120px"></th>
-                        <th style="width: 120px">Cliente</th>
-                        <th style="width: 120px">Obra/Planta</th>
-                        <th style="width: 80px">Producto</th>
-                        <th style="width: 40px;text-align: right;">Cantidad<br>Real</th>
-                        <th style="width: 60px">Unidad</th>
-                        <th style="width: 80px">Fecha Entrega<br>Solicitada</th>
-                        <th style="width: 80px">Horario de Salida</th>
-                        <th style="width: 80px">Forma de<br>Entrega</th>
-                        <th style="width: 80px">Planta de Origen</th>
-                        <th style="width: 80px">Estado</th>
-                        <th style="width: 60px; text-align: right;">Nº Nota<br>de Venta</th>
-                        <th style="width: 60px; text-align: right;">Nº de guía</th>
-                        <th style="width: 80px; text-align: right;">Nº Aux.</th>
+                        <th style="width: 5%">Pedido</th>
+                        <th style="width: 12%"></th>
+                        <th style="width: 10%">Cliente</th>
+                        <th style="width: 10%">Obra/Planta</th>
+                        <th style="width: 10%">Producto</th>
+                        <th style="width: 5%; text-align: right;">Cantidad<br>Real</th>
+                        <th style="width: 5%">Unidad</th>
+                        <th style="width: 7%">Fecha Entrega<br>Solicitada</th>
+                        <th style="width: 7%">Horario de Salida</th>
+                        <th style="width: 3%">Forma de Entrega</th>
+                        <th style="width: 4%">Planta de Origen</th>
+                        <th style="width: 5%">Estado</th>
+                        <th style="width: 5%; text-align: right;">Nota de Venta</th>
+                        <th style="width: 5%; text-align: right;">Nº de guía</th>
+                        <th style="width: 7%; text-align: right;">Nº Aux.</th>
                     </thead>
                     <tbody>
+                        @foreach($pedidos as $item)
+                            <tr>
+                                <td style="width: 5%">
+                                    <a target="_blank" href="{{ asset('/') }}verpedidoNuevaVentana/{{ $item->idPedido }}/1/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
+                                </td>
+                                <td style="width: 12%">
+                                    @if ($item->modificado>0)
+                                        <span class="badge badge-primary">{{$item->modificado}}</span>
+                                    @endif                                        
+                                    @if ($item->tipoTransporte==2)
+                                        <span class="badge badge-danger">M</span>
+                                    @endif
+                                    @if ( $item->formula!='' )
+                                        <span><img src="{{ asset('/') }}img/iconos/matraz.png" border="0" title="{{ $item->formula }}" width="15px" height="15pxs"></span>
+                                    @endif   
+                                    @if ( $item->numeroGuia>0 )
+                                        <span onclick='abrirGuia(1, {{ $item->numeroGuia }}, this.parentNode.parentNode);' style="cursor:pointer; cursor: hand"><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0"></span>
+                                    @endif
+                                    @if ( $item->certificado!='' )  
+                                        <a target="_blank" href="{{ asset('/') }}bajarCertificado/{{$item->certificado}}/">    
+                                            <img src="{{ asset('/') }}img/iconos/certificado.png" border="0">
+                                        </a>
+                                    @endif
+                                    @if ( $item->salida==1 )
+                                    <span><img src="{{ asset('/') }}img/iconos/enTransporte.png" border="0" onclick="verUbicacionGmaps('{{ $item->Patente }}');" style="cursor:pointer; cursor: hand"></span>                                      
+                                    @endif                              
+                                </td>
+                                <td style="width: 10%">{{ $item->emp_nombre }}</td>
+                                <td style="width: 10%">{{ $item->nombreObra }}</td>
+                                <td style="width: 10%">{{ $item->prod_nombre }}</td>
+                                <td style="width: 5%; text-align: right;">{{$item->cantidadReal}}</td>
+                                <td style="width: 5%">{{ $item->unidad }}</td>
+                                <td style="width: 7%">{{$item->fechaEntrega}}</td>
+                                <td style="width: 7%">{{$item->fechaHoraSalida}}</td>
+                                <td style="width: 3%">{{$item->formaEntrega}}</td>
+                                <td style="width: 4%">{{ $item->nombrePlanta }}</td>
+                                <td style="width: 5%">{{ $item->estadoPedido }}</td>
+                                <td style="width: 5%; text-align: right;">{{ $item->idNotaVenta }}</td>
+                                <td style="width: 5%; text-align: right;">{{ $item->numeroGuia }}</td>
+                                <td style="width: 7%; text-align: right;">
+                                    @if( Session::get('idPerfil')>='5' and Session::get('idPerfil')<='7' )
+                                        <a class="btn btn-xs btn-default" style="height: 25px;width:100px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );">{{ $item->numeroAuxiliar }}</a>
+                                    @else
+                                        {{ $item->numeroAuxiliar }}
+                                    @endif
+                                </td>
+
+                            </tr>
+                        @endforeach
                     </tbody>            
                 </table>      
 
@@ -214,8 +263,6 @@
 
     <script src="{{ asset('/') }}js/app/funciones.js?{{$parametros[0]->version}}"></script>
     <script src="{{ asset('/') }}js/app/guiaDespacho.js?{{$parametros[0]->version}}"></script>
-    <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>  
-    
     <script>
 
         $('#datosGuia').on('submit', function(e) {
@@ -453,15 +500,8 @@
                             cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/'+ dato[x].certificado +'">';
                             cadena+='<img src="'+ urlApp + 'img/iconos/certificado.png" border="0"></a>';
                         }
-
                         if( dato[x].salida==1 ){
-                            if (dato[x].gps==1){
-                                patenteSinGuion="'"+ dato[x].Patente.replace('-','')+"'";
-                                cadena+='<span><img src="' + urlApp + 'img/iconos/enTransporteGps.png" border="0" onclick="verUbicacionGmaps(' + patenteSinGuion + ');" style="cursor:pointer; cursor: hand"></span>'; 
-
-                            }else{
-                                cadena+='<span><img src="' + urlApp + 'img/iconos/enTransporte.png" border="0" style="cursor:pointer; cursor: hand"></span>'; 
-                            }
+                            cadena+='<span><img src="' + urlApp + 'img/iconos/enTransporte.png" border="0" onclick="verUbicacionGmaps(' + dato[x].Patente + ');" style="cursor:pointer; cursor: hand"></span>';    
                         }
 
                         celdaPedido='<a target="_blank" href="'+urlApp+'verpedidoNuevaVentana/'+ dato[x].idPedido + '/1/" class="btn btn-xs btn-success">' + dato[x].idPedido +'</a>';
@@ -475,7 +515,7 @@
                         }                        
                         var fila=tabla.row.add( [
                                 celdaPedido,
-                                "<div style='white-space:normal;width:100%'>" + cadena + "</div>",
+                                cadena,
                                 dato[x].emp_nombre,
                                 dato[x].nombreObra,
                                 dato[x].prod_nombre,
@@ -491,21 +531,21 @@
                                 celdaNumAux
                             ] ).index();
 
-                        tabla.cell(fila,0).node().width="60px";
-                        tabla.cell(fila,1).node().width="120px";
-                        tabla.cell(fila,2).node().width="120px";
-                        tabla.cell(fila,3).node().width="120px";
-                        tabla.cell(fila,4).node().width="80px";
-                        tabla.cell(fila,5).node().width="40px";tabla.cell(fila,5).node().style.textAlign="right";
-                        tabla.cell(fila,6).node().width="60px";
-                        tabla.cell(fila,7).node().width="80px";
-                        tabla.cell(fila,8).node().width='80px';
-                        tabla.cell(fila,9).node().width='80px';
-                        tabla.cell(fila,10).node().width='80px';
-                        tabla.cell(fila,11).node().width='80px';
-                        tabla.cell(fila,12).node().width='60px';tabla.cell(fila,12).node().style.textAlign="right";
-                        tabla.cell(fila,13).node().width='60px';tabla.cell(fila,13).node().style.textAlign="right";
-                        tabla.cell(fila,14).node().width='80px';
+                        tabla.cell(fila,0).node().width='5%';
+                        tabla.cell(fila,1).node().width='12%';
+                        tabla.cell(fila,2).node().width='10%';
+                        tabla.cell(fila,3).node().width='10%';
+                        tabla.cell(fila,4).node().width='10%';
+                        tabla.cell(fila,5).node().width='5%';
+                        tabla.cell(fila,6).node().width='5%';
+                        tabla.cell(fila,7).node().width='7%';
+                        tabla.cell(fila,8).node().width='7%';
+                        tabla.cell(fila,9).node().width='3%';
+                        tabla.cell(fila,10).node().width='4%';
+                        tabla.cell(fila,11).node().width='5%';
+                        tabla.cell(fila,12).node().width='5%';
+                        tabla.cell(fila,13).node().width='5%';
+                        tabla.cell(fila,14).node().width='7%';
 
                     }
                     tabla.draw();
@@ -576,7 +616,7 @@
             $("#max").val(dd + '/' + mm + '/' + yyyy);
 
 
-            hoy.setDate(hoy.getDate() - 30);
+            hoy.setDate(hoy.getDate() - 60);
             var dd = hoy.getDate();
             var mm = hoy.getMonth()+1;
             var yyyy = hoy.getFullYear();
@@ -597,7 +637,7 @@
                     $(this).html( '<select id="selPlanta" class="form-control input-sm"></select>' );
                 }else if(title.trim()!='' && title.trim()=='Producto' ){
                     $(this).html( '<select id="selProducto" class="form-control input-sm"></select>' );                    
-                }else if(title.trim()!='' && title.trim()=='Forma deEntrega' ){
+                }else if(title.trim()!='' && title.trim()=='Forma de Entrega' ){
                     $(this).html( '<select id="selFormaEntrega" class="form-control input-sm"></select>' );
                 }else if(title.trim()!='' && title.trim()=='Estado' ){
                     $(this).html( '<select id="selEstado" class="form-control input-sm"></select>' );                                                 
@@ -614,16 +654,16 @@
                 }       
             } );
 
-            var tituloArchivo='Histórico de Pedidos Despachados';
+
+           var tituloArchivo='Histórico de Pedidos Despachados'
 
             // DataTable
             var table=$('#tablaDetalle').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,
                 lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
-                scrollX: true,
-                scrollCollapse: true,
-                dom: 'Bfrtip',              
+                "scrollX": true,            
+                dom: 'Bfrtip',
                 columnDefs:[
                                 {
                                     render: function (data, type, full, meta) {
@@ -648,6 +688,20 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
                         }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: tituloArchivo,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: tituloArchivo,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+                        }
                     }
                 ],                
                 "order": [[ 0, "desc" ]],                       
@@ -661,8 +715,6 @@
                 }                  
             });
 
-
-
             $('.date').datepicker({
                 todayHighlight: true,
                 format: "dd/mm/yyyy",
@@ -674,8 +726,6 @@
             $('#wrapper').toggleClass('sidebar-hide');
             $('.main-menu').find('.openable').removeClass('open');
             $('.main-menu').find('.submenu').removeAttr('style'); 
-
-            obtenerHistorico(1);
 
         } );
 

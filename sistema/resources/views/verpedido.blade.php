@@ -5,14 +5,17 @@
 
 <div style="padding: 5px">
     <div class="panel panel-default table-responsive">
-        <div class="panel-heading">
+<!--        <div class="panel-heading">
             <h5><b>Pedido Nº {{ $pedido[0]->idPedido }}</b></h5>
-        </div>
+        </div>-->
         <div class="padding-md clearfix">
         	<div>
                 <input type="hidden" id="idPedido" value="{{ $pedido[0]->idPedido }}">
                 <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                 <div class="row" style="padding-top: 5px">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <font size="3"><b>Pedido Nº {{ $pedido[0]->idPedido }}</b></font>
+                    </div>
                     <div class="col-lg-1 col-md-1 col-sm-1">
                         Cliente
                     </div>
@@ -28,7 +31,7 @@
                     <div class="col-lg-1 col-md-1 col-sm-2">
                         Creación
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-4">
+                    <div class="col-lg-2 col-md-2 col-sm-3">
                         <input class="form-control input-sm" readonly value="{{ $pedido[0]->fechahora_creacion }}">
                     </div>                                     
                 </div>
@@ -36,21 +39,15 @@
                     <div class="col-lg-1 col-md-1 col-sm-1">
                         Obra
                     </div>
-                    <div class="col-lg-3 col-md-4 col-sm-5">
+                    <div class="col-lg-3 col-md-3 col-sm-4">
                         <input class="form-control input-sm" readonly value="{{ $pedido[0]->Obra }}">
                     </div>                      
-                    <div class="col-lg-1 col-md-1 col-sm-2">
-                        Fecha&nbspEntrega
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        Datos de Contacto
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-4">
-                        <input class="form-control input-sm" readonly value="{{ $pedido[0]->fechaEntrega }} {{ $pedido[0]->horarioEntrega }}">
-                    </div>
-                    <div class="col-lg-1 col-md-1 col-sm-2">
-                        Ejecutivo&nbspQL
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-4">
-                        <input class="form-control input-sm" readonly value="{{ $pedido[0]->usuario_encargado }}">
-                    </div>                       
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <input class="form-control input-sm" readonly value="{{ $pedido[0]->datosContacto }}">
+                    </div>                      
                 </div>
                 <div class="row" style="padding-top: 5px">
                     <div class="col-lg-1 col-md-1 col-sm-1">
@@ -62,7 +59,7 @@
                     <div class="col-lg-1 col-sm-2 col-md-1">
                         O.Compra
                     </div>
-                    <div class="col-lg-2 col-sm-3 col-md-2">
+                    <div class="col-lg-3 col-sm-4 col-md-3">
                         <div class="input-group">                           
                             <input id="txtOrdenCompra" class="form-control input-sm" readonly value="{{ $pedido[0]->ordenCompraCliente }}" data-ocarchivo="{{ $pedido[0]->nombreArchivoOC }}" >
                             @if ( Session::get('grupoUsuario')=='C' ) 
@@ -88,6 +85,20 @@
                             <textarea class="form-control input-sm" readonly rows="1">{{ $pedido[0]->condiciondePago }}</textarea>
                         </div>
                     @endif                                    
+                </div>
+                <div class="row" style="padding-top: 5px">
+                    <div class="col-lg-1 col-md-1 col-sm-2">
+                        Fecha&nbspEntrega
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4">
+                        <input class="form-control input-sm" readonly value="{{ $pedido[0]->fechaEntrega }} {{ $pedido[0]->horarioEntrega }}">
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-2">
+                        Ejecutivo&nbspQL
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input class="form-control input-sm" readonly value="{{ $pedido[0]->usuario_encargado }}">
+                    </div>
                 </div>
                 <div class="row" style="padding-top: 5px">
                     <div class="col-lg-1 col-md-2 col-sm-2">
@@ -292,17 +303,23 @@
             @elseif ($accion=='6')
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedidoCliente();">Aprobar</button>                                      
             @endif
-            @if ($accion=='3' or $accion=='1')
-                @if ( ( $pedido[0]->cerrada==0 and $pedido[0]->idEstadoPedido <= '3') and 
-                    (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' or 
-                     Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') )
 
-                    @if( $pedido[0]->idEstadoPedido <= '0' or ( $despachado>0 and $sinDespachar>0) )
-                        <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+            <!-- Mostrar boton "Pasar a Historico" sólo si NO es pedido en historico -->
+            
+            @if($plantilla!='plantilla2') 
+                @if ($accion=='3' or $accion=='1')
+                    @if ( ( $pedido[0]->cerrada==0 and $pedido[0]->idEstadoPedido <= '3') and 
+                        (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' or 
+                         Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') )
+
+                        @if( $pedido[0]->idEstadoPedido <= '0' or ( $despachado>0 and $sinDespachar>0) )
+                            <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+                        @endif
+
                     @endif
-
                 @endif
             @endif
+                
             @if($plantilla=='plantilla')
                 <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
             @endif
@@ -614,6 +631,20 @@
                     return;
                 }
                 document.getElementById('folioDTE').dataset.numeroguia=$("#nuevoFolioDTE").val();
+                if(document.getElementById('btnAnularGuiaTemporal')){
+                  document.getElementById('btnAnularGuiaTemporal').style.display='none';
+                }
+                
+                if(document.getElementById('btnGuardarDatosGuia')){
+                  document.getElementById('btnGuardarDatosGuia').style.display='none';
+                }
+
+                if( document.getElementById('btnEmitirGuia').dataset.idperfil=='5' || 
+                    document.getElementById('btnEmitirGuia').dataset.idperfil=='6' || 
+                    document.getElementById('btnEmitirGuia').dataset.idperfil=='7'){
+                    document.getElementById('btnRegistrarSalida').style.display='inline';
+                }
+
                 $("#folioDTE").val( $("#nuevoFolioDTE").val() );
                 document.getElementById('btnEmitirGuia').style.display='none';
                 document.getElementById('btnBajar').style.display='inline';

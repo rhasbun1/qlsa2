@@ -170,7 +170,7 @@
                             <td style="width: 150px"> {{ $item->prod_nombre }} </td>
                             <td style="width: 80px">
                                 @if( $item->requiere_diseno==1 )
-                                    @if( Session::get('grupoUsuario')=='C' and Session::get('idPerfil')!='12')
+                                    @if( Session::get('grupoUsuario')=='C' and Session::get('idPerfil')!='11')
                                         <input class="form-control input-sm" value="{{ $item->formula }}" maxlength="20"> 
                                     @else
                                         {{ $item->formula }}
@@ -205,13 +205,31 @@
                     </div>
                     <div class="row" style="padding-top: 5px; padding-left: 5px"">
                         @foreach($pedidos as $item)
-                            @if( $item->idEstadoPedido==1 )
-                                <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
-                            @elseif( $item->idEstadoPedido==0 )
-                                <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>                              
+
+                            @if( Session::get('grupoUsuario')=='CL')
+                            
+                                @if( $item->idEstadoPedido==1 )
+                                    <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
+                                @elseif( $item->idEstadoPedido==0 )
+                                    <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>                              
+                                @else
+                                    <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
+                                @endif
+
+
                             @else
-                                <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
-                            @endif    
+
+                                @if( $item->idEstadoPedido==1 )
+                                    <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
+                                @elseif( $item->idEstadoPedido==0 )
+                                    <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>                              
+                                @else
+                                    <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
+                                @endif
+
+                            @endif
+
+
                         @endforeach 
                     </div>                      
                 @else
@@ -227,9 +245,9 @@
                 @if( Session::get('grupoUsuario')=='C' and $notaventa[0]->aprobada==1 and $notaventa[0]->TienePedidos==0 and $accion!='3' ) 
                     <a href="{{ asset('/') }}Desaprobarnota/{{ $notaventa[0]->idNotaVenta }}/" class="btn btn-sm btn-primary" style="width:90px">Desaprobar</a>
                 @endif
-                @if( Session::get('grupoUsuario')=='C' and Session::get('idPerfil')!='11' )
+                @if( Session::get('grupoUsuario')=='C' and (Session::get('idPerfil')!='11' and Session::get("idPerfil")!=19 ) )
                     <button class="btn btn-sm btn-success" onclick="guardarCambiosNV();">Guardar Cambios</button>
-                    @if( $notaventa[0]->cerrada==0 and $notaventa[0]->aprobada==1 and Session::get('grupoUsuario')=='C' and Session::get("idPerfil")!=11 )
+                    @if( $notaventa[0]->cerrada==0 and $notaventa[0]->aprobada==1 and Session::get('grupoUsuario')=='C' and (Session::get("idPerfil")!=11 and Session::get("idPerfil")!=19 ) )
                         <a href="{{ asset('/') }}gestionarpedido/{{ $notaventa[0]->idNotaVenta }}/" class="btn btn-sm btn-primary">Crear Pedido</a>
                     @endif
                 @elseif ( Session::get('grupoUsuario')=='CL')

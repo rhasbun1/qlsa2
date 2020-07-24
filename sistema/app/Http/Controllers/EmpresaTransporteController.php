@@ -60,4 +60,18 @@ class EmpresaTransporteController extends Controller
         }        
     }
 
+    public function deshabilitaEmpresaTransporte(Request $datos){
+        if( $datos->ajax() ){
+            $emp=DB::Select('call spUpdDeshabilitaEmpresaTransporte(?)', array( $datos->input('idEmpresaTransporte') ) );
+            return $emp;
+        }     
+    }
+
+    public function habilitaEmpresaTransporte(Request $datos){
+        if( $datos->ajax() ){
+            $emp=DB::Select('call spUpdHabilitaEmpresaTransporte(?)', array( $datos->input('idEmpresaTransporte') ) );
+            return $emp;
+        }     
+    }
+
 }

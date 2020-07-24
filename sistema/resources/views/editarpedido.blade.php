@@ -75,10 +75,10 @@
                         <input class="form-control input-sm" readonly value="{{ $pedido[0]->estado }}">
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-2">
-                        Observaciones (máx.150 carac.)
+                        Observaciones (máx.100 carac.)
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-7">
-                        <textarea id="txtObservaciones" maxlength="150" class="form-control input-sm" rows="2">{{ $pedido[0]->observaciones }}</textarea>
+                        <textarea id="txtObservaciones" maxlength="100" class="form-control input-sm" rows="2">{{ $pedido[0]->observaciones }}</textarea>
                     </div>                                                      
                 </div>
                 <div class="row" style="padding-top: 5px">

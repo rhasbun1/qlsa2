@@ -66,7 +66,7 @@
 
                     <div class="col-lg-3 col-sm-4 col-md-3">
                         <div class="input-group">                           
-                            <input id="txtOrdenCompra" class="form-control input-sm" value="{{ $NotadeVenta[0]->ordenCompraCliente }}" data-ocarchivo="{{ $NotadeVenta[0]->nombreArchivoOC }}" >
+                            <input id="txtOrdenCompra" class="form-control input-sm" value="{{ $NotadeVenta[0]->ordenCompraCliente }}" data-ocarchivo="{{ $NotadeVenta[0]->nombreArchivoOC }}" maxlength="15" >
                             <span class="input-group-addon glyphicon glyphicon-cloud-download" title="Bajar Orden de Compra" onclick="bajarOC();">
 
                             </span>
@@ -308,8 +308,8 @@
                     </div>
                     <div class="row" style="padding-top: 10px">
                         <div class="col-sm-4 col-md-8">
-                            Observaciones (máx.150 carac.)
-                            <input id="txtObservaciones" class="form-control input-sm" maxlength="150">
+                            Observaciones (máx.100 carac.)
+                            <input id="txtObservaciones" class="form-control input-sm" maxlength="100">
                         </div>
                         <div class="col-sm-4 col-md-3" style="padding-top: 20px">  
                             <label class="label-checkbox"><input type="checkbox" id="noExcederCantidad"><span class="custom-checkbox"></span>No exceder la cantidad solicitada</label>                 

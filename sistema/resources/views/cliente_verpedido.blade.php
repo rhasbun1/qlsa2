@@ -87,9 +87,9 @@
                     <th>Producto</th>
                     <th style="width: 80px">Diseño</th>
                     <th style="width: 50px">Cant.</th>
-                    <th>Unidad</th>
-                    <th>Precio ($) <b>*</b></th>
-                    <th>Total ($)</th>
+                    <th>Unidad</th>                
+                    <th>Precio ($) *</th>
+                    <th>Total ($) **</th>
                     <th>Planta de Origen</th>
                     <th>Entrega</th>
                     <th>Transporte</th>
@@ -215,6 +215,9 @@
                     @endif                     
                 </tfoot>
             </table>
+            <br>
+            <b>*</b> Precio indicado es el reajustado a la fecha de creación del pedido. Pueden existir diferencias con el precio final de facturación si el despacho se realiza en un mes distinto.<br>
+            <b>**</b> El total facturado podrá ser distinto ya que se considerarán las cantidades efectivamente despachadas y los precios reajustados al mes durante el cual se realiza efectivamente el despacho.            
         </div> 
 
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">

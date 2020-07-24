@@ -17,7 +17,8 @@
 	                    <th style="width:300px">Cliente</th>
                         <th style="width:250px">Obra/Planta</th>
                         <th style="width:120px">Planta QLSA</th>
-                        <th style="width:80px">Costo Flete ($/ton)</th>
+                        <th style="width:120px">Unidad</th>
+                        <th style="width:80px">Costo Flete ($/Unidad)</th>
                         <th style="width:80px">Distancia (km)</th>
                         <th style="width:80px">Tiempo Traslado (horas)</th>
 	                </thead>
@@ -28,6 +29,7 @@
 	                            <td>{{ $item->nombreCliente}}</td>
                                 <td>{{ $item->nombreObra}}</td>
                                 <td data-idplanta="{{ $item->idPlanta}}">{{ $item->nombrePlanta}}</td>
+                                <td data-ucodigo="{{ $item->u_codigo}}">{{ $item->nombreUnidad}}</td>
                                 @if(Session::get('idPerfil')=='5' or Session::get('idPerfil')=='10' or Session::get('idPerfil')=='18')
                                 <td>
                                     <input class="form-control input-sm" value="{{ $item->flete}}" maxlength="7" onkeypress='return isIntegerKey(event)'>
@@ -100,6 +102,31 @@
         }      
 		$(document).ready(function() {
 
+            $('#tablaNotas thead tr').clone(true).appendTo( '#tablaNotas thead' );
+            $('#tablaNotas thead tr:eq(1) th').each( function (i) {
+                var title = $(this).text();
+                if(title.trim()!='' && title.trim()=='Unidad' ){
+                    $(this).html( '<select id="selUnidad" class="form-control input-sm"></select>' );
+                }else if(title.trim()!='' && title.trim()=='Planta QLSA' ){
+                    $(this).html( '<select id="selPlanta" class="form-control input-sm"></select>' );                    
+                }else{
+                    if(i<5){
+                        $(this).html( '<input type="text" class="form-control input-sm" placeholder="Buscar..." />' );
+                        $( 'input', this ).on( 'keyup change', function () {
+                            if ( tabla.column(i).search() !== this.value ) {
+                                tabla
+                                    .column(i)
+                                    .search( this.value )
+                                    .draw();
+                            }
+                        } ); 
+                    }else{
+                        $(this).html( '' );
+                    }                  
+                }
+            
+            } );
+
             var tabla=$('#tablaNotas').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,
@@ -116,24 +143,7 @@
         } );
 
         function actualizarFiltros(tabla){
-            tabla.columns(0).every( function () {
-                var column = this;
-                var select = $("#selProducto" ).empty().append( '<option value=""></option>' )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
- 
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
- 
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
-            tabla.columns(1).every( function () {
+            tabla.columns(4).every( function () {
                 var column = this;
                 var select = $("#selUnidad" ).empty().append( '<option value=""></option>' )
                     .on( 'change', function () {
@@ -150,7 +160,7 @@
                     select.append( '<option value="'+d+'">'+d+'</option>' )
                 } );
             } );
-            tabla.columns(2).every( function () {
+            tabla.columns(3).every( function () {
                 var column = this;
                 var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
                     .on( 'change', function () {
@@ -166,7 +176,7 @@
                 column.data().unique().sort().each( function ( d, j ) {
                     select.append( '<option value="'+d+'">'+d+'</option>' )
                 } );
-            } );                      
+            } );                    
         }
 
 
@@ -177,21 +187,21 @@
 		    var cadena='[';
 		    var costo="0";
 		    for (var i = 0; i < tabla.rows().count(); i++){
-		    	if(tabla.cell(i,4).node().getElementsByTagName('input')[0].value==''){
+		    	if(tabla.cell(i,5).node().getElementsByTagName('input')[0].value==''){
 		    		flete="0";
 		    	}else{
-		    		flete=tabla.cell(i,4).node().getElementsByTagName('input')[0].value;
+		    		flete=tabla.cell(i,5).node().getElementsByTagName('input')[0].value;
 		    	}
 
-                if(tabla.cell(i,5).node().getElementsByTagName('input')[0].value==''){
+                if(tabla.cell(i,6).node().getElementsByTagName('input')[0].value==''){
                     distancia="0";
                 }else{
-                    distancia=tabla.cell(i,5).node().getElementsByTagName('input')[0].value;
+                    distancia=tabla.cell(i,6).node().getElementsByTagName('input')[0].value;
                 }
-                if(tabla.cell(i,6).node().getElementsByTagName('input')[0].value==''){
+                if(tabla.cell(i,7).node().getElementsByTagName('input')[0].value==''){
                     tiempoTraslado="0";
                 }else{
-                    tiempoTraslado=tabla.cell(i,6).node().getElementsByTagName('input')[0].value;
+                    tiempoTraslado=tabla.cell(i,7).node().getElementsByTagName('input')[0].value;
                 }                
 
                 if( isNaN(flete) || isNaN(distancia) || isNaN(tiempoTraslado) ){
@@ -216,6 +226,7 @@
                 cadena+='{';
                 cadena+='"idNotaVenta":"'+ tabla.cell(i,0).data() + '", ';
                 cadena+='"idPlanta":"'+ tabla.cell(i,3).node().dataset.idplanta + '", ';
+                cadena+='"u_codigo":"'+ tabla.cell(i,4).node().dataset.ucodigo + '", ';
                 cadena+='"flete":"'+ flete  + '", ';
                 cadena+='"distancia":"'+ distancia  + '", ';
                 cadena+='"tiempoTraslado":"' + tiempoTraslado + '"';

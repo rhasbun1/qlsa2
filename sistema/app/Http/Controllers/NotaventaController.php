@@ -268,7 +268,7 @@ class NotaventaController extends Controller
 
     public function bajarOCnventa($nombreArchivo){
       $pathtoFile = public_path().'/ocompra/nventa/'.$nombreArchivo;
-      $nombreArchivo = asset('logistica/public/ocompra/nventa/'.$nombreArchivo);
+      $nombreArchivo = asset('ocompra/nventa/'.$nombreArchivo);
       $result = File::exists($pathtoFile); 
       if($result){
             return view('verpdf')->with('nombreArchivo', $nombreArchivo);
@@ -343,9 +343,10 @@ class NotaventaController extends Controller
             $detalle=$datos->input('detalle');
             $detalle= json_decode($detalle);
             foreach ( $detalle as $item){
-                DB::Select("call spUpdNotaVentaCargos(?,?,?,?,?,?)", array( 
+                DB::Select("call spUpdNotaVentaCargos(?,?,?,?,?,?,?)", array( 
                     $item->idNotaVenta,
                     $item->idPlanta,
+                    $item->u_codigo,
                     $item->flete, 
                     $item->distancia, 
                     $item->tiempoTraslado, 

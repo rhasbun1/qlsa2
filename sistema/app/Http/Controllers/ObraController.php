@@ -18,7 +18,7 @@ class ObraController extends Controller
             if($detalle!=''){
                 $detalle= json_decode($detalle);
             }
-            $obra=DB::Select("call spInsObra(?,?,?,?,?,?,?,?,?,?,?)", array( $datos->input('idObra'), 
+            $obra=DB::Select("call spInsObra(?,?,?,?,?,?,?,?,?,?,?,?)", array( $datos->input('idObra'), 
                                                                         $datos->input('nombre'),
                                                                         $datos->input('descripcion'),
                                                                         $datos->input('nombreContacto'),
@@ -28,7 +28,8 @@ class ObraController extends Controller
                                                                         $datos->input('distancia'),
                                                                         $datos->input('tiempo'),
                                                                         $datos->input('costoFlete'),
-                                                                        $datos->input('codigoSoftland')
+                                                                        0,
+                                                                        $datos->input('habilitada'),
                                                                     ));
             if($detalle!=''){
                 foreach ( $detalle as $item){
@@ -37,7 +38,8 @@ class ObraController extends Controller
             }
             
             return response()->json([
-                "idObra" => $obra[0]->idObra
+                "idObra" => $obra[0]->idObra,
+                "codigoSoftland" => $obra[0]->codigoSoftland
             ]);
         }
         
@@ -47,7 +49,7 @@ class ObraController extends Controller
     {
         //
         if($datos->ajax()){
-            return DB::table('obras')->select('idObra', 'nombre')->where('emp_codigo', $datos->input('emp_codigo') )->get();
+            return DB::table('obras')->select('idObra', 'nombre')->where('emp_codigo', $datos->input('emp_codigo') )->where('habilitada', 1 )->get();
         }
     }    
 
@@ -60,7 +62,7 @@ class ObraController extends Controller
     public function datosObra(Request $datos)
     {
         if($datos->ajax()){
-            $obra=DB::table('obras')->select('nombre', 'nombreContacto', 'correoContacto', 'telefonoContacto', 'emp_codigo', 'descripcion', 'distancia', 'tiempo', 'costoFlete', 'codigoSoftland')->where('obras.idObra', $datos->idObra)->get();
+            $obra=DB::table('obras')->select('nombre', 'nombreContacto', 'correoContacto', 'telefonoContacto', 'emp_codigo', 'descripcion', 'distancia', 'tiempo', 'costoFlete', 'codigoSoftland', 'habilitada')->where('obras.idObra', $datos->idObra)->get();
             $distancias=DB::Select('call spGetObraDistanciaPlantas(?)', array( $datos->idObra ) );
             $data = [
                 'obra' => $obra,

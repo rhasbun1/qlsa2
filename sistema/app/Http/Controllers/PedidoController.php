@@ -305,7 +305,9 @@ class PedidoController extends Controller
         $listaDetallePedido=DB::Select('call spGetPedidoDetalle(?)', array($idPedido) );
         $log = DB::Select('call spGetPedidoLog(?)', array($idPedido) );
         $notas = DB::Select('call spGetPedidoNotas(?)', array($idPedido) );
-        $emptransporte = DB::table('empresastransporte')->select('idEmpresaTransporte','nombre')->get();
+
+        $emptransporte = DB::table('empresastransporte')->select('idEmpresaTransporte','nombre', 'habilitada')->orderBy('nombre', 'ASC')->get();
+
         $plantas=DB::table('plantas')->select('idPlanta', 'nombre')->get();
         $parametros=DB::table('parametros')->select('version')->get();
         $ramplas=DB::Select('call spGetRamplas()');

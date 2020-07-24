@@ -15,6 +15,7 @@
                     <th>Nombre Obra</th>
                     <th>Cliente</th>
                     <th>Nombre Contacto</th>
+                    <th>Habilitada</th>
                     <th style="width: 40px"></th>
                 </thead> 
                 <tbody>
@@ -23,6 +24,13 @@
                             <td>{{ $item->nombreObra }}</td>
                             <td>{{ $item->nombreCliente }}</td>
                             <td>{{ $item->nombreContacto }}</td>
+                            <td style="text-align: center">
+                                @if($item->habilitada==1)
+                                    Si
+                                @else
+                                    No
+                                @endif
+                            </td>
                             <td style="width: 40px">
                                 <button class="btn btn-xs btn btn-warning" onclick="editarObra( {{ $item->idObra }}, this.parentNode.parentNode )" title="Editar" ><i class="fa fa-edit fa-lg"></i></button>
                                 <button class="btn btn-xs btn btn-danger"  onclick="eliminarObra( {{ $item->idObra }}, this.parentNode.parentNode )" title="Eliminar" ><i class="fa fa-trash-o fa-lg"></i></button>
@@ -60,12 +68,17 @@
                                 @endforeach
                             </select>                            
                         </div>
+                    </div>
+                    <div class="row" style="padding-top: 5px">
                         <div class="col-md-2">
                             Nombre Obra/Planta(*)
                         </div>
                         <div class="col-md-5">
                             <input type="text" id="txtNombreObra" class="form-control input-sm" maxlength="50">
-                        </div>
+                        </div> 
+                        <div class="col-sm-4 col-md-3">
+                            <label class="label-checkbox"><input type="checkbox" id="habilitada"><span class="custom-checkbox"></span>Habilitada</label>              
+                        </div>                                              
                     </div>
                     <div class="row" style="padding-top: 5px">
                         <div class="col-md-2">
@@ -96,7 +109,7 @@
                         <div class="col-md-10">
                             <textarea id="txtDescripcionObra" class="form-control input-sm" maxlength="255" rows="3"></textarea>
                         </div>
-                    </div> 
+                    </div>                                   
                     <div class="row" style="padding: 15px">
                         <table id="tabDistancias" class="table table-hover table-condensed table-responsive">
                             <thead>

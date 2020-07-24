@@ -102,6 +102,7 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('subirGuiaDespachoPdf', 'GuiaController@subirGuiaDespachoPdf');
 
 	Route::post('solicitarSessionIDSitrack', 'SitrackController@solicitarSessionIDSitrack');
+	
 	Route::post('productosCodigosSoftland', 'ProductoController@productosCodigosSoftland');
 	Route::post('guardarDatosProductoListaPrecio', 'ProductoController@guardarDatosProductoListaPrecio');
 	Route::post('actualizarCostos', 'ProductoController@actualizarCostos');
@@ -170,6 +171,8 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('listaUsuarios', 'UsuarioController@listaUsuarios');
 	Route::get('listadeObras', 'ObraController@listadeObras');
 	Route::get('listaEmpresasTransporte', 'EmpresaTransporteController@listaEmpresas');
+	Route::post('deshabilitaEmpresaTransporte', 'EmpresaTransporteController@deshabilitaEmpresaTransporte');
+	Route::post('habilitaEmpresaTransporte', 'EmpresaTransporteController@habilitaEmpresaTransporte');
 	Route::get('verpedido/{idPedido}/{accion}/', 'PedidoController@verpedido');
 	Route::get('verpedidoNuevaVentana/{idPedido}/{accion}/', 'PedidoController@verpedidoNuevaVentana');
 	Route::get('clienteVerPedido/{idPedido}/{accion}/', 'PedidoController@clienteVerPedido');
@@ -187,6 +190,8 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('notasdeVentaMargenes', 'ReportesController@notasdeVentaMargenes');
 	
 	Route::get('imprimirNotaVenta/{id}/', 'NotaventaController@imprimirNotaVenta');
+
+	Route::get('testGuiaTxt/{numeroGuia}/', 'GuiaController@testGuiaTxt');
 
 	Route::get('test', 'GuiaController@test');
 	Route::get('sendemail', function () {

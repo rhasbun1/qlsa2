@@ -58,7 +58,7 @@
                                 <td>Pendiente de Aprobación</td>
                             @endif
                             <td>
-                                @if($item->aprobada==1 and Session::get('grupoUsuario')=='C' and Session::get("idPerfil")!=11 )
+                                @if($item->aprobada==1 and Session::get('grupoUsuario')=='C' and (Session::get("idPerfil")!=11 and Session::get("idPerfil")!=19 )  )
                                     <a href="gestionarpedido/{{ $item->idNotaVenta }}/" class="btn btn-xs btn-success">Crear Pedido</a>
                                 @endif    
                             </td>

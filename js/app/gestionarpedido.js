@@ -182,6 +182,7 @@
         document.getElementById("divPiePedido").style.display="block";
         var tabla=document.getElementById('tablaDetallePedidoGranel'); 
         for(var x=1; x<tabla.rows.length; x++){
+            tabla.rows[x].cells[7].getElementsByTagName('input')[0].value='';
             tabla.rows[x].style.display='none';
         }  
     }
@@ -343,6 +344,7 @@
 
     function ocultarFila(fila){
         var tabla=document.getElementById('tablaDetallePedidoGranel');
+        tabla.rows[fila].cells[7].getElementsByTagName('input')[0].value='';
         tabla.rows[fila].style.display='none';
     }
 
@@ -572,155 +574,159 @@
             }            
         }
 
-        if(valorFleteFalso>0){
-            if(!retiraCliente){
-                //Verificacion de carga máxima para pedidos tipo transporte NORMAL
 
+        if(!retiraCliente){
+            //Verificacion de carga máxima para pedidos tipo transporte NORMAL
+
+            if(valorFleteFalso>0){
                 if($("#valorFleteFalso").val().trim()!=''){
                     valFleteFalso=parseInt($("#valorFleteFalso").val());
                     cantFleteFalso=parseInt($("#cantidadFleteFalso").val());
-                }     
-
-                //Verificacion de carga máxima para pedidos tipo transporte NORMAL
-                if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=='1'){
-                    if( (toneladas+cantFleteFalso) > cmtten){
-                        swal(
-                            {
-                                title: 'La cantidad de toneladas excede el máximo permitido por pedido (máx. ' + cmtten +')!!' ,
-                                text: '',
-                                type: 'warning',
-                                showCancelButton: false,
-                                confirmButtonText: 'OK',
-                                cancelButtonText: '',
-                                closeOnConfirm: true,
-                                closeOnCancel: false
-                            }
-                        )
-                        $("#btnCrearPedido").attr("disabled", false);
-                        return;                 
-                    }
                 }
+            }else{
+                valFleteFalso=0;
+                cantFleteFalso=0;
+            }        
 
-
-                if(valorFleteFalso>0){
-
-                    if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=='1'){
-                        if( (toneladas+cantFleteFalso) < cmtten){
-                            if( document.getElementById('idCliente').dataset.idperfil=="1"){
-                                mensaje="La cantidad NO PUEDE SER MENOR a la carga máxima";
-                            }else{
-                                mensaje="La cantidad es menor a la carga máxima, ¿Desea aplicar flete falso?";
-                            }
-                            
-                            swal(
-                                {
-                                    title: mensaje,
-                                    text: '',
-                                    type: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonText: 'Si',
-                                    cancelButtonText: 'No',
-                                    closeOnConfirm: true,
-                                    closeOnCancel: true
-                                },
-                                function(isConfirm)
-                                {
-                                    if(isConfirm){
-                                        if(document.getElementById('idCliente').dataset.idperfil=="1"){
-                                            $("#btnCrearPedido").attr("disabled", false);
-                                            return;
-                                        }else{
-                                            incluyeFleteFalso="1";
-                                            cantidadFleteFalso=cmtten-toneladas;
-                                            $("#valorFleteFalso").val(valorFleteFalso);
-                                            $("#cantidadFleteFalso").val(cantidadFleteFalso);
-                                            $("#totalFleteFalso").val(cantidadFleteFalso*valorFleteFalso);
-                                            document.getElementById('divFleteFalso').style.display='block';
-                                            $("#btnCrearPedido").attr("disabled", false);
-                                        }
-                                        return;
-                                    }
-                                }                    
-                            )
-               
+            //Verificacion de carga máxima para pedidos tipo transporte NORMAL
+            if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=='1'){
+                if( (toneladas+cantFleteFalso) > cmtten){
+                    swal(
+                        {
+                            title: 'La cantidad de toneladas excede el máximo permitido por pedido (máx. ' + cmtten +')!!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
                         }
-                    } 
-
-                    total+=(cantFleteFalso*valFleteFalso);       
-
+                    )
+                    $("#btnCrearPedido").attr("disabled", false);
+                    return;                 
                 }
+            }
 
 
-                //Verificacion de carga máxima para pedidos tipo transporte MIXTO
-                if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=='2'){
-                    if( (toneladas+cantFleteFalso) > (cmttem1+cmttem2) ){
+            if(valorFleteFalso>0){
+
+                if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=='1'){
+                    if( (toneladas+cantFleteFalso) < cmtten){
+                        if( document.getElementById('idCliente').dataset.idperfil=="1"){
+                            mensaje="La cantidad NO PUEDE SER MENOR a la carga máxima";
+                        }else{
+                            mensaje="La cantidad es menor a la carga máxima, ¿Desea aplicar flete falso?";
+                        }
+                        
                         swal(
                             {
-                                title: 'La cantidad total de toneladas excede el máximo permitido por pedido (máx. ' + cmtten +')!!' ,
+                                title: mensaje,
                                 text: '',
                                 type: 'warning',
-                                showCancelButton: false,
-                                confirmButtonText: 'OK',
-                                cancelButtonText: '',
+                                showCancelButton: true,
+                                confirmButtonText: 'Si',
+                                cancelButtonText: 'No',
                                 closeOnConfirm: true,
-                                closeOnCancel: false
-                            }
-                        )
-                        $("#btnCrearPedido").attr("disabled", false);
-                        return;                 
-                    }
-                }
-
-
-                if(valorFleteFalso>0){
-                    //Verificacion de carga máxima para pedidos tipo transporte MIXTOS
-                    if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=='2'){
-
-                        if( (toneladas+cantFleteFalso) < (cmttem1+cmttem2) ){
-                            if(document.getElementById('idCliente').dataset.idperfil=="1"){
-                                mensaje='La cantidad NO PUEDE SER MENOR a la carga máxima (' + (cmttem1+cmttem2) +' toneladas)';
-                            }else{
-                                mensaje="La cantidad total es menor a la carga máxima, ¿Desea aplicar flete falso?";
-                            }                
-                            swal(
-                                {
-                                    title: mensaje ,
-                                    text: '',
-                                    type: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonText: 'Si',
-                                    cancelButtonText: 'No',
-                                    closeOnConfirm: true,
-                                    closeOnCancel: true
-                                },
-                                function(isConfirm)
-                                {
-                                    if(isConfirm){
-                                        if(document.getElementById('idCliente').dataset.idperfil=="1"){
-                                            $("#btnCrearPedido").attr("disabled", false);
-                                            return;
-                                        }else{
-                                            incluyeFleteFalso="1";
-                                            cantidadFleteFalso=cmtten-toneladas;
-                                            $("#valorFleteFalso").val(valorFleteFalso);
-                                            $("#cantidadFleteFalso").val(cantidadFleteFalso);
-                                            $("#totalFleteFalso").val(cantidadFleteFalso*valorFleteFalso);
-                                            document.getElementById('divFleteFalso').style.display='block';
-                                            $("#btnCrearPedido").attr("disabled", false);
-                                        }
+                                closeOnCancel: true
+                            },
+                            function(isConfirm)
+                            {
+                                if(isConfirm){
+                                    if(document.getElementById('idCliente').dataset.idperfil=="1"){
+                                        $("#btnCrearPedido").attr("disabled", false);
                                         return;
                                     }else{
+                                        incluyeFleteFalso="1";
+                                        cantidadFleteFalso=cmtten-toneladas;
+                                        $("#valorFleteFalso").val(valorFleteFalso);
+                                        $("#cantidadFleteFalso").val(cantidadFleteFalso);
+                                        $("#totalFleteFalso").val(cantidadFleteFalso*valorFleteFalso);
+                                        document.getElementById('divFleteFalso').style.display='block';
                                         $("#btnCrearPedido").attr("disabled", false);
-                                        return;                            
                                     }
-                                }                    
-                            )
-                            return;               
+                                    return;
+                                }
+                            }                    
+                        )
+           
+                    }
+                } 
+
+                total+=(cantFleteFalso*valFleteFalso);       
+
+            }
+
+
+            //Verificacion de carga máxima para pedidos tipo transporte MIXTO
+            if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=='2'){
+                if( (toneladas+cantFleteFalso) > (cmttem1+cmttem2) ){
+                    swal(
+                        {
+                            title: 'La cantidad total de toneladas excede el máximo permitido por pedido (máx. ' + cmtten +')!!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
                         }
+                    )
+                    $("#btnCrearPedido").attr("disabled", false);
+                    return;                 
+                }
+            }
+
+            if(valorFleteFalso>0){
+                //Verificacion de carga máxima para pedidos tipo transporte MIXTOS
+                if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=='2'){
+
+                    if( (toneladas+cantFleteFalso) < (cmttem1+cmttem2) ){
+                        if(document.getElementById('idCliente').dataset.idperfil=="1"){
+                            mensaje='La cantidad NO PUEDE SER MENOR a la carga máxima (' + (cmttem1+cmttem2) +' toneladas)';
+                        }else{
+                            mensaje="La cantidad total es menor a la carga máxima, ¿Desea aplicar flete falso?";
+                        }                
+                        swal(
+                            {
+                                title: mensaje ,
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Si',
+                                cancelButtonText: 'No',
+                                closeOnConfirm: true,
+                                closeOnCancel: true
+                            },
+                            function(isConfirm)
+                            {
+                                if(isConfirm){
+                                    if(document.getElementById('idCliente').dataset.idperfil=="1"){
+                                        $("#btnCrearPedido").attr("disabled", false);
+                                        return;
+                                    }else{
+                                        incluyeFleteFalso="1";
+                                        cantidadFleteFalso=cmtten-toneladas;
+                                        $("#valorFleteFalso").val(valorFleteFalso);
+                                        $("#cantidadFleteFalso").val(cantidadFleteFalso);
+                                        $("#totalFleteFalso").val(cantidadFleteFalso*valorFleteFalso);
+                                        document.getElementById('divFleteFalso').style.display='block';
+                                        $("#btnCrearPedido").attr("disabled", false);
+                                    }
+                                    return;
+                                }else{
+                                    $("#btnCrearPedido").attr("disabled", false);
+                                    return;                            
+                                }
+                            }                    
+                        )
+                        return;               
                     }
                 }
             }
         }
+
 
         var cont=0;
         var cadena='[';

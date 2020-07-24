@@ -10,8 +10,9 @@
         $("#txtDistancia").val('');
         $("#txtTiempo").val('');
         $("#txtCostoFlete").val('');
-        $("#codigoSoftland").val('');
-        $("#mdNuevaObra").modal("show"); 
+        $("#txtCodigoSoftland").val('');
+        $("#mdNuevaObra").modal("show");
+        document.getElementById('habilitada').checked=true;
         document.getElementById('idCliente').selectedIndex=-1;
         $("#txtNombreObra").focus();
     }
@@ -41,7 +42,6 @@
                 $("#txtDistancia").val(obra[0].distancia);
                 $("#txtTiempo").val(obra[0].tiempo);
                 $("#txtCostoFlete").val(obra[0].costoFlete);
-                $("#codigoSoftland").val(obra[0].codigoSoftland)
                 var sel=document.getElementById("idCliente");
 
                 for(var x=0; x<sel.length; x++){
@@ -59,6 +59,12 @@
                     $("#tabDistancias").append(cadena);
                 }
 
+                if(obra[0].habilitada==1){
+                    document.getElementById('habilitada').checked=true;
+                }else{
+                    document.getElementById('habilitada').checked=false;
+                }
+                
                 $("#mdNuevaObra").modal("show"); 
                 $("#txtNombreObra").focus();
             }
@@ -136,7 +142,11 @@
         cadena=cadena.slice(0,-2);
         cadena+=']';
         
+        var habilitar=0;
 
+        if( document.getElementById('habilitada').checked ){
+            habilitar=1;
+        }
         $.ajax({
             url: ruta,
             headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
@@ -150,11 +160,15 @@
                     correoContacto: $("#txtCorreoContactoObra").val(),
                     telefonoContacto: $("#txtTelefonoObra").val(),
                     descripcion: $("#txtDescripcionObra").val(),
-                    codigoSoftland: $("#codigoSoftland").val(),
+                    habilitada: habilitar,
                     distanciaplantas: cadena
                   },
             success:function(dato){
-                    
+                    var resp='No';
+                    if(habilitar==1){
+                        resp='Si';
+                    }
+
                     var cadena='';
                     if($("#idObra").val()=="0"){
                         cadena="<button class='btn btn-xs btn btn-warning' onclick='editarObra(" + dato.idObra +  ", this.parentNode.parentNode )' title='Editar'><i class='fa fa-edit fa-lg'></i></button>";
@@ -163,6 +177,7 @@
                                 $("#txtNombreObra").val(),
                                 $("#idCliente option:selected").html(),
                                 $("#txtNombreContactoObra").val(),
+                                resp,
                                 cadena
                             ]).draw();
                     }else{
@@ -170,7 +185,7 @@
                         tabla.cell(fila,0).data( $("#txtNombreObra").val() );
                         tabla.cell(fila,1).data( $("#idCliente option:selected").html() );
                         tabla.cell(fila,2).data( $("#txtNombreContactoObra").val() );
-
+                        tabla.cell(fila,3).data( resp );
                     }
 
 

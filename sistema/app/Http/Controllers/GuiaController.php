@@ -87,6 +87,7 @@ class GuiaController extends Controller
                                                                         Session::get('idUsuario')
                                                                          ) );
             }
+
             return response()->json([
                 "numroGuia" => $guia[0]->numeroGuia
             ]);            
@@ -110,8 +111,11 @@ class GuiaController extends Controller
             $nombreArchivo=public_path().'/guias/txt/G'.$datos->input('numeroGuia').'.txt';
             $guiaElectronica=DB::Select('call spGetFormatoGuiaElectronica(?)', array($datos->input('numeroGuia')) );          
             $fh = fopen($nombreArchivo, 'w');
-            
+            $idPedido=0;
             foreach ( $guiaElectronica as $item){
+
+                $idPedido=$item->numeroOrdenProduccion;
+
                 $cadena='';
                 $cadena=$cadena.''.$item->bodega.''.';';
                 $cadena=$cadena.$item->numeroGuia.';';
@@ -215,6 +219,13 @@ class GuiaController extends Controller
                 $cadena=$cadena.''.$item->referencia5_Descripcion.''.';';
                 $cadena=$cadena.$item->referencia5_NumeroDocumento.';';
                 $cadena=$cadena.''.$item->referencia5_FechaDocumento.''.';';
+                
+                $cadena = str_replace(
+                array('Á', 'É', 'Í', 'Ó', 'Ú', 'á', 'é', 'í', 'ó', 'ú', 'Ñ', 'ñ', 'º'),
+                array('A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u', 'N', 'n', ''),
+                $cadena
+                );
+
                 fwrite($fh, $cadena.chr(13).chr(10));
             }
             
@@ -251,8 +262,14 @@ class GuiaController extends Controller
                 $result = (array) $respuesta;
 
                 if($result["FolioDte"]){
-                    DB::Select('call spGetUpdFolioDTE(?,?,?)', array( $datos->input('numeroGuia'), $result["FolioDte"], Session::get('idUsuario') ) ); 
+                    // spUpdGuiaEmitidaActualizaCliente, esto marca al cliente la primera vez que se emite una guía de forma correcta, para que en
+                    // las proximas guías solo envía el codigo de despacho y NO incluya direccion, comuna y ciudad.
+                    //DB::Select('call spUpdGuiaEmitidaActualizaCliente(?)', array($datos->input('numeroGuia') ));
+                     
+                    DB::Select('call spGetUpdFolioDTE(?,?,?)', array( $datos->input('numeroGuia'), $result["FolioDte"], Session::get('idUsuario') ) );
                 }
+
+                $despacho=DB::Select('call spGetVerificaDespachoCompleto(?)', array($idPedido) );
                 
                 if($result["PdfenBase64"]){
                     // a route is created, (it must already be created in its repository(pdf)).
@@ -273,7 +290,8 @@ class GuiaController extends Controller
 
                 return response()->json([
                     "FolioDte" => $result["FolioDte"],
-                    "Error" => $descripcionError
+                    "Error" => $descripcionError,
+                    "despachoCompleto" => $despacho[0]->despachoCompleto
                 ]);                
             }
             catch(SoapFault $fault) {
@@ -281,6 +299,132 @@ class GuiaController extends Controller
             }
         }
 
+    }
+
+
+    public function testGuiaTxt($numeroGuia){
+        $nombreArchivo=public_path().'/guias/txt/G'.$numeroGuia.'.txt';
+        $guiaElectronica=DB::Select('call spGetFormatoGuiaElectronica(?)', array($numeroGuia) );          
+        $fh = fopen($nombreArchivo, 'w');
+        $idPedido=0;
+        foreach ( $guiaElectronica as $item){
+
+            $idPedido=$item->numeroOrdenProduccion;
+
+            $cadena='';
+            $cadena=$cadena.''.$item->bodega.''.';';
+            $cadena=$cadena.$item->numeroGuia.';';
+            $cadena=$cadena.''.$item->tipoDocumento.''.';';
+            $cadena=$cadena.''.$item->subTipoDocumento.''.';';
+            $cadena=$cadena.''.$item->fechaGeneracion.''.';';
+            $cadena=$cadena.''.$item->ConceptoSalida.''.';';
+            $cadena=$cadena.''.$item->observacion.''.';';
+            $cadena=$cadena.''.$item->codigoClienteSoftland.''.';';
+            $cadena=$cadena.''.strtoupper($item->nombreCliente).''.';';
+            $cadena=$cadena.''.strtoupper($item->rutCliente).''.';';
+            $cadena=$cadena.''.$item->giroCliente.''.';';
+            $cadena=$cadena.''.$item->direccionCliente.''.';';
+            $cadena=$cadena.''.$item->comunaCliente.''.';';
+            $cadena=$cadena.''.$item->ciudadCliente.''.';';
+            $cadena=$cadena.''.$item->centroCosto.''.';';
+            $cadena=$cadena.''.$item->codigoBodegaDestino.''.';';
+            $cadena=$cadena.''.$item->codigoListaPrecio.''.';';
+            $cadena=$cadena.$item->numeroOrdenTrabajo.';';
+            $cadena=$cadena.$item->numeroOrdenProduccion.';';
+            $cadena=$cadena.$item->OrdenCompra.';';
+            $cadena=$cadena.$item->facturaAsociada.';';
+            $cadena=$cadena.''.$item->subTipoFacturaAsociada.''.';';
+            $cadena=$cadena.$item->notaCreditoAsociada.';';
+            $cadena=$cadena.''.$item->codigoCentroCostoparaContabilizar.''.';';
+            $cadena=$cadena.''.$item->codigoVendedor.''.';';
+            $cadena=$cadena.''.$item->codigoCondiciondePago.''.';';
+            $cadena=$cadena.''.$item->codigoLugarDespacho.''.';';
+            $cadena=$cadena.''.$item->direccionDespacho.''.';';
+            $cadena=$cadena.''.$item->comunaDespacho.''.';';
+            $cadena=$cadena.''.$item->ciudadDespacho.''.';';
+            $cadena=$cadena.''.$item->paisDespacho.''.';';
+            $cadena=$cadena.''.$item->atencion.''.';';
+            $cadena=$cadena.''.$item->provincia.''.';';
+            $cadena=$cadena.''.$item->region.''.';';
+            $cadena=$cadena.$item->codigoPostalDespacho.';';
+            $cadena=$cadena.''.$item->codigoGLN.''.';';
+            /*$cadena=$cadena.''.$item->.''.';';*/
+            $cadena=$cadena.$item->codigoVendedorWalmart.';';
+            $cadena=$cadena.''.$item->retiradoPor.''.';';
+            $cadena=$cadena.''.$item->patenteCamionDespacho.''.';';
+            $cadena=$cadena.''.$item->solicitadoPor.''.';';  
+            $cadena=$cadena.''.$item->rutTransportista.''.';';
+            $cadena=$cadena.''.$item->despachadoPor.''.';';
+            $cadena=$cadena.''.$item->rutSolicitante.''.';';
+            $cadena=$cadena.$item->tipoDespacho.';';
+            $cadena=$cadena.$item->numeroNotaVenta.';';
+            $cadena=$cadena.$item->pordentajeDescuento1.';';
+            $cadena=$cadena.$item->valorDescuento1.';';
+            $cadena=$cadena.$item->pordentajeDescuento2.';';
+            $cadena=$cadena.$item->valorDescuento2.';';
+            $cadena=$cadena.$item->pordentajeDescuento3.';';
+            $cadena=$cadena.$item->valorDescuento3.';';
+            $cadena=$cadena.$item->pordentajeDescuento4.';';
+            $cadena=$cadena.$item->valorDescuento4.';';
+            $cadena=$cadena.$item->pordentajeDescuento5.';';
+            $cadena=$cadena.$item->valorDescuento5.';';
+            $cadena=$cadena.$item->flete.';';
+            $cadena=$cadena.$item->embalaje.';';
+            $cadena=$cadena.$item->totalFinal.';';
+            $cadena=$cadena.''.$item->codigoProductoSF.''.';';
+            $cadena=$cadena.''.$item->descripcionProducto.''.';';
+            $cadena=$cadena.''.$item->codigoUnidadMedida.''.';';
+            $cadena=$cadena.''.$item->descripcionProducto1.''.';';
+            $cadena=$cadena.$item->cantidadDespachada.';';
+            $cadena=$cadena.$item->precioReferencia.';';
+            $cadena=$cadena.$item->porcentajeDescuentoLinea1.';';
+            $cadena=$cadena.$item->valorDescuentoLinea1.';';
+            $cadena=$cadena.$item->porcentajeDescuentoLinea2.';';
+            $cadena=$cadena.$item->valorDescuentoLinea2.';';
+            $cadena=$cadena.$item->porcentajeDescuentoLinea3.';';
+            $cadena=$cadena.$item->valorDescuentoLinea3.';';
+            $cadena=$cadena.$item->porcentajeDescuentoLinea4.';';
+            $cadena=$cadena.$item->valorDescuentoLinea4.';';
+            $cadena=$cadena.$item->porcentajeDescuentoLinea5.';';
+            $cadena=$cadena.$item->valorDescuentoLinea5.';';
+            $cadena=$cadena.$item->valorTotalDescuentosdeLinea.';';
+            $cadena=$cadena.''.$item->partida.''.';';
+            $cadena=$cadena.''.$item->pieza.''.';';
+            $cadena=$cadena.''.$item->fechaVencimiento.''.';';
+            $cadena=$cadena.''.$item->serie.''.';';
+            $cadena=$cadena.''.$item->cuentadeConsumodelMovimento.''.';';
+            $cadena=$cadena.''.$item->conservaFolioAsignadoalDTE.''.';';
+            $cadena=$cadena.''.$item->referencia1_TipoDocumento.''.';';
+            $cadena=$cadena.''.$item->referencia1_Descripcion.''.';';
+            $cadena=$cadena.$item->referencia1_NumeroDocumento.';';
+            $cadena=$cadena.''.$item->referencia1_FechaDocumento.''.';';
+            $cadena=$cadena.''.$item->referencia2_TipoDocumento.''.';';
+            $cadena=$cadena.''.$item->referencia2_Descripcion.''.';';
+            $cadena=$cadena.$item->referencia2_NumeroDocumento.';';
+            $cadena=$cadena.''.$item->referencia2_FechaDocumento.''.';';
+            $cadena=$cadena.''.$item->referencia3_TipoDocumento.''.';';
+            $cadena=$cadena.''.$item->referencia3_Descripcion.''.';';
+            $cadena=$cadena.$item->referencia3_NumeroDocumento.';';
+            $cadena=$cadena.''.$item->referencia3_FechaDocumento.''.';';
+            $cadena=$cadena.''.$item->referencia4_TipoDocumento.''.';';
+            $cadena=$cadena.''.$item->referencia4_Descripcion.''.';';
+            $cadena=$cadena.$item->referencia4_NumeroDocumento.';';
+            $cadena=$cadena.''.$item->referencia4_FechaDocumento.''.';';
+            $cadena=$cadena.''.$item->referencia5_TipoDocumento.''.';';
+            $cadena=$cadena.''.$item->referencia5_Descripcion.''.';';
+            $cadena=$cadena.$item->referencia5_NumeroDocumento.';';
+            $cadena=$cadena.''.$item->referencia5_FechaDocumento.''.';';
+
+            $cadena = str_replace(
+            array('Á', 'É', 'Í', 'Ó', 'Ú', 'á', 'é', 'í', 'ó', 'ú', 'Ñ', 'ñ', 'º'),
+            array('A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u', 'N', 'n', ''),
+            $cadena
+            );
+
+            fwrite($fh, $cadena.chr(13).chr(10));
+        }
+        
+        fclose($fh);
     }
 
     public function datosGuiaDespacho(Request $datos){
@@ -329,7 +473,9 @@ class GuiaController extends Controller
         $guia=DB::Select('call spGetGuiaDespacho(?,?)', array( 1, $data->input('nuevoFolioDTE') ) );
 
         if(count($guia)){
-            return "0";
+            return response()->json([
+                "folioExiste" => "1"
+            ]);
         }
 
 
@@ -337,9 +483,13 @@ class GuiaController extends Controller
         $nombreArchivo= "GD".$data->input("nuevoFolioDTE").".pdf";
         Storage::disk('guiaspdf')->put($nombreArchivo, \File::get( $archivo) );
 
-        DB::Select('call spUpdArchivoGuiaPDF(?,?,?,?)', array( $data->input('numGuia'), $data->input('nuevoFolioDTE'), $nombreArchivo, Session::get('idUsuario') ) );
-
-        return $nombreArchivo; 
+        $guia=DB::Select('call spUpdArchivoGuiaPDF(?,?,?,?)', array( $data->input('numGuia'), $data->input('nuevoFolioDTE'), $nombreArchivo, Session::get('idUsuario') ) );
+        $despacho=DB::Select('call spGetVerificaDespachoCompleto(?)', array($guia[0]->idPedido) );
+        return response()->json([
+            "nombreArchivo" => $nombreArchivo,
+            "despachoCompleto" => $despacho[0]->despachoCompleto
+        ]);         
+        return ; 
     }
 
     public function bajarCertificado($file){
@@ -365,7 +515,13 @@ class GuiaController extends Controller
 
     public function eliminarCertificado(Request $datos){
         if($datos->ajax()){
-            $guia=DB::Select('call spUpdCertificado(?)', array( $datos->input('nombreCertificado'), $datos->input('opcion')  ) );
+            $guia=DB::Select('call spUpdCertificado(?,?,?,?,?)', array( 
+                $datos->input('numeroGuia'),
+                $datos->input('prodcodigo'), 
+                $datos->input('ucodigo'), 
+                $datos->input('idPlanta'), 
+                $datos->input('nombreCertificado')  ) );
+            
             return $guia;      
         }        
     }
@@ -436,10 +592,14 @@ class GuiaController extends Controller
                     'Email' => 'daviddiaz1402@gmail.com',
                     'Name' => 'David Diaz'
                   ],
-                   [
-                    'Email' => $correoDestinatario,
+                  [
+                    'Email' => 'nbastias@spsgroup.cl',
+                    'Name' => 'Natalia Bastias'
+                  ],                  
+/*                   [
+                   'Email' => $correoDestinatario,
                     'Name' => $correoDestinatario
-                  ]
+                  ]*/
                 ],
                 'Subject' => "AVISO DE SALIDA DE DESPACHO",
                 'TextPart' => "",

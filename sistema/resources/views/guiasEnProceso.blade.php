@@ -29,7 +29,12 @@
                     <tbody>
                         @foreach($guias as $item)
                             <tr>                                    
-                                <td style="width:50px" data-numguia="{{ $item->numeroGuia }}" data-prodcodigo="{{ $item->prod_codigo }}">
+                                <td style="width:50px"
+                                        data-numguia="{{ $item->numeroGuia }}" 
+                                        data-prodcodigo="{{ $item->prod_codigo }}" 
+                                        data-ucodigo="{{ $item->u_codigo }}" 
+                                        data-idplanta="{{ $item->idPlanta }}"
+                                >
                                     @if( $item->certificado=='' )
                                         <button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1, {{ $item->prod_codigo }} );" title="Subir Certificado"><span class="glyphicon glyphicon-arrow-up"></span></button>
                                         <button class="btn btn-danger btn-xs" onclick="productoSinCertificado(this.parentNode.parentNode, {{ $item->prod_codigo }} );" title="Producto Sin Certificado"><span class="glyphicon glyphicon-arrow-down"></span></button>                                        
@@ -37,7 +42,7 @@
                                         <a target="_blank" href="{{ asset('/') }}bajarCertificado/{{ $item->certificado }}">
                                             <img src="{{ asset('/') }}img/iconos/certificado.png" border="0">
                                         </a>
-                                        <button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this);" data-archivo="{{$item->certificado}}">
+                                        <button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this, this.parentNode.parentNode);" data-archivo="{{$item->certificado}}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button> 
                                     @endif                                    
@@ -278,14 +283,26 @@
             $("#modSubirArchivo").modal("hide");
         }
 
-        function eliminarCertificado(btn){
+        function eliminarCertificado(btn, row){
+            var tabla=$("#tablaAprobados").DataTable();
+            var fila=tabla.row(row).index();
+            var titulo="";
+            var textoBoton="";
+            if(btn.dataset.archivo=='S/C'){
+                titulo="¿Desea dejar este certificado como pendiente?";
+                textoBoton='Aceptar';
+            }else{
+                titulo='¿Elimina el certificado de este producto?';
+                textoBoton='Eliminar';
+            }
+
             swal(
                 {
-                    title: '¿Elimina el certificado de este producto?' ,
+                    title: titulo,
                     text: '',
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Eliminar',
+                    confirmButtonText: textoBoton,
                     cancelButtonText: 'Cancelar',
                     closeOnConfirm: true,
                     closeOnCancel: true
@@ -301,7 +318,11 @@
                             dataType: 'json',
                             data: {
                                     nombreCertificado: btn.dataset.archivo,
-                                    opcion: 1
+                                    opcion: 2,
+                                    numeroGuia: tabla.cell(row,0).node().dataset.numguia,
+                                    prodcodigo: tabla.cell(row,0).node().dataset.prodcodigo,
+                                    ucodigo: tabla.cell(row,0).node().dataset.ucodigo,
+                                    idPlanta: tabla.cell(row,0).node().dataset.idplanta,
                                   },                    
                             success:function(dato){
                                 btn.parentNode.innerHTML='<button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1,' + btn.parentNode.dataset.prodcodigo + ');"><span class="glyphicon glyphicon-arrow-up"></span></button>';
@@ -316,7 +337,6 @@
                 }
             )            
         }
-        
         $('#datos').on('submit', function(e) {
           // evito que propague el submit
           e.preventDefault();

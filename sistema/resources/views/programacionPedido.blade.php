@@ -5,20 +5,23 @@
 
 <div style="padding: 5px">
     <div class="panel panel-default table-responsive">
-        <div class="panel-heading">
+     <!--     <div class="panel-heading">
             <div class="row">
-                <div class="col-sm-3 col-md-3 col-lg-2">
+              <div class="col-sm-3 col-md-3 col-lg-2">
                     <h5><b>Pedido Nº {{ $pedido[0]->idPedido }}</b></h5>
                 </div>
-                <input type="hidden" id="tipoTransporte" value="{{$pedido[0]->tipoTransporte}}">
-                <input type="hidden" id="tipoCarga" value="{{$pedido[0]->tipoCarga}}">
             </div>             
-        </div>
+        </div>-->
         <div class="padding-md clearfix">
         	<div>
+                <input type="hidden" id="tipoTransporte" value="{{$pedido[0]->tipoTransporte}}">
+                <input type="hidden" id="tipoCarga" value="{{$pedido[0]->tipoCarga}}">                
                 <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" id="idPedido" name="_token" value="{{ $pedido[0]->idPedido }}">
         		<div class="row" style="padding-top: 5px">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <font size="3"><b>Pedido Nº {{ $pedido[0]->idPedido }}</b></font>
+                    </div>                    
         			<div class="col-lg-1 col-md-1 col-sm-1">
         				Cliente
         			</div>
@@ -49,19 +52,27 @@
                     <div class="col-lg-3 col-md-4 col-sm-5">
                         <input class="form-control input-sm" readonly value="{{ $pedido[0]->Obra }}">
                     </div>                      
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        Datos de Contacto
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <input class="form-control input-sm" readonly value="{{ $pedido[0]->datosContacto }}">
+                    </div>                      
+        		</div>
+                <div class="row" style="padding-top: 5px">
                     <div class="col-lg-1 col-md-1 col-sm-2">
                         Fecha&nbspEntrega
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4">
                         <input class="form-control input-sm" readonly value="{{ $pedido[0]->fechaEntrega }} {{ $pedido[0]->horarioEntrega }}">
-   			        </div>
+                    </div>
                     <div class="col-lg-1 col-md-1 col-sm-2">
                         Ejecutivo&nbspQL
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4">
                         <input class="form-control input-sm" readonly value="{{ $pedido[0]->usuario_encargado }}">
-                    </div>                       
-        		</div>
+                    </div>
+                </div>                  
         		<div class="row" style="padding-top: 5px">
         			<div class="col-lg-1 col-md-1 col-sm-1">
         				Estado
@@ -119,7 +130,7 @@
                         <td style="display: none">
                             {{ $item->prod_codigo }}
                         </td>
-                        <td style="width:100px" data-guia="{{ $item->numeroGuia }}" dato-existelistaprecios="{{ $item->existeEnListaPrecios }}">
+                        <td style="width:100px" data-guia="{{ $item->numeroGuia }}" data-foliodte="{{ $item->folioDTE }}" dato-existelistaprecios="{{ $item->existeEnListaPrecios }}">
                             {{ $item->prod_nombre }}
                             @if ($item->modificado>0)
                                 <span class="badge badge-primary" title="Nº de modificaciones">{{$item->modificado}}</span>
@@ -144,12 +155,12 @@
                                 </span>                                
                             @endif 
                             @if ( $item->salida==1 )
-                            <span><img src="{{ asset('/') }}img/iconos/enTransporte.png" border="0" onclick="verUbicacionGmaps('{{ $item->patente }}');" style="cursor:pointer; cursor: hand"></span>                                      
+                                <span><img src="{{ asset('/') }}img/iconos/enTransporte.png" border="0" onclick="verUbicacionGmaps('{{ $item->patente }}');" style="cursor:pointer; cursor: hand"></span>                                      
                             @endif                              
                         </td>
                         <td style="width:30px; text-align: right;"> {{ $item->cantidad }} </td>
                         <td style="width:40px"> {{ $item->u_nombre }} </td>
-                        <td style="width:100px">
+                        <td style="width:100px" data-idplanta="{{ $item->idPlanta }}">
                             @if( Session::get('idPerfil')=='8' )
                                 {{ $item->nombrePlanta }}
                             @else
@@ -173,11 +184,13 @@
                                         <select id="idEmpresaTransporte" class="form-control input-sm" onchange="cargarListas(this.value, this.parentNode.parentNode.rowIndex);" @if (Session::get('idPerfil')=='8') disabled @endif >
                                           <option value="0"></option>  
                                           @foreach($emptransporte as $empresa)
-                                            @if( $empresa->idEmpresaTransporte == $item->idEmpresaTransporte) then
-                                                <option value="{{ $empresa->idEmpresaTransporte }}" selected>{{ $empresa->nombre }}</option>
-                                            @else
-                                                <option value="{{ $empresa->idEmpresaTransporte }}">{{ $empresa->nombre }}</option>
-                                            @endif    
+                                            @if( $empresa->habilitada==1 )
+                                                @if( $empresa->idEmpresaTransporte == $item->idEmpresaTransporte) then
+                                                    <option value="{{ $empresa->idEmpresaTransporte }}" selected>{{ $empresa->nombre }}</option>
+                                                @else
+                                                    <option value="{{ $empresa->idEmpresaTransporte }}">{{ $empresa->nombre }}</option>
+                                                @endif
+                                            @endif 
                                           @endforeach   
                                         </select>
                                     @endif
@@ -316,8 +329,8 @@
             @if( (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') and $productosSinGuia>0 )
             <button id="btnAsignarGuia" class="btn btn-sm btn-success" onclick="asignarFolio();">Asignar Guía a elementos seleccionados</button>
             @endif
-            @if( ($pedido[0]->tipoCarga==1 or $pedido[0]->tipoCarga==2 ) and $pedido[0]->idFormaEntrega==2 and (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7') )
-                <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+            @if( ($pedido[0]->tipoCarga==1 or $pedido[0]->tipoCarga==2 ) and $pedido[0]->idFormaEntrega==2 and (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7') and $sinDespachar>0 )
+                <button id="btnHistorico" class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
             @else
                 @if ( ( ( intval($pedido[0]->idEstadoPedido) >= 2 and intval($pedido[0]->idEstadoPedido <=5) ) or intval($pedido[0]->idEstadoPedido==0) ) and
                     (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' ) )
@@ -604,23 +617,11 @@
                 }
             }
 
-            // Se recorre el DataTable para modificar la funcion abrirGuia con el nuevo número ingresado por el usuario
-
-            var numeroGuiaOrigen="abrirGuia(1, " + document.getElementById('folioDTE').dataset.numeroguia + ", this.parentNode.parentNode)";
-            var nuevoNumeroGuia ="abrirGuia(1, " + $('#nuevoFolioDTE').val() + ", this.parentNode.parentNode)";
-            var table = $('#tablaDetalle').DataTable();
-            var cadena = "";
-            var filas=table.rows().count();
-            for (var i = 0; i < filas; i++){
-                cadena=table.cell(i,1).data();
-                table.cell(i,1).data( cadena.replace(numeroGuiaOrigen, nuevoNumeroGuia) );
-            }
-
             // Aqui se actualizan los cantidades ingresadas en la guía de despacho   
 
             actualizarDatosGuiaDespacho(false);
 
-            // a continuación se envñia el formulario con el nuevo número de guía y el archivo pdf correspondiente a la guía
+            // a continuación se envía el formulario con el nuevo número de guía y el archivo pdf correspondiente a la guía
 
           var formData = new FormData( $("#datosGuia")[0]);
           $.ajax({
@@ -632,11 +633,74 @@
               contentType: false,
               processData: false,
               success:function(data){
-                document.getElementById('folioDTE').dataset.numeroguia=$("#nuevoFolioDTE").val();
-                $("#folioDTE").val( $("#nuevoFolioDTE").val() );
-                document.getElementById('btnEmitirGuia').style.display='none';
-                document.getElementById('btnBajar').style.display='inline';
-                cerrarModalSubirGuiaPdf();
+
+                if(data.folioExiste=='1'){
+                    swal(
+                        {
+                            title: '¡El Número de guía ingresado ya existe!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            if(isConfirm){
+                              return;
+                            }
+                        }
+                    );
+                }else{
+
+                    // Se recorre el DataTable para modificar la funcion abrirGuia con el nuevo número ingresado por el usuario
+
+                    var numeroGuiaOrigen="abrirGuia(1, " + document.getElementById('folioDTE').dataset.numeroguia + ", this.parentNode.parentNode)";
+                    var nuevoNumeroGuia ="abrirGuia(1, " + $('#nuevoFolioDTE').val() + ", this.parentNode.parentNode)";
+                    var table = $('#tablaDetalle').DataTable();
+                    var cadena = "";
+                    var filas=table.rows().count();
+                    for (var i = 0; i < filas; i++){
+                        cadena=table.cell(i,1).data();
+                        table.cell(i,1).data( cadena.replace(numeroGuiaOrigen, nuevoNumeroGuia) );
+                    }
+
+                    document.getElementById('folioDTE').dataset.numeroguia=$("#nuevoFolioDTE").val();
+                    if(document.getElementById('btnAnularGuiaTemporal')){
+                      document.getElementById('btnAnularGuiaTemporal').style.display='none';
+                    }
+                    if(document.getElementById('btnGuardarDatosGuia')){
+                      document.getElementById('btnGuardarDatosGuia').style.display='none';
+                    }
+
+                    if( document.getElementById('btnEmitirGuia').dataset.idperfil=='5' || 
+                        document.getElementById('btnEmitirGuia').dataset.idperfil=='6' || 
+                        document.getElementById('btnEmitirGuia').dataset.idperfil=='7'){
+                        document.getElementById('btnRegistrarSalida').style.display='inline';
+                    }
+                                                
+                    $("#folioDTE").val( $("#nuevoFolioDTE").val() );
+                    document.getElementById('btnEmitirGuia').style.display='none';
+                    document.getElementById('btnBajar').style.display='inline';
+                    cerrarModalSubirGuiaPdf();
+
+                    if(data.despachoCompleto==1){
+                        if(document.getElementById('btnHistorico')){
+                            document.getElementById('btnHistorico').style.display='none';
+                        }
+                        
+                        if(document.getElementById('btnAsignarGuia')){
+                           document.getElementById('btnAsignarGuia').style.display='none'; 
+                        }
+                        
+                    }  
+                }
+
+
+
+
               },
               error: function(jqXHR, text, error){
                   alert('Error!, No se pudo Añadir los datos');
@@ -767,13 +831,26 @@
             })
 
 
+
+            var numFilas=0;
+            var numGuias=0;
             for (var i = 1; i < tabla.rows.length; i++){
                 if(tipoTransporte.value==2){
                     if(tabla.rows[i].cells[12].getElementsByTagName('input')[0]){
                        tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked=true;
                     }
                 }
-            }          
+                numFilas++;
+
+                if(tabla.rows[i].cells[1].dataset.foliodte>0){
+                    numGuias++;
+                }
+            } 
+
+            if(numFilas==numGuias){
+                document.getElementById("btnHistorico").style.display="none";
+            }
+
             if(tipoTransporte.value==2){
                 if( document.getElementById('btnAsignarGuia') ){
                     btnAsignarGuia.innerHTML="Asignar Guía";
