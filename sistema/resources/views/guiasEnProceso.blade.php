@@ -48,7 +48,7 @@
                                     @endif                                    
                                 </td>
                                 <td style="width:50px">
-                                    <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/8/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
+                                    <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/8-5/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
                                     <span name="{{$item->numeroGuia}}" onclick='abrirGuia(1, {{ $item->numeroGuia }}, this.parentNode.parentNode);' style="cursor:pointer; cursor: hand" title="Ver guía"><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0"></span>
                                 </td>
                                 <td style="width:70px;text-align: right;">

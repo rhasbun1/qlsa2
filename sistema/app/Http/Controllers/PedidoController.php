@@ -255,7 +255,9 @@ class PedidoController extends Controller
                                 ->with('formasdeentrega', $formasdeentrega);
     }      
 
-    public function verpedido($idPedido, $accion){
+    public function verpedido($idPedido, $accionPedidoNota){
+        $accion = explode('-', $accionPedidoNota)[0];
+        $accionNota = explode('-', $accionPedidoNota)[1];
         $pedido=DB::Select('call spGetPedido(?)', array($idPedido) );
         $listaDetallePedido=DB::Select('call spGetPedidoDetalle(?)', array($idPedido) );
         $log = DB::Select('call spGetPedidoLog(?)', array($idPedido) );
@@ -269,7 +271,8 @@ class PedidoController extends Controller
                                 ->with('log', $log)
                                 ->with('notas', $notas)
                                 ->with('parametros', $parametros)
-                                ->with('plantilla', 'plantilla');
+                                ->with('plantilla', 'plantilla')
+                                ->with('accionNota', $accionNota);
     }
 
     public function verpedidoNuevaVentana($idPedido, $accion){
@@ -286,7 +289,8 @@ class PedidoController extends Controller
                                 ->with('log', $log)
                                 ->with('notas', $notas)
                                 ->with('parametros', $parametros)
-                                ->with('plantilla', 'plantilla2');
+                                ->with('plantilla', 'plantilla2')
+                                ->with('accionNota', 4);
     }
 
 

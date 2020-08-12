@@ -26,12 +26,13 @@ class CamionController extends Controller
                             $datos->input('idEmpresaTransporte'),
                             $datos->input('patente'),
                             $datos->input('patenteRampla'),
-                            $datos->input('disponible')
+                            $datos->input('gps')
                             ) 
                         );
 
             return response()->json([
-                "idCamion" => $camion[0]->idCamion
+                "idCamion" => $camion[0]->idCamion,
+                "nombreEmpresa" => $camion[0]->nombreEmpresa,
             ]);
         }
     }

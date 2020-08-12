@@ -334,27 +334,27 @@ function asignarFolio(){
 
                     retira=true;
                     cont=1;
+                 //   if(tabla.rows[i].cells[6].getElementsByTagName('input')[0] ){
+                        if( tabla.rows[i].cells[6].getElementsByTagName('input')[0].value.trim()=='' ||
+                                      tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim()=='' ||
+                                      tabla.rows[i].cells[9].getElementsByTagName('input')[0].value.trim()=='' ){
 
-                    if( tabla.rows[i].cells[6].getElementsByTagName('input')[0].value.trim()=='' ||
-                                  tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim()=='' ||
-                                  tabla.rows[i].cells[9].getElementsByTagName('input')[0].value.trim()=='' ){
+                            swal(
+                                {
+                                    title: 'Debe completar todos los datos de transporte' ,
+                                    text: '',
+                                    type: 'warning',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'OK',
+                                    cancelButtonText: '',
+                                    closeOnConfirm: true,
+                                    closeOnCancel: false
+                                });
+                            document.getElementById("btnAsignarGuia").disabled=false;
+                            return;
 
-                        swal(
-                            {
-                                title: 'Debe completar todos los datos de transporte' ,
-                                text: '',
-                                type: 'warning',
-                                showCancelButton: false,
-                                confirmButtonText: 'OK',
-                                cancelButtonText: '',
-                                closeOnConfirm: true,
-                                closeOnCancel: false
-                            });
-                        document.getElementById("btnAsignarGuia").disabled=false;
-                        return;
-
-                    }
-
+                        }                        
+                   // }
 
                 }else{
 

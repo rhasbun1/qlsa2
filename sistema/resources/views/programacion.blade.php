@@ -117,7 +117,7 @@
                                     @endif  
                                         <td style="width:80px" data-idpedido="{{ $item->idPedido }}" >
                                             @if ( $item->idEstadoPedido=='0' or Session::get('idPerfil')=='9' )
-                                                <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/3/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
+                                                <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/3-2/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
                                             @else
                                                 <a href="{{ asset('/') }}programarpedido/{{ $item->idPedido }}/3/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
                                             @endif
@@ -216,7 +216,7 @@
                                 @foreach($pedidos as $item)
                                     @if( $item->idEstadoPedido == '1' )
                                         <tr>
-                                            <td><a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/3/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a></td>
+                                            <td><a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/3-2/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a></td>
                                             <td></td>
                                             <td>{{ $item->fechahora_creacion }}</td>
                                             <td>{{ $item->nombreCliente }}</td>

@@ -233,13 +233,14 @@ class NotaventaController extends Controller
      return DB::Select('call spGetNotaVenta(?)', array($id));   
     }
 
-    public function vernotaventa($id, $accion){
-
+    public function vernotaventa($idNotaPedido, $accion){
+        //MATIAS
+        $id = explode('-', $idNotaPedido)[0];
+        $numPedido = explode('-', $idNotaPedido)[1];
         $notaventa=DB::Select('call spGetNotaVenta(?)', array($id));
         $notaventadetalle=DB::Select('call spGetNotaVentaDetalle(?)', array($id) );
 
         $pedidos=DB::Select('call spGetNotaVentaPedidos(?, ?, ?)', array($id, Session::get('idUsuario'), Session::get('idPerfil') ) );
-
         $log = DB::Select('call spGetNotaVentaLog(?)', array($id) );
         $condicionesPago=CondicionPago::All();
         $usuarios=DB::Select('call spGetUsuarioPorGrupo(?)', array( 'C' )); 
@@ -249,7 +250,9 @@ class NotaventaController extends Controller
                                    ->with('pedidos', $pedidos)
                                    ->with('condicionesPago', $condicionesPago)
                                    ->with('log', $log)
-                                   ->with('usuarios', $usuarios);
+                                   ->with('usuarios', $usuarios)
+                                   ->with('accion', $accion)
+                                   ->with('numPedido', $numPedido);
     }
 
     public function cerrarNotaVenta($idNotaVenta, $motivo){

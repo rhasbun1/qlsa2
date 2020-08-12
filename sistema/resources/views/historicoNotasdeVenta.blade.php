@@ -86,7 +86,8 @@
                 <tbody>
                     @foreach($listaNotasdeVenta as $item)
                         <tr>
-                            <td style="width: 60px"><a href="vernotaventa/{{ $item->idNotaVenta }}/3/" class="btn btn-xs btn-info" title="Ver Nota Venta" style="width:100%">{{ $item->idNotaVenta }}</a></td>
+                            <!--MATIAS-->
+                            <td style="width: 60px"><a href="vernotaventa/{{ $item->idNotaVenta }}-0/3/" class="btn btn-xs btn-info" title="Ver Nota Venta" style="width:100%">{{ $item->idNotaVenta }}</a></td>                            
                             <td>{{ $item->fecha_hora_creacion }}</td>
                             <td>{{ $item->emp_nombre }}</td>
                             <td>{{ $item->Obra }}</td>
@@ -310,8 +311,8 @@
                         }else{
                             cadena="Pendiente de Aprobación";
                         }
-
-                        nv='<a href="vernotaventa/' + dato[x].idNotaVenta + '/3/" class="btn btn-xs btn-info" title="Ver Nota Venta" style="width:100%">' + dato[x].idNotaVenta + '</a>';
+                        //MATIAS
+                        nv='<a href="vernotaventa/' + dato[x].idNotaVenta + '-0/3/" class="btn btn-xs btn-info" title="Ver Nota Venta" style="width:100%">' + dato[x].idNotaVenta + '</a>';
                                           
                         var fila=tabla.row.add( [
                                 nv,
@@ -320,8 +321,6 @@
                                 dato[x].Obra,
                                 cadena
                             ] ).index();
-
-
                     }
                     tabla.draw();
                     actualizarFiltros(tabla);

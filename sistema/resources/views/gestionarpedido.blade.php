@@ -278,15 +278,15 @@
                     <div class="row">
                         <div class="col-sm-2 col-md-2">
                             Contacto
-                            <input id="txtNombreContacto" class="form-control input-sm" value="{{ $NotadeVenta[0]->nombreContacto}}">
+                            <input id="txtNombreContacto" class="form-control input-sm" value="{{ $NotadeVenta[0]->nombreContacto}}" maxlength="50">
                         </div> 
                         <div class="col-sm-2 col-md-2">
                             Correo
-                            <input id="txtCorreoContacto" class="form-control input-sm" value="{{ $NotadeVenta[0]->correoContacto}}">
+                            <input id="txtCorreoContacto" class="form-control input-sm" value="{{ $NotadeVenta[0]->correoContacto}}" maxlength="80">
                         </div>
                         <div class="col-sm-2 col-md-2">
                             Telefono/Móvil
-                            <input id="txtTelefono" class="form-control input-sm" value="{{ $NotadeVenta[0]->telefonoContacto}}">
+                            <input id="txtTelefono" class="form-control input-sm" maxlength="30" value="{{ $NotadeVenta[0]->telefonoContacto}}">
                         </div>
                         <div class="col-sm-2 col-md-2">
                             Fecha de Entrega (*)

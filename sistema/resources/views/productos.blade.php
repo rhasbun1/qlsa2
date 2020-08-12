@@ -236,7 +236,12 @@
             var table=$('#tabla').DataTable();
             var buscar=$("#selProductos option:selected").html().trim()+$("#selUnidades option:selected").html().trim()+$("#selPlantas option:selected").html().trim();
 
+            var buscar2=$("#selProductos option:selected").html().trim()+$("#selUnidades option:selected").html().trim();
+
+            var corrigeDiseno=false;
+
             for (var i = 0; i < table.rows().count(); i++){
+
                 if( (buscar==table.cell(i,1).data().trim()+table.cell(i,2).data().trim()+table.cell(i,3).data().trim()) && fila!=i ){
                     swal(
                         {
@@ -251,7 +256,55 @@
                         });
                     return;
                 }
+                if( (buscar2==table.cell(i,1).data().trim()+table.cell(i,2).data().trim() ) && fila!=i ){
+
+                    if( $("#requiereDiseno option:selected").html().trim()!=table.cell(i,6).data().trim() ){
+                        corrigeDiseno=true;
+                        break;
+                    }
+
+                }
+
             }
+
+            if(corrigeDiseno){
+                swal(
+                        {
+                            title: '[Requiere diseño] ha cambiado su valor, continua?',
+                            text: 'El producto/unidad existe para varias plantas, se actualizará el valor de [Requiere Diseño] a todas.',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: 'NO',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            if(isConfirm){
+                                
+                                for (var i = 0; i < table.rows().count(); i++){
+                                    if( (buscar2==table.cell(i,1).data().trim()+table.cell(i,2).data().trim() )  ){
+
+                                        table.cell(i,6).data( $("#requiereDiseno option:selected").html().trim() );
+
+                                    }
+
+                                }
+                                //table.draw(); 
+                                enviarDatosProducto(fila);
+
+                            }
+                        }
+                    );
+
+            }else{
+                enviarDatosProducto(fila)
+            }
+
+        }
+
+        function enviarDatosProducto(fila){
             $.ajax({
                 url: urlApp + "guardarDatosProductoListaPrecio",
                 headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
@@ -273,7 +326,6 @@
                 success:function(dato){
                     var table = $('#tabla').DataTable();
                     if(fila.toString()=='-1'){
-                       //ff=table.row.add( [ 
                        table.row.add( [
                                 dato[0].idProductoListaPrecios,
                                 $("#selProductos option:selected").html(),
@@ -300,12 +352,14 @@
                         table.cell(fila,7).data( $("#granel option:selected").html() );
                         table.cell(fila,8).data( $("#solicitaCertificado option:selected").html() ); 
                         table.cell(fila,9).data( $("#tiempoProduccion").val() );
-                        table.cell(fila,10).draw();                
+                        table.cell(fila,10).draw();
+
+                        console.log('paso por aqui');              
                     }
                     cerrarModProducto();
                 }
 
-            })
+            })            
         }
 
         function eliminarProductoPrecio(fila){

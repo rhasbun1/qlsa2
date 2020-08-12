@@ -65,7 +65,7 @@
                                 @foreach($pedidos as $item)
                                     <tr>
                                         <td style="width: 80px" data-pedido='{{ $item->idPedido }}'>
-                                            <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/1/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
+                                            <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/1-2/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
                                             @if( Session::get('grupoUsuario')=='C' and $item->idEstadoPedido==1 )
                                                 <button class="btn btn-sm btn-primary" title="Aprobar pedido" onclick="aprobarPedido({{ $item->idPedido }}, this)"><span class="glyphicon glyphicon-ok"></span></button>
                                             @endif                                          
@@ -113,7 +113,12 @@
                                     @endif
                                 @endif    
                                     <td data-pedido='{{ $item->idPedido }}' style="width:20px;">
+                                        <!--
                                         <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/1/" class="btn btn-xs btn-success" title="Ver Pedido">{{ $item->idPedido }}</a>
+                                        -->
+
+                                        <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/1-2/" class="btn btn-xs btn-success" title="Ver Pedido">{{ $item->idPedido }}</a>
+
                                         @if( Session::get('grupoUsuario')=='C' and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='11') and $item->idEstadoPedido==1 )
                                             <button class="btn btn-xs btn-primary" title="Aprobar Pedido" onclick="aprobarPedido({{ $item->idPedido }}, this)"><span class="glyphicon glyphicon-ok"></span></button>
                                         @endif                                        

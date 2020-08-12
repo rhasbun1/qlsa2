@@ -82,7 +82,7 @@
                                         @endif                                    
                                     </td>
                                     <td style="width:50px">
-                                        <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/8/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
+                                        <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/8-6/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
                                         <span name="{{$item->numeroGuia}}" onclick='abrirGuia(1, {{ $item->numeroGuia }}, this.parentNode.parentNode);' style="cursor:pointer; cursor: hand" title="Ver guía"><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0"></span>
                                     </td>
                                     <td style="width:70px;text-align: right;">
@@ -450,7 +450,7 @@
                         }                                                          
 
                         var col1='';
-                        col1+='<a href="' + urlApp + 'verpedido/' + dato[x].idPedido + '/8/" class="btn btn-xs btn-success">' + dato[x].idPedido + '</a>';
+                        col1+='<a href="' + urlApp + 'verpedido/' + dato[x].idPedido + '/8-6/" class="btn btn-xs btn-success">' + dato[x].idPedido + '</a>';
                         col1+='<span name="' + dato[x].numeroGuia + '" onclick="abrirGuia(1, ' + dato[x].numeroGuia + ', this.parentNode.parentNode);" style="cursor:pointer; cursor: hand" title="Ver guía"><img src="' + urlApp + 'img/iconos/guiaDespacho2.png" border="0"></span>';
 
                         var col2='';

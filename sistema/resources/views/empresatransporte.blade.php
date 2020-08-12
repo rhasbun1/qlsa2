@@ -123,7 +123,7 @@
                     <th style='display:none'>Identificador</th>
                     <th>Patente Camión</th>
                     <th>Patente Rampla</th>
-                    <th>Disponible</th>
+                    <th style="text-align: center;">Seguimiento<br>GPS</th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -132,11 +132,11 @@
                            <td style='display:none'> {{ $item->idCamion }} </td>
                            <td> {{ $item->patente }} </td>
                            <td> {{ $item->patenteRampla }} </td>
-                           <td> 
-                               @if ($item->disponible==1)
-                                    SI
+                           <td style="text-align: center;"> 
+                               @if ($item->gps==1)
+                                    Si
                                @else
-                                    NO
+                                    No
                                @endif 
                            </td>
                            <td>
@@ -223,24 +223,29 @@
                         Patente (*)
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control input-sm" maxlength="50" id="patente">
-                    </div>    
+                        <input type="text" class="form-control input-sm" maxlength="7" id="patente">
+                    </div>                        
                 </div>
                 <div class="row" style="padding:10px">
                     <div class="col-sm-2">
                         Patente Rampla
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control input-sm" maxlength="50" id="patenteRampla">
-                    </div>
+                        <input type="text" class="form-control input-sm" maxlength="7" id="patenteRampla">
+                    </div>                        
+                </div>
+
                 <div class="row" style="padding:10px">
                     <div class="col-sm-2">
-                        Disponible
+                        Seguimiento GPS
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control input-sm" maxlength="50" id="disponible">
+                        <select class="form-control input-sm" id="gps">
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
                     </div>    
-                </div>                     
+                
                 </div>
 
             </div>
@@ -336,6 +341,7 @@
             $("#patente").val('');
             $("#patenteRampla").val('');
             $("#idFilaCamion").val('0');
+            document.getElementById('gps').selectedIndex=1;
 			$("#modCamion").modal("show");
 		}
 
@@ -345,6 +351,11 @@
             $("#idCamion").val(idCamion);
             $("#patente").val( tabla.rows[fila].cells[1].innerHTML.trim() );
             $("#patenteRampla").val(tabla.rows[fila].cells[2].innerHTML.trim());
+            if (tabla.rows[fila].cells[3].innerHTML.trim()=='Si') {
+                document.getElementById("gps").selectedIndex=0;
+            }else{
+                document.getElementById("gps").selectedIndex=1;
+            }
             $("#idFilaCamion").val(fila);
             $("#modCamion").modal("show");
         }        
@@ -585,7 +596,55 @@
                 return;             
             }
 
+
+            if(document.getElementById('patente').value.indexOf('-')==-1){
+
+                swal(
+                    {
+                        title: 'Falta el GUION en la patente!',
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    }
+                )
+                return;
+            }
+
             var id=$("#idCamion").val();
+            var tabla=document.getElementById("tablaCamiones");
+            var p1;
+            var p2;
+            p2=$("#patente").val();
+            p2=p2.toString().trim().toUpperCase();
+
+            if( id==0 ){
+                for(x=1;x<tabla.rows.length;x++){
+                    p1=tabla.rows[x].cells[1].innerHTML;
+                    p1=p1.toString().trim().toUpperCase();
+                    if( p1==p2 ){
+                        swal(
+                            {
+                                title: 'La patente que intenta ingresar ya existe en esta empresa!',
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            }
+                        )
+
+                        return;
+                    }
+                }
+                
+            }
+
             $.ajax({
                 url: urlApp + "grabarCamion",
                 headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
@@ -594,28 +653,55 @@
                 data: { 
                         idCamion: $("#idCamion").val(),
                         idEmpresaTransporte: $("#idEmpresaTransporte").val(),
-                        patente: $("#patente").val(),
+                        patente: p2,
                         patenteRampla: $("#patenteRampla").val(),
-                        disponible: 1
+                        gps: document.getElementById('gps').value
                       },
                 success:function(dato){
-                    var tabla=document.getElementById("tablaCamiones");
+                    
+
+                    if(dato.idCamion==-1){
+                        swal(
+                            {
+                                title: 'Esta patente ya existe en la empresa ' + dato.nombreEmpresa,
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            }
+                        )
+                        return; 
+
+                    }
+
 
                     if(id=='0'){
                         cadena="<tr>";
                         cadena+="<td style='display:none'>" + dato.idCamion+ "</td>";
-                        cadena+="<td>" + $("#patente").val() + "</td>";
+                        cadena+="<td>" + p2 + "</td>";
                         cadena+="<td>" + $("#patenteRampla").val() + "</td>";
-                        cadena+="<td>SI</td>";
+                        if(document.getElementById('gps').value==1){
+                            cadena+="<td style='text-align: center;'>Si</td>";
+                        }else{
+                            cadena+="<td style='text-align: center;'>No</td>";
+                        }
+
                         cadena+='<td><button onclick="editarCamion('+ dato.idCamion + ', this.parentNode.parentNode.rowIndex);" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-edit fa-lg"></i></button>';
                         cadena+='<button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarCamion(' + dato.idCamion + ', this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button><td>';
                         cadena+="</tr>";
                         $("#tablaCamiones").append(cadena);
                     }else{
                         var fila=$("#idFilaCamion").val();
-                        tabla.rows[fila].cells[1].innerHTML=$("#patente").val();
+                        tabla.rows[fila].cells[1].innerHTML=p2;
                         tabla.rows[fila].cells[2].innerHTML=$("#patenteRampla").val();
-
+                        if(document.getElementById('gps').value==1){
+                            tabla.rows[fila].cells[3].innerHTML='Si';  
+                        }else{
+                            tabla.rows[fila].cells[3].innerHTML='No';
+                        }
                     }
 
                     $("#patenteRampla").val('');

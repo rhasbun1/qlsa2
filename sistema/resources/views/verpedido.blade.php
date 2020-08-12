@@ -71,8 +71,8 @@
                         N.Venta 
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-2">
-                        @if ( Session::get('grupoUsuario')=='P' or Session::get('grupoUsuario')=='C' ) 
-                            <a class="btn btn-success btn-sm" style="width: 100%" href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}/2/">{{ $pedido[0]->idNotaVenta }}</a>
+                        @if ( Session::get('grupoUsuario')=='P' or Session::get('grupoUsuario')=='C' )
+                            <a class="btn btn-success btn-sm" style="width: 100%" href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-{{ $pedido[0]->idPedido }}/{{ $accionNota }}/">{{ $pedido[0]->idNotaVenta }}</a>
                         @else
                             <input class="form-control input-sm" value="{{ $pedido[0]->idNotaVenta }}" readonly>
                         @endif
@@ -144,11 +144,13 @@
                     <?php
                         $despachado=0;
                         $sinDespachar=0;
+                        $guiaEmitida=0;
                     ?>
                     @foreach($listaDetallePedido as $item)
                     <?php
                         if($item->salida==1){$despachado++;}
                         if($item->salida==0){$sinDespachar++;}
+                        if($item->numeroGuia>0){$guiaEmitida++;}
                     ?>
                     <tr>
                         <td style="display: none"> 
@@ -285,7 +287,7 @@
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedido({{ $pedido[0]->idPedido }});">Aprobar</button>
             @endif    
 
-            @if ( (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='4') and $pedido[0]->idEstadoPedido>0 and $sinDespachar>0 )
+            @if ( (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='4') and $pedido[0]->idEstadoPedido>0 and $guiaEmitida==0 )
                 <a href="{{ asset('/') }}editarPedido/{{ $pedido[0]->idPedido }}/" class="btn btn-sm btn-success" style="width:100px">Modificar</a>
             @endif
             @if ($accion=='1')
@@ -319,11 +321,38 @@
                     @endif
                 @endif
             @endif
-                
+            
+            @if($plantilla=='plantilla')
+                @if ($accion == 1)
+                    <a href="{{ asset('/') }}listarPedidos/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                @else
+                    @if ($accionNota == 2)
+                        @if (Session::get('idPerfil') == '11') <!--MATIAS-->
+                            <a href="{{ asset('/') }}listarPedidos/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                        @else
+                            @if (Session::get('idPerfil') == '4' || Session::get('idPerfil') == '2' || Session::get('idPerfil') == '3' || Session::get('idPerfil') == '12' || Session::get('idPerfil') == '18' || Session::get('idPerfil') == '19')<!--MATIAS-->
+                                <a href="{{ asset('/') }}listarPedidos/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                            @else
+                                <a href="{{ asset('/') }}programacion/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                            @endif
+                        @endif
+                    @elseif ($accionNota == 5)
+                        <a href="{{ asset('/') }}guiasEnProceso/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                    @elseif ($accionNota == 6)
+                        <a href="{{ asset('/') }}modificarCertificado/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                    @elseif ($accionNota == 7) <!-- MATIAS -->
+                        <a href="{{ asset('/') }}listaIngresosClienteporAprobar/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                    @else
+                        <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-{{ $pedido[0]->idPedido }}/{{ $accionNota }}/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a><!--MATIAS-->                    
+                    @endif
+                @endif
+            @endif            
+
+            <!--
             @if($plantilla=='plantilla')
                 <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
             @endif
-
+            -->
         </div>
         
         @if (Session::get('grupoUsuario')!='CL')

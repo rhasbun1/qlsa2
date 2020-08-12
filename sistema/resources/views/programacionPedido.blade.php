@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-lg-1 col-md-2 col-sm-3">
                         @if ( Session::get('grupoUsuario')!='CL' or Session::get('idPerfil')=='6' ) 
-                            <a class="btn btn-success btn-sm" style="width: 100%" href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}/2/">{{ $pedido[0]->idNotaVenta }}</a>
+                            <a class="btn btn-success btn-sm" style="width: 100%" href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-{{ $pedido[0]->idPedido }}/2/">{{ $pedido[0]->idNotaVenta }}</a><!--MATIAS-->                            
                         @else
                             <input class="form-control input-sm" value="{{ $pedido[0]->idNotaVenta }}" readonly style="text-align: center;">
                         @endif    

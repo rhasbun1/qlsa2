@@ -82,7 +82,7 @@
                     @foreach($pedidos as $item)
                         <tr>
                             <td style="width: 80px" data-pedido='{{ $item->idPedido }}'>
-                                <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/6/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
+                                <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/6-7/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a> <!-- MATIAS -->
                                 @if( Session::get('grupoUsuario')=='C')
                                     <button class="btn btn-sm btn-primary" title="Aprobar pedido" onclick="aprobarPedido({{ $item->idPedido }}, this.parentNode.parentNode)"><span class="glyphicon glyphicon-ok"></span></button>
                                 @endif                                          
