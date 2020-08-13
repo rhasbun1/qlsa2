@@ -209,22 +209,22 @@
                             @if( Session::get('grupoUsuario')=='CL')
                             
                                 @if( $item->idEstadoPedido==1 )
-                                    <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
+                                    <a class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
                                 @elseif( $item->idEstadoPedido==0 )
-                                    <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>                              
+                                    <a class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>                              
                                 @else
-                                    <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
+                                    <a class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
                                 @endif
 
 
                             @else
 
                                 @if( $item->idEstadoPedido==1 )
-                                    <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4-{{ $accion }}/" class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
+                                    <a class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
                                 @elseif( $item->idEstadoPedido==0 )
-                                    <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4-{{ $accion }}" class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>                              
+                                    <a class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>                              
                                 @else
-                                    <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4-{{ $accion }}/" class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
+                                    <a class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
                                 @endif
                                 
                             @endif
