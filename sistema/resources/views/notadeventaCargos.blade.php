@@ -8,7 +8,6 @@
         <div class="panel-heading">
             <b>Fletes, Distancias y Tiempos {{ $subtitulo }}</b>
         </div>
-
         <div class="padding-md clearfix" id="cuadro1">
 	        <div style="width: 80%">        
 	            <table id="tablaNotas" class="table table-hover table-condensed table-responsive" style="width: 100%">
