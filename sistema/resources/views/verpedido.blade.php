@@ -68,7 +68,7 @@
                         </div>                            
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-1">
-                        N.Venta 
+                        N.Venta
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-2">
                         @if ( Session::get('grupoUsuario')=='P' or Session::get('grupoUsuario')=='C' )

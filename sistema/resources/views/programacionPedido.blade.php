@@ -35,7 +35,7 @@
                         <input class="form-control input-sm" readonly value="{{ $pedido[0]->fechahora_creacion }}">
                     </div> 
                     <div class="col-lg-1 col-md-1 col-sm-1">
-                        N.Venta 
+                        N.Venta
                     </div>
                     <div class="col-lg-1 col-md-2 col-sm-3">
                         @if ( Session::get('grupoUsuario')!='CL' or Session::get('idPerfil')=='6' ) 

@@ -205,31 +205,52 @@
                     </div>
                     <div class="row" style="padding-top: 5px; padding-left: 5px"">
                         @foreach($pedidos as $item)
-
                             @if( Session::get('grupoUsuario')=='CL')
-                            
+                                
                                 @if( $item->idEstadoPedido==1 )
-                                    <a class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
+                                    @if ($accion == 1)
+                                        <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
+                                    @else
+                                        <a class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
+                                    @endif
                                 @elseif( $item->idEstadoPedido==0 )
-                                    <a class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>                              
+                                    @if ($accion == 1)
+                                        <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>   
+                                    @else
+                                        <a class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>   
+                                    @endif                         
                                 @else
-                                    <a class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
+                                    @if ($accion == 1)
+                                        <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
+                                    @else
+                                        <a class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
+                                    @endif
                                 @endif
 
 
                             @else
 
                                 @if( $item->idEstadoPedido==1 )
-                                    <a class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
+                                    @if ($accion == 1)
+                                        <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4-{{ $accion }}/" class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
+                                    @else
+                                        <a class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
+                                    @endif
                                 @elseif( $item->idEstadoPedido==0 )
-                                    <a class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>                              
+                                    @if ($accion == 1)
+                                        <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4-{{ $accion }}" class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>     
+                                    @else
+                                        <a class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>   
+                                    @endif                         
                                 @else
-                                    <a class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
+                                    @if ($accion == 1)
+                                        <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4-{{ $accion }}/" class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
+                                    @else
+                                        <a class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
+                                    @endif
                                 @endif
                                 
                             @endif
-
-
                         @endforeach 
                     </div>                      
                 @else
