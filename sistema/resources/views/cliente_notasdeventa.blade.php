@@ -44,7 +44,7 @@
                 <tbody>
                     @foreach($listaNotasdeVenta as $item)
                         <tr>
-                            <td><a href="vernotaventa/{{ $item->idNotaVenta }}/1/" class="btn btn-xs btn-info">{{ $item->idNotaVenta }}</a></td>
+                            <td><a href="vernotaventa/{{ $item->idNotaVenta }}-0/1/" class="btn btn-xs btn-info">{{ $item->idNotaVenta }}</a></td>
                             <td>{{ $item->fechahora_creacion }}</td>
                             <td>{{ $item->Obra }}</td>
                             <td>{{ $item->nombreUsuarioEncargado }}</td>
