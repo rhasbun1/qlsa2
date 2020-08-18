@@ -27,7 +27,7 @@
                         N.Venta Nº
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-2">
-                        <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}/1/" class="btn btn-xs btn-info">{{ $pedido[0]->idNotaVenta }}</a>
+                        <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-{{ $pedido[0]->idPedido }}/2/" class="btn btn-xs btn-info">{{ $pedido[0]->idNotaVenta }}</a>
                     </div>                          			
         		</div>
         		<div class="row" style="padding-top: 5px">

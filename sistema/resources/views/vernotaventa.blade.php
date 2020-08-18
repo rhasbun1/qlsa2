@@ -208,19 +208,19 @@
                             @if( Session::get('grupoUsuario')=='CL')
                                 
                                 @if( $item->idEstadoPedido==1 )
-                                    @if ($accion == 1)
+                                    @if ($accion == 1 || $accion == 3)
                                         <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
                                     @else
                                         <a class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
                                     @endif
                                 @elseif( $item->idEstadoPedido==0 )
-                                    @if ($accion == 1)
+                                    @if ($accion == 1 || $accion == 3)
                                         <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>   
                                     @else
                                         <a class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>   
                                     @endif                         
                                 @else
-                                    @if ($accion == 1)
+                                    @if ($accion == 1 || $accion == 3)
                                         <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/4/" class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
                                     @else
                                         <a class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
@@ -231,19 +231,19 @@
                             @else
 
                                 @if( $item->idEstadoPedido==1 )
-                                    @if ($accion == 1)
+                                    @if ($accion == 1 || $accion == 3)
                                         <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4-{{ $accion }}/" class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
                                     @else
                                         <a class="btn btn-xs btn-info"> {{$item->idPedido}} *</a>
                                     @endif
                                 @elseif( $item->idEstadoPedido==0 )
-                                    @if ($accion == 1)
+                                    @if ($accion == 1 || $accion == 3)
                                         <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4-{{ $accion }}" class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>     
                                     @else
                                         <a class="btn btn-xs btn-danger" title="Pedido Suspendido"> {{$item->idPedido}} *</a>   
                                     @endif                         
                                 @else
-                                    @if ($accion == 1)
+                                    @if ($accion == 1 || $accion == 3)
                                         <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/4-{{ $accion }}/" class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
                                     @else
                                         <a class="btn btn-xs btn-primary"> {{$item->idPedido}} </a>
