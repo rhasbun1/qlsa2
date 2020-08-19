@@ -228,7 +228,8 @@
             @if ($accion == 7)
                 <a href="{{ asset('/') }}clientePedidos/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>  
             @else
-                <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                               
+                <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+            @endif                             
         </div>        
     </div>
 </div>
