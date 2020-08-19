@@ -282,8 +282,12 @@
                         Session::get('idPerfil')=='3' or 
                         Session::get('idPerfil')=='4') )
                     <button class="btn btn-sm btn-danger" onclick="cerrarNotaVenta();">Pasar a Histórico</button> 
-                    @if ($accion == 1)                   
-                        <a href="{{ asset('/') }}listarNotasdeVenta/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                    @if ($accion == 1)
+                        @if ( Session::get('idPerfil') == '14' || Session::get('idPerfil') == '15')                   
+                            <a href="{{ asset('/') }}clienteNotasdeVenta/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                        @else
+                            <a href="{{ asset('/') }}listarNotasdeVenta/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                        @endif
                     @elseif ($accion == 2)
                         <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/1-2/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                     @elseif ($accion == 4)
@@ -293,7 +297,11 @@
                     @endif
                 @else
                     @if ($accion == 1)
-                        <a href="{{ asset('/') }}listarNotasdeVenta/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                        @if ( Session::get('idPerfil') == '14' || Session::get('idPerfil') == '15')                   
+                            <a href="{{ asset('/') }}clienteNotasdeVenta/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                        @else
+                            <a href="{{ asset('/') }}listarNotasdeVenta/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                        @endif
                     @elseif ($accion == 2)
                         <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>  
                     @elseif ($accion == 3)
