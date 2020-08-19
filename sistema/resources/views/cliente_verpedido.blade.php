@@ -27,7 +27,11 @@
                         N.Venta Nº
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-2">
-                        <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-{{ $pedido[0]->idPedido }}/2/" class="btn btn-xs btn-info">{{ $pedido[0]->idNotaVenta }}</a>
+                        @if ($accion == 4)
+                            <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-{{ $pedido[0]->idPedido }}/2/" class="btn btn-xs btn-info disabled">{{ $pedido[0]->idNotaVenta }}</a>
+                        @else
+                            <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-{{ $pedido[0]->idPedido }}/2/" class="btn btn-xs btn-info">{{ $pedido[0]->idNotaVenta }}</a>
+                        @endif
                     </div>                          			
         		</div>
         		<div class="row" style="padding-top: 5px">
@@ -221,7 +225,7 @@
         </div> 
 
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
-            <a href="{{ asset('/') }}clientePedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                    
+            <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                    
         </div>        
     </div>
 </div>
