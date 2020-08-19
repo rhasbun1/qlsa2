@@ -289,7 +289,7 @@
                             <a href="{{ asset('/') }}listarNotasdeVenta/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                         @endif
                     @elseif ($accion == 2)
-                        <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/1-2/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                        <a href="{{ asset('/') }}verpedido/{{ $numPedido }}/1-2/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                     @elseif ($accion == 4)
                         <a href="{{ asset('/') }}verpedidoNuevaVentana/{{ $numPedido }}/1/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>  <!--MATIAS -->                        
                     @else

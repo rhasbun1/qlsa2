@@ -225,7 +225,7 @@
         </div> 
 
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
-            <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                    
+            <a href="{{ asset('/') }}clientePedidos/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                    
         </div>        
     </div>
 </div>
