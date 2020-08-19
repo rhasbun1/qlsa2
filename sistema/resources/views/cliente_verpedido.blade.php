@@ -225,7 +225,10 @@
         </div> 
 
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
-            <a href="{{ asset('/') }}clientePedidos/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                    
+            @if ($accion == 7)
+                <a href="{{ asset('/') }}clientePedidos/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>  
+            @else
+                <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                               
         </div>        
     </div>
 </div>
