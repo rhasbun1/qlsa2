@@ -55,7 +55,8 @@
                     correoContacto: $("#txtCorreoContactoObra").val(),
                     telefonoContacto: $("#txtTelefonoObra").val(),
                     descripcion: $("#txtDescripcionObra").val(),
-                    distanciaplantas: ''
+                    distanciaplantas: '',
+                    habilitada: 1
                   },
             success:function(dato){
                 if(dato.idObra==-1){

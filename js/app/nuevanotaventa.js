@@ -352,6 +352,27 @@
             return;
         }
 
+
+        if(document.getElementById('idObra').value==0){
+            swal(
+                {
+                    title: 'Debe seleccionar una obra o cambiar a Retira Cliente.',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function(isConfirm)
+                {
+                    return;
+                }
+            )
+            return;              
+        }
+
         if( document.getElementById('idUsuarioEncargado').selectedIndex<1 ){
             swal(
                 {
