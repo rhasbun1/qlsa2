@@ -5,7 +5,7 @@
 	<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
     <div class="panel panel-default" id="contenedor3">
         <div class="panel-heading">
-            <b>Pedidos Despachadados por Año</b>
+            <b>Despachos por Año</b>
         </div>
         <div class="padding-md clearfix">
         	<div class="row">

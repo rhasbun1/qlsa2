@@ -5,7 +5,7 @@
 	<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
     <div class="panel panel-default" id="contenedor3">
         <div class="panel-heading">
-            <b>Notas de Venta Vigentes y Márgenes</b>
+            <b>Notas de Venta y Márgenes</b>
         </div>  
     </div>    	
     <div class="content-wrapper">
@@ -84,13 +84,14 @@
 	            { field: 'saldo', headerText: 'Saldo', width: 100, textAlign: 'Right', format: "N" },	
 	            { field: 'unidad', headerText: 'Unidad', width: 100, textAlign: 'Center' },
 	            { field: 'formato', headerText: 'Formato', width: 100, textAlign: 'Center' },
-	            { field: 'costo', headerText: 'Costo', width: 100,  textAlign: 'Right', format: "C2" },	
-	            { field: 'otrosCostos', headerText: 'Otros Costos', width: 100, textAlign: 'Right', format: "C2" },	
-	            { field: 'Flete', headerText: 'Flete', width: 100, textAlign: 'Right', format: "C2" },	
-	            { field: 'precioVentaUnitarioActual', headerText: 'Precio Venta', width: 100, textAlign: 'Right', format: "C2" },	
-	            { field: 'margenBrutoUnitarioActual', headerText: 'Precio Bruto', width: 100, textAlign: 'Right', format: "C2" },	
-	            { field: 'facturado', headerText: 'Facturado', width: 100, textAlign: 'Right', format: "C2" },	
-	            { field: 'margenBrutoTotal', headerText: 'Margen Bruto', width: 100, textAlign: 'Right', format: "C2" }
+	            { field: 'costo', headerText: 'Costo $', width: 100,  textAlign: 'Right', format: "N" },	
+	            { field: 'otrosCostos', headerText: 'Otros Costos $', width: 100, textAlign: 'Right', format: "N" },	
+	            { field: 'Flete', headerText: 'Flete $', width: 100, textAlign: 'Right', format: "N" },	
+	            { field: 'precioVentaUnitarioActual', headerText: 'Precio Venta $', width: 100, textAlign: 'Right', format: "N" },
+	            { field: 'totalPrecioVenta', headerText: 'Total Precio Venta $', width: 100, textAlign: 'Right', format: 'N' },	
+	            { field: 'margenBrutoUnitarioActual', headerText: 'Precio Bruto $', width: 100, textAlign: 'Right', format: "N" },
+	            { field: 'facturado', headerText: 'Facturado $', width: 100, textAlign: 'Right', format: "N" },	
+	            { field: 'margenBrutoTotal', headerText: 'Margen Bruto $', width: 100, textAlign: 'Right', format: "N" }
 	        ];
 
 
