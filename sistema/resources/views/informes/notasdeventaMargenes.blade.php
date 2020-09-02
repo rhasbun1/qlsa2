@@ -110,7 +110,7 @@
 		        allowCsvExport: true,
 		        height: 500,
 		        rowHeight: 20,       
-		        toolbar: ['ExcelExport', 'PdfExport', 'CsvExport', 'Print'],
+		        toolbar: ['ExcelExport'],
 		        columns: columnas,
 		        pageSettings: { pageCount: 5, pageSize: 10, pageSizes: ['10', '50', 'All'] },
 		        aggregates: [{
