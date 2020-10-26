@@ -26,6 +26,20 @@
     <script src="{{ asset('/') }}js/syncfusion/jquery.globalize.js"></script>
 	<script src="{{ asset('/') }}js/syncfusion/lang/globalize.culture.en-US.min.js"></script>
 
+	<script id="template_costo" type="text/x-template">
+        ${if(costo==-1)}
+        	-
+        ${else}
+        	${costo}
+        ${/if}
+    </script>
+	<script id="template_Flete" type="text/x-template">
+        ${if(Flete==-1)}
+        	<div style="text-align:center;width:100%">-</div>
+        ${else}
+        	${Flete}
+        ${/if}
+    </script>
     <style>
         .e-grid .e-headercell {
             height:70px !important;
@@ -84,14 +98,16 @@
 	            { field: 'saldo', headerText: 'Saldo', width: 100, textAlign: 'Right', format: "N" },	
 	            { field: 'unidad', headerText: 'Unidad', width: 100, textAlign: 'Center' },
 	            { field: 'formato', headerText: 'Formato', width: 100, textAlign: 'Center' },
-	            { field: 'costo', headerText: 'Costo $', width: 100,  textAlign: 'Right', format: "N" },	
-	            { field: 'otrosCostos', headerText: 'Otros Costos $', width: 100, textAlign: 'Right', format: "N" },	
-	            { field: 'Flete', headerText: 'Flete $', width: 100, textAlign: 'Right', format: "N" },	
-	            { field: 'precioVentaUnitarioActual', headerText: 'Precio Venta $', width: 100, textAlign: 'Right', format: "N" },
-	            { field: 'totalPrecioVenta', headerText: 'Total Precio Venta $', width: 100, textAlign: 'Right', format: 'N' },	
-	            { field: 'margenBrutoUnitarioActual', headerText: 'Precio Bruto $', width: 100, textAlign: 'Right', format: "N" },
-	            { field: 'facturado', headerText: 'Facturado $', width: 100, textAlign: 'Right', format: "N" },	
-	            { field: 'margenBrutoTotal', headerText: 'Margen Bruto $', width: 100, textAlign: 'Right', format: "N" }
+	            { field: 'costo', headerText: 'Costo Unit. Actual($)', width: 100,  textAlign: 'Center', format: "N", template: '#template_costo' },	
+	            { field: 'otrosCostos', headerText: 'Otros Costos($)', width: 100, textAlign: 'Right', format: "N" },	
+	            { field: 'Flete', headerText: 'Flete Unit. Actual($)', width: 100, textAlign: 'Right', format: "N", template: '#template_Flete' },	
+	            { field: 'precioVentaUnitarioActual', headerText: 'Precio Venta Unit. Actual($)', width: 100, textAlign: 'Right', format: "N" },
+	            //{ field: 'totalPrecioVenta', headerText: 'Total Precio Venta $', width: 100, textAlign: 'Right', format: 'N' },	
+	            { field: 'margenBrutoUnitarioActual', headerText: 'Margen Bruto Unit. Actual ($)', width: 100, textAlign: 'Right', format: "N" },
+	            { field: 'margenBrutoUnitarioActualPorcentaje', headerText: 'Margen Bruto Unit.Actual(%)', width: 100, textAlign: 'Right', format: "N" },
+	            { field: 'facturado', headerText: 'Total Facturado a la fecha($)', width: 100, textAlign: 'Right', format: "N" },	
+	            { field: 'margenBrutoTotal', headerText: 'Margen Bruto Total a la fecha($)', width: 100, textAlign: 'Right', format: "N" },
+	            { field: 'margenBrutoTotalPorcentaje', headerText: 'Margen Bruto Total a la fecha(%)', width: 100, textAlign: 'Right', format: "N" } 
 	        ];
 
 
