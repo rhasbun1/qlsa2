@@ -113,12 +113,7 @@
                                     @endif
                                 @endif    
                                     <td data-pedido='{{ $item->idPedido }}' style="width:20px;">
-                                        <!--
-                                        <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/1/" class="btn btn-xs btn-success" title="Ver Pedido">{{ $item->idPedido }}</a>
-                                        -->
-
                                         <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/1-2/" class="btn btn-xs btn-success" title="Ver Pedido">{{ $item->idPedido }}</a>
-
                                         @if( Session::get('grupoUsuario')=='C' and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='11') and $item->idEstadoPedido==1 )
                                             <button class="btn btn-xs btn-primary" title="Aprobar Pedido" onclick="aprobarPedido({{ $item->idPedido }}, this)"><span class="glyphicon glyphicon-ok"></span></button>
                                         @endif                                        
@@ -167,7 +162,7 @@
                                     <td style="width: 70px">{{ $item->nombrePlanta }}</td>
                                     <td style="width: 100px">{{ $item->fechaCarga }} {{ $item->horaCarga }} </td>
                                     <td style="width: 150px">{{ $item->apellidoConductor }} / {{ $item->empresaTransporte }}</td>
-                                    <td style="width: 50px;text-align: right;">{{ $item->fechahora_creacion }}</td>
+                                <td style="width: 50px;text-align: right;">{{ $item->fecha }} {{ $item->hora}}</td>
                                     <td style="width: 80px;text-align: center;">{{ $item->numeroAuxiliar }}</td>
                                 </tr>
                             @endforeach

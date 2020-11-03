@@ -290,12 +290,17 @@ class NotaventaController extends Controller
             $nv->idCondiciondePago = $datos->input('idCondiciondePago');
             $nv->codigoClienteSoftland = $datos->input('codigoSoftland');
             $nv->idUsuarioEncargado = $datos->input('idUsuarioEncargado');
-            $nv->save();
+            $nv->save(); 
+            $num = 0;
+            $idNotaventa = $datos->input('idNotaVenta');
+            $idUsuario = $datos->input('idUsuarioEncargado');
 
             $detalle=$datos->input('detalle');
             $detalle= json_decode($detalle);
             foreach ( $detalle as $item){
-                DB::Select("call spUpdValoresNotaVenta(?,?)", array( $item->idNotaVentaDetalle, $item->formula ) );
+           
+            DB::Select("call spUpdValoresNotaVenta(?,?,?,?,?)", array( $item->idNotaVentaDetalle, $item->formula,$idNotaventa,$idUsuario,$num) );
+                $num = 2;
             }
 
             return response()->json([
@@ -391,6 +396,12 @@ class NotaventaController extends Controller
 
             return $notas;
         }
+    }
+
+    public function listarNotasdeVentaModal(){
+        DB::Select('call spPasarNVvencidaHistorico()');
+		$listaNotasdeVenta=DB::Select('call spGetNotasdeVentas(?)', array(0) );       	
+        return $listaNotasdeVenta;
     }
 
 }
