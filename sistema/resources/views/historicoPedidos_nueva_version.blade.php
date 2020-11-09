@@ -6,7 +6,7 @@
     <div class="panel panel-default table-responsive">
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         <div class="panel-heading">
-            <b>Histórico de Pedidos Despachados</b>
+            <b>Pedidos Despachados</b>
         </div>
         <div class="panel-body" id="panelBody">
             <div> 
@@ -623,7 +623,7 @@
             if (mm < 10) {mm = '0' + mm; }
             $("#min").val(dd + '/' + mm + '/' + yyyy);
 
-           var tituloArchivo='Histórico de Pedidos Despachados'
+           var tituloArchivo='Pedidos Despachados'
 
             $('.date').datepicker({
                 todayHighlight: true,

@@ -352,27 +352,6 @@
             return;
         }
 
-
-        if(document.getElementById('idObra').value==0){
-            swal(
-                {
-                    title: 'Debe seleccionar una obra o cambiar a Retira Cliente.',
-                    text: '',
-                    type: 'warning',
-                    showCancelButton: false,
-                    confirmButtonText: 'OK',
-                    cancelButtonText: '',
-                    closeOnConfirm: true,
-                    closeOnCancel: false
-                },
-                function(isConfirm)
-                {
-                    return;
-                }
-            )
-            return;              
-        }
-
         if( document.getElementById('idUsuarioEncargado').selectedIndex<1 ){
             swal(
                 {
@@ -509,7 +488,7 @@
         var formData = new FormData( $("#datos")[0] );
 
         formData.append("cot_numero", $("#txtNumeroCotizacion").val());
-        formData.append("cot_año", $("#txtAno").val());
+        formData.append("cot_ano", $("#txtAno").val());
         formData.append("idObra", $("#idObra").val());
         formData.append("observaciones", $("#txtObservaciones").val());
         formData.append("contacto", $("#txtNombreContacto").val() );

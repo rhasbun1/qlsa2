@@ -148,6 +148,9 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('editarPedido/{idPedido}/', 'PedidoController@editarPedido');
 	Route::get('verResumenGranel', 'PedidoController@verResumenGranel');
 	Route::post('resumenGranel', 'PedidoController@resumenGranel');
+
+
+	Route::get('listarNotasVentaModal','NotaventaController@listarNotasdeVentaModal');
 	
 	Route::get('correoAutorizacionPedidoUrgente/{idPedido}/{idUsuario}/', 'PedidoController@correoAutorizacionPedidoUrgente');
 

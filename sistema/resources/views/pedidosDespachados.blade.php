@@ -27,7 +27,12 @@
 	</head>
 	<body>
 		<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
-		<div style="padding: 10px">
+        <div style="padding: 10px">
+            <div>
+                <h2>
+                    Pedidos despachados (granel)
+                </h2>
+            </div>
 			<div class="row" style="padding-top: 15px; padding-bottom: 15px">
                 @if( Session::get('idPlanta')=='0')
     				<div class="col-md-3" style="display: inline">
@@ -345,7 +350,7 @@
                     }
                 }                
             ],                  
-            "order": [[ 1, "asc" ]],                        
+            "order": [[ 9, "asc" ]],                        
             language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
 
         });

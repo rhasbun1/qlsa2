@@ -6,8 +6,38 @@
     <div class="panel panel-default table-responsive">
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         <div class="panel-heading">
-            <b>Fletes, Distancias y Tiempos {{ $subtitulo }}</b>
+            <b> Costo Flete y Tiempo de Traslado {{ $subtitulo }}</b>
         </div>
+        <br><br>
+        <div style="padding-bottom: 15px">
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    Filtro&nbsppor&nbspFecha&nbspCreación
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group date" id="divFechaMin">
+                        <input type="text" class="form-control input-sm" id="min" onchange="ordenPorFecha()">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group date" id="divFechaMax">
+                        <input type="text" class="form-control input-sm" id="max">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>                    
+            
+        </div>
+
+        
+
         <div class="padding-md clearfix" id="cuadro1">
 	        <div style="width: 80%">        
 	            <table id="tablaNotas" class="table table-hover table-condensed table-responsive" style="width: 100%">
@@ -91,6 +121,36 @@
     <script src="js/syncfusion/ej.web.all.min.js"> </script>
     <script src="{{ asset('/') }}js/syncfusion/lang/ej.culture.de-DE.min.js"></script>
 
+    <script>
+        var min = $('#min').val().trim();
+        var max = $('#max').val().trim();
+        $(document).ready(function() {
+            
+
+            
+            
+            $('.date').datepicker({
+                todayHighlight: true,
+                format: "dd/mm/yyyy",
+                weekStart: 1,
+                language: "es",
+                autoclose: true
+
+               
+            })
+       
+            
+
+        } );
+      
+           
+        
+        
+    </script>
+    <script>
+
+    
+    </script>
 	<script>
         $('#mdProcesando').on('shown.bs.modal', function (e) {
           guardarCambios();
@@ -126,6 +186,7 @@
             
             } );
 
+            
             var tabla=$('#tablaNotas').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,
@@ -263,6 +324,43 @@
             })	
 
 		}
+
+function ordenPorFecha(){
+    var min = document.getElementById('min').value;
+    var max = document.getElementById('max').value;
+    n =  new Date();
+    //Año
+    y = n.getFullYear();
+    //Mes
+    m = n.getMonth() + 1;
+    //Día
+    d = n.getDate();
+    dat = (d + "/" + m + "/" + y);
+  
+    var elem = min.split('/');
+    
+    dia = elem[0];
+    mes = elem[1];
+    anio = elem[2];
+   
+    if(dia > d && mes >= m && anio >= y){
+        $.ajax({
+            url: urlApp + "obtenerPedidosDespachados",
+            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+            type: 'POST',
+            dataType: 'json',
+            data: {
+            	idPlanta: codPlanta,
+            	fechaInicio: fechaAtexto($("#fechaInicio").val()),
+            	fechaTermino: fechaAtexto($("#fechaTermino").val())
+            },
+            success:function(dato){
+      
+    }
+    
+   
+
+   };
 
 	</script>
 

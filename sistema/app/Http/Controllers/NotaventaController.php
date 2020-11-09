@@ -45,7 +45,7 @@ class NotaventaController extends Controller
             }
 
             $idnotaventa=DB::Select('call spInsNotaVenta(?,?,?,?,?,?,?,?,?,?,?,?,?,?)', array($datos->input('cot_numero'),
-                            $datos->input('cot_año'),
+                            $datos->input('cot_ano'),
                             $datos->input('idObra'),
                             $datos->input('observaciones'),
                             $datos->input('contacto'),
@@ -228,7 +228,7 @@ class NotaventaController extends Controller
 
     public function datosNotaVenta($id){
      //   return DB::table('cotizaciones')->join('empresas','empresas.emp_codigo', '=', 'cotizaciones.emp_codigo')->
-     //   select('cotizaciones.cot_fecha_creacion', 'cotizaciones.cot_obra', 'empresas.emp_codigo',  'empresas.emp_razon_social', 'cotizaciones.cot_año')->where('cotizaciones.cot_numero', //$id)->get();        
+     //   select('cotizaciones.cot_fecha_creacion', 'cotizaciones.cot_obra', 'empresas.emp_codigo',  'empresas.emp_razon_social', 'cotizaciones.cot_ano')->where('cotizaciones.cot_numero', //$id)->get();        
 
      return DB::Select('call spGetNotaVenta(?)', array($id));   
     }
@@ -300,7 +300,7 @@ class NotaventaController extends Controller
             foreach ( $detalle as $item){
            
             DB::Select("call spUpdValoresNotaVenta(?,?,?,?,?)", array( $item->idNotaVentaDetalle, $item->formula,$idNotaventa,$idUsuario,$num) );
-                $num = 2;
+                $num = 2; 
             }
 
             return response()->json([
@@ -332,7 +332,7 @@ class NotaventaController extends Controller
 
 
     public function notaVentaVigenteCargos(){
-        $cargos=DB::Select('call spGetNotaVentaCostos(?)', array(0) );
+        $cargos=DB::Select('call spGetNotaVentaCostos(?,?,?)', array(0,0,0));
         return view('notadeventaCargos')->with('cargos', $cargos)->with('subtitulo', '(Notas de Venta Vigentes)');
     }     
 
