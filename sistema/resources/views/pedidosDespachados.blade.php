@@ -88,7 +88,7 @@
     function resumenGeneral(){
 
         var codPlanta={{Session::get('idPlanta')}};
-
+        
         if(codPlanta==0){
             codPlanta=$("#idPlanta").val();
         }
@@ -97,13 +97,14 @@
             url: urlApp + "obtenerPedidosDespachados",
             headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
             type: 'POST',
-            dataType: 'json',
+            dataType: 'json',    
             data: {
             	idPlanta: codPlanta,
             	fechaInicio: fechaAtexto($("#fechaInicio").val()),
             	fechaTermino: fechaAtexto($("#fechaTermino").val())
             },
             success:function(dato){
+                
             	var tabla=$("#tablaPedidos").DataTable();
             	tabla.clear().draw();
             	for(var x=0;x<dato.length;x++){

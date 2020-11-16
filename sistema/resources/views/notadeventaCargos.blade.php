@@ -6,32 +6,19 @@
     <div class="panel panel-default table-responsive">
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         <div class="panel-heading">
-            <b> Costo Flete y Tiempo de Traslado {{ $subtitulo }}</b>
+            <b id="b"> Costo Flete y Tiempo de Traslado {{ $subtitulo }}</b>
         </div>
         <br><br>
         <div style="padding-bottom: 15px">
             <div class="row">
                 <div class="col-md-2">
                 </div>
-                <div class="col-md-2">
-                    Filtro&nbsppor&nbspFecha&nbspCreación
-                </div>
-                <div class="col-md-2">
-                    <div class="input-group date" id="divFechaMin">
-                        <input type="text" class="form-control input-sm" id="min" onchange="ordenPorFecha()">
-                        <div class="input-group-addon">
-                            <span class="glyphicon glyphicon-th"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="input-group date" id="divFechaMax">
-                        <input type="text" class="form-control input-sm" id="max">
-                        <div class="input-group-addon">
-                            <span class="glyphicon glyphicon-th"></span>
-                        </div>
-                    </div>
-                </div>
+               <div class="col-md-9" style="display: inline">
+                Filtro&nbsppor&nbspFecha&nbspCreación
+					<input id="fechaInicio" class="form-control input-sm date" style="display: inline; width: 140px">&nbsp&nbsp
+					<input id="fechaTermino" class="form-control input-sm date" style="display: inline; width: 140px" data-date-end-date="0d">
+                    <button class="btn btn-success btn-sm" style="display: inline;" onclick="resumenGeneral()">Buscar</button>
+				</div>
             </div>                    
             
         </div>
@@ -52,36 +39,7 @@
                         <th style="width:80px">Tiempo Traslado (horas)</th>
 	                </thead>
 	                <tbody>
-	                    @foreach($cargos as $item)
-	                        <tr>
-	                            <td>{{ $item->idNotaVenta }}</td>
-	                            <td>{{ $item->nombreCliente}}</td>
-                                <td>{{ $item->nombreObra}}</td>
-                                <td data-idplanta="{{ $item->idPlanta}}">{{ $item->nombrePlanta}}</td>
-                                <td data-ucodigo="{{ $item->u_codigo}}">{{ $item->nombreUnidad}}</td>
-                                @if(Session::get('idPerfil')=='5' or Session::get('idPerfil')=='10' or Session::get('idPerfil')=='18')
-                                <td>
-                                    <input class="form-control input-sm" value="{{ $item->flete}}" maxlength="7" onkeypress='return isIntegerKey(event)'>
-                                </td>
-                                <td>
-                                    <input class="form-control input-sm" value="{{ $item->distancia}}" maxlength="5" onkeypress='return isIntegerKey(event)'>
-                                </td>
-                                <td>
-                                    <input class="form-control input-sm" value="{{ $item->tiempoTraslado}}" maxlength="3" onkeypress='return isIntegerKey(event)'>
-                                </td>
-                                @else
-                                <td style="text-align: right;">
-                                    {{number_format( $item->flete, 0, ',', '.' )}} 
-                                </td>
-                                <td style="text-align: right;">
-                                    {{number_format( $item->distancia, 0, ',', '.' )}}
-                                </td>
-                                <td style="text-align: right;">
-                                    {{number_format( $item->tiempoTraslado, 0, ',', '.' )}}
-                                </td>                                
-                                @endif
-	                        </tr>
-	                    @endforeach
+	                   
 	                </tbody>
 	            </table>
 	        </div>
@@ -113,39 +71,84 @@
 
 @section('javascript')
     <!-- Datepicker -->
-    <script src="{{ asset('/') }}js/bootstrap-datepicker.min.js"></script>  
+    <script src="{{ asset('/') }}js/bootstrap-datepicker.min.js"></script>
+<script src="{{ asset('/') }}locales/bootstrap-datepicker.es.min.js"></script>  
+<!-- Bootstrap -->
+<script src="{{ asset('/') }}bootstrap/js/bootstrap.js"></script>
+
+<script src="{{ asset('/') }}js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('/') }}js/buttons.html5.min.js"></script>
+
 
     <!-- Timepicker -->
-    <script src="{{ asset('/') }}js/bootstrap-timepicker.min.js"></script>  
+    <script src="{{ asset('/') }}js/bootstrap-timepicker.min.js"></script> 
+    <script src="https://cdn.datatables.net/fixedcolumns/3.2.5/js/dataTables.fixedColumns.min.js"></script> 
     <script src="{{ asset('/') }}js/app/funciones.js"></script>
     <script src="js/syncfusion/ej.web.all.min.js"> </script>
     <script src="{{ asset('/') }}js/syncfusion/lang/ej.culture.de-DE.min.js"></script>
 
     <script>
-        var min = $('#min').val().trim();
-        var max = $('#max').val().trim();
-        $(document).ready(function() {
-            
-
-            
-            
-            $('.date').datepicker({
-                todayHighlight: true,
-                format: "dd/mm/yyyy",
-                weekStart: 1,
-                language: "es",
-                autoclose: true
-
-               
-            })
        
-            
+       function resumenGeneral(){
+     
+           var fechaInicio1 = fechaAtexto($("#fechaInicio").val());
+           var fechaTermino1 =  fechaAtexto($("#fechaTermino").val());
+           if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Vigentes)"){
+               var urll = "notaVentaVigenteCargos1";
+               alert("0");
+           }else if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
 
-        } );
-      
+               var urll ="notaVentaCerradaCargos1";
+              
+           }else if($("#b").text()== " Costo Flete y Tiempo de Traslado (Asignaciones Pendientes)"){
+              var urll= "notaVentaCargosUrgente1"
+           }
+        
            
+$.ajax({
+    url: urlApp + urll,
+    headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+    type: 'POST',
+    dataType: 'json',
+    data: {
+        fechaInicio:fechaInicio1,
+        fechaTermino: fechaTermino1
+    },
+    success:function(dato){
+       
+        var tabla=$("#tablaNotas").DataTable();
+        tabla.clear().draw();
         
-        
+        for(var x=0;x<dato.length;x++){
+            
+            
+            var rowNode= tabla.row.add([
+                                        dato[x].idNotaVenta ,
+                                        dato[x].nombreCliente,
+                                        dato[x].nombreObra,
+                                        dato[x].nombrePlanta,
+                                        dato[x].nombreUnidad,
+                                        dato[x].flete,
+                                        dato[x].distancia,
+                                        dato[x].tiempoTraslado
+                                        ]);
+
+            var fila=tabla.row( rowNode ).index();
+            var celdas=tabla.row( rowNode).data();
+   
+            var celda=tabla.cell(fila,0).node();
+            $( celda ).css( 'text-align', 'right' ).css( 'width', '60px');
+
+            var celda=tabla.cell(fila,5).node();
+            $( celda ).css( 'text-align', 'right' ).css( 'width', '60px');
+
+        }
+      tabla.draw();
+    }
+})
+       }
+       
+
     </script>
     <script>
 
@@ -324,6 +327,7 @@
             })	
 
 		}
+        
 
 function ordenPorFecha(){
     var min = document.getElementById('min').value;
@@ -343,25 +347,56 @@ function ordenPorFecha(){
     mes = elem[1];
     anio = elem[2];
    
-    if(dia > d && mes >= m && anio >= y){
-        $.ajax({
-            url: urlApp + "obtenerPedidosDespachados",
-            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
-            type: 'POST',
-            dataType: 'json',
-            data: {
-            	idPlanta: codPlanta,
-            	fechaInicio: fechaAtexto($("#fechaInicio").val()),
-            	fechaTermino: fechaAtexto($("#fechaTermino").val())
-            },
-            success:function(dato){
-      
-    }
+   
     
    
 
    };
+   
 
-	</script>
+    </script>
+    <script>
+        $(document).ready(function() {
+
+var hoy = new Date();
+hoy.setDate(hoy.getDate() - 3);
+
+var dd = hoy.getDate();
+var mm = hoy.getMonth()+1;
+var yyyy = hoy.getFullYear();
+
+if (dd < 10) {dd = '0' + dd; }
+if (mm < 10) {mm = '0' + mm; }
+if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
+    $("#fechaInicio").val(dd + '/' + mm + '/' + (yyyy-1));
+}else{
+    $("#fechaInicio").val(dd + '/' + mm + '/' + (yyyy-5));
+}
+   
+
+
+
+
+
+var hoy = new Date();
+var dd = hoy.getDate();
+var mm = hoy.getMonth()+1;
+var yyyy = hoy.getFullYear();
+if (dd < 10) {dd = '0' + dd; }
+if (mm < 10) {mm = '0' + mm; }
+
+$("#fechaTermino").val(dd + '/' + mm + '/' + yyyy);
+
+$('.date').datepicker({
+    todayHighlight: true,
+    format: "dd/mm/yyyy",
+    weekStart: 1,
+    language: "es",
+    autoclose: true
+})
+resumenGeneral();      
+     }); 
+    
+    </script>
 
 @endsection        	

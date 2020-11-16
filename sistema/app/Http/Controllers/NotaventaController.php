@@ -11,6 +11,7 @@ use File;
 use PDF;
 use App\CondicionPago;
 use App\Notaventa;
+use PhpParser\Node\Stmt\Return_;
 
 class NotaventaController extends Controller
 {
@@ -231,12 +232,12 @@ class NotaventaController extends Controller
      //   select('cotizaciones.cot_fecha_creacion', 'cotizaciones.cot_obra', 'empresas.emp_codigo',  'empresas.emp_razon_social', 'cotizaciones.cot_ano')->where('cotizaciones.cot_numero', //$id)->get();        
 
      return DB::Select('call spGetNotaVenta(?)', array($id));   
-    }
+    } 
 
     public function vernotaventa($idNotaPedido, $accion){
         //MATIAS
         $id = explode('-', $idNotaPedido)[0];
-        $numPedido = explode('-', $idNotaPedido)[1];
+        $numPedido = explode('-',$idNotaPedido)[1];
         $notaventa=DB::Select('call spGetNotaVenta(?)', array($id));
         $notaventadetalle=DB::Select('call spGetNotaVentaDetalle(?)', array($id) );
 
@@ -331,21 +332,38 @@ class NotaventaController extends Controller
     }
 
 
-    public function notaVentaVigenteCargos(){
-        $cargos=DB::Select('call spGetNotaVentaCostos(?,?,?)', array(0,0,0));
-        return view('notadeventaCargos')->with('cargos', $cargos)->with('subtitulo', '(Notas de Venta Vigentes)');
-    }     
+    public function notaVentaVigenteCargos(Request $datos){
+        
+        
+        return view('notadeventaCargos')->with('subtitulo', '(Notas de Venta Vigentes)');
+    }  
+    public function    notaVentaVigenteCargos1(Request $datos){
+        if($datos->ajax()){  
+        $cargos=DB::Select('call spGetNotaVentaCostos(?,?,?)', array(0,$datos->input('fechaInicio'),$datos->input('fechaTermino')));
+        return $cargos;
+        }
+    }
 
-    public function notaVentaCerradaCargos(){
-        $cargos=DB::Select('call spGetNotaVentaCostos(?)', array(1) );
-        return view('notadeventaCargos')->with('cargos', $cargos)->with('subtitulo', '(Notas de Venta Cerradas)');
+    public function notaVentaCerradaCargos(Request $datos){
+        return view('notadeventaCargos')->with('subtitulo', '(Notas de Venta Cerradas)');
     } 
+    public function notaVentaCerradaCargos1(Request $datos){
+        if($datos->ajax()){ 
+        $cargos=DB::Select('call spGetNotaVentaCostos(?,?,?)', array(1,$datos->input('fechaInicio'),$datos->input('fechaTermino')));
+        return  $cargos;
+    } 
+}
 
     public function notaVentaCargosUrgente(){
+       
+        return view('notadeventaCargos')->with('subtitulo', '(Asignaciones Pendientes)');        
+    } 
+    public function notaVentaCargosUrgente1(Request $datos){
+        if($datos->ajax()){ 
         $cargos=DB::Select('call spGetNotaVentasCostosUrgentes()');
-        return view('notadeventaCargos')->with('cargos', $cargos)->with('subtitulo', '(Asignaciones Pendientes)');        
+        return $cargos;        
     }   
-
+    }
     public function actualizarNotaVentaCargos(Request $datos){
         if($datos->ajax()){
             $detalle=$datos->input('detalle');
