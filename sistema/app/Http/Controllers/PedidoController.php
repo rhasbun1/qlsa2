@@ -555,7 +555,7 @@ class PedidoController extends Controller
         if($datos->ajax()){    
             $resumen= DB::Select('call spGetPedidosDespachados(?,?,?,?,?)', array( $datos->input('idPlanta'), $datos->input('fechaInicio'), $datos->input('fechaTermino'), Session::get('idUsuario'), Session::get('idPerfil')  ));
             return $resumen;
-        }    
+        }
     }
 
     public function actualizarNumeroAuxiliar(Request $datos){

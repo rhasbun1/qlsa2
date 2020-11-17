@@ -485,6 +485,7 @@
                             window.open(urlApp + 'verResumenGranel', "QL Now")                    
                         }
                     },
+                    
                     {
                         text: 'Pedidos despachados (Granel)',
                         action: function ( e, dt, node, config ) {
