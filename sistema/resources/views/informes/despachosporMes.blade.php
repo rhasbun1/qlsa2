@@ -9,12 +9,12 @@
         </div>
         <div class="padding-md clearfix">
         	<div class="row">
-        		<div class="col-md-4" style="display: inline-block;">
+        		<div class="col-md-4" style="display: inline-block;" id="periodoInicio">
         			Mes/Año Inicio&nbsp&nbsp&nbsp
         			<select id="mesInicio" class="form-control input-sm" style="width: 120px;display: inline;"></select>
         			<input id="anoInicio" maxlength="4" class="form-control input-sm" style="width: 60px;display: inline;" onkeypress='return isNumberKey(event)'>
         		</div>
-        		<div class="col-md-4" style="display: inline-block;">
+        		<div class="col-md-4" style="display: inline-block;" id="periodoTermino">
         			Mes/Año Término&nbsp&nbsp&nbsp
         			<select id="mesTermino" class="form-control input-sm" style="width: 120px;display: inline;"></select>
         			<input id="anoTermino" maxlength="4" class="form-control input-sm" style="width: 60px;display: inline;" onkeypress='return isNumberKey(event)'>
@@ -36,7 +36,7 @@
 	                </select>        			
         		</div>
         		<div class="col-md-1">
-					Unidad
+					Formato
         		</div>
         		<div class="col-md-2">
         			<select id="tipo" class="form-control input-sm">
@@ -119,10 +119,13 @@
 			if( checkTodo.checked ){
 				anoInicio.readOnly=true;
 				anoTermino.readOnly=true;
+				periodoInicio.style.display="none";
+				periodoTermino.style.display="none";
 			}else{
 				anoInicio.readOnly=false;
 				anoTermino.readOnly=false;
-
+				periodoInicio.style.display="inline-block";
+				periodoTermino.style.display="inline-block";
 			}
 		}
 
