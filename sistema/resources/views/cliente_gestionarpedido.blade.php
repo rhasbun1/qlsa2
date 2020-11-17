@@ -35,7 +35,7 @@
                         Cotización
                     </div>
                     <div class="col-sm-3 col-md-3 col-lg-2">
-                        <input class="form-control input-sm" id="txtAno" readonly value="{{ $NotadeVenta[0]->cot_numero }} / {{ $NotadeVenta[0]->cot_año}}">
+                        <input class="form-control input-sm" id="txtAno" readonly value="{{ $NotadeVenta[0]->cot_numero }} / {{ $NotadeVenta[0]->cot_ano}}">
                     </div>
                 </div>
                 <div class="row" style="padding-top: 10px">

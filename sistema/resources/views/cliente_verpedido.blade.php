@@ -27,11 +27,7 @@
                         N.Venta Nº
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-2">
-                        @if ($accion == 4)
-                            <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-{{ $pedido[0]->idPedido }}/2/" class="btn btn-xs btn-info disabled">{{ $pedido[0]->idNotaVenta }}</a>
-                        @else
-                            <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-{{ $pedido[0]->idPedido }}/2/" class="btn btn-xs btn-info">{{ $pedido[0]->idNotaVenta }}</a>
-                        @endif
+                        <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}/1/" class="btn btn-xs btn-info">{{ $pedido[0]->idNotaVenta }}</a>
                     </div>                          			
         		</div>
         		<div class="row" style="padding-top: 5px">
@@ -225,12 +221,28 @@
         </div> 
 
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
-            @if ($accion == 7)
-                <a href="{{ asset('/') }}clientePedidos/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>  
-            @else
-                <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
-            @endif                             
-        </div>        
+            <a href="{{ asset('/') }}clientePedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                    
+        </div>  
+        <div class="tab-pane active" id="tabLogAcciones" style="padding-top: 5px">
+            <table id="tablaLog" class="table table-hover table-condensed table-responsive" style="width: 850px">
+                <thead>
+                    <th style="width:200px">Fecha/Hora</th>
+                    <th style="width:250px">Usuario</th>
+                    <th style="width:350px">Acción</th>
+                    <th style="width:350px">Motivo</th>
+                </thead>
+                <tbody>
+                    @foreach($log as $item)
+                    <tr>
+                        <td style="width:200px"> {{ $item->fechaHora }} </td>
+                        <td style="width:250px"> {{ $item->nombreUsuario }} </td>
+                        <td style="width:350px"> {{ $item->accion }} </td>
+                        <td style="width:350px"> {{ $item->motivo }} </td>
+                    </tr>
+                    @endforeach  
+                </tbody>
+            </table>
+        </div>      
     </div>
 </div>
 

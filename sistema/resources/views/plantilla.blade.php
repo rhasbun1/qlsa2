@@ -233,7 +233,7 @@
 								    @if ( Session::get('idPerfil')!='6' and Session::get('idPerfil')!='9' )
 									<li><a href="{{ asset('/') }}historicoNotasdeVenta"><span class="submenu-label">Histórico de Notas de Venta</span></a></li>
 									@endif
-									<li><a href="{{ asset('/') }}historicoPedidos"><span class="submenu-label">Histórico de Pedidos Despachados</span></a></li>
+									<li><a href="{{ asset('/') }}historicoPedidos"><span class="submenu-label">Pedidos Despachados</span></a></li>
 									@if ( Session::get('idPerfil')=='2' or
 										Session::get('idPerfil')=='3' or
 										Session::get('idPerfil')=='4' or 
@@ -322,7 +322,7 @@
 										@if ( Session::get('idPerfil')!='11' and Session::get('idPerfil')!='12')										
 										<li class="openable">
 											<a href="#">
-												<span class="submenu-label">Fletes, Distancias y Tiempos</span>
+												<span class="submenu-label"> Costo Flete y Tiempo de Traslado</span>
 											</a>
 											<ul class="submenu third-level">
 												<li><a href="{{ asset('/') }}notaVentaVigenteCargos"><span class="submenu-label">Notas de Venta Vigentes</span></a></li>

@@ -41,8 +41,11 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('existeArchivo', 'NotaventaController@existeArchivo');
 	Route::post('actualizarDatosNV', 'NotaventaController@actualizarDatosNV');
 	Route::get('notaVentaVigenteCargos', 'NotaventaController@notaVentaVigenteCargos');
+	Route::post('notaVentaVigenteCargos1', 'NotaventaController@notaVentaVigenteCargos1');
 	Route::get('notaVentaCerradaCargos', 'NotaventaController@notaVentaCerradaCargos');
+	Route::post('notaVentaCerradaCargos1', 'NotaventaController@notaVentaCerradaCargos1');
 	Route::get('notaVentaCargosUrgente', 'NotaventaController@notaVentaCargosUrgente');
+	Route::post('notaVentaCargosUrgente1', 'NotaventaController@notaVentaCargosUrgente1');
 	Route::post('actualizarNotaVentaCargos', 'NotaventaController@actualizarNotaVentaCargos');
 	Route::post('obtenerHistoricoNotaVentas', 'NotaventaController@obtenerHistoricoNotaVentas');
 
@@ -148,6 +151,9 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('editarPedido/{idPedido}/', 'PedidoController@editarPedido');
 	Route::get('verResumenGranel', 'PedidoController@verResumenGranel');
 	Route::post('resumenGranel', 'PedidoController@resumenGranel');
+
+
+	Route::get('listarNotasVentaModal','NotaventaController@listarNotasdeVentaModal');
 	
 	Route::get('correoAutorizacionPedidoUrgente/{idPedido}/{idUsuario}/', 'PedidoController@correoAutorizacionPedidoUrgente');
 

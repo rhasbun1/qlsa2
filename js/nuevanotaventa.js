@@ -3,7 +3,7 @@
         $.get( appUrl + 'cotizacion/'+$("#txtNumeroCotizacion").val()+'/'+$("#txtAno").val()+'/datosCotizacion/', function (data) {
             $("#txtNombreCliente").val(data[0].emp_nombre);
             $("#txtFechaCotizacion").val(data[0].cot_fecha_creacion);
-            $("#txtAno").val(data[0].cot_año);
+            $("#txtAno").val(data[0].cot_ano);
             $("#txtObra").val(data[0].cot_obra);
             $("#idCliente").val( data[0].emp_codigo );
             $("#txtUsuarioCrea").val( data[0].usuario_creacion );

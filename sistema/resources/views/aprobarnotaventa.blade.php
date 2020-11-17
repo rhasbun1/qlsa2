@@ -25,7 +25,7 @@
                         <tr>
                             <td>{{ $item->idNotaVenta }}</td>
                             <td>{{ $item->cot_numero }}</td>
-                            <td>{{ $item->cot_año }}</td>
+                            <td>{{ $item->cot_ano }}</td>
                             <td>{{ $item->fechahora_creacion }}</td>
                             <td>{{ $item->emp_nombre }}</td>
                             <td>{{ $item->Obra }}</td>

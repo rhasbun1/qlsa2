@@ -34,7 +34,7 @@ class CotizacionController extends Controller
                         ->join('unidades', 'unidades.u_codigo', '=', 'cotizaciones_productos.u_codigo' )
                         ->select('cotizaciones_productos.prod_codigo', 'cotizaciones_productos.cp_glosa_reajuste', 'productos.prod_nombre', 'unidades.u_nombre', 'cotizaciones_productos.cp_cantidad', 'cotizaciones_productos.cp_precio', 'productos.requiere_diseno', 'cotizaciones_productos.cp_costo_flete', 'cotizaciones_productos.cp_varios')
                         ->where('cotizaciones_productos.cot_codigo', $datos->input('prod_codigo') )
-                        ->where('cotizaciones_productos.cot_año', $datos->input('ano') )
+                        ->where('cotizaciones_productos.cot_ano', $datos->input('ano') )
                         ->get();*/
 
             $resultado=DB::Select('call spGetCotizacionDetalle(?,?)', array( $datos->input('idCotizacion'), $datos->input('ano') ) );     

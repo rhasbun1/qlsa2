@@ -38,7 +38,7 @@ body{
     <th class="tg-cpu2"><b>Obra/Planta</b></th>
     <th class="tg-cpu2" >{{$notaventa[0]->Obra}}</th>    
     <th class="tg-cpu2" style="text-align:right"><b>Cotización</b></th>
-    <th class="tg-cpu2">{{$notaventa[0]->cot_numero}} / {{$notaventa[0]->cot_año}}</th>
+    <th class="tg-cpu2">{{$notaventa[0]->cot_numero}} / {{$notaventa[0]->cot_ano}}</th>
   </tr>
   <tr>
     <th class="tg-cpu2"><b>Contacto</b></th>

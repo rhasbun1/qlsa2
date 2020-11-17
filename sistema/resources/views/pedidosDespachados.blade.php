@@ -27,7 +27,12 @@
 	</head>
 	<body>
 		<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
-		<div style="padding: 10px">
+        <div style="padding: 10px">
+            <div>
+                <h2>
+                    Pedidos despachados (granel)
+                </h2>
+            </div>
 			<div class="row" style="padding-top: 15px; padding-bottom: 15px">
                 @if( Session::get('idPlanta')=='0')
     				<div class="col-md-3" style="display: inline">
@@ -83,7 +88,7 @@
     function resumenGeneral(){
 
         var codPlanta={{Session::get('idPlanta')}};
-
+        
         if(codPlanta==0){
             codPlanta=$("#idPlanta").val();
         }
@@ -92,13 +97,14 @@
             url: urlApp + "obtenerPedidosDespachados",
             headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
             type: 'POST',
-            dataType: 'json',
+            dataType: 'json',    
             data: {
             	idPlanta: codPlanta,
             	fechaInicio: fechaAtexto($("#fechaInicio").val()),
             	fechaTermino: fechaAtexto($("#fechaTermino").val())
             },
             success:function(dato){
+                
             	var tabla=$("#tablaPedidos").DataTable();
             	tabla.clear().draw();
             	for(var x=0;x<dato.length;x++){
@@ -345,7 +351,7 @@
                     }
                 }                
             ],                  
-            "order": [[ 1, "asc" ]],                        
+            "order": [[ 9, "asc" ]],                        
             language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
 
         });

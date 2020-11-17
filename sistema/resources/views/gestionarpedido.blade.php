@@ -36,7 +36,7 @@
                         Cotización
                     </div>
                     <div class="col-sm-3 col-md-3 col-lg-2">
-                        <input class="form-control input-sm" id="txtAno" readonly value="{{ $NotadeVenta[0]->cot_numero }} / {{ $NotadeVenta[0]->cot_año}}">
+                        <input class="form-control input-sm" id="txtAno" readonly value="{{ $NotadeVenta[0]->cot_numero }} / {{ $NotadeVenta[0]->cot_ano}}">
                     </div>
                 </div>
                 <div class="row" style="padding-top: 10px">
@@ -278,15 +278,15 @@
                     <div class="row">
                         <div class="col-sm-2 col-md-2">
                             Contacto
-                            <input id="txtNombreContacto" class="form-control input-sm" value="{{ $NotadeVenta[0]->nombreContacto}}" maxlength="50">
+                            <input id="txtNombreContacto" class="form-control input-sm" value="{{ $NotadeVenta[0]->nombreContacto}}">
                         </div> 
                         <div class="col-sm-2 col-md-2">
                             Correo
-                            <input id="txtCorreoContacto" class="form-control input-sm" value="{{ $NotadeVenta[0]->correoContacto}}" maxlength="80">
+                            <input id="txtCorreoContacto" class="form-control input-sm" value="{{ $NotadeVenta[0]->correoContacto}}">
                         </div>
                         <div class="col-sm-2 col-md-2">
                             Telefono/Móvil
-                            <input id="txtTelefono" class="form-control input-sm" maxlength="30" value="{{ $NotadeVenta[0]->telefonoContacto}}">
+                            <input id="txtTelefono" class="form-control input-sm" value="{{ $NotadeVenta[0]->telefonoContacto}}">
                         </div>
                         <div class="col-sm-2 col-md-2">
                             Fecha de Entrega (*)

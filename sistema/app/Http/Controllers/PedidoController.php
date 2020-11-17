@@ -298,10 +298,12 @@ class PedidoController extends Controller
         $pedido=DB::Select('call spGetPedido(?)', array($idPedido) );
         $listaDetallePedido=DB::Select('call spGetPedidoDetalle(?)', array($idPedido) );
         $emptransporte = DB::table('empresastransporte')->select('idEmpresaTransporte','nombre')->get();
+        $log = DB::Select('call spGetPedidoLog(?)', array($idPedido) );
         return view('cliente_verpedido')->with('pedido', $pedido)
                                 ->with('listaDetallePedido', $listaDetallePedido)
                                 ->with('accion', $accion)
-                                ->with('emptransporte', $emptransporte);
+                                ->with('emptransporte', $emptransporte)
+                                ->with('log', $log);
     }
     
     public function programarpedido($idPedido){
@@ -553,7 +555,7 @@ class PedidoController extends Controller
         if($datos->ajax()){    
             $resumen= DB::Select('call spGetPedidosDespachados(?,?,?,?,?)', array( $datos->input('idPlanta'), $datos->input('fechaInicio'), $datos->input('fechaTermino'), Session::get('idUsuario'), Session::get('idPerfil')  ));
             return $resumen;
-        }    
+        }
     }
 
     public function actualizarNumeroAuxiliar(Request $datos){

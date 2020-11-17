@@ -32,7 +32,15 @@
                         </thead>
                         <tbody>
                             @foreach($pedidos as $item)
-                                <tr>
+                                @if ( $item->idEstadoPedido=='0' )
+                                    <tr style="background-color: #A93226; color: #FDFEFE">
+                                @else
+                                    @if ( $item->modificado>0)
+                                        <tr style="background-color: #F5CBA7">
+                                    @else
+                                        <tr>
+                                    @endif
+                                    @endif
                                     <td style="width:150px">
                                         <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/7/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
                                         @if ( $item->cantidadReal>0 )

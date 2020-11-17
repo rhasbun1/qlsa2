@@ -189,7 +189,7 @@
                                             <td style="width:120px">{{ $item->fechaCarga }} {{ $item->horaCarga }} </td>
                                             <td style="width:150px">{{ $item->apellidoConductor }} / {{ $item->empresaTransporte }}</td>
                                         @endif
-                                        <td style="width:100px">{{ $item->fechahora_creacion }}</td>
+                                        <td style="width:100px">{{ $item->fecha }} {{ $item->hora}}</td>
                                     </tr>
                                 @endif
                             @endforeach
