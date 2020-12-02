@@ -2,6 +2,7 @@
 
 @section('contenedorprincipal')
 
+
 <div style="padding: 20px">
     <div class="panel panel-default table-responsive">
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">

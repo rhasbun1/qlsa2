@@ -21,6 +21,7 @@ class ProductoController extends Controller
 {
     //
 
+
     public function listaProductos()
     {
         //
