@@ -28,8 +28,10 @@ class ProductoController extends Controller
         $unidades=Unidad::All();
         $plantas=Planta::All();
         $productos=Producto::All();
+        $planta = DB::select('call spGetPlantas' );
+
         return view('productos')->with('listaProductos', $listaProductos)->with('unidades', $unidades)->with('plantas', $plantas)
-            ->with('productos', $productos);
+            ->with('productos', $productos)->with('planta',$planta);
     }
 
     public function guardarDatosProducto(Request $datos){

@@ -13,6 +13,7 @@
 			<div class="panel-stat3 bg-warning btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadGranelDespachadoEsteMes }} ton</h2>
         <font size=5><strong>Toneladas (granel) despachadas este Mes</strong></font>
+        <br>
 			</div>
 		</a>
 		</span>
@@ -22,7 +23,8 @@
 		<a href="#modalToneladasDespachadasAnual"  data-toggle="modal">
 			<div class="panel-stat3 bg-warning btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadGranelAcumuladoAnual }} ton</h2>
-				<font size=5><strong>Toneladas (granel) despachadas este Año</strong></font>
+        <font size=5><strong>Toneladas (granel) despachadas este Año</strong></font>
+        <br>
 			</div>
 		</a>
 	</div>
@@ -33,7 +35,9 @@
 		<a href="#modalPendienteAprobacion" data-target=""  data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%" >
 				<h2 class="m-top-none">{{ $datos[0]->cantidadNventasPendientesAprobacion }}</h2>
-				<h4>Notas de Venta pendientes de aprobación</h4>
+        <h4>Notas de Venta </h4>
+        <h4>pendientes de aprobación</h4>
+        
 			</div>
 		</a>
 	</div>
@@ -43,6 +47,8 @@
         <div class="panel-stat3 bg-info btn" style="width:100%">
           <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasados }}</h2>
           <h4>Pedidos Atrasados </h4>
+          <br>
+
         </div>
       </a>
     </div>
@@ -51,7 +57,8 @@
       <a href="#modalPedidosSinAprobar" data-toggle="modal">
           <div class="panel-stat3 bg-info btn" style="width:100%">
             <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinAprobar }}</h2>
-            <h4>Pedidos pendientes de Aprobación de Crédito</h4>
+            <p> <h4>Pedidos pendientes de</h4>
+            <h4>Aprobación de Crédito</h4></p>
           </div>
         </a>
       </div>
@@ -68,6 +75,7 @@
 			<div class="panel-stat3 bg-warning btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadGranelDespachadoEsteMes }} ton</h2>
         <font size=5><strong>Toneladas (granel) despachadas este Mes</strong></font>
+        <br>
 			</div>
 		</a>
 		</span>
@@ -77,7 +85,8 @@
 		<a href="#modalToneladasDespachadasAnual"  data-toggle="modal">
 			<div class="panel-stat3 bg-warning btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadGranelAcumuladoAnual }} ton</h2>
-				<font size=5><strong>Toneladas (granel) despachadas este Año</strong></font>
+        <font size=5><strong>Toneladas (granel) despachadas este Año</strong></font>
+        <br>
 			</div>
 		</a>
 	</div>
@@ -87,7 +96,8 @@
 		<a href="{{ asset('/') }}#modalPedidoClientePendientes"  data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosIngresadosClienteSinAprobar }}</h2>
-				<h4>Pedidos Pendientes de Preaprobación (ingresados por clientes)</h4>
+        <p><h4>Pedidos Pendientes de </h4>
+        <h4>Preaprobación (ingresados por clientes)</h4></p>
 			</div>
 		</a>
 
@@ -99,6 +109,7 @@
           <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasados }}</h2>
 
           <h4>Pedidos Atrasados </h4>
+          <br>
         </div>
       </a>
     </div>
@@ -108,7 +119,8 @@
       <a href="#modalPedidosSinAprobar" data-toggle="modal">
           <div class="panel-stat3 bg-info btn" style="width:100%">
             <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinAprobar }}</h2>
-            <h4>Pedidos pendientes de Aprobación de Crédito</h4>
+            <p> <h4>Pedidos pendientes de</h4>
+              <h4>Aprobación de Crédito</h4></p>
           </div>
         </a>
       </div>
@@ -125,7 +137,8 @@
 	<a href="#modalPedidoClienteEnProceso"   data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosProcesoCliente }}</h2>
-				<h4>Pedidos en Proceso</h4>
+        <h4>Pedidos en Proceso</h4>
+        <br>
 			</div>
 		</a>
 	</div>
@@ -133,7 +146,8 @@
 	<a href="{{ asset('/') }}clientePedidos"   data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosDespachadosCliente }}</h2>
-				<h4>Pedidos Despachados</h4>
+        <h4>Pedidos Despachados</h4>
+        <br>
 			</div>
 		</a>
   </div>
@@ -143,7 +157,8 @@
     <a href="#modalPedidosSinAprobar" data-toggle="modal">
         <div class="panel-stat3 bg-info btn" style="width:100%">
           <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinAprobar }}</h2>
-          <h4>Pedidos pendientes de Aprobación de Crédito</h4>
+          <p> <h4>Pedidos pendientes de</h4>
+            <h4>Aprobación de Crédito</h4></p>
         </div>
       </a>
     </div>
@@ -157,7 +172,8 @@
 			<a href="{{ asset('/') }}#modalJefePedidosEnProceso" data-toggle="modal">
 				<div class="panel-stat3 bg-info btn" style="width:100%">
 					<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosEnProceso }} </h2>
-					<h4>Pedidos En Proceso</h4>
+          <h4>Pedidos En Proceso</h4>
+          <br>
 				</div>
 			</a>
 		</div>
@@ -166,7 +182,8 @@
 		<a href="#modalPedidosAGranelSinAsignacionHorario"  data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosGranelSinAsignacion }}</h2>
-				<h4>Pedidos a granel sin Horario de Carga</h4>
+        <h4>Pedidos a granel </h4>
+        <h4>sin Horario de Carga</h4>
 			</div>
 		</a>
 	</div>
@@ -177,7 +194,7 @@
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasados }}</h2>
 
 				<h4>Pedidos Atrasados </h4>
-
+        <br>
 			</div>
 		</a>
 	</div>
@@ -192,7 +209,8 @@
 		<a href="#modalJefeLabCertificados"  data-toggle="modal">	
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinCertificados }}</h2>
-				<h4>Certificados pendientes</h4>
+        <h4>Certificados pendientes</h4>
+        <br>
 			</div>
 		</a>
 	</div>
@@ -201,7 +219,8 @@
 	<a href="#modalJefeLabModificadoHaceUnaHora"  data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosModificadosUltimaHora }}</h2>
-				<h4>Pedidos Modificados durante la última horas</h4>
+        <h4>Pedidos Modificados</h4>
+        <h4> durante la última horas</h4>
 			</div>
 		</a>
 	</div>
@@ -214,8 +233,9 @@
 <div class="col-md-6">
   <a href="#modalPedidosSinAprobar" data-toggle="modal">
       <div class="panel-stat3 bg-warning btn" style="width:100%">
-        <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinAprobar }}</h2>
+        <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinAprobar}}</h2>
         <font size=5><strong>Pedidos pendientes de Aprobación de Crédito</strong></font>
+        <br>
       </div>
     </a>
   </div>
@@ -225,7 +245,8 @@
 		<a href="#modalToneladasDespachadasMensual" data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadGranelDespachadoEsteMes }} ton</h2>
-				<h4>Toneladas (granel) despachadas este Mes</h4>
+        <h4>Toneladas (granel) </h4>
+        <h4>despachadas este Mes</h4>
 			</div>
 		</a>
 	</div>
@@ -234,7 +255,8 @@
 		<a href="#modalToneladasDespachadasAnual" data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadGranelAcumuladoAnual }} ton</h2>
-			<h4>Toneladas (granel) despachadas este Año</h4>
+      <h4>Toneladas (granel) </h4>
+      <h4>despachadas este Año</h4>
 			</div>
 		</a>
   </div>
@@ -246,46 +268,54 @@
 @endif
 
 @if ((Session::get('idPerfil') == '10'))
+<div class="row">
+    <div class="col-md-6">
+        <a href="#NotaVentaSinFlete"  data-toggle="modal">
+          <div class="panel-stat3 bg-warning btn" style="width:100%">
+            <h2 class="m-top-none">{{ $datos[0]->cantidadNotaVentaConFleteSinAsignar }}</h2>
+            <font size=4.9><strong>Asignaciones de Flete pendientes</strong></font>
+            <br>
+          </div>
+        </a>
+    </div>
 
-<div class="col-md-6">
-		<a href="#NotaVentaSinFlete"  data-toggle="modal">
-			<div class="panel-stat3 bg-warning btn" style="width:100%">
-        <h2 class="m-top-none">{{ $datos[0]->cantidadNotaVentaConFleteSinAsignar }}</h2>
-        <font size=4.9><strong>Asignaciones de Flete pendientes</strong></font>
-			</div>
-		</a>
+
+    <div class="col-md-3">
+        <a href="#modalPedidoSinTransporteAsignado" data-toggle="modal">
+          <div class="panel-stat3 bg-info btn" style="width:100%">
+            <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinTransporteAsignado }}</h2>
+            <h4>Pedidos sin Transporte </h4>
+            <h4>asignado</h4>
+          </div>
+        </a>
+    </div>
+
+    <div class="col-md-3">
+
+        <a href="#modalAtrasadoTransporte" data-toggle="modal">
+          <div class="panel-stat3 bg-info btn" style="width:100%">
+            <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasadosTransporte }}</h2>
+
+            <h4>Pedidos Atrasados </h4>
+            <br>
+          </div>
+        </a>
+    </div>
 </div>
 
-
-<div class="col-md-3">
-		<a href="#modalPedidoSinTransporteAsignado" data-toggle="modal">
-			<div class="panel-stat3 bg-info btn" style="width:100%">
-				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinTransporteAsignado }}</h2>
-				<h4>Pedidos sin Transporte asignado</h4>
-			</div>
-		</a>
-</div>
-
-<div class="col-md-3">
-
-		<a href="#modalAtrasadoTransporte" data-toggle="modal">
-			<div class="panel-stat3 bg-info btn" style="width:100%">
-				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasadosTransporte }}</h2>
-
-        <h4>Pedidos Atrasados </h4>
-
-			</div>
-		</a>
-</div>
-<div class="col-md-3">
+{{-- <div class="row">
+  <div class="col-md-3">
 
   <a href="#" data-toggle="modal">
     <div class="panel-stat3 bg-info btn" style="width:100%">
     <h2 class="m-top-none">0</h2>
-      <h4>Devoluciones pendientes de VB° de Jefe de Transporte </h4>
+      <h4>Devoluciones pendientes de</h4>
+      <h4>VB° de Jefe de Transporte</h4>
     </div>
   </a>
 </div>
+</div> --}}
+
 
 
 
@@ -557,7 +587,7 @@
                 <th >Cliente</th>
                 <th >obra/planta</th>
                 <th >Producto</th>
-                <th >Cant.</th>
+                <th >Cantidad</th>
                 
                 <th >Horario de Salida</th>
 
@@ -621,7 +651,7 @@
                 <th >Cliente</th>
                 <th>Obra</th>
                 <th >Producto</th>
-                <th >Cant.</th>
+                <th >Cantidad</th>
                 <th>fecha entrega</th>
                 
                 
@@ -680,7 +710,7 @@
                 <th >Cliente</th>
                 <th>Obra/Planta</th>
                 <th >Producto</th>
-                <th >Cant.</th>
+                <th >Cantidad</th>
                
                     
                 </thead>
@@ -735,7 +765,7 @@
                 <th >Cliente</th>
                 <th> Planta/Obra</th>
                 <th >Producto</th>
-                <th >Cant.</th>
+                <th >Cantidad</th>
                
                     
                 </thead>
@@ -1144,7 +1174,7 @@
                 <th >Cliente</th>
                 <th >Obra/Planta</th>
                 <th >Producto</th>
-                <th >Cant.</th>
+                <th >Cantidad</th>
                 <th >Unidad</th>
                 <th>Fecha Entrega</th>
                 <th >Forma Entrega</th>
@@ -1319,10 +1349,14 @@
     <!-- Timepicker -->
     <script src="{{ asset('/') }}js/bootstrap-timepicker.min.js"></script>  
 
+
+
+   <script src="{{ asset('/') }}js/app/funciones.js"></script>
+
     
 
     <script>
-	console.log("seccion dashboard");
+	
 	
         $(document).ready(function() {
             
@@ -1330,7 +1364,7 @@
             var table=$('#tablaModalClientePendiente').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1338,43 +1372,37 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Pendientes de Preaprobación (ingresados por clientes)',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4,5,6,7 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                  
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Pendientes de Preaprobación (ingresados por clientes)',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4,5,6,7 ]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
-                              
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }        
 			});
 			
 			 // DataTable
 			 var table=$('#tablaNotaVentaPendiente').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1382,25 +1410,17 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Notas de Venta pendientes de Aprobación',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Notas de Venta pendientes de Aprobación',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
@@ -1411,6 +1431,9 @@
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 			
@@ -1418,7 +1441,7 @@
 			 var table=$('#tablaPedidosEnProceso').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1426,35 +1449,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos en Proceso',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4,5,6,7,8,9,10,11,12,13 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos en Proceso',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9,10,11,12,13]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 			
@@ -1462,7 +1480,7 @@
 			 var table=$('#tablaModalToneladasDespachadasMensual').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1470,35 +1488,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Toneladas (granel) despachadas este Mes',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4,5,6,7,8 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Toneladas (granel) despachadas este Mes',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 			
@@ -1506,7 +1519,7 @@
 			 var table=$('#tablaModalToneladasDespachadasAnual').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1514,35 +1527,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Toneladas (granel) despachadas este Año',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Toneladas (granel) despachadas este Año',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 			
@@ -1551,7 +1559,7 @@
 			 var table=$('#tablaModalClienteEnProceso').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1559,35 +1567,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos en Proceso',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                   
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos en Proceso',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -1595,7 +1598,7 @@
 			 var table=$('#tablaModalPedidoClienteEnDespacho').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1603,35 +1606,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Atrasados',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                   
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Atrasados',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -1639,7 +1637,7 @@
 			var table=$('#tablaModalJefePedidosEnProceso').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1647,35 +1645,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos en Proceso',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos en Proceso',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -1683,7 +1676,7 @@
 			var table=$('#tablaModalPedidosAGranelSinAsignacionHorario').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1691,35 +1684,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos a granel sin Horario de Carga',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos a granel sin Horario de Carga',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -1727,7 +1715,7 @@
 			var table=$('#tablaModalJefePedidosAtrasados').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1735,35 +1723,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Atrasados (despacho pendiente)',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                   
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Atrasados (despacho pendiente)',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -1771,7 +1754,7 @@
 				var table=$('#tablaModalJefeLabCertificados').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1779,35 +1762,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Certificados Pendientes',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                   
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Certificados Pendientes',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -1816,43 +1794,38 @@
 				var table=$('#tablaModalJefeLabModificadoHaceUnaHora').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
-				dom: 'Bfrtip',
-				buttons: [
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
+                dom: 'Bfrtip',
+                buttons: [
                                   
                                             
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Modificados durante las últimas X horas',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Modificados durante las últimas X horas',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -1860,7 +1833,7 @@
 				var table=$('#tablaNotaVentaSinFlete').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1868,25 +1841,17 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Asignaciones de Flete pendientes',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                   
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Asignaciones de Flete pendientes',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
@@ -1897,6 +1862,9 @@
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -1904,7 +1872,7 @@
 			var table=$('#tablaModalPedidoSinTransporteAsignado').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1912,35 +1880,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos sin Transporte asignado',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4,5 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                   
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos sin Transporte asignado',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -1948,7 +1911,7 @@
 			var table=$('#tablaModalAtrasadoTransporte').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -1956,35 +1919,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Atrasados (aún sin despacharse)',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Atrasados (aún sin despacharse)',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -1992,7 +1950,7 @@
 			var table=$('#tablaModalClienteSinAprobar').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -2000,25 +1958,17 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos sin aprobar',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                   
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos sin aprobar',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
@@ -2029,6 +1979,9 @@
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 
@@ -2037,7 +1990,7 @@
 			var table=$('#tablaModalPedidosSinAprobar').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
 				dom: 'Bfrtip',
 				buttons: [
                                   
@@ -2045,35 +1998,30 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos pendientes de Aprobación de Crédito',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos pendientes de Aprobación de Crédito',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
                     }
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
                               
 			}); //finData
 

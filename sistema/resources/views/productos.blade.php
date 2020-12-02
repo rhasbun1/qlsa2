@@ -8,6 +8,32 @@
         <div class="panel-heading">
             <b>Productos</b>
         </div>
+        <div style="padding-bottom: 15px">
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+               <div class="col-md-9 row"  style="display: inline">
+                    <div class="col-md-2">
+                        Filtrar por Planta
+                    </div>
+                    <div class="col-md-4">
+                         <select id="licitacion" class="form-control input-sm bloquear">
+                        <option value="0">Seleccione...</option>
+                        @foreach($planta as $item)
+                            <option value="{{ $item->idPlanta}}">{{ $item->idPlanta}} {{ $item->nombre }}</option>
+                        @endforeach 
+                        <option value="6">Todas</option> 
+                    </select> 
+                    </div>
+                    <div class="col-md-4">
+                       <button class="btn btn-success btn-sm" style="display: inline;" onclick="resumenGeneral()">Buscar</button>
+   
+                    </div>
+				</div>
+            </div>                    
+            
+        </div>
+
         <div class="padding-md clearfix">           
             <table id="tabla" class="table table-hover table-condensed table-responsive"  style="width: 100%">
                 <thead>
@@ -236,12 +262,7 @@
             var table=$('#tabla').DataTable();
             var buscar=$("#selProductos option:selected").html().trim()+$("#selUnidades option:selected").html().trim()+$("#selPlantas option:selected").html().trim();
 
-            var buscar2=$("#selProductos option:selected").html().trim()+$("#selUnidades option:selected").html().trim();
-
-            var corrigeDiseno=false;
-
             for (var i = 0; i < table.rows().count(); i++){
-
                 if( (buscar==table.cell(i,1).data().trim()+table.cell(i,2).data().trim()+table.cell(i,3).data().trim()) && fila!=i ){
                     swal(
                         {
@@ -256,55 +277,7 @@
                         });
                     return;
                 }
-                if( (buscar2==table.cell(i,1).data().trim()+table.cell(i,2).data().trim() ) && fila!=i ){
-
-                    if( $("#requiereDiseno option:selected").html().trim()!=table.cell(i,6).data().trim() ){
-                        corrigeDiseno=true;
-                        break;
-                    }
-
-                }
-
             }
-
-            if(corrigeDiseno){
-                swal(
-                        {
-                            title: '[Requiere diseño] ha cambiado su valor, continua?',
-                            text: 'El producto/unidad existe para varias plantas, se actualizará el valor de [Requiere Diseño] a todas.',
-                            type: 'warning',
-                            showCancelButton: false,
-                            confirmButtonText: 'OK',
-                            cancelButtonText: 'NO',
-                            closeOnConfirm: true,
-                            closeOnCancel: false
-                        },
-                        function(isConfirm)
-                        {
-                            if(isConfirm){
-                                
-                                for (var i = 0; i < table.rows().count(); i++){
-                                    if( (buscar2==table.cell(i,1).data().trim()+table.cell(i,2).data().trim() )  ){
-
-                                        table.cell(i,6).data( $("#requiereDiseno option:selected").html().trim() );
-
-                                    }
-
-                                }
-                                //table.draw(); 
-                                enviarDatosProducto(fila);
-
-                            }
-                        }
-                    );
-
-            }else{
-                enviarDatosProducto(fila)
-            }
-
-        }
-
-        function enviarDatosProducto(fila){
             $.ajax({
                 url: urlApp + "guardarDatosProductoListaPrecio",
                 headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
@@ -326,6 +299,7 @@
                 success:function(dato){
                     var table = $('#tabla').DataTable();
                     if(fila.toString()=='-1'){
+                       //ff=table.row.add( [ 
                        table.row.add( [
                                 dato[0].idProductoListaPrecios,
                                 $("#selProductos option:selected").html(),
@@ -352,14 +326,12 @@
                         table.cell(fila,7).data( $("#granel option:selected").html() );
                         table.cell(fila,8).data( $("#solicitaCertificado option:selected").html() ); 
                         table.cell(fila,9).data( $("#tiempoProduccion").val() );
-                        table.cell(fila,10).draw();
-
-                        console.log('paso por aqui');              
+                        table.cell(fila,10).draw();                
                     }
                     cerrarModProducto();
                 }
 
-            })            
+            })
         }
 
         function eliminarProductoPrecio(fila){
@@ -556,6 +528,8 @@
 
         } );
 
+       
+   
     </script>
     
 @endsection

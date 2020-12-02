@@ -95,7 +95,7 @@
            var fechaTermino1 =  fechaAtexto($("#fechaTermino").val());
            if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Vigentes)"){
                var urll = "notaVentaVigenteCargos1";
-               alert("0");
+               
            }else if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
 
                var urll ="notaVentaCerradaCargos1";
@@ -358,19 +358,19 @@ function ordenPorFecha(){
     <script>
         $(document).ready(function() {
 
-var hoy = new Date();
-hoy.setDate(hoy.getDate() - 3);
+            var hoy = new Date();
+            hoy.setDate(hoy.getDate() - 3);
 
-var dd = hoy.getDate();
-var mm = hoy.getMonth()+1;
-var yyyy = hoy.getFullYear();
+            var dd = hoy.getDate();
+            var mm = hoy.getMonth()+1;
+            var yyyy = hoy.getFullYear();
 
-if (dd < 10) {dd = '0' + dd; }
-if (mm < 10) {mm = '0' + mm; }
-if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
-    $("#fechaInicio").val(dd + '/' + mm + '/' + (yyyy-1));
-}else{
-    $("#fechaInicio").val(dd + '/' + mm + '/' + (yyyy-5));
+            if (dd < 10) {dd = '0' + dd; }
+            if (mm < 10) {mm = '0' + mm; }
+            if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
+                $("#fechaInicio").val(dd + '/' + mm + '/' + (yyyy-1));
+            }else{
+                $("#fechaInicio").val(dd + '/' + mm + '/' + (yyyy-5));
 }
    
 
