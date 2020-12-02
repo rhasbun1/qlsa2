@@ -27,15 +27,15 @@
 	<script src="{{ asset('/') }}js/syncfusion/lang/globalize.culture.en-US.min.js"></script>
 
 	<script id="template_costo" type="text/x-template">
-        ${if(costo==-1)}
-        	-
+        ${if(costo==0)}
+        	PENDIENTE
         ${else}
         	${costo}
         ${/if}
     </script>
 	<script id="template_Flete" type="text/x-template">
         ${if(Flete==-1)}
-        	<div style="text-align:center;width:100%">-</div>
+        	<div style="text-align:center;width:100%">PENDIENTE</div>
         ${else}
         	${Flete}
         ${/if}
