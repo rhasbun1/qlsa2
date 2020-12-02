@@ -6,6 +6,7 @@
 
 @if (Session::get('grupoUsuario')!='CL' and (Session::get('idPerfil') == '2' || Session::get('idPerfil') == '4' || Session::get('idPerfil') == '18'))
 
+
 	
 <div class="col-md-6">
 		
