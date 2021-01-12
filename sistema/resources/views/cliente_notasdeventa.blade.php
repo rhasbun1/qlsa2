@@ -138,13 +138,7 @@
                             columns: [ 0, 1, 2, 3, 4 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                   
                     {
                         extend: 'pdfHtml5',
                         title: 'Notas de Venta Vigentes',

@@ -8,7 +8,7 @@
         <div class="panel-heading">
             <div class="panel-tab clearfix">
                 <ul class="tab-bar">
-                    <li class="active"><a href="#tabAprobados" data-toggle="tab"><b>Pedidos Ingresados Aprobados</b></a></li> 
+                    <li class="active"><a href="#tabAprobados" data-toggle="tab"><b>pedidos despachados</b></a></li> 
                 </ul>
             </div>
         </div> 
@@ -17,13 +17,14 @@
                 <div class="tab-pane active" id="tabAprobados" style="padding-top: 5px">
                     <table id="tablaAprobados" class="pedidos table table-hover table-condensed" style="width:100%">
                         <thead>
-                            <th style="width:150px">Pedido</th>
+                            <th style="width:100px">Pedido</th>
                             <th style="width:80px">Estado</th>
                             <th>Fecha Creación</th>
                             <th>Cliente</th>
                             <th>Obra/Planta</th>
                             <th>Producto</th>
                             <th style="text-align: right">Cantidad</th>
+                            <th>Unidad</th>
                             <th>Planta Origen</th>
                             <th>Forma Entrega</th>
                             <th>Fecha Entrega</th>
@@ -62,6 +63,7 @@
                                     <td>{{ $item->nombreObra }}</td>
                                     <td>{{ $item->prod_nombre }}</td>
                                     <td style="text-align: right">{{ $item->cantidad }}</td>
+                                    <td>{{ $item->u_abre }}</td>
                                     <td>{{ $item->nombrePlanta }}</td>
                                     <td>{{ $item->formaEntrega }}</td>
                                     <td>{{ $item->fechaEntrega }} {{ $item->horarioEntrega }}</td>
@@ -74,6 +76,8 @@
                 </div>
             </div>
         </div>
+        <a href="{{ asset('/') }}dashboard" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+
     </div>
    
 </div>
@@ -134,21 +138,16 @@
                         extend: 'excelHtml5',
                         title: 'Notas de Venta Vigentes',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4,5,6,7,8,9,10,11,12,13 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                  
+                    
                     {
                         extend: 'pdfHtml5',
                         title: 'Notas de Venta Vigentes',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4,5,6,7,8,9,10,11,12,13]
                         }
                     }
                 ],                       

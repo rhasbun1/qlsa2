@@ -194,13 +194,7 @@
                             columns: [ 0, 1, 2, 3, 4 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: tituloArchivo,
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
+                  
                     {
                         extend: 'pdfHtml5',
                         title: tituloArchivo,

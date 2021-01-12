@@ -136,7 +136,6 @@
 				<div class="main-menu">
 					<ul>
 						@if ( Session::get('idPerfil')!='13' )
-							@if ( Session::get('grupoUsuario')!='CL' and Session::get('idPerfil')!='6' )
 								<li class="active">
 									<a href="{{ asset('/') }}dashboard">
 										<span class="menu-icon">
@@ -148,7 +147,7 @@
 										<span class="menu-hover"></span>
 									</a>
 								</li>
-							@endif
+							
 							@if ( Session::get('grupoUsuario')=='C' )
 								<li class="openable open">
 									<a href="#">

@@ -131,13 +131,28 @@
 
 
             // DataTable
+            var titulo="Pedidos en Proceso";
+
             var table=$('#tablaDetalle').DataTable({
                  orderCellsTop: true,
-                 fixedHeader: true,         
+                 fixedHeader: true, 
+                 dom: 'Bfrtip',        
                 "scrollX": true,
                 "order": [[ 0, "desc" ]],
-                "paging": false,             
+                "paging": false,  
+                buttons: [
+                    {
+                        text: 'Atras',
+                        action: function ( e, dt, node, config ) {
+                            location.href=("{{ asset('/') }}dashboard");
+                        }
+                    }
+                ],                  
+                "order": [[ 0, "asc" ]],              
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                preDrawCallback: function( settings ) {
+                    document.getElementById('panelBody').style.display="block";
+                  },  
                 initComplete: function () {
                     this.api().columns(3).every( function () {
                         var column = this;

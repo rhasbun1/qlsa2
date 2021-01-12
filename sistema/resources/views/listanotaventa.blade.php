@@ -13,6 +13,8 @@
                     <div class="col-md-2">
                     </div>
                     <div class="col-md-2">
+                    <input style="display: none" disabled value="{{Session::get('idPerfil')}}" type="text" class="form-control input-sm" id="idPerfil">
+
                         Filtro&nbsppor&nbspFecha&nbspCreación
                     </div>
                     <div class="col-md-2">
@@ -182,16 +184,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4,5 ]
                         }
                     },
                     {
@@ -200,7 +193,7 @@
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3, 4,5 ]
                         }
                     }
                 ],                  

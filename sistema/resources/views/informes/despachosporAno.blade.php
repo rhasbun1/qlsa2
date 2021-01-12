@@ -47,7 +47,9 @@
 					<button class="btn btn-success btn-sm" onclick="cargarDatos();">Obtener Informe</button>
         		</div>        		         		
         	</div>
-        </div>        
+		</div> 
+		<a href="{{ asset('/') }}dashboard" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+       
     </div>    	
     <div class="content-wrapper">
         <div id="Grid">

@@ -340,12 +340,23 @@
                        // this.disable();    
                         resumenGeneral(); 
                     }
-                },
-                'pageLength'
+                },  
+                
+                
+                'pageLength',
+                {
+                        extend: 'excelHtml5',
+                        title: "oo",
+                        exportOptions: {
+                            columns: [ 0, 2, 3, 4, 5 , 6, 7, 8 ]
+                        }
+                    }  
             ],                  
             "order": [[ 1, "asc" ]],                        
-            language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
-
+            language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                preDrawCallback: function( settings ) {
+                    document.getElementById('panelBody').style.display="block";
+                }
         });
 	 });
 </script>

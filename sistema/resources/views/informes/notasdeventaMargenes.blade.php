@@ -11,7 +11,9 @@
     <div class="content-wrapper">
         <div id="Grid">
         </div>
-    </div>
+	</div>
+	<a href="{{ asset('/') }}dashboard" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+
 </div>
 
 @endsection

@@ -6,14 +6,13 @@
 
 @if (Session::get('grupoUsuario')!='CL' and (Session::get('idPerfil') == '2' || Session::get('idPerfil') == '4' || Session::get('idPerfil') == '18'))
 
-
 	
 <div class="col-md-6">
 		
 		<a href="#modalToneladasDespachadasMensual"  data-toggle="modal">
 			<div class="panel-stat3 bg-warning btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadGranelDespachadoEsteMes }} ton</h2>
-        <font size=5><strong>Toneladas (granel) despachadas este Mes</strong></font>
+        <font size=4><strong>Toneladas (granel) despachadas este Mes</strong></font>
         <br>
 			</div>
 		</a>
@@ -24,7 +23,7 @@
 		<a href="#modalToneladasDespachadasAnual"  data-toggle="modal">
 			<div class="panel-stat3 bg-warning btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadGranelAcumuladoAnual }} ton</h2>
-        <font size=5><strong>Toneladas (granel) despachadas este Año</strong></font>
+        <font size=4><strong>Toneladas (granel) despachadas este Año</strong></font>
         <br>
 			</div>
 		</a>
@@ -34,7 +33,7 @@
 	
 	<div class="col-md-3">
 		<a href="#modalPendienteAprobacion" data-target=""  data-toggle="modal">
-			<div class="panel-stat3 bg-info btn" style="width:100%" >
+			<div class="panel-stat3 bg-info btn" style="width:110%" >
 				<h2 class="m-top-none">{{ $datos[0]->cantidadNventasPendientesAprobacion }}</h2>
         <h4>Notas de Venta </h4>
         <h4>pendientes de aprobación</h4>
@@ -47,7 +46,8 @@
     <a href="#modalJefePedidosAtrasados" data-toggle="modal">
         <div class="panel-stat3 bg-info btn" style="width:100%">
           <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasados }}</h2>
-          <h4>Pedidos Atrasados </h4>
+          <h4>Pedidos Atrasados</h4>
+          
           <br>
 
         </div>
@@ -68,7 +68,7 @@
 	
 	
 @endif
-@if (Session::get('grupoUsuario')!='CL' and (Session::get('idPerfil') == '3'))
+@if (Session::get('grupoUsuario')!='CL' and (Session::get('idPerfil') == '3' || Session::get('idPerfil') == '19'))
 	
 	<div class="col-md-6">
 		
@@ -97,8 +97,9 @@
 		<a href="{{ asset('/') }}#modalPedidoClientePendientes"  data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosIngresadosClienteSinAprobar }}</h2>
-        <p><h4>Pedidos Pendientes de </h4>
-        <h4>Preaprobación (ingresados por clientes)</h4></p>
+        <h5>Pedidos Pendientes de </h5>
+        <h5>Preaprobación </h5>
+        <h5>(ingresados por clientes)</h5>
 			</div>
 		</a>
 
@@ -108,7 +109,7 @@
     <a href="#modalJefePedidosAtrasados" data-toggle="modal">
         <div class="panel-stat3 bg-info btn" style="width:100%">
           <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasados }}</h2>
-
+          <br>
           <h4>Pedidos Atrasados </h4>
           <br>
         </div>
@@ -122,6 +123,7 @@
             <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinAprobar }}</h2>
             <p> <h4>Pedidos pendientes de</h4>
               <h4>Aprobación de Crédito</h4></p>
+              <br>    
           </div>
         </a>
       </div>
@@ -168,7 +170,7 @@
 	
 
 @endif
-@if ((Session::get('idPerfil') == '6' || Session::get('idPerfil') == '7' || Session::get('idPerfil') == '8'))
+@if ((Session::get('idPerfil') == '6' || Session::get('idPerfil') == '7' || Session::get('idPerfil') == '8' || Session::get('idPerfil') == '5'))
 	<div class="col-md-3">
 			<a href="{{ asset('/') }}#modalJefePedidosEnProceso" data-toggle="modal">
 				<div class="panel-stat3 bg-info btn" style="width:100%">
@@ -184,7 +186,7 @@
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosGranelSinAsignacion }}</h2>
         <h4>Pedidos a granel </h4>
-        <h4>sin Horario de Carga</h4>
+        <br>
 			</div>
 		</a>
 	</div>
@@ -235,7 +237,7 @@
   <a href="#modalPedidosSinAprobar" data-toggle="modal">
       <div class="panel-stat3 bg-warning btn" style="width:100%">
         <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinAprobar}}</h2>
-        <font size=5><strong>Pedidos pendientes de Aprobación de Crédito</strong></font>
+        <h3><strong>Pedidos pendientes de Aprobación de Crédito</strong><h3>
         <br>
       </div>
     </a>
@@ -274,7 +276,7 @@
         <a href="#NotaVentaSinFlete"  data-toggle="modal">
           <div class="panel-stat3 bg-warning btn" style="width:100%">
             <h2 class="m-top-none">{{ $datos[0]->cantidadNotaVentaConFleteSinAsignar }}</h2>
-            <font size=4.9><strong>Asignaciones de Flete pendientes</strong></font>
+            <font size=4><strong>Asignaciones de Flete pendientes</strong></font>
             <br>
           </div>
         </a>
@@ -335,7 +337,7 @@
   <div class="modal-dialog modal-lg" style="width:90%" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLabel">Pedidos Atrasados (aún sin despacharse)</h2>
+        <h2 class="modal-title" id="exampleModalLabel">Pedidos Atrasados (despacho pendiente)</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -351,6 +353,7 @@
                 <th >Obra/Planta</th>
                 <th >Producto</th>
                 <th >Cantidad</th>
+                <th>Unidad</th>
                 <th >Fecha Entrega</th>
                 
               
@@ -370,6 +373,7 @@
                                     <td style="width: 120px">{{ $item->nombreObra }}</td>
                                     <td style="width: 120px">{{ $item->nombreProducto }}</td>
                                     <td style="width: 120px">{{ $item->cantidad }}</td>
+                                    <td style="width: 120px">{{ $item->u_nombre }}</td>
                                     <td style="width: 120px">{{ $item->fechaEntrega }}</td>
                                     
                                   
@@ -409,8 +413,9 @@
                 <th >Cliente</th> 
                 <th >Planta de Origen</th> 
                 <th>Obra/Planta </th>
-                <th >Nombre Producto</th>
-                <th >Fecha De carga</th>
+                <th >Producto</th>
+                <th>Unidad</th>
+                <th >Fecha de Carga</th>
               
                
                
@@ -423,12 +428,13 @@
                 @foreach($listaPedidoSinFechaDeCarga as $item)
                             
                                 <tr>
-                                    <td style="width: ">{{ $item->idPedido }}</td>
-                                    <td style="width: ">{{ $item->nombreEmpresa }}</td>
-                                    <td style="width: ">{{ $item->nombrePlanta }}</td>
-                                    <td style="width: ">{{ $item->nombreObra }}</td>
-                                    <td style="width: ">{{ $item->prod_nombre }}</td>
-                                    <td style="width: ">{{ $item->fechaCarga }}</td>
+                                    <td style="width: 50px">{{ $item->idPedido }}</td>
+                                    <td style="width: 120px">{{ $item->nombreEmpresa }}</td>
+                                    <td style="width: 120px">{{ $item->nombrePlanta }}</td>
+                                    <td style="width: 120px">{{ $item->nombreObra }}</td>
+                                    <td style="width: 120px">{{ $item->prod_nombre }}</td>
+                                    <td style="width: 120px">{{ $item->u_nombre }}</td>
+                                    <td style="width: 120px">{{ $item->fechaCarga }}</td>
                                     
                                    
                                     
@@ -462,14 +468,11 @@
       <table id="tablaNotaVentaSinFlete" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
 
-                <th >Pedido</th>  
+                <th >Nota de Venta</th>  
                 <th >Cliente</th>  
                 <th >Planta de Origen</th>  
                 <th>Obra/Planta</th>       
-                <th >Nombre Producto</th> 
-                
-                 
-                
+               
 
                 </thead>
                 
@@ -479,15 +482,11 @@
                 @foreach($listaNotaVentaSinFlete as $item)
                             
                                 <tr>
-                                    <td style="width: ">{{ $item->idPedido }}</td>
-                                    <td style="width: ">{{ $item->nombreEmpresa }}</td>
-                                    <td style="width: ">{{ $item->nombrePlanta }}</td> 
-                                    <td style="width: ">{{ $item->nombreObra }}</td>
-                                    <td style="width: ">{{ $item->prod_nombre }}</td>
-                                    
-                                    
-                                    
-                                    
+                                    <td style="width: 120px">{{ $item->idNotaVenta }}</td>
+                                    <td style="width: 120px">{{ $item->nombreCliente }}</td>
+                                    <td style="width: 120px">{{ $item->nombrePlanta }}</td> 
+                                    <td style="width: 120px">{{ $item->nombreObra }}</td>
+                                   
                                    
                                     
                                 </tr>
@@ -511,7 +510,7 @@
     <div class="modal-content">
       <div class="modal-header">
 
-        <h2 class="modal-title" id="exampleModalLabel">Pedidos Modificados durante las últimas X horas</h2>
+        <h2 class="modal-title" id="exampleModalLabel">Pedidos Modificados durante las últimas 24 horas</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -540,15 +539,15 @@
                 @foreach($listaAccionesHaceUnaHora as $item)
                             
                                 <tr>
-                                  <td style="width: ">{{ $item->idPedido }}</td>
-                                  <td style="width: ">{{ $item->tipo }}</td>
-                                  <td style="width: ">{{ $item->motivo }}</td>
-                                  <td style="width: ">{{ $item->fechaHora }}</td>
-                                  <td style="width: ">{{ $item->nombreUsuario }}</td>
-                                  <td style="width: ">{{ $item->nombre }}</td>
-                                  <td style="width: ">{{ $item->nombreEmpresa }}</td>
-                                  <td style="width: ">{{ $item->nombreObra }}</td>
-                                  <td style="width: ">{{ $item->nombreProducto }}</td>
+                                  <td style="width:50px">{{ $item->idPedido }}</td>
+                                  <td style="width:120px ">{{ $item->tipo }}</td>
+                                  <td style="width: 120px">{{ $item->motivo }}</td>
+                                  <td style="width:120px ">{{ $item->fechaHora }}</td>
+                                  <td style="width: 120px">{{ $item->nombreUsuario }}</td>
+                                  <td style="width: 120px">{{ $item->nombre }}</td>
+                                  <td style="width:120px ">{{ $item->nombreEmpresa }}</td>
+                                  <td style="width: 120px">{{ $item->nombreObra }}</td>
+                                  <td style="width:120px ">{{ $item->nombreProducto }}</td>
                                    
                                     
                                 </tr>
@@ -586,9 +585,10 @@
                 <th >Estado</th>
                 <th >Planta de Origen</th>
                 <th >Cliente</th>
-                <th >obra/planta</th>
+                <th >Obra/Planta</th>
                 <th >Producto</th>
                 <th >Cantidad</th>
+                <th>Unidad</th>
                 
                 <th >Horario de Salida</th>
 
@@ -603,16 +603,16 @@
                 @foreach($listaJefeLabCertificadosPorSubir as $item)
                             
                                 <tr>
-                                    <td style="width: ">{{ $item->idPedido }}</td>
-                                    <td style="width: ">{{ $item->estadoPedido }}</td>
-                                    <td style="width: ">{{ $item->nombrePlanta }}</td>
-                                    <td style="width: ">{{ $item->nombreCliente }}</td>
-                                    <td style="width: ">{{ $item->nombreObra }}</td>
-                                    <td style="width: ">{{ $item->prod_nombre }}</td>
+                                    <td style="width: 50px">{{ $item->idPedido }}</td>
+                                    <td style="width:120px ">{{ $item->estadoPedido }}</td>
+                                    <td style="width: 120px">{{ $item->nombrePlanta }}</td>
+                                    <td style="width: 120px">{{ $item->nombreCliente }}</td>
+                                    <td style="width: 120px">{{ $item->nombreObra }}</td>
+                                    <td style="width:120px ">{{ $item->prod_nombre }}</td>
                                     
-                                    <td style="width: ;text-align: right;">{{number_format( $item->cantidad, 0, ',', '.' ) }}</td>
-                                    
-                                    <td style="width: ">{{ $item->fechaHoraSalida }}</td>
+                                    <td style="width: 120px;text-align: right;">{{number_format( $item->cantidad, 0, ',', '.' ) }}</td>
+                                    <td style="width: 120px">{{ $item->u_nombre }}</td>
+                                    <td style="width: 120px">{{ $item->fechaHoraSalida }}</td>
 
                                 </tr>
                 @endforeach            
@@ -648,12 +648,13 @@
                 <th >Pedido</th>             
                 <th >Estado</th>
                 <th >Fecha Creacion</th>
-                <th>planta de origen</th>
+                <th>Planta de Origen</th>
                 <th >Cliente</th>
-                <th>Obra</th>
+                <th>Obra/Planta</th>
                 <th >Producto</th>
                 <th >Cantidad</th>
-                <th>fecha entrega</th>
+                <th>Unidad</th>
+                <th>Fecha Entrega</th>
                 
                 
                 </thead>
@@ -670,6 +671,7 @@
                                     <td style="width: 120px">{{ $item->nombreObra }}</td>
                                     <td style="width: 120px">{{ $item->prod_nombre }}</td>
                                     <td style="width: 30px;text-align: right;">{{number_format( $item->cantidad, 0, ',', '.' ) }}</td>
+                                    <td style="width: 120px">{{ $item->u_nombre }}</td>
                                     <td style="width: 120px">{{ $item->fechaEntrega }}</td>
                                    
                                    
@@ -767,11 +769,13 @@
                 <th> Planta/Obra</th>
                 <th >Producto</th>
                 <th >Cantidad</th>
+                <th>Unidad</th>
+                <th>Fecha de Entrega</th>
                
                     
                 </thead>
                 
-                
+                  
                
                 <tbody>
                 @foreach($listaJefePedidoEnProceso as $item)
@@ -786,7 +790,8 @@
                                     <td style="width: 120px">{{ $item->prod_nombre }}</td>
                                    
                                     <td style="width: 30px;text-align: right;">{{number_format( $item->cantidad, 0, ',', '.' ) }}</td>
-                                    
+                                    <td style="width: 120px">{{ $item->u_nombre }}</td>
+                                    <td style="width: 120px">{{ $item->fechaEntrega }}</td>
                                 </tr>
                 @endforeach         
                 </tbody>
@@ -862,7 +867,7 @@
     <div class="modal-content">
       <div class="modal-header">
 
-        <h2 class="modal-title" id="exampleModalLabel">Pedidos pendientes de Aprobación de Crédito</h2>
+        <h2 class="modal-title" id="exampleModalLabel">Pedidos Pendientes de Aprobación de Crédito</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -871,16 +876,14 @@
       <div class="modal-body">
       <table id="tablaModalPedidosSinAprobar" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
-                <th >Pedido</th>             
+                <th >Pedido</th> 
+                <th >Fecha Creacion</th>            
                 <th >Estado</th>
-              
                 <th >Cliente</th>
-                <th >Fecha Creacion</th>
-
-                <th>Fecha de Entrega</th>
-                <th>nombre de obra</th>
+                <th>Obra/Planta</th>
                 <th >Producto</th>
-                <th>total</th>
+                <th>Fecha de Entrega</th>
+                <th>Total ($)</th>
 
 
                
@@ -892,16 +895,13 @@
                                 <tr>
                                 
                                     <td style="width: 50px">{{ $item->idPedido }}</td>
-                                    <td style="width: 120px">{{ $item->estado }}</td>
-                                    
-                                    <td style="width: 120px">{{ $item->emp_nombre }}</td>
                                     <td style="width: 120px">{{ $item->fechahora_creacion }}</td>
-
-                                    <td style="width: 120px">{{ $item->fechaEntrega }}</td>
+                                    <td style="width: 120px">{{ $item->estado }}</td>
+                                    <td style="width: 120px">{{ $item->emp_nombre }}</td>
                                     <td style="width: 120px">{{ $item->Obra }}</td>
-                                    
                                     <td style="width: 120px">{{ $item->prod_nombre }}</td>
-                                    <td style="width: 120px">{{ $item->total }}</td>
+                                    <td style="width: 120px">{{ $item->fechaEntrega }}</td>
+                                    <td style="width: 120px">{{ number_format($item->total) }}</td>
 
 
 
@@ -996,12 +996,14 @@
       <div class="modal-body">
       <table id="tablaModalClienteEnProceso" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
-                <th >Pedido</th>             
+                <th >Pedido</th>  
+                <th >Fecha Creacion</th>           
                 <th >Estado</th>
                 
                 <th >Obra</th>
                 <th >Producto</th>
-                <th >Fecha Creacion</th>
+                <th>Cantidad</th>
+                <th>Unidad</th>
                 <th>Fecha de Entrega</th>
                 
               
@@ -1014,11 +1016,13 @@
                                 <tr>
                                 
                                     <td style="width: 50px">{{ $item->idPedido }}</td>
+                                    <td style="width: 120px">{{ $item->fechahora_creacion }}</td>
                                     <td style="width: 120px">{{ $item->estadoPedido }}</td>
                                     
                                     <td style="width: 120px">{{ $item->nombreObra }}</td>
                                     <td style="width: 120px">{{ $item->prod_nombre }}</td>
-                                    <td style="width: 120px">{{ $item->fechahora_creacion }}</td>
+                                    <td style="width: 120px">{{ $item->cantidad }}</td>
+                                    <td style="width: 120px">{{ $item->u_nombre }}</td>
                                     <td style="width: 120px">{{ $item->fechaEntrega }}</td>
                                     
                                     
@@ -1200,7 +1204,7 @@
                                         {{ $item->prod_nombre }}                                   
                                     </td>
                                     <td style="width: 30px;text-align: right;">{{number_format( $item->cantidad, 0, ',', '.' ) }}</td>
-                                    <td style="width: 30px;text-align: center">{{ $item->u_abre }}</td>
+                                    <td style="width: 30px;text-align: center">{{ $item->u_nombre }}</td>
                                     <td style="width: 100px">{{ $item->fechaEntrega }} {{ $item->horarioEntrega }}</td>
                                     <td style="width: 70px">{{ $item->formaEntrega }}</td>
                                     <td style="width: 70px">{{ $item->nombrePlanta }}</td>
@@ -1255,13 +1259,13 @@
                             <td>{{ $item1->Obra }}</td>
                             <td>{{ $item1->nombreUsuarioEncargado }}</td>
 							@if($item1->aprobada==1)
-                                <td>Aprobado</td>
-                            @else
-                                <td>Pendiente de Aprobación</td>
-                            @endif  
+                      <td>Aprobado</td>
+              @else
+                      <td>Pendiente de Aprobación</td>
+              @endif  
 
                         </tr>
-                @endforeach
+         @endforeach
 				</tbody>
             </table>  
       </div>
@@ -1288,7 +1292,7 @@
       <table id="tablaModalClientePendiente" class="table table-hover table-condensed table-responsive" style="width:100%">
                 <thead>
 
-                <th>Pedido Nº</th>
+                    <th>Pedido Nº</th>
                     
                     <th>Fecha Creación</th>
                     <th>Cliente</th>
@@ -1301,6 +1305,7 @@
                     <th>Fecha Entrega</th>
                     <th>Producto</th>
                     <th>Cantidad</th>
+                    <th>Unidad</th>
 
                 </thead>
                 
@@ -1319,7 +1324,8 @@
                             @endif    
                             <td>{{ $item->fechaEntrega }}</td>
                             <td>{{ $item->prod_nombre }}</td>
-                            <td>{{ number_format( $item->cantidad, 0, ',', '.' ) }}</td>                           
+                            <td>{{ number_format( $item->cantidad, 0, ',', '.' ) }}</td> 
+                            <td>{{ $item->u_nombre }}</td>
                         </tr>
                 @endforeach
 				</tbody>
@@ -1650,7 +1656,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
                         }
                     },
                     
@@ -1660,7 +1666,7 @@
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
                         }
                     }
                 ],                
@@ -1803,23 +1809,23 @@
                     'pageLength',                
                     {
                         extend: 'excelHtml5',
-                        title: 'Pedidos Modificados durante las últimas X horas',
+                        title: 'Pedidos Modificados durante las últimas 24 horas',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     },
-                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Pedidos Modificados durante las últimas X horas',
+                        title: 'Pedidos Modificados durante las últimas 24 horas',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
                     }
+                   
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
@@ -2027,10 +2033,22 @@
 			}); //finData
 
         } );
+        function addCommas(nStr) { 
+            nStr += ''; 
+            var x = nStr.split('.'); 
+            var x1 = x[0]; 
+            var x2 = x.length > 1 ? '.' + x[1] : ''; 
+            var rgx = /(\d+)(\d{3})/; 
+            while (rgx.test(x1)) { 
+              x1 = x1.replace(rgx, '$1' + ',' + '$2'); 
+            } 
+            return x1 + x2; 
+        } 
 
     </script>
     
 @endsection
+
 
 
 
