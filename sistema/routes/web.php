@@ -18,6 +18,11 @@ Route::post('verificarusuario', 'UsuarioController@verificarusuario');
 Route::post('validarUsuario', 'UsuarioController@validarUsuario');
 Route::get('autorizarPedidoUrgente/{token}/', 'PedidoController@autorizarPedidoUrgente');
 
+Route::get('guiasPorFacturar', 'GuiaController@guiasPorFacturar');
+Route::get('consultaDtesEmitidos', 'GuiaController@consultaDtesEmitidos');
+Route::get('liberarDte', 'GuiaController@liberarDte');
+Route::get('devolucionesEnProceso/{tipo}/', 'DevolucionController@devolucionesEnProceso');
+Route::get('verDevolucion', 'DevolucionController@verDevolucion');
 /* Cambiar Version */
 Route::get('nuevaVersion', 'Controller@nuevaVersion');
 

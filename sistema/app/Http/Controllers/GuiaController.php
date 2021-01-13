@@ -615,4 +615,18 @@ class GuiaController extends Controller
         return;
     }
 
+    public function guiasPorFacturar(){
+        $clientes=DB::Select('call spGetEmpresas');
+        return view('guiasPorFacturar')->with('clientes', $clientes);
+    }
+
+    public function consultaDtesEmitidos(){
+        $clientes=DB::Select('call spGetEmpresas');
+        return view('consultaDtesEmitidos')->with('clientes', $clientes);        
+    }
+
+    public function liberarDte(){
+        return view('liberarDte');
+    }    
+
 }
