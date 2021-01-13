@@ -7,13 +7,12 @@
         <div class="panel-heading">
             <b>Notas de Venta y Márgenes</b>
         </div>  
-    </div>    	
+    </div>
+    <button class="btn btn-success btn-sm" onclick="revisarDatos();">Revisar Datos</button>    	
     <div class="content-wrapper">
         <div id="Grid">
         </div>
-	</div>
-	<a href="{{ asset('/') }}dashboard" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
-
+    </div>
 </div>
 
 @endsection
@@ -29,7 +28,7 @@
 	<script src="{{ asset('/') }}js/syncfusion/lang/globalize.culture.en-US.min.js"></script>
 
 	<script id="template_costo" type="text/x-template">
-        ${if(costo==0)}
+        ${if(costo==-1)}
         	PENDIENTE
         ${else}
         	${costo}
@@ -52,6 +51,12 @@
     </style>    
 
     <script>
+
+    	function revisarDatos(){
+
+    		console.log($("#Grid").ejGrid("getRowHeight") );
+
+    	}
 
 		ej.base.L10n.load({
 		    'en-US': {
@@ -85,7 +90,7 @@
 		    }
 		});
 
-
+	
 		function renderGrid(data){
 			var columnas;
 
@@ -102,7 +107,7 @@
 	            { field: 'formato', headerText: 'Formato', width: 100, textAlign: 'Center' },
 	            { field: 'costo', headerText: 'Costo Unit. Actual($)', width: 100,  textAlign: 'Center', format: "N", template: '#template_costo' },	
 	            { field: 'otrosCostos', headerText: 'Otros Costos($)', width: 100, textAlign: 'Right', format: "N" },	
-	            { field: 'Flete', headerText: 'Flete Unit. Actual($)', width: 100, textAlign: 'Right', format: "N", template: '#template_Flete' },	
+	            { field: 'Flete', headerText: 'Flete Unit. Actual($)', width: 100, textAlign: 'Right', format: "N", template: '#template_Flete' },
 	            { field: 'precioVentaUnitarioActual', headerText: 'Precio Venta Unit. Actual($)', width: 100, textAlign: 'Right', format: "N" },
 	            //{ field: 'totalPrecioVenta', headerText: 'Total Precio Venta $', width: 100, textAlign: 'Right', format: 'N' },	
 	            { field: 'margenBrutoUnitarioActual', headerText: 'Margen Bruto Unit. Actual ($)', width: 100, textAlign: 'Right', format: "N" },
@@ -176,6 +181,11 @@
                 data: {},
                 success:function(dato){
                 		data=dato;
+
+                		for(var x=0;x<data.length;x++){
+							console.log(data[x].costo);
+						}
+
                 		renderGrid(data);
                 },
                 error: function(jqXHR, text, error){
