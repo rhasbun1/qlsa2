@@ -6,6 +6,10 @@
 <div style="padding: 20px">
     <div class="panel panel-default table-responsive">
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
+        <input type="text" id="perfil"  value="{{Session::get('idPerfil')}}" hidden>
+
+      
+        
         <div class="panel-heading">
             <b id="b"> Costo Flete y Tiempo de Traslado {{ $subtitulo }}</b>
         </div>
@@ -18,7 +22,7 @@
                 Filtro&nbsppor&nbspFecha&nbspCreación
 					<input id="fechaInicio" class="form-control input-sm date" style="display: inline; width: 140px">&nbsp&nbsp
 					<input id="fechaTermino" class="form-control input-sm date" style="display: inline; width: 140px" data-date-end-date="0d">
-                    <button class="btn btn-success btn-sm" style="display: inline;" onclick="resumenGeneral()">Buscar</button>
+                    <input type="button" class="btn btn-success btn-sm" style="display: inline;" onclick="resumenGeneral()" value="Buscar">
 				</div>
             </div>                    
             
@@ -38,8 +42,12 @@
                         <th style="width:80px">Costo Flete ($/Unidad)</th>
                         <th style="width:80px">Distancia (km)</th>
                         <th style="width:80px">Tiempo Traslado (horas)</th>
+                        <th style="display: none;">id usuario</th>
+                        <th style="display: none;">id planta</th>
+
 	                </thead>
-	                <tbody>
+	                <tbody id="tablan">
+                    
 	                   
 	                </tbody>
 	            </table>
@@ -89,6 +97,7 @@
     <script src="{{ asset('/') }}js/syncfusion/lang/ej.culture.de-DE.min.js"></script>
 
     <script>
+   
        
        function resumenGeneral(){
      
@@ -122,20 +131,57 @@ $.ajax({
         
         for(var x=0;x<dato.length;x++){
             
-            
-            var rowNode= tabla.row.add([
-                                        dato[x].idNotaVenta ,
-                                        dato[x].nombreCliente,
-                                        dato[x].nombreObra,
-                                        dato[x].nombrePlanta,
-                                        dato[x].nombreUnidad,
-                                        dato[x].flete,
-                                        dato[x].distancia,
-                                        dato[x].tiempoTraslado
-                                        ]);
+            var codigo = "<input class='form-control input-sm' style='display: none;' value=" + dato[x].u_codigo + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
+            var idPlanta = "<input class='form-control input-sm' style='display: none;' value=" + dato[x].idPlanta + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
 
-            var fila=tabla.row( rowNode ).index();
-            var celdas=tabla.row( rowNode).data();
+            var rowNode= [
+                            idNotaVenta=dato[x].idNotaVenta ,
+                            dato[x].nombreCliente,
+                            dato[x].nombreObra,
+                            dato[x].nombrePlanta,
+                            dato[x].nombreUnidad,
+                            idPlanta
+                            
+                        ];
+           var flete = "<input class='form-control input-sm' value=" + dato[x].flete + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
+           var distancia = "<input class='form-control input-sm' value=" + dato[x].distancia + " maxlength='5' onkeypress='return isIntegerKey(event)'>";
+           var tiempoTraslado = "<input class='form-control input-sm' value=" + dato[x].tiempoTraslado + " maxlength='3' onkeypress='return isIntegerKey(event)'>";
+           
+           if($("#perfil").val() == 5 || $("#perfil").val() == 10 || $("#perfil").val() == 18){
+                var rowNode1=[
+                                flete,
+                                distancia,
+                                tiempoTraslado,
+                                codigo
+                            ];
+ 
+           }else{
+            var rowNode1= [    
+                             number_format( dato[x].flete, 0, ',', '.' ),
+                             number_format( dato[x].distancia, 0, ',', '.' ),
+                             number_format( dato[x].tiempoTraslado, 0, ',', '.' )
+                          
+                         ];
+
+           }
+         
+        
+          
+            var nn = tabla.row.add([rowNode[0],
+                                    rowNode[1],
+                                    rowNode[2],
+                                    rowNode[3],
+                                    rowNode[4],
+                                   
+                                    rowNode1[0],
+                                    rowNode1[1],
+                                    rowNode1[2],
+                                    rowNode1[3],
+                                    rowNode[5]
+                                    ]);
+
+            var fila=tabla.row( nn ).index();
+            var celdas=tabla.row( nn).data();
    
             var celda=tabla.cell(fila,0).node();
             $( celda ).css( 'text-align', 'right' ).css( 'width', '60px');
@@ -164,6 +210,8 @@ $.ajax({
             $("#mdProcesando").modal('show');
         }      
 		$(document).ready(function() {
+           
+
 
             $('#tablaNotas thead tr').clone(true).appendTo( '#tablaNotas thead' );
             $('#tablaNotas thead tr:eq(1) th').each( function (i) {
@@ -266,7 +314,8 @@ $.ajax({
                     tiempoTraslado="0";
                 }else{
                     tiempoTraslado=tabla.cell(i,7).node().getElementsByTagName('input')[0].value;
-                }                
+                }   
+
 
                 if( isNaN(flete) || isNaN(distancia) || isNaN(tiempoTraslado) ){
                     $("#mdProcesando").modal('hide');
@@ -285,12 +334,28 @@ $.ajax({
                     )
                     return;                   
                 }
+                // var idtab = tabla.cell(i,3).data();
+               
+                // if("{{$cargos[0]->nombre}}" == idtab){
+                //   var aa=1;
+                // }else if("{{$cargos[1]->nombre}}" == idtab){
+                //     var aa=2;
+                // }else if("{{$cargos[2]->nombre}}" == idtab){
+                //     var aa=3;
+                // }else if("{{$cargos[3]->nombre}}" == idtab){
+                //     var aa=4;
+                // }else if("{{$cargos[4]->nombre}}" == idtab){
+                //     var aa=5;
+                // }
+                u_codigo=tabla.cell(i,8).node().getElementsByTagName('input')[0].value;
+                idPlanta=tabla.cell(i,9).node().getElementsByTagName('input')[0].value;
+
 
 
                 cadena+='{';
                 cadena+='"idNotaVenta":"'+ tabla.cell(i,0).data() + '", ';
-                cadena+='"idPlanta":"'+ tabla.cell(i,3).node().dataset.idplanta + '", ';
-                cadena+='"u_codigo":"'+ tabla.cell(i,4).node().dataset.ucodigo + '", ';
+                cadena+='"idPlanta":"'+ idPlanta+ '", ';
+                cadena+='"u_codigo":"'+u_codigo + '", ';
                 cadena+='"flete":"'+ flete  + '", ';
                 cadena+='"distancia":"'+ distancia  + '", ';
                 cadena+='"tiempoTraslado":"' + tiempoTraslado + '"';

@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-md-3">
                 </div>
-               <div class="col-md-9 row"  style="display: inline">
+               <!-- <div class="col-md-9 row"  style="display: inline">
                     <div class="col-md-2">
                         Filtrar por Planta
                     </div>
@@ -27,10 +27,10 @@
                     </select> 
                     </div>
                     <div class="col-md-4">
-                       <button class="btn btn-success btn-sm" style="display: inline;" onclick="resumenGeneral()">Buscar</button>
+                       <input type="button" value="Buscar" class="btn btn-success btn-sm" style="display: inline;" onclick="resumenGeneral()">
    
                     </div>
-				</div>
+				</div> -->
             </div>                    
             
         </div>

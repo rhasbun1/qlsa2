@@ -17,6 +17,7 @@ Route::get('/', function () {
 Route::post('verificarusuario', 'UsuarioController@verificarusuario');
 Route::post('validarUsuario', 'UsuarioController@validarUsuario');
 Route::get('autorizarPedidoUrgente/{token}/', 'PedidoController@autorizarPedidoUrgente');
+Route::get('obtenerIdPlanta', 'PlantaController@obtenerIdPlanta');
 
 Route::get('guiasPorFacturar', 'GuiaController@guiasPorFacturar');
 Route::get('consultaDtesEmitidos', 'GuiaController@consultaDtesEmitidos');
@@ -25,6 +26,8 @@ Route::get('devolucionesEnProceso/{tipo}/', 'DevolucionController@devolucionesEn
 Route::get('verDevolucion', 'DevolucionController@verDevolucion');
 /* Cambiar Version */
 Route::get('nuevaVersion', 'Controller@nuevaVersion');
+Route::get('notaVentas', 'Controller@notaVentas');
+
 
 Route::group(['middleware' => 'checksession'], function () {
 	Route::get('informacion/{idPlanta}/', 'Controller@informacion');
@@ -158,6 +161,7 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('resumenGranel', 'PedidoController@resumenGranel');
 
 
+
 	Route::get('listarNotasVentaModal','NotaventaController@listarNotasdeVentaModal');
 	
 	Route::get('correoAutorizacionPedidoUrgente/{idPedido}/{idUsuario}/', 'PedidoController@correoAutorizacionPedidoUrgente');
@@ -225,6 +229,7 @@ Route::group(['middleware' => 'checksession'], function () {
 
 	Route::resource('nuevanotaventa', 'NotaventaController', ['except' => 'show']);
 	Route::resource('gestionarpedido/{idNotaVenta}', 'PedidoController', ['except' => 'show']);
+
 
 	
 

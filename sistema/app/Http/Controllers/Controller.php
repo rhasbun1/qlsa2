@@ -18,8 +18,11 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function dashboard(){
-
+        
         $nombreUsuario= explode(" ", Session::get('nombreUsuario'));
+        $empresaUsuario= explode(" ", Session::get('empresaUsuario'));
+
+
         
         $datos=DB::Select('call sp_GetDatosDashboard(?,?,?)', array(0,Session::get('idUsuario'), Session::get('idPerfil')));
 
@@ -59,6 +62,7 @@ class Controller extends BaseController
 
         $listaPedidoSinAprobarCliente=DB::Select('call spGetClientePedidosSinAprobar(?)', array(Session::get('idUsuario')));
 
+        $listaPedidoSinAprobarClientes=DB::Select('call spGetPedidoSinAprobarClientes(?)', array(Session::get('empresaUsuario')));
 
         
         
@@ -100,7 +104,14 @@ class Controller extends BaseController
                                 ->with('listaPedidoClienteEnProceso', $listaPedidoClienteEnProceso)
                                 ->with('listaPedidoClienteEnDespacho', $listaPedidoClienteEnDespacho)
                                 ->with('listaPedidoSinAprobar', $listaPedidoSinAprobar)
+                                ->with('listaPedidoSinAprobarClientes', $listaPedidoSinAprobarClientes)
                                 ->with('listaPedidoSinAprobarCliente', $listaPedidoSinAprobarCliente);
+    }
+    public function notaVentas(){
+        $listaNotasdeVenta=DB::Select('call spGetNotasdeVentas(?)', array(0) );
+
+        return $listaNotasdeVenta;
+
     }
 
     public function informacion($idPlanta=0){

@@ -142,7 +142,7 @@
                                                 <span><img src="{{ asset('/') }}img/iconos/cargacompleta.png" border="0"></span>
                                             @endif
                                             @if ( $item->numeroGuia>0 )
-                                                <span onclick="abrirGuia(1, {{ $item->numeroGuia }}, this.parentNode.parentNode)" style="cursor:pointer; cursor: hand"><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0"></span>
+                                                <span onclick="abrirGuia(1, {{ $item->numeroGuia}}, this.parentNode.parentNode)" style="cursor:pointer; cursor: hand"><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0"></span>
                                             @endif                                            
                                             @if ( $item->certificado!='' )  
                                                 <a target="_blank" href="{{ asset('/') }}bajarCertificado/{{ $item->certificado }}">
@@ -700,7 +700,7 @@
                 cadena=table.cell(i,1).data();
                 table.cell(i,1).data( cadena.replace(numeroGuiaOrigen, nuevoNumeroGuia) );
             }
-
+    
             // Aqui se actualizan los cantidades ingresadas en la guía de despacho   
 
             actualizarDatosGuiaDespacho(false);

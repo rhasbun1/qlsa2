@@ -30,7 +30,8 @@
 		<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         <div style="padding: 10px">
             <div>
-               <h2>Proximos Pedidos (Grandel)</h2> 
+               <h2>Proximos Pedidos (Granel)</h2> 
+              
             </div>
             <div class="row" style="padding-top: 15px; padding-bottom: 15px">
 				<div class="col-md-3" style="display: inline">
@@ -355,7 +356,7 @@
             "order": [[ 1, "asc" ]],                        
             language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
                 preDrawCallback: function( settings ) {
-                    document.getElementById('panelBody').style.display="block";
+                    // document.getElementById('panelBody').style.display="block";
                 }
         });
 	 });

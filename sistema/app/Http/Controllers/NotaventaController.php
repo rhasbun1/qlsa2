@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use SoapClient;
 use File;
+use App\Planta;
 use PDF;
 use App\CondicionPago;
 use App\Notaventa;
@@ -294,7 +295,7 @@ class NotaventaController extends Controller
             $nv->save(); 
             $num = 0;
             $idNotaventa = $datos->input('idNotaVenta');
-            $idUsuario = $datos->input('idUsuarioEncargado');
+            $idUsuario = Session::get('idUsuario');
 
             $detalle=$datos->input('detalle');
             $detalle= json_decode($detalle);
@@ -303,7 +304,7 @@ class NotaventaController extends Controller
             DB::Select("call spUpdValoresNotaVenta(?,?,?,?,?)", array( $item->idNotaVentaDetalle, $item->formula,$idNotaventa,$idUsuario,$num) );
                 $num = 2; 
             }
-
+ 
             return response()->json([
                 "idNotaVenta" => $datos->input('idNotaVenta')
             ]);                          
@@ -334,10 +335,12 @@ class NotaventaController extends Controller
 
     public function notaVentaVigenteCargos(Request $datos){
         
+        $cargos=DB::Select('call spGetPlantas()');
+
         
-        return view('notadeventaCargos')->with('subtitulo', '(Notas de Venta Vigentes)');
+        return view('notadeventaCargos')->with('subtitulo', '(Notas de Venta Vigentes)')->with('cargos', $cargos);
     }  
-    public function    notaVentaVigenteCargos1(Request $datos){
+    public function notaVentaVigenteCargos1(Request $datos){
         if($datos->ajax()){  
         $cargos=DB::Select('call spGetNotaVentaCostos(?,?,?)', array(0,$datos->input('fechaInicio'),$datos->input('fechaTermino')));
         return $cargos;

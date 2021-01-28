@@ -351,15 +351,7 @@
                             columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
                         }
                     },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Listado de Clientes',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-                        }
-                    },
+                    
                     {
                         extend: 'pdfHtml5',
                         title: 'Listado de Clientes',

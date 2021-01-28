@@ -259,7 +259,7 @@
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)
                                         <input id="horaEntrega" type="text" class="form-control input-sm bootstrap-timepicker" value="{{ $item->horaCarga }}">
                                     @endif
-                                </td>
+                                </td> 
                             @elseif ( Session::get('idPerfil')=='8' or Session::get('idPerfil')=='10'  )
                                 <td style="width:70px">
                                     @if(($pedido[0]->tipoTransporte==2 and $ln==1) or $pedido[0]->tipoTransporte==1)

@@ -51,7 +51,7 @@
                             Número (*)
                         </div>
                         <div class="col-sm-3">
-                            <input type="text" id="numeroRampla" class="form-control input-sm" maxlength="3">
+                            <input type="number" id="numeroRampla" class="form-control input-sm" maxlength="3">
                         </div>
                         <div class="col-sm-3">
                             Patente (*)

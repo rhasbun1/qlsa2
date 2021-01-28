@@ -26,6 +26,7 @@ class PlantaController extends Controller
         return Planta::All();
     }    
 
+   
     public function grabarPlanta(Request $datos){
         if( $datos->ajax() ){
             $planta=DB::Select('call spInsPlanta(?,?,?)', array(
