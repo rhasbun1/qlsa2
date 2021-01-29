@@ -257,7 +257,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                            columns: [ 0, 1, 2]
                         }
                     },
                     {
@@ -266,7 +266,7 @@
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                            columns: [ 0, 1, 2]
                         }
                     }
                 ],                  

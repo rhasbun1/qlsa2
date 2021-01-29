@@ -132,114 +132,199 @@
             var uPerfil='{{ Session::get("idPerfil") }}';
             var grupo='{{ Session::get("grupoUsuario") }}';
 
-            // DataTable
-            var table=$('#tablaDetalle').DataTable({
-                orderCellsTop: true,
-                fixedHeader: true,  
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        text: 'Nueva Nota',
-                        className: 'orange',
-                        attr:  {
-                                    id: 'btnNuevaNota'
-                                },
-                        action: function ( e, dt, node, config ) {
-                            if( uPerfil==11 || grupo!='C' ){
-                                swal(
-                                    {
-                                        title: 'Este perfil no tiene acceso a Crear Notas' ,
-                                        text: '',
-                                        type: 'warning',
-                                        showCancelButton: false,
-                                        confirmButtonText: 'OK',
-                                        cancelButtonText: '',
-                                        closeOnConfirm: true,
-                                        closeOnCancel: false
-                                    },
-                                    function(isConfirm)
-                                    {
-                                        if(isConfirm){
-                                            return;                         
-                                        }
-                                    }
-                                )   
-                            }else{
-                                location.href="{{ asset('/') }}nuevanotaventa";
+
+            if(uPerfil==11 || grupo!='C'){
+                    var table=$('#tablaDetalle').DataTable({
+                    orderCellsTop: true,
+                    fixedHeader: true,  
+                    "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                    dom: 'Bfrtip',
+                    buttons: [
+                    
+                                      
+                        {
+                            text: 'Actualizar',
+                            action: function ( e, dt, node, config ) {
+                                this.disable();    
+                                location.reload(true);                        
+                            }
+                        },                        
+                        'pageLength',                
+                        {
+                            extend: 'excelHtml5',
+                            title: 'Notas de Venta Vigentes',
+                            text: '<i class="fa fa-file-excel-o"></i>',
+                            titleAttr: 'Excel',                        
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4,5 ]
+                            }
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            title: 'Notas de Venta Vigentes',
+                            text:      '<i class="fa fa-file-pdf-o"></i>',
+                            titleAttr: 'PDF',                         
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4,5 ]
                             }
                         }
-                    },               
-                    {
-                        text: 'Actualizar',
-                        action: function ( e, dt, node, config ) {
-                            this.disable();    
-                            location.reload(true);                        
-                        }
-                    },                        
-                    'pageLength',                
-                    {
-                        extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text: '<i class="fa fa-file-excel-o"></i>',
-                        titleAttr: 'Excel',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4,5 ]
-                        }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4,5 ]
-                        }
-                    }
-                ],                  
-                "order": [[ 0, "desc" ]],
-                language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
-                initComplete: function () {
-                    this.api().columns(4).every( function () {
-                        var column = this;
+                    ],                  
+                    "order": [[ 0, "desc" ]],
+                    language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                    initComplete: function () {
+                        this.api().columns(4).every( function () {
+                            var column = this;
 
-                        var select = $('<select class="form-control input-sm"><option value=""></option></select>')
-                            .appendTo( $( '#tablaDetalle thead tr:eq(1) th:eq(4)' ).empty() )
-                            .on( 'change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
-         
-                                column
-                                    .search( val ? '^'+val+'$' : '', true, false )
-                                    .draw();
+                            var select = $('<select class="form-control input-sm"><option value=""></option></select>')
+                                .appendTo( $( '#tablaDetalle thead tr:eq(1) th:eq(4)' ).empty() )
+                                .on( 'change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+            
+                                    column
+                                        .search( val ? '^'+val+'$' : '', true, false )
+                                        .draw();
+                                } );
+            
+                            column.data().unique().sort().each( function ( d, j ) {
+                                select.append( '<option value="'+d+'">'+d+'</option>' )
                             } );
-         
-                        column.data().unique().sort().each( function ( d, j ) {
-                            select.append( '<option value="'+d+'">'+d+'</option>' )
                         } );
-                    } );
-                    this.api().columns(5).every( function () {
-                        var column = this;
+                        this.api().columns(5).every( function () {
+                            var column = this;
 
-                        var select = $('<select class="form-control input-sm"><option value=""></option></select>')
-                            .appendTo( $( '#tablaDetalle thead tr:eq(1) th:eq(5)' ).empty() )
-                            .on( 'change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
-         
-                                column
-                                    .search( val ? '^'+val+'$' : '', true, false )
-                                    .draw();
+                            var select = $('<select class="form-control input-sm"><option value=""></option></select>')
+                                .appendTo( $( '#tablaDetalle thead tr:eq(1) th:eq(5)' ).empty() )
+                                .on( 'change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+            
+                                    column
+                                        .search( val ? '^'+val+'$' : '', true, false )
+                                        .draw();
+                                } );
+            
+                            column.data().unique().sort().each( function ( d, j ) {
+                                select.append( '<option value="'+d+'">'+d+'</option>' )
                             } );
-         
-                        column.data().unique().sort().each( function ( d, j ) {
-                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );                    
+                    }                
+                });
+
+            }else{
+                    var table=$('#tablaDetalle').DataTable({
+                    orderCellsTop: true,
+                    fixedHeader: true,  
+                    "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                    dom: 'Bfrtip',
+                    buttons: [
+                    
+                        {
+                            text: 'Nueva Nota',
+                            className: 'orange',
+                            attr:  {
+                                        id: 'btnNuevaNota'
+                                    },
+                            action: function ( e, dt, node, config ) {
+                                if( uPerfil==11 || grupo!='C' ){
+                                    swal(
+                                        {
+                                            title: 'Este perfil no tiene acceso a Crear Notas' ,
+                                            text: '',
+                                            type: 'warning',
+                                            showCancelButton: false,
+                                            confirmButtonText: 'OK',
+                                            cancelButtonText: '',
+                                            closeOnConfirm: true,
+                                            closeOnCancel: false
+                                        },
+                                        function(isConfirm)
+                                        {
+                                            if(isConfirm){
+                                                return;                         
+                                            }
+                                        }
+                                    )   
+                                }else{
+                                    location.href="{{ asset('/') }}nuevanotaventa";
+                                }
+                            }
+                        },               
+                        {
+                            text: 'Actualizar',
+                            action: function ( e, dt, node, config ) {
+                                this.disable();    
+                                location.reload(true);                        
+                            }
+                        },                        
+                        'pageLength',                
+                        {
+                            extend: 'excelHtml5',
+                            title: 'Notas de Venta Vigentes',
+                            text: '<i class="fa fa-file-excel-o"></i>',
+                            titleAttr: 'Excel',                        
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4,5 ]
+                            }
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            title: 'Notas de Venta Vigentes',
+                            text:      '<i class="fa fa-file-pdf-o"></i>',
+                            titleAttr: 'PDF',                         
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4,5 ]
+                            }
+                        }
+                    ],                  
+                    "order": [[ 0, "desc" ]],
+                    language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                    initComplete: function () {
+                        this.api().columns(4).every( function () {
+                            var column = this;
+
+                            var select = $('<select class="form-control input-sm"><option value=""></option></select>')
+                                .appendTo( $( '#tablaDetalle thead tr:eq(1) th:eq(4)' ).empty() )
+                                .on( 'change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+            
+                                    column
+                                        .search( val ? '^'+val+'$' : '', true, false )
+                                        .draw();
+                                } );
+            
+                            column.data().unique().sort().each( function ( d, j ) {
+                                select.append( '<option value="'+d+'">'+d+'</option>' )
+                            } );
                         } );
-                    } );                    
-                }                
-            });
+                        this.api().columns(5).every( function () {
+                            var column = this;
+
+                            var select = $('<select class="form-control input-sm"><option value=""></option></select>')
+                                .appendTo( $( '#tablaDetalle thead tr:eq(1) th:eq(5)' ).empty() )
+                                .on( 'change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+            
+                                    column
+                                        .search( val ? '^'+val+'$' : '', true, false )
+                                        .draw();
+                                } );
+            
+                            column.data().unique().sort().each( function ( d, j ) {
+                                select.append( '<option value="'+d+'">'+d+'</option>' )
+                            } );
+                        } );                    
+                    }                
+                });
+            }
+            // DataTable
+            
 
             $('.date').datepicker({
                 todayHighlight: true,

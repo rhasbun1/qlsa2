@@ -32,7 +32,7 @@
 
 	
 	<div class="col-md-3">
-		<a href="#modalPendienteAprobacion" data-target=""  data-toggle="modal">
+		<a href="#modalPendienteAprobacion" data-target="" id="notasVen"  data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:110%" >
 				<h2 class="m-top-none">{{ $datos[0]->cantidadNventasPendientesAprobacion }}</h2>
         <h4>Notas de Venta </h4>
@@ -157,9 +157,9 @@
   
   <div class="col-md-3">
 
-    <a href="#modalPedidosSinAprobar" data-toggle="modal">
+    <a href="#modalPedidosSinAprobar1" data-toggle="modal">
         <div class="panel-stat3 bg-info btn" style="width:100%">
-          <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinAprobar }}</h2>
+          <h2 class="m-top-none">{{ $datos[0]->pedidosSinAprobarClientes }}</h2>
           <p> <h4>Pedidos pendientes de</h4>
             <h4>Aprobación de Crédito</h4></p>
         </div>
@@ -223,7 +223,7 @@
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosModificadosUltimaHora }}</h2>
         <h4>Pedidos Modificados</h4>
-        <h4> durante la última horas</h4>
+        <h4> durante las últimas 24 horas</h4>
 			</div>
 		</a>
 	</div>
@@ -235,10 +235,10 @@
 
 <div class="col-md-6">
   <a href="#modalPedidosSinAprobar" data-toggle="modal">
-      <div class="panel-stat3 bg-warning btn" style="width:100%">
+      <div class="panel-stat3 bg-warning btn" style="width:102%">
         <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinAprobar}}</h2>
-        <h3><strong>Pedidos pendientes de Aprobación de Crédito</strong><h3>
-        <br>
+        <h3><strong>Pedidos pendientes de Aprobación de Crédito</strong></h3>
+        
       </div>
     </a>
   </div>
@@ -276,7 +276,8 @@
         <a href="#NotaVentaSinFlete"  data-toggle="modal">
           <div class="panel-stat3 bg-warning btn" style="width:100%">
             <h2 class="m-top-none">{{ $datos[0]->cantidadNotaVentaConFleteSinAsignar }}</h2>
-            <font size=4><strong>Asignaciones de Flete pendientes</strong></font>
+            <font size=5><strong>Asignaciones de Flete pendientes</strong></font>
+            <br>
             <br>
           </div>
         </a>
@@ -298,7 +299,7 @@
         <a href="#modalAtrasadoTransporte" data-toggle="modal">
           <div class="panel-stat3 bg-info btn" style="width:100%">
             <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasadosTransporte }}</h2>
-
+              
             <h4>Pedidos Atrasados </h4>
             <br>
           </div>
@@ -861,7 +862,66 @@
 
 
 
+<div class="modal fade" id="modalPedidosSinAprobar1"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="width:90%" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
 
+        <h2 class="modal-title" id="exampleModalLabel">Pedidos Pendientes de Aprobación de Crédito</h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <table id="tablaModalPedidosSinAprobar" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                <thead>
+                <th >Pedido</th> 
+                <th >Fecha Creacion</th>            
+                <th >Estado</th>
+                <th >Cliente</th>
+                <th>Obra/Planta</th>
+                <th >Producto</th>
+                <th>Fecha de Entrega</th>
+                <th>Total ($)</th>
+
+
+               
+                    
+                </thead>
+                
+                <tbody>
+                @foreach($listaPedidoSinAprobarClientes as $item)
+                                <tr>
+                                
+                                    <td style="width: 50px">{{ $item->idPedido }}</td>
+                                    <td style="width: 120px">{{ $item->fechahora_creacion }}</td>
+                                    <td style="width: 120px">{{ $item->estado }}</td>
+                                    <td style="width: 120px">{{ $item->emp_nombre }}</td>
+                                    <td style="width: 120px">{{ $item->Obra }}</td>
+                                    <td style="width: 120px">{{ $item->prod_nombre }}</td>
+                                    <td style="width: 120px">{{ $item->fechaEntrega }}</td>
+                                    <td style="width: 120px">{{ number_format($item->total) }}</td>
+
+
+
+                                    
+                                  
+                                    
+                                </tr>
+
+                                @endforeach         
+                </tbody>
+               
+         </table>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal fade" id="modalPedidosSinAprobar"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" style="width:90%" role="document">
     <div class="modal-content">
@@ -945,6 +1005,7 @@
                 <th >Cliente</th>
                 <th >Fecha Creacion</th>
                 <th >Producto</th>
+                <th>total ($)</th>
                 
               
                
@@ -960,6 +1021,9 @@
                                     
                                     <td style="width: 120px">{{ $item->emp_nombre }}</td>
                                     <td style="width: 120px">{{ $item->fechahora_creacion }}</td>
+                                    <td style="width: 120px">{{ $item->prod_nombre }}</td>
+
+                                    <td style="width: 120px">{{ $item->total }}</td>
                                     
                                   
                                     
@@ -1250,23 +1314,25 @@
 
                 </thead>
                 
-                <tbody>
-				@foreach($listaNotasdeVenta as $item1)
-                 <tr>
-                            
-				 <td>{{ $item1->fechahora_creacion }}</td>        
-				 <td>{{ $item1->emp_nombre }}</td>
-                            <td>{{ $item1->Obra }}</td>
-                            <td>{{ $item1->nombreUsuarioEncargado }}</td>
-							@if($item1->aprobada==1)
-                      <td>Aprobado</td>
-              @else
-                      <td>Pendiente de Aprobación</td>
-              @endif  
+                <tbody id="notaVentas1">
+              
+                    @foreach($listaNotasdeVenta as $item1)
+                      <tr>
+                                        
+                          <td>{{ $item1->fechahora_creacion }}</td>        
+                          <td>{{ $item1->emp_nombre }}</td>
+                          <td>{{ $item1->Obra }}</td>
+                          <td>{{ $item1->nombreUsuarioEncargado }}</td>
+                          @if($item1->aprobada==1)
+                                  <td>Aprobado</td>
+                          @else
+                                  <td>Pendiente de Aprobación</td>
+                          @endif  
 
-                        </tr>
-         @endforeach
-				</tbody>
+                      </tr>
+                    @endforeach
+			          
+              </tbody>
             </table>  
       </div>
       <div class="modal-footer">
@@ -1366,6 +1432,7 @@
 	
 	
         $(document).ready(function() {
+          
             
             // DataTable
             var table=$('#tablaModalClientePendiente').DataTable({
@@ -1404,7 +1471,38 @@
                     actualizarFiltros(this.api());
                 }        
 			});
-			
+
+
+
+      // $(document).on('click','#notasVen', e=>
+      // {
+      //   $.ajax({
+      //       url: urlApp + "notaVentas",
+      //       type: "POST",
+      //       data:{},
+      //       dataType: "JSON",
+      //       success: function(data) {
+
+      //         var html = '';
+      //         var i;
+      //         for (i = 0; i < data.length; i++) {
+      //           html += '<tr>' +
+      //           '<td>'+data[i].fechahora_creacion+'</td>' +
+      //           '<td>'+data[i].emp_nombre+'</td>' +
+      //           '<td>'+data[i].Obra+'</td>' +
+      //           '<td>'+data[i].nombreUsuarioEncargado+'</td>' 
+      //           if(data[i].aprobada==1){
+      //            + '<td>'+"Aprobado"+'</td>' 
+      //           }else{
+      //            + '<td>'+"Pendiente de Aprobación"+'</td>'
+      //           } 
+      //           + '<tr>';
+      //         }
+      //         $('#notaVentas1').html(html);
+      //       }
+      //   })
+      // });
+        
 			 // DataTable
 			 var table=$('#tablaNotaVentaPendiente').DataTable({
                 orderCellsTop: true,
@@ -1578,7 +1676,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
                     },
                    
@@ -1588,7 +1686,7 @@
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
                     }
                 ],                
@@ -1891,7 +1989,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4,5 ]
+                            columns: [ 0, 1, 2, 3, 4,5,6 ]
                         }
                     },
                    
@@ -1901,7 +1999,7 @@
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6]
                         }
                     }
                 ],                
@@ -1930,7 +2028,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
                         }
                     },
                     
@@ -1940,7 +2038,7 @@
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
                         }
                     }
                 ],                
