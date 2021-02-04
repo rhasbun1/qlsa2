@@ -39,6 +39,9 @@
                         <th style="width:250px">Obra/Planta</th>
                         <th style="width:120px">Planta QLSA</th>
                         <th style="width:120px">Unidad</th>
+                        <th style="width:120px">Fecha Creación</th>
+                     
+                        
                         <th style="width:80px">Costo Flete ($/Unidad)</th>
                         <th style="width:80px">Distancia (km)</th>
                         <th style="width:80px">Tiempo Traslado (horas)</th>
@@ -104,14 +107,14 @@
            var fechaInicio1 = fechaAtexto($("#fechaInicio").val());
            var fechaTermino1 =  fechaAtexto($("#fechaTermino").val());
            if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Vigentes)"){
-               var urll = "notaVentaVigenteCargos1";
+               var urll = 'notaVentaVigenteCargos1';
                
            }else if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
 
-               var urll ="notaVentaCerradaCargos1";
+               var urll ='notaVentaCerradaCargos1';
               
            }else if($("#b").text()== " Costo Flete y Tiempo de Traslado (Asignaciones Pendientes)"){
-              var urll= "notaVentaCargosUrgente1"
+              var urll= 'notaVentaCargosUrgente1'
            }
         
            
@@ -140,7 +143,8 @@ $.ajax({
                             dato[x].nombreObra,
                             dato[x].nombrePlanta,
                             dato[x].nombreUnidad,
-                            idPlanta
+                            idPlanta,
+                            dato[x].fecha_hora_creacion
                             
                         ];
            var flete = "<input class='form-control input-sm' value=" + dato[x].flete + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
@@ -159,7 +163,8 @@ $.ajax({
             var rowNode1= [    
                              number_format( dato[x].flete, 0, ',', '.' ),
                              number_format( dato[x].distancia, 0, ',', '.' ),
-                             number_format( dato[x].tiempoTraslado, 0, ',', '.' )
+                             number_format( dato[x].tiempoTraslado, 0, ',', '.' ),
+                             codigo
                           
                          ];
 
@@ -172,6 +177,7 @@ $.ajax({
                                     rowNode[2],
                                     rowNode[3],
                                     rowNode[4],
+                                    rowNode[6],
                                    
                                     rowNode1[0],
                                     rowNode1[1],
@@ -186,7 +192,7 @@ $.ajax({
             var celda=tabla.cell(fila,0).node();
             $( celda ).css( 'text-align', 'right' ).css( 'width', '60px');
 
-            var celda=tabla.cell(fila,5).node();
+            var celda=tabla.cell(fila,4).node();
             $( celda ).css( 'text-align', 'right' ).css( 'width', '60px');
 
         }

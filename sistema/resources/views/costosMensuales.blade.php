@@ -7,7 +7,7 @@
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" id="periodoActual" value='{{ $periodoActual }}'
         <div class="panel-heading">
-            <b>Costos Mensuales</b>
+            <b>Costos  Mensuales</b>
         </div>
 
         <div class="padding-md clearfix" id="cuadro1">
@@ -61,6 +61,8 @@
                                 @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
                                   <button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>                                    
                                 @endif
+                                <button type="button" class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">revisar prueba</button>
+                                
 	                            </td>
 	                        </tr>
 	                    @endforeach
@@ -115,7 +117,7 @@
           <div style="text-align: right;">
             @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
                 <button id="btnGuardarCambios" class="btn btn-sm btn-success" style="width:120px" onclick="abrirCuadroEspera();">Guardar Cambios</button>
-                <button id="btnAgregarCosto" class="btn btn-sm btn-primary" style="width:120px" onclick="abrirAgregarCosto();">Agregar otro costo</button>
+                <button id="btnAgregarCosto" class="btn btn-sm btn-primary" style="width:120px" onclick="abrirAgregarCosto();">Agregar otro Costo</button>
             @endif
             <button class="btn btn-sm btn-warning" style="width:100px" onclick="cerrarListaProductos();">Cerrar</button>
           </div>  
@@ -555,6 +557,8 @@
                         mes: mes
                       },
                 success:function(dato){
+                  $( "#btnAgregarCosto" ).show();
+
                     for(var x=0;x<dato.length;x++){
                         if( 
                             ( document.getElementById('idPerfilSession').value=='2' ||
@@ -752,6 +756,112 @@
       $("#txtCosto").val("");
       $("#mdAgregarCosto").modal('hide'); 
     }
+    function verificarmes(row){
+        	var table=$('#tabla').DataTable();
+        	var fila=table.row(row).index();
+        	var ano=table.cell(fila,0).data();
+        	var mes=table.row(row).node().dataset.nummes;
+
+        	$("#anoSel").val(ano);
+        	$("#mesSel").val(table.cell(fila,1).data());
+
+          if(parseInt(mes)<10){ 
+               mm='0'+mes.toString();
+          }else{
+              mm=mes.toString();
+          }
+
+          periodoSeleccionado=parseInt(ano.toString()+mm.toString());
+        	document.getElementById('mesSel').dataset.numeromes=mes;
+
+          titulo="Lista de Costos " + table.cell(fila,1).data() + " " + ano;
+        	var productos=$("#tablaProductos").DataTable();
+
+        	productos.rows().remove().draw();
+
+            $.ajax({
+                url: urlApp +'verificarMesEn0',
+                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                type: 'POST',
+                dataType: 'json',
+                data: { 
+                        ano: ano,
+                        mes: mes
+                      },
+                success:function(dato){
+                  if(dato[0].numero != 0){
+                    $.ajax({
+                        url: urlApp +'costosMensualesProductosen0',
+                        headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { 
+                                ano: ano,
+                                mes: mes
+                              },
+                            success:function(dato){
+                              $( "#btnAgregarCosto" ).hide();
+                                for(var x=0;x<dato.length;x++){
+
+                                    if( 
+                                        ( document.getElementById('idPerfilSession').value=='2' ||
+                                          document.getElementById('idPerfilSession').value=='5' || 
+                                          document.getElementById('idPerfilSession').value=='18')    
+                                        ){
+                                        elemCosto="<input class='cajaNumero' value='" + new Intl.NumberFormat("de-DE").format(dato[x].costo) +"' style='width: 100px' onkeypress='return isIntegerKey(event)' onblur='formatoNumero(this);'>";
+                                    }else{
+                                        elemCosto="<input class='cajaNumero' input-sm' value='" + new Intl.NumberFormat("de-DE").format(dato[x].costo) +"' style='width: 100px' readonly>";
+                                    }
+
+                                    var fila=productos.row.add( [
+                                            dato[x].prod_nombre,
+                                            dato[x].u_nombre,
+                                            dato[x].nombrePlanta,
+                                            elemCosto, 
+                                            dato[x].costo
+                                        ] ).index();
+
+                                    productos.cell(fila,0).node().dataset.idproductolistaprecio=dato[x].idProductoListaPrecio;
+                                    productos.cell(fila,0).node().style.width="0px";
+
+                                }
+
+                                productos.draw();
+                                
+                                /*$(".cajaNumero").ejNumericTextbox({
+                                    decimalPlaces: 0,
+                                  // watermarkText: "Ingrese valor",
+                                    minValue: 0,
+                                    locale: "de-DE",
+                                    showSpinButton: false,
+                                    width: 120
+                                });*/
+
+                                actualizarFiltros(productos);
+
+                                $("#mdCostos").modal('show');
+                        
+                            }
+                        })
+
+                  }else{
+                    swal(
+                {
+                    title: 'El mes no contiene costos en 0' ,
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                }
+            ) 
+                  }
+
+                }
+              })
+    }
 
     function guardarAgregarCostos(){
       var table=$('#tablaProductos').DataTable();
@@ -787,7 +897,7 @@
           if (dato.length == 0){
             swal(
                 {
-                    title: 'Se debe agregar el producto a la lista de precios' ,
+                    title: 'Primero debe crear el producto en el maestro de productos' ,
                     text: '',
                     type: 'warning',
                     showCancelButton: false,

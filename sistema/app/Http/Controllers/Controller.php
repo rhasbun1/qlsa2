@@ -26,7 +26,7 @@ class Controller extends BaseController
         
         $datos=DB::Select('call sp_GetDatosDashboard(?,?,?)', array(0,Session::get('idUsuario'), Session::get('idPerfil')));
 
-        $listaNotasdeVenta=DB::Select('call spGetNotasdeVentas(?)', array(0) );
+        $listaNotasdeVenta=DB::Select('call spGetNotasdeVentasPendientesAprobacion(?)', array(0) );
         
         $listaPedidosIngresadosporClientesSinAprobar=DB::Select('call spGetpedidosIngresadosporClientesSinAprobar', array(0) );
 

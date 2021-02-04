@@ -156,7 +156,7 @@
             </div>
             <div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; text-align: right;">
                <button id="btnGuardarDatosGuia" type="button" class="btn btn-success btn-sm" onclick="actualizarDatosGuiaDespacho(true)">Actualizar Datos</button>
-               <button id="btnEmitirGuia" type="button" class="btn btn-warning btn-sm" onclick="emitirGuiaDespacho()" data-idperfil={{ Session::get('idPerfil') }}>Emitir Guía</button>
+               <button id="btnEmitirGuia" type="button" class="btn btn-warning btn-sm" onclick="emitirGuiaDespacho()" data-idperfil="{{ Session::get('idPerfil') }}">Emitir Guía</button>
                <button id="btnSubirPdf" type="button" class="btn btn-info btn-sm" onclick="abrirSubirGuiaPdf()">Subir PDF</button>  
                <button id="btnBajar" type="button" class="btn btn-primary btn-sm" onclick="bajarGuiaPdf();">Ver Guia PDF</button> 
                <button id="btnRegistrarSalida" type="button" class="btn btn-default btn-sm" onclick="registrarSalida();">Registrar Salida</button>

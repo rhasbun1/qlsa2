@@ -6,6 +6,7 @@
     <div class="panel panel-default table-responsive">
         <div class="panel-heading">
             <b>Empresas de Transporte</b>
+            <input type="text" value="{{Session::get('idPerfil')}} " id="perfil" hidden >
             <span class="badge badge-info pull-right">{{ $listaEmpresas->count() }} Clientes</span>
         </div>
         <div class="panel-body">
@@ -138,7 +139,27 @@
 
 
             // DataTable
-            var table=$('#tabla').DataTable({
+            if($("#perfil").val() == 2 || $("#perfil").val() == 19){
+                var table=$('#tabla').DataTable({
+                orderCellsTop: true,
+                fixedHeader: true,  
+                dom: 'Bfrtip',
+                buttons: [
+                                   
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Listado de Clientes',
+                        text: '<i class="fa fa-file-excel-o"></i>',
+                        titleAttr: 'Excel',                        
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4, 5 ]
+                            }
+                        }
+                    ],                  
+                    language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                });
+            }else{
+                var table=$('#tabla').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
                 dom: 'Bfrtip',
@@ -148,19 +169,23 @@
                         action: function ( e, dt, node, config ) {
                            location.href="{{ asset('/') }}datosEmpresaTransporte/0/";
                         }
-                    },                 
+                    },  
+                                   
                     {
                         extend: 'excelHtml5',
                         title: 'Listado de Clientes',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4, 5 ]
+                            }
                         }
-                    }
-                ],                  
-                language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
-            });
+                    ],                  
+                    language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                });
+                
+            }
+            
 
             $('#tablaDeshabilitados thead tr').clone(true).appendTo( '#tablaDeshabilitados thead' );
             $('#tablaDeshabilitados thead tr:eq(1) th').each( function (i) {

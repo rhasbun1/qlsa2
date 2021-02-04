@@ -9,7 +9,7 @@
 					Correlativo Guía Despacho
 				</div>
 				<div class="col-md-2 col-lg-1">
-					<input class="form-control input-sm" type="number" id="correlativoGuias" value="{{ $param[0]->numeroGuia }}">
+					<input class="form-control input-sm" type="number" onkeypress='return validaNumericos(event)'  min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" id="correlativoGuias" value="{{ $param[0]->numeroGuia }}">
 				</div>
 			</div>
 			<div class="row" style="padding:3px">
@@ -17,7 +17,7 @@
 					IVA
 				</div>
 				<div class="col-md-1">
-					<input class="form-control input-sm" type="number" id="iva" value="{{ $param[0]->iva }}">
+					<input class="form-control input-sm" onkeypress='return validaNumericos(event)'  min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" id="iva" value="{{ $param[0]->iva }}">
 				</div>
 			</div>		
 			<div class="row" style="padding:3px">
@@ -25,7 +25,7 @@
 					Carga Máx. Granel, Tipo Transporte Normal
 				</div>
 				<div class="col-md-1">
-					<input class="form-control input-sm" type="number" id="cmgttn" value="{{ $param[0]->carga_max_granel_tte_normal }}">
+					<input class="form-control input-sm" onkeypress='return validaNumericos(event)'  min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" id="cmgttn" value="{{ $param[0]->carga_max_granel_tte_normal }}">
 				</div>
 			</div>
 			<div class="row" style="padding:3px">
@@ -33,7 +33,7 @@
 					Carga Máx. Granel, Tipo Transporte Mixto 1
 				</div>
 				<div class="col-md-1">
-					<input class="form-control input-sm" type="number" id="cmgttm1" value="{{ $param[0]->carga_max_granel_tte_mixto_1 }}">
+					<input class="form-control input-sm" onkeypress='return validaNumericos(event)'  min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" id="cmgttm1" value="{{ $param[0]->carga_max_granel_tte_mixto_1 }}">
 				</div>
 			</div>
 			<div class="row" style="padding:3px">
@@ -41,7 +41,7 @@
 					Carga Máx. Granel, Tipo Transporte Mixto 2
 				</div>
 				<div class="col-md-1">
-					<input class="form-control input-sm" type="number" id="cmgttm2" value="{{ $param[0]->carga_max_granel_tte_mixto_2 }}">
+					<input class="form-control input-sm" onkeypress='return validaNumericos(event)'  min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" id="cmgttm2" value="{{ $param[0]->carga_max_granel_tte_mixto_2 }}">
 				</div>
 			</div>			
 			<br>
@@ -95,7 +95,7 @@
 					Tope de días para aprobación automática
 				</div>
 				<div class="col-md-2">
-					<input class="form-control input-sm" type="number" id="antiguedadDias" value="{{ $param[0]->antiguedad_dias }}">
+					<input class="form-control input-sm" onkeypress='return validaNumericos(event)'  min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" id="antiguedadDias" value="{{ $param[0]->antiguedad_dias }}">
 				</div>
 			</div>
 			<div class="row" style="padding:3px">
@@ -103,7 +103,7 @@
 					Monto Tope para aprobación automática
 				</div>
 				<div class="col-md-2">
-					<input class="form-control input-sm" type="number" id="montoTopeNV" value="{{ $param[0]->monto_TopeNV }}">
+					<input class="form-control input-sm" onkeypress='return validaNumericos(event)'  min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" id="montoTopeNV" value="{{ $param[0]->monto_TopeNV }}">
 				</div>				
 			</div>
 			<br>
@@ -137,6 +137,13 @@
 
 
 <script>
+function validaNumericos(event) {
+    if(event.charCode >= 48 && event.charCode <= 57){
+      return true;
+     }
+     return false;        
+}
+
 	function grabarParametros(){
 			var idUsuario;
 

@@ -240,10 +240,10 @@
 
             <div style="padding-top:18px; padding-bottom: 20px;padding-left: 15px">
                 @if( ( Session::get('idPerfil')=='2' or Session::get('idPerfil')=='4' ) and $notaventa[0]->aprobada==0 and $accion!='3' )
-                    <a href="{{ asset('/') }}aprobarnota/{{  $notaventa[0]->idNotaVenta }}/" class="btn btn-sm btn-primary" style="width:80px">Aprobar</a>
+                   <input type="button" class="btn btn-sm btn-primary" onclick="aprobar()" style="width:80px" value="Aprobar">
                 @endif
                 @if( Session::get('grupoUsuario')=='C' and $notaventa[0]->aprobada==1 and $notaventa[0]->TienePedidos==0 and $accion!='3' ) 
-                    <a href="{{ asset('/') }}Desaprobarnota/{{ $notaventa[0]->idNotaVenta }}/" class="btn btn-sm btn-primary" style="width:90px">Desaprobar</a>
+                    <input type="button"  class="btn btn-sm btn-primary" onclick="desaprobar()" style="width:90px" value="Desaprobar">
                 @endif
                 @if( Session::get('grupoUsuario')=='C' and (Session::get('idPerfil')!='11' and Session::get("idPerfil")!=19 ) )
                     <button class="btn btn-sm btn-success" onclick="guardarCambiosNV();">Guardar Cambios</button>
@@ -401,6 +401,45 @@
                 }
             })
         });
+        function aprobar(){
+            swal(
+                {
+                    title: 'Desea Apreobar la Nota De Venta?',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Si',
+                    cancelButtonText: 'No',
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function(isConfirm)
+                {
+                    location.href = "{{ asset('/') }}aprobarnota/{{  $notaventa[0]->idNotaVenta }}/";
+                }
+            )
+        }
+        function desaprobar(){
+            swal(
+                {
+                    title: 'Desea Despreobar la Nota De Venta?',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Si',
+                    cancelButtonText: 'No',
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function(isConfirm)
+                {
+                    location.href ="{{ asset('/') }}Desaprobarnota/{{ $notaventa[0]->idNotaVenta }}/";
+                }
+            )
+        }
+
+
+        
 
 
         function actualizarValores(){

@@ -545,9 +545,15 @@
                                 cadena+='<span onclick="abrirGuia(1, ' + dato[x].numeroGuia + ', this.parentNode.parentNode);" style="cursor:pointer; cursor: hand"><img src="'+ urlApp + 'img/iconos/guiaDespacho2.png" border="0"></span>';
                             }
 
-                            if( dato[x].certificado!='' ){  
-                                cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/"' + dato[x].certificado + '">';
-                                cadena+='<img src="'+ urlApp + 'img/iconos/certificado.png" border="0"></a>';
+                            if( dato[x].certificado!='' ){
+                                if(dato[x].certificado == 'S/C'){
+                                   
+
+                                    cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/"' + dato[x].certificado + '">';
+                                cadena+='<img src="'+ urlApp + 'img/iconos/cerwtificado.png" border="0"></a>';
+                                }  
+                                
+                                
                             }
 
                             if( dato[x].salida==1 ){
@@ -781,7 +787,7 @@
         
         $(document).ready(function() {
             
-            var idPerfil={{ Session::get('idPerfil')}};
+            var idPerfil=$("#idPerfil").val();
             var tablaDetalle="#tablaAprobados";
             // Setup - add a text input to each footer cell
 

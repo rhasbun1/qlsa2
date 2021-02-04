@@ -881,4 +881,17 @@ class PedidoController extends Controller
             return response()->json($respuesta);
         }         
     }
+   
+    public function verificarMesEn0(Request $datos){
+        if($datos->ajax()){
+            $costosEn0=DB::Select('call spGetVerificarMesEn0(?,?)', array($datos->input('ano'), $datos->input('mes')) );
+            return $costosEn0;
+        }
+    }
+    public function costosMensualesProductosen0(Request $datos){
+        if($datos->ajax()){
+            $costosMensualesProductos=DB::Select('call spGetCostosMensuales_ProductosCosto0(?,?)', array($datos->input('ano'), $datos->input('mes')) );
+            return $costosMensualesProductos;
+        }
+    }
 }

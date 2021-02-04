@@ -33,7 +33,7 @@
 	
 	<div class="col-md-3">
 		<a href="#modalPendienteAprobacion" data-target="" id="notasVen"  data-toggle="modal">
-			<div class="panel-stat3 bg-info btn" style="width:110%" >
+			<div class="panel-stat3 bg-info btn" style="width:100%" >
 				<h2 class="m-top-none">{{ $datos[0]->cantidadNventasPendientesAprobacion }}</h2>
         <h4>Notas de Venta </h4>
         <h4>pendientes de aprobación</h4>
@@ -46,9 +46,9 @@
     <a href="#modalJefePedidosAtrasados" data-toggle="modal">
         <div class="panel-stat3 bg-info btn" style="width:100%">
           <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasados }}</h2>
-          <h4>Pedidos Atrasados</h4>
-          
+          <h3>Pedidos Atrasados</h3>
           <br>
+          
 
         </div>
       </a>
@@ -218,7 +218,7 @@
 		</a>
 	</div>
 	
-	<div class="col-md-3">
+	<div class="col-md-3 text-center">
 	<a href="#modalJefeLabModificadoHaceUnaHora"  data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosModificadosUltimaHora }}</h2>
@@ -901,7 +901,7 @@
                                     <td style="width: 120px">{{ $item->Obra }}</td>
                                     <td style="width: 120px">{{ $item->prod_nombre }}</td>
                                     <td style="width: 120px">{{ $item->fechaEntrega }}</td>
-                                    <td style="width: 120px">{{ number_format($item->total) }}</td>
+                                    <td style="width: 120px">{{ number_format($item->total, 0, ",", ".") }}</td>
 
 
 
@@ -934,7 +934,7 @@
         </button>
       </div>
       <div class="modal-body">
-      <table id="tablaModalPedidosSinAprobar" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+      <table id="tablaModalPedidosSinAprobar1" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
                 <th >Pedido</th> 
                 <th >Fecha Creacion</th>            
@@ -961,7 +961,7 @@
                                     <td style="width: 120px">{{ $item->Obra }}</td>
                                     <td style="width: 120px">{{ $item->prod_nombre }}</td>
                                     <td style="width: 120px">{{ $item->fechaEntrega }}</td>
-                                    <td style="width: 120px">{{ number_format($item->total) }}</td>
+                                    <td style="width: 120px">{{ number_format($item->total,0,",",".") }}</td>
 
 
 
@@ -1896,7 +1896,7 @@
 
 			
 				// DataTable
-				var table=$('#tablaModalJefeLabModificadoHaceUnaHora').DataTable({
+				var table=$('#tablaModalPedidosSinAprobar1').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
                 lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
@@ -1911,7 +1911,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
                     },
                     {
@@ -1920,7 +1920,7 @@
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
                     }
                    
@@ -1933,7 +1933,7 @@
                 }  
                               
 			}); //finData
-
+     
 				// DataTable
 				var table=$('#tablaNotaVentaSinFlete').DataTable({
                 orderCellsTop: true,
@@ -2092,7 +2092,7 @@
 
       
       	// DataTable
-			var table=$('#tablaModalPedidosSinAprobar').DataTable({
+			var table=$("#tablaModalPedidosSinAprobar").DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
                 lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
