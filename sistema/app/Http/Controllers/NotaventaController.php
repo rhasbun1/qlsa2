@@ -424,5 +424,8 @@ class NotaventaController extends Controller
 		$listaNotasdeVenta=DB::Select('call spGetNotasdeVentas(?)', array(0) );       	
         return $listaNotasdeVenta;
     }
+    public function verificarMesEn0(){
+        
+    }
 
 }

@@ -146,6 +146,10 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('obtenerPedidosDespachados','PedidoController@obtenerPedidosDespachados');
 	Route::post('crearCostosMensuales', 'PedidoController@crearCostosMensuales');
 	Route::post('costosMensualesProductos', 'PedidoController@costosMensualesProductos');
+	Route::post('verificarMesEn0', 'PedidoController@verificarMesEn0');
+	Route::post('costosMensualesProductosen0', 'PedidoController@costosMensualesProductosen0');
+
+
 	Route::post('obtenerIdProductoListaPrecio', 'PedidoController@obtenerIdProductoListaPrecio');
 	Route::post('guardarProductoListaPrecio', 'PedidoController@guardarProductoListaPrecio');
 	Route::get('aprobarnotaventa', 'NotaventaController@AprobarNotasdeVenta');
