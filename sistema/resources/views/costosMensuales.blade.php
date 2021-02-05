@@ -61,7 +61,7 @@
                                 @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
                                   <button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>                                    
                                 @endif
-                                <button type="button" class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">revisar prueba</button>
+                                <button type="button"  class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">Revicion Costos en 0</button>
                                 
 	                            </td>
 	                        </tr>
@@ -614,6 +614,7 @@
 
 
 		function agregarMes(){
+
 			var table=$('#tabla').DataTable();
             var ano=$("#ano").val();
 
@@ -631,46 +632,68 @@
                     });
                 return;
             }
+           
+            var f = new Date();
+           
+      if((f.getMonth() +2 >= $("#mes").val() && f.getFullYear() >= $("#ano").val()) || (f.getMonth() +1 == 12 && f.getFullYear() +1 == $("#ano").val() && $("#mes").val() == 1) || (f.getMonth() +1 == 12 && f.getFullYear() +1 >= $("#ano").val())){
 
-			for (var i = 0; i < table.rows().count(); i++){
+        
+            for (var i = 0; i < table.rows().count(); i++){
 
-				var m = table.row(i).node().dataset.nummes;
-				if(table.cell(i,0).data()==$("#ano").val() && m==$("#mes").val() ){
-                    swal(
-                        {
-                            title: '¡Mes ya existe!',
-                            text: 'El año y mes ingresados ya existen en la lista',
-                            type: 'warning',
-                            showCancelButton: false,
-                            confirmButtonText: 'OK',
-                            cancelButtonText: 'NO',
-                            closeOnConfirm: true,
-                            closeOnCancel: false
-                        });
-                    return;
-				}
-			}
+                var m = table.row(i).node().dataset.nummes;
+                if(table.cell(i,0).data()==$("#ano").val() && m==$("#mes").val() ){
+                            swal(
+                                {
+                                    title: '¡Mes ya existe!',
+                                    text: 'El año y mes ingresados ya existen en la lista',
+                                    type: 'warning',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'OK',
+                                    cancelButtonText: 'NO',
+                                    closeOnConfirm: true,
+                                    closeOnCancel: false
+                                });
+                            return;
+                  } 
+            }
 
-      $.ajax({
-          url: urlApp + "crearCostosMensuales",
-          headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
-          type: 'POST',
-          dataType: 'json',
-          data: {                      
-                  ano: $("#ano").val(),
-                  mes: $("#mes").val()
-                },
-          success:function(dato){
-            var nodo=table.row.add( [
-                    $("#ano").val(),
-                    $("#mes option:selected").html(),
-                    '<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>' + 
-                    '<button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>'                       
-                    ] ).draw().node();
 
-            nodo.dataset.nummes=$("#mes").val();
-          }
-      })			
+            $.ajax({
+              url: urlApp + "crearCostosMensuales",
+              headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+              type: 'POST',
+              dataType: 'json',
+              data: {                      
+                      ano: $("#ano").val(),
+                      mes: $("#mes").val()
+                    },
+              success:function(dato){
+                var nodo=table.row.add( [
+                        $("#ano").val(),
+                        $("#mes option:selected").html(),
+                        '<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>' + 
+                        '<button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>' +
+                        '<button type="button" class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">revisar prueba</button>'           
+                        ] ).draw().node();
+
+                nodo.dataset.nummes=$("#mes").val();
+              }
+            })			
+
+      }else{
+        swal(
+            {
+                title: '¡Solo Puede Ingresar Costos Hasta Un Mes Mas Que El Actual!',
+                text: '',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'NO',
+                closeOnConfirm: true,
+                closeOnCancel: false
+            });
+      }        
+
                       
 		}
 

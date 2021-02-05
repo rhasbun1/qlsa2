@@ -340,19 +340,7 @@ $.ajax({
                     )
                     return;                   
                 }
-                // var idtab = tabla.cell(i,3).data();
                
-                // if("{{$cargos[0]->nombre}}" == idtab){
-                //   var aa=1;
-                // }else if("{{$cargos[1]->nombre}}" == idtab){
-                //     var aa=2;
-                // }else if("{{$cargos[2]->nombre}}" == idtab){
-                //     var aa=3;
-                // }else if("{{$cargos[3]->nombre}}" == idtab){
-                //     var aa=4;
-                // }else if("{{$cargos[4]->nombre}}" == idtab){
-                //     var aa=5;
-                // }
                 u_codigo=tabla.cell(i,8).node().getElementsByTagName('input')[0].value;
                 idPlanta=tabla.cell(i,9).node().getElementsByTagName('input')[0].value;
 
