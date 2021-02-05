@@ -4,6 +4,7 @@
 <div class="padding-md">
 	<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
 
+  
 @if (Session::get('grupoUsuario')!='CL' and (Session::get('idPerfil') == '2' || Session::get('idPerfil') == '4' || Session::get('idPerfil') == '18'))
 
 	
@@ -98,8 +99,11 @@
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosIngresadosClienteSinAprobar }}</h2>
         <h5>Pedidos Pendientes de </h5>
-        <h5>Preaprobación </h5>
-        <h5>(ingresados por clientes)</h5>
+        
+        <p><font size=5><strong>Preaprobación</strong></font></p>
+
+        <font size=1>(ingresados por clientes)</font>
+        
 			</div>
 		</a>
 
@@ -300,8 +304,9 @@
           <div class="panel-stat3 bg-info btn" style="width:100%">
             <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasadosTransporte }}</h2>
               
-            <h4>Pedidos Atrasados </h4>
-            <br>
+            <h4>Pedidos Atrasados</h4>
+            <h4>(despacho pendiente)</h4>
+            
           </div>
         </a>
     </div>
@@ -715,6 +720,7 @@
                 <th>Obra/Planta</th>
                 <th >Producto</th>
                 <th >Cantidad</th>
+                <th>Unidad</th>
                
                     
                 </thead>
@@ -732,7 +738,7 @@
                                     <td style="width: 120px">{{ $item->prod_nombre }}</td>
                                     
                                     <td style="width: 30px;text-align: right;">{{number_format( $item->cantidad, 0, ',', '.' ) }}</td>
-                                    
+                                    <td style="width: 120px">{{ $item->u_nombre }}</td>
                                 </tr>
                 @endforeach         
                 </tbody>
