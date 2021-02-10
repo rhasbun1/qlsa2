@@ -147,7 +147,8 @@ $.ajax({
             var codigo = "<input class='form-control input-sm' style='display: none;' value=" + dato[x].u_codigo + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
             var idPlanta = "<input class='form-control input-sm' style='display: none;' value=" + dato[x].idPlanta + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
            
-               
+                $fechamedificada = dato[x].fecha_hora_creacion;
+                
             var rowNode= [
                             idNotaVenta=dato[x].idNotaVenta ,
                             dato[x].nombreCliente,
@@ -155,7 +156,7 @@ $.ajax({
                             dato[x].nombrePlanta,
                             dato[x].nombreUnidad,
                             idPlanta,            
-                            $ano 
+                            $fechamedificada 
                                       
                         ];
            var flete = "<input class='form-control input-sm' value=" + dato[x].flete + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
