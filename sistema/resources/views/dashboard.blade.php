@@ -226,8 +226,8 @@
 	<a href="#modalJefeLabModificadoHaceUnaHora"  data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosModificadosUltimaHora }}</h2>
-        <h4>Pedidos Modificados</h4>
-        <h4> durante las últimas 24 horas</h4>
+        <h5>Pedidos Modificados</h5>
+        <h5> durante las últimas 24 horas</h5>
 			</div>
 		</a>
 	</div>
@@ -1137,8 +1137,8 @@
                     <th style="width: 200px">Cliente</th>
                     <th>Obra/Planta</th>
                     <th>Producto</th>
-    				<th style="width: 60px">Cantidad</th>
-					<th>Transporte</th>
+    				        <th style="width: 60px">Cantidad</th>
+					          <th>Transporte</th>
                     <th>Conductor</th>
                     <th style="width: 80px">Fecha Salida</th>
     	</thead>
@@ -1838,7 +1838,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
                         }
                     },
                    
@@ -1848,7 +1848,7 @@
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF',                         
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
                         }
                     }
                 ],                

@@ -139,7 +139,7 @@
 
 
             // DataTable
-            if($("#perfil").val() == 2 || $("#perfil").val() == 19){
+            if($("#perfil").val() == 2 || $("#perfil").val() == 19 || $("#perfil").val() == 3 || $("#perfil").val() == 12 ||  $("#perfil").val() == 18 ||  $("#perfil").val() == 4 ||  $("#perfil").val() == 11){
                 var table=$('#tabla').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
@@ -154,7 +154,15 @@
                             exportOptions: {
                                 columns: [ 0, 1, 2, 3, 4, 5 ]
                             }
+                        } ,{
+                        extend: 'pdfHtml5',
+                        title: 'Pedidos en Proceso',
+                        text:      '<i class="fa fa-file-pdf-o"></i>',
+                        titleAttr: 'PDF',                          
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5]
                         }
+                    },
                     ],                  
                     language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
                 });

@@ -61,7 +61,7 @@
                                 @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
                                   <button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>                                    
                                 @endif
-                                <button type="button"  class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">Revicion Costos en 0</button>
+                                <button type="button"  class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">Revision Costos en 0</button>
                                 
 	                            </td>
 	                        </tr>
@@ -444,18 +444,7 @@
                 dom: 'Bfrtip',
                 buttons: [
                     btnExcel,
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Costos',
-                        text:      '<i class="fa fa-file-text-o"></i>',
-                        titleAttr: 'CSV',
-                        fieldSeparator: ';',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 4 ]
-                        }, 
-                        charset: 'UTF-8',
-                        bom: true
-                    },                
+                                  
                 ],                                                
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
                 initComplete: function () {

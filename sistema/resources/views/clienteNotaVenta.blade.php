@@ -284,13 +284,22 @@
             buttons: [              
                 {
                     extend: 'excelHtml5',
-                    title: 'Listado de Clientes Full y Limitado',
+                    title: 'Clientes / Notas de Venta',
                     text: '<i class="fa fa-file-excel-o"></i>',
                     titleAttr: 'Excel',                         
                     exportOptions: {
                         columns: [ 0, 1, 2, 3]
                     }
-                }
+                },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Clientes / Notas de Venta',
+                        text:      '<i class="fa fa-file-pdf-o"></i>',
+                        titleAttr: 'PDF',                         
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3 ]
+                        }
+                    } 
             ],                  
             language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
         });

@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-md-2">
                 </div>
-               <div class="col-md-9" style="display: inline">
+               <div class="col-md-9" id="filtro" style="display: inline">
                 Filtro&nbsppor&nbspFecha&nbspCreación
 					<input id="fechaInicio" class="form-control input-sm date" style="display: inline; width: 140px">&nbsp&nbsp
 					<input id="fechaTermino" class="form-control input-sm date" style="display: inline; width: 140px" data-date-end-date="0d">
@@ -94,10 +94,17 @@
 
     <!-- Timepicker -->
     <script src="{{ asset('/') }}js/bootstrap-timepicker.min.js"></script> 
-    <script src="https://cdn.datatables.net/fixedcolumns/3.2.5/js/dataTables.fixedColumns.min.js"></script> 
+    <!-- <script src="https://cdn.datatables.net/fixedcolumns/3.2.5/js/dataTables.fixedColumns.min.js"></script>  -->
     <script src="{{ asset('/') }}js/app/funciones.js"></script>
     <script src="js/syncfusion/ej.web.all.min.js"> </script>
     <script src="{{ asset('/') }}js/syncfusion/lang/ej.culture.de-DE.min.js"></script>
+
+
+
+    <!-- Timepicker -->
+
+    <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>  
+    
 
     <script>
    
@@ -115,6 +122,9 @@
               
            }else if($("#b").text()== " Costo Flete y Tiempo de Traslado (Asignaciones Pendientes)"){
               var urll= 'notaVentaCargosUrgente1'
+              $("#filtro"). hide();
+             
+
            }
         
            
@@ -136,16 +146,17 @@ $.ajax({
             
             var codigo = "<input class='form-control input-sm' style='display: none;' value=" + dato[x].u_codigo + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
             var idPlanta = "<input class='form-control input-sm' style='display: none;' value=" + dato[x].idPlanta + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
-
+           
+               
             var rowNode= [
                             idNotaVenta=dato[x].idNotaVenta ,
                             dato[x].nombreCliente,
                             dato[x].nombreObra,
                             dato[x].nombrePlanta,
                             dato[x].nombreUnidad,
-                            idPlanta,
-                            dato[x].fecha_hora_creacion
-                            
+                            idPlanta,            
+                            $ano 
+                                      
                         ];
            var flete = "<input class='form-control input-sm' value=" + dato[x].flete + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
            var distancia = "<input class='form-control input-sm' value=" + dato[x].distancia + " maxlength='5' onkeypress='return isIntegerKey(event)'>";
@@ -221,7 +232,7 @@ $.ajax({
 
             $('#tablaNotas thead tr').clone(true).appendTo( '#tablaNotas thead' );
             $('#tablaNotas thead tr:eq(1) th').each( function (i) {
-                var title = $(this).text();
+                var title = $(this).text(); 
                 if(title.trim()!='' && title.trim()=='Unidad' ){
                     $(this).html( '<select id="selUnidad" class="form-control input-sm"></select>' );
                 }else if(title.trim()!='' && title.trim()=='Planta QLSA' ){
@@ -248,37 +259,110 @@ $.ajax({
             var tabla=$('#tablaNotas').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,
-                columnDefs: [ {
-                                "targets": [4,5,6],
-                                "orderable": false
-                                } ],                    
-                language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                scrollX: true,
+                scrollCollapse: true,
+                dom: 'Bfrtip',              
+                columnDefs:[
+                                {
+                                    render: function (data, type, full, meta) {
+                                        return "<div style='white-space:normal;width:100%'>" + data + "</div>";
+                                    },                                     
+                                    targets:[1]
+                                }
+                            ],
+
+                buttons: [
+                    'pageLength', 
+                    {
+                        text: 'Actualizar',
+                        action: function ( e, dt, node, config ) {
+                            this.disable();    
+                            location.reload(true);                        
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Costo Flete y Tiempo de Traslado',
+                        text: '<i class="fa fa-file-excel-o"></i>',
+                        titleAttr: 'Excel',                        
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4,5,6,7,8]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Costo Flete y Tiempo de Traslado',
+                        text:      '<i class="fa fa-file-pdf-o"></i>',
+                        titleAttr: 'PDF',                         
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4,5,6,7,8 ]
+                        }
+                    }                    
+                    
+                ],        
+                // "order": [[ 0, "desc" ]],                    
+                // // language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
                 initComplete: function () {
-                    actualizarFiltros(this.api());
-                }                
-            });             
+                    this.api().columns(4).every( function () {
+                        var column = this;
+                        var select = $("#selUnidad" ).empty().append( '<option value=""></option>' )
+                            .on( 'change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+         
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+         
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    } );
+                    this.api().columns(3).every( function () {
+                        var column = this;
+                        var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
+                            .on( 'change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+         
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+         
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    } );
+                }               
+            });              
 
         } );
-
+ 
         function actualizarFiltros(tabla){
-            tabla.columns(4).every( function () {
+            tabla.columns(3).every( function () {
                 var column = this;
                 var select = $("#selUnidad" ).empty().append( '<option value=""></option>' )
-                    .on( 'change', function () {
+                .on( 'change', function () {
                         var val = $.fn.dataTable.util.escapeRegex(
                             $(this).val()
                         );
- 
+
                         column
                             .search( val ? '^'+val+'$' : '', true, false )
                             .draw();
                     } );
- 
+
                 column.data().unique().sort().each( function ( d, j ) {
                     select.append( '<option value="'+d+'">'+d+'</option>' )
                 } );
             } );
-            tabla.columns(3).every( function () {
+            
+            tabla.columns(4).every( function () {
                 var column = this;
                 var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
                     .on( 'change', function () {
@@ -305,21 +389,21 @@ $.ajax({
 		    var cadena='[';
 		    var costo="0";
 		    for (var i = 0; i < tabla.rows().count(); i++){
-		    	if(tabla.cell(i,5).node().getElementsByTagName('input')[0].value==''){
+		    	if(tabla.cell(i,6).node().getElementsByTagName('input')[0].value==''){
 		    		flete="0";
 		    	}else{
-		    		flete=tabla.cell(i,5).node().getElementsByTagName('input')[0].value;
+		    		flete=tabla.cell(i,6).node().getElementsByTagName('input')[0].value;
 		    	}
 
-                if(tabla.cell(i,6).node().getElementsByTagName('input')[0].value==''){
+                if(tabla.cell(i,7).node().getElementsByTagName('input')[0].value==''){
                     distancia="0";
                 }else{
-                    distancia=tabla.cell(i,6).node().getElementsByTagName('input')[0].value;
+                    distancia=tabla.cell(i,7).node().getElementsByTagName('input')[0].value;
                 }
-                if(tabla.cell(i,7).node().getElementsByTagName('input')[0].value==''){
+                if(tabla.cell(i,8).node().getElementsByTagName('input')[0].value==''){
                     tiempoTraslado="0";
                 }else{
-                    tiempoTraslado=tabla.cell(i,7).node().getElementsByTagName('input')[0].value;
+                    tiempoTraslado=tabla.cell(i,8).node().getElementsByTagName('input')[0].value;
                 }   
 
 

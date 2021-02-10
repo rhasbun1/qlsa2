@@ -177,7 +177,7 @@
                     },                
                     {
                         extend: 'excelHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Listado de Feriados',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',
                         exportOptions: {
@@ -187,7 +187,7 @@
                    
                     {
                         extend: 'pdfHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Listado de Feriados',
                         text:      '<i class="fa fa-file-pdf-o"></i>',
                         titleAttr: 'PDF', 
                         exportOptions: {

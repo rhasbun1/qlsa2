@@ -59,7 +59,7 @@
 			<table id="tablaPedidos" class="table table-hover table-condensed table-responsive" style="width: 100%">
 				<thead>
 					<th style="width:80px;text-align: right;">Nº de Pedido</th>
-                    <th style="width: 80px"></th>
+                    <th></th>
                     <th>Planta Origen</th>
                     <th style="width: 200px">Cliente</th>
                     <th>Obra/Planta</th>

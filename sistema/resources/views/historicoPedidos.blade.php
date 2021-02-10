@@ -7,7 +7,7 @@
     <div class="panel panel-default">
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         <div class="panel-heading">
-            <b>Pedidos Despachados</b>
+            <b>Pedidos000 Despachados</b>
         </div>
         <div class="panel-body" id="panelBody" style="display: none;">
             <div> 
@@ -64,7 +64,7 @@
                     <div class="col-md-7">
                         <div class="row">
                             <div class="col-md-4" style="padding-top: 5px">
-                                Filtrar por Horario Salida
+                                Filtrar por Fecha Salida
                             </div>
                             <div class="col-md-3">
                                 <div class="input-group date" id="divFechaMin">
@@ -88,7 +88,7 @@
                         </div>
                         <div class="row" style="padding-top: 5px">  
                             <div class="col-md-4" style="padding-top: 5px">
-                                Filtrar por Horario de Creación (filtro para <b>ver todos los pedidos suspendidos</b>)
+                                Filtrar por Fecha de Creación (filtro para <b>ver todos los pedidos suspendidos</b>)
                             </div>
                             <div class="col-md-3">
                                 <div class="input-group date" id="divFechaCreacionMin">
@@ -154,7 +154,7 @@
                         <th style="width: 40px;text-align: right;">Cantidad<br>Real</th>
                         <th style="width: 60px">Unidad</th>
                         <th style="width: 80px">Fecha Entrega<br>Solicitada</th>
-                        <th style="width: 80px">Horario de Salida</th>
+                        <th style="width: 80px">Fecha Salida/Hora SALIDA</th>
                         <th style="width: 80px">Forma de<br>Entrega</th>
                         <th style="width: 80px">Planta de Origen</th>
                         <th style="width: 80px">Estado</th>
@@ -648,7 +648,17 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
                         }
-                    }
+                    },
+                    
+                    {
+                        extend: 'pdfHtml5',
+                        title: tituloArchivo,
+                        text:      '<i class="fa fa-file-pdf-o"></i>',
+                        titleAttr: 'PDF',                         
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4,5,6,7,8 ]
+                        }
+                    } 
                 ],                
                 "order": [[ 0, "desc" ]],                       
                 language:{ url: "{{ asset('/') }}locales/datatables_ES.json",

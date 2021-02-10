@@ -364,7 +364,7 @@
                     <div class="tab-pane active" id="tabLogAcciones" style="padding-top: 5px">
                         <table id="tablaLog" class="table table-hover table-condensed table-responsive" style="width: 850px">
                             <thead>
-                                <th style="width:170px">Fecha/Hora</th>
+                                <th style="width:170px">Fecha</th>
                                 <th style="width:200px">Usuario</th>
                                 <th style="width:250px">Acción</th>
                                 <th style="width:350px">Motivo</th>

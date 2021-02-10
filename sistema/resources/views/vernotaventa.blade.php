@@ -290,7 +290,7 @@
     <div class="tab-pane active" id="tabLogAcciones" style="padding-top: 5px">
         <table id="tablaLog" class="table table-hover table-condensed table-responsive" style="width: 850px">
             <thead>
-                <th style="width:200px">Fecha/Hora</th>
+                <th style="width:200px">Fecha</th>
                 <th style="width:200px">Usuario</th>
                 <th style="width:100px">Acción</th>
                 <th style="width:350px">Motivo</th>
@@ -404,12 +404,11 @@
         function aprobar(){
             swal(
                 {
-                    title: 'Desea Apreobar la Nota De Venta?',
+                    title: 'Nota De Venta Aprobada',
                     text: '',
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Si',
-                    cancelButtonText: 'No',
+                    confirmButtonText: 'ok',
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
@@ -417,17 +416,17 @@
                 {
                     location.href = "{{ asset('/') }}aprobarnota/{{  $notaventa[0]->idNotaVenta }}/";
                 }
+            
             )
         }
         function desaprobar(){
             swal(
                 {
-                    title: 'Desea Despreobar la Nota De Venta?',
+                    title: 'Nota De Venta Desaprobada',
                     text: '',
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Si',
-                    cancelButtonText: 'No',
+                    confirmButtonText: 'ok',
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
@@ -512,7 +511,23 @@
                         swal.showInputError("El motivo no puede estar vacío.");
                         return false
                     }else{
-                        location.href="{{ asset('/') }}cerrarNotaVenta/{{ $notaventa[0]->idNotaVenta }}/" + inputValue +"/";                  
+                        swal(
+                            {
+                                title: 'Nota de Venta Pasada a Historico' ,
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            },
+                            function(isConfirm)
+                            {
+                                if(isConfirm){
+                                    location.href="{{ asset('/') }}cerrarNotaVenta/{{ $notaventa[0]->idNotaVenta }}/" + inputValue +"/";                  
+                                }
+                            })
                     }
 
                 }

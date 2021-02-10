@@ -66,6 +66,10 @@
     <script src="{{ asset('/') }}js/app/funciones.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/3.2.5/js/dataTables.fixedColumns.min.js"></script>
 
+
+    <!-- Timepicker -->
+
+    
     <script>
         function reFresh(){ 
             location.reload(true)
@@ -147,12 +151,12 @@
                             location.href=("{{ asset('/') }}dashboard");
                         }
                     }
-                ],                  
-                "order": [[ 0, "asc" ]],              
-                language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
-                preDrawCallback: function( settings ) {
-                    document.getElementById('panelBody').style.display="block";
-                  },  
+                ],                   
+                // "order": [[ 0, "asc" ]],              
+                // language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                // preDrawCallback: function( settings ) {
+                //     document.getElementById('panelBody').style.display="block";
+                //   },  
                 initComplete: function () {
                     this.api().columns(3).every( function () {
                         var column = this;

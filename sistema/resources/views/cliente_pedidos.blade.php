@@ -138,7 +138,7 @@
                         extend: 'excelHtml5',
                         title: 'Notas de Venta Vigentes',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4,5,6,7,8,9,10,11,12,13 ]
+                            columns: [ 0, 1, 2, 3, 4,5,6,7,8,9,10,11,12 ]
                         }
                     },
                   
@@ -147,7 +147,7 @@
                         extend: 'pdfHtml5',
                         title: 'Notas de Venta Vigentes',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4,5,6,7,8,9,10,11,12,13]
+                            columns: [ 0, 1, 2, 3, 4,5,6,7,8,9,10,11,12]
                         }
                     }
                 ],                       

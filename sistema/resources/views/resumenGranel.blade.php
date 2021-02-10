@@ -64,7 +64,7 @@
                     <th style="width:90px"></th>
 					<th style="width:60px">Forma Entrega</th>
 					<th style="width:60px;text-align: right;">Nº Pedido</th>
-					<th style="width:80px">Horario Carga</th>
+					<th style="width:80px">Fecha Carga</th>
 					<th style="width:80px">Planta Origen</th>
 					<th style="width:80px">Producto</th>
 					<th style="width:50px;text-align: right;">Cantidad</th>
@@ -345,13 +345,7 @@
                 
                 
                 'pageLength',
-                {
-                        extend: 'excelHtml5',
-                        title: "oo",
-                        exportOptions: {
-                            columns: [ 0, 2, 3, 4, 5 , 6, 7, 8 ]
-                        }
-                    }  
+                 
             ],                  
             "order": [[ 1, "asc" ]],                        
             language:{url: "{{ asset('/') }}locales/datatables_ES.json"},

@@ -13,7 +13,7 @@
 					Nº Guía (*)
 				</div>
 				<div class="col-md-2">
-					<input id="numeroGuia" class="form-control input-sm" onkeypress="return isNumberKey(event)" maxlength="9">
+					<input id="numeroGuia" class="form-control input-sm"  maxlength="10">
 				</div>
 			</div>
 			<div class="row" style="padding-top: 5px">

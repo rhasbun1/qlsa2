@@ -547,7 +547,7 @@
 
                             if( dato[x].certificado!='' ){
                                 if(dato[x].certificado == 'S/C'){
-                                   
+                                      
 
                                     cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/"' + dato[x].certificado + '">';
                                 cadena+='<img src="'+ urlApp + 'img/iconos/cerwtificado.png" border="0"></a>';
