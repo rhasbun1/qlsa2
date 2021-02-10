@@ -124,7 +124,14 @@
                     if( dato[x].certificado!='' ){
                         cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/' + dato[x].certificado + '"><img src="'+ urlApp + 'img/iconos/certificado.png" border="0"></a>';
                     } 
-                 
+                    var fechaHora = dato[x].fechaHoraSalida;
+                    fecha = fechaHora.split(" ", 1 ); 
+                    hora = fechaHora.split(" ")[1]; 
+                    fecha1 = String(fecha);  
+                    var ano = fecha1.split("-")[0];
+                    var mes = fecha1.split("-")[1];
+                    var dia = fecha1.split("-")[2];
+                    var fecha2 = dia+"/"+mes+"/"+ano;
 			        var rowNode= tabla.row.add([
 			        							dato[x].idPedido,
                                                 cadena,
@@ -134,8 +141,8 @@
 			        							dato[x].prod_nombre,
 			        							dato[x].cantidadDespachada,
 			        							dato[x].nombreTransporte,
-			        							dato[x].nombreConductor,
-                                                dato[x].fechaHoraSalida
+                                                dato[x].nombreConductor,
+                                                (fecha2+" "+hora)                                                
                                                 ]);
 
 			        var fila=tabla.row( rowNode ).index();
@@ -351,9 +358,12 @@
                     }
                 }                
             ],                  
-            "order": [[ 9, "asc" ]],                        
+            "order": [[ 0, "asc" ]],                        
             language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
 
         });
 	 });
+     function formato(texto){
+                             return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+                        }
 </script>

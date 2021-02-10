@@ -36,7 +36,7 @@
                 <thead>
                     <th style="width: 80px">Tipo</th>
                     <th style="width: 500px">Motivo</th>
-                    <th style="width: 120px">Fecha/Hora</th>
+                    <th style="width: 120px">Fecha</th>
                     <th style="width: 200px">Usuario</th>
                 </thead>
                 <tbody>
@@ -131,7 +131,7 @@
 	                        var fila=tabla.row.add( [
 	                                dato[x].tipo,
 	                                dato[x].motivo,
-	                                dato[x].fechaHora,
+	                                formato(dato[x].fechaHora),
 	                                dato[x].nombreUsuario
 	                            ] );
 	                    }
@@ -141,6 +141,9 @@
         	}
    		
     	}
+		function formato(texto){
+			return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+		}
 
     </script>
    

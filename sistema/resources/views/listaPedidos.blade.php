@@ -162,7 +162,7 @@
                                     <td style="width: 70px">{{ $item->nombrePlanta }}</td>
                                     <td style="width: 100px">{{ $item->fechaCarga }} {{ $item->horaCarga }} </td>
                                     <td style="width: 150px">{{ $item->apellidoConductor }} / {{ $item->empresaTransporte }}</td>
-                                <td style="width: 50px;text-align: right;">{{ $item->fecha }} {{ $item->hora}}</td>
+                                <td style="width: 50px;text-align: right;">{{ date('d/m/Y', strtotime($item->fecha)) }} {{ $item->hora}}</td>
                                     <td style="width: 80px;text-align: center;">{{ $item->numeroAuxiliar }}</td>
                                 </tr>
                             @endforeach

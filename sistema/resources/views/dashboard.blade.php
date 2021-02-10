@@ -1146,6 +1146,11 @@
                 <tbody>
 				
                 @foreach($listatoneladasAnuales as $item)
+                
+                <?php
+                    $fecha = explode(" ", $item->fechaHoraSalida);
+                
+                ?>
 				<tr>
                             <td>{{ $item->idPedido }}</td>
                             <td>{{ $item->plantaQLSA }}</td>
@@ -1155,7 +1160,7 @@
                             <td>{{ $item->cantidadDespachada }}</td>
                             <td>{{ $item->nombreTransporte }}</td>
                             <td>{{ $item->nombreConductor }}</td>
-                            <td>{{ $item->fechaHoraSalida }}</td>
+                            <td>{{ date('d/m/Y', strtotime($fecha[0]))  }} {{$fecha[1]}}</td>
 				</tr>
                 @endforeach        
 				
@@ -1194,8 +1199,8 @@
                     <th style="width: 200px">Cliente</th>
                     <th>Obra/Planta</th>
                     <th>Producto</th>
-    				<th style="width: 60px">Cantidad</th>
-					<th>Transporte</th>
+    				        <th style="width: 60px">Cantidad</th>
+					          <th>Transporte</th>
                     <th>Conductor</th>
                     <th style="width: 80px">Fecha Salida</th>
 					
@@ -1203,6 +1208,7 @@
                 
                 <tbody>
                 @foreach($listaToneladasaMensuales as $item)
+                $fecha = explode($item->fechaHoraSalida);
 				<tr>  
                             <td>{{ $item->idPedido }}</td>
                             <td>{{ $item->plantaQLSA }}</td>
@@ -1212,7 +1218,7 @@
                             <td>{{ $item->cantidadDespachada }}</td>
                             <td>{{ $item->nombreTransporte }}</td>
                             <td>{{ $item->nombreConductor }}</td>
-                            <td>{{ $item->fechaHoraSalida }}</td>
+                            <td>{{ {{ date('d/m/Y', strtotime($fecha[0]))  }} {{$fecha[1]}} }}</td>
 							</tr>
                 @endforeach        
                 </tbody>

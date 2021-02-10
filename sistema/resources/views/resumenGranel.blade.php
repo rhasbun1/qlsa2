@@ -328,13 +328,14 @@
          
         } );
 
-        var table=$('#tablaPedidos').DataTable({
-             orderCellsTop: true,
-             fixedHeader: true,         
-            "lengthMenu": [[6, 10, 20, -1], ["6", "10", "20", "Todos"]],
-            dom: 'Bfrtip',
-            "scrollX": true,
-            buttons: [
+    
+            var table=$('#tablaPedidos').DataTable({
+                orderCellsTop: true,
+                fixedHeader: true,
+                "scrollX": true,
+                lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],                
+                dom: 'Bfrtip',
+                buttons: [
                 {
                     text: 'Actualizar',
                     action: function ( e, dt, node, config ) {
@@ -344,7 +345,7 @@
                 },  
                 
                 
-                'pageLength',
+                'pageLength'
                  
             ],                  
             "order": [[ 1, "asc" ]],                        
