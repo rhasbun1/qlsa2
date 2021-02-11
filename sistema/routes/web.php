@@ -230,7 +230,6 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('consultarProductoAcciones', 'AccionesController@consultarProductoAcciones');
 	Route::post('consultarRegistroAcciones', 'AccionesController@consultarRegistroAcciones');
 	Route::post('subirArchivoCostos', 'ProductoController@subirArchivoCostos');
-	Route::post('plantaspedidos', 'PedidoController@plantaspedidos');
 
 	Route::resource('nuevanotaventa', 'NotaventaController', ['except' => 'show']);
 	Route::resource('gestionarpedido/{idNotaVenta}', 'PedidoController', ['except' => 'show']);
