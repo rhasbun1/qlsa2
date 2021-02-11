@@ -245,7 +245,7 @@
             }
         })        
     }  
-
+    
     function agregarProducto(){
 
         if(document.getElementById('tipoTransporte').selectedIndex<0){

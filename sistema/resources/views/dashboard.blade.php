@@ -1218,7 +1218,7 @@
                             <td>{{ $item->cantidadDespachada }}</td>
                             <td>{{ $item->nombreTransporte }}</td>
                             <td>{{ $item->nombreConductor }}</td>
-                            <td>{{ {{ date('d/m/Y', strtotime($fecha[0]))  }} {{$fecha[1]}} }}</td>
+                            <td>{{  date('d/m/Y', strtotime($fecha[0]))  }} {{$fecha[1]}} }}</td>
 							</tr>
                 @endforeach        
                 </tbody>

@@ -894,4 +894,11 @@ class PedidoController extends Controller
             return $costosMensualesProductos;
         }
     }
+    public function plantaspedidos(Request $dato){
+        
+        if($dato->ajax()){
+            $costosEn0=DB::Select('call spGetPlantasPedido(?,?)', array($dato->input('nomPlanta'),$dato->input('unidad')));
+            return $costosEn0;
+        }
+    }
 }

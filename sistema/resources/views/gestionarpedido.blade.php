@@ -212,9 +212,10 @@
                         <tbody>
                             @foreach($NotadeVentaDetalle as $item)
                                 @if ($item->u_nombre =='tonelada')
+                                
                                     <tr>
                                         <td style="display: none">{{ $item->prod_codigo }}</td>
-                                        <td style="width:150px">{{ $item->prod_nombre }}</td>
+                                        <td style="width:150px" >{{ $item->prod_nombre }}</td>
                                         <td style="width:80px">{{ $item->formula }}</td>
                                         @if($item->cp_tipo_reajuste=='Con reajuste')
                                             <td align="right" style="width:80px">{{ number_format( $item->precioActual, 0, ',', '.' ) }}</td>
@@ -229,19 +230,17 @@
                                             <input class="form-control input-sm" onblur="verificarCantidad(this);" maxlength="6" onkeypress="return isIntegerKey(event)" >
                                         </td>
                                         <td style="width:80px">
-                                            <select class="form-control input-sm">
-                                                @foreach($Plantas as $planta)
-                                                    @if( $item->idPlanta==$planta->idPlanta )
-                                                        <option value="{{ $planta->idPlanta }}" selected>{{ $planta->nombre }}</option>
-                                                    @else
-                                                        <option value="{{ $planta->idPlanta }}">{{ $planta->nombre }}</option>
-                                                    @endif    
-                                                @endforeach 
-                                            </select>                                    
+                                         
+                                            <select  id="selectPlanta" class="selectPlanta{{ $item->prod_codigo }} form-control input-sm">
+
+                                    
+                                                
+                                            </select>    
+                                                                           
                                         </td>
                                         <td style="width:80px">
                                             @if($item->idFormaEntrega==2)
-                                                <select class="form-control input-sm">
+                                                <select id="pruebacarga" class="form-control input-sm">
                                                     @foreach($FormasdeEntrega as $formaEntrega)
                                                         @if( $item->idFormaEntrega==$formaEntrega->idFormaEntrega )
                                                             <option value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>
@@ -265,7 +264,15 @@
                                                 <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
                                             </button>
                                         </td>
+                                       
                                     </tr>
+                                    <script  type="text/javascript"> 
+                                        setTimeout(() => {
+                                            val = plantaspedidos("{{ $item->prod_nombre }}","{{$item->u_nombre}}","{{ $item->prod_codigo }}");
+
+                                        }, 5000);
+                                    </script>
+                                    
                                 @endif
                             @endforeach            
                         </tbody>
@@ -505,5 +512,29 @@
                 }
             })            
         }
+        function plantaspedidos(nombrePlanta,unidad,codigo){
+        
+        $.ajax({
+            async:false, 
+            url: urlApp + 'plantaspedidos',
+            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                nomPlanta:nombrePlanta,
+                unidad:unidad
+            },
+            success:function(dato){
+                console.log("salida de datos",dato);
+                $(dato).each(function(i, v){ // indice, valor
+
+                    $(".selectPlanta"+codigo).append('<option value="' + v.idPlanta + '">' + v.nombre + '</option>');
+                })
+            }
+        }); 
+        
+
+    }
+
     </script>
 @endsection
