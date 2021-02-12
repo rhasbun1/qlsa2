@@ -129,10 +129,10 @@
                                 Rango por Nº Guía Despacho
                             </div>
                             <div class="col-md-3">
-                                <input id="txtGuiaDesde" class="form-control input-sm" id="min" maxlength="9" onkeypress="return isIntegerKey(event)">
+                                <input id="txtGuiaDesde" class="form-control input-sm" id="min" maxlength="10" onkeypress="return isIntegerKey(event)">
                             </div>
                             <div class="col-md-3">
-                                <input id="txtGuiaHasta" class="form-control input-sm" id="max" maxlength="9" onkeypress="return isIntegerKey(event)">
+                                <input id="txtGuiaHasta" class="form-control input-sm" id="max" maxlength="10" onkeypress="return isIntegerKey(event)">
                             </div>
                             <div class="col-md-1">
                                 <button class="btn btn-success btn-sm" onclick="obtenerHistorico(3);">Buscar</button>

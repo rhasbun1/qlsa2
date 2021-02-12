@@ -832,7 +832,7 @@
             var table=$('#tablaAprobados').DataTable({
                  orderCellsTop: true,
                  fixedHeader: true,         
-                "lengthMenu": [[-1, 6, 12, 20, -1], ["Todos", "6", "12", "20"]],
+                "lengthMenu": [[-1, 6, 12, 20], ["Todos", "6", "12", "20"]],
                 dom: 'Bfrtip',
                 "scrollX": true,
                 buttons: [

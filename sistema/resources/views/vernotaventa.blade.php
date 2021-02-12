@@ -260,7 +260,7 @@
                         (Session::get('idPerfil')=='2' or 
                         Session::get('idPerfil')=='3' or 
                         Session::get('idPerfil')=='4') )
-                    <button class="btn btn-sm btn-danger" onclick="cerrarNotaVenta();">Pasar a Histórico</button> 
+                    <button class="btn btn-sm btn-danger" onclick="cerrarNotaVenta('{{ $notaventa[0]->idNotaVenta }}')">Pasar a Histórico</button> 
                     @if ($accion == 1)                   
                         <a href="{{ asset('/') }}listarNotasdeVenta/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                     @elseif ($accion == 2)
@@ -407,10 +407,9 @@
                     title: 'Nota De Venta Aprobada',
                     text: '',
                     type: 'warning',
-                    showCancelButton: true,
                     confirmButtonText: 'ok',
                     closeOnConfirm: true,
-                    closeOnCancel: true
+                    
                 },
                 function(isConfirm)
                 {

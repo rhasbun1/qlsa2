@@ -150,7 +150,23 @@
                         action: function ( e, dt, node, config ) {
                             location.href=("{{ asset('/') }}dashboard");
                         }
+                    },
+            
+                    {
+                        extend: 'excelHtml5',
+                        title: "Registro de Salidas",
+                        exportOptions: {
+                            columns: [ 0, 2, 3, 4, 5 , 6, 7 ]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title:  "Registro de Salidas",
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5,6,7 ]
+                        }
                     }
+
                 ],                   
                 // "order": [[ 0, "asc" ]],              
                 // language:{url: "{{ asset('/') }}locales/datatables_ES.json"},

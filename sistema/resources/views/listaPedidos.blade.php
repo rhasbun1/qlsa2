@@ -404,276 +404,546 @@
 
             // DataTable
             var uPerfil='{{ Session::get("idPerfil") }}';
-
-
-            var table=$('#tablaDetalle').DataTable({
-                orderCellsTop: true,
-                fixedHeader: true,
-                "scrollX": true,
-                lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],                
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        text: 'Nuevo Pedido',
-                        className: 'orange',
-                        attr:  {
-                                    id: 'btnNuevoPedido'
-                                },
-                        action: function ( e, dt, node, config ) {
-                            if( uPerfil==11 || uPerfil==19 ){
-                                swal(
-                                    {
-                                        title: 'Este perfil no tiene acceso a Crear Pedidos' ,
-                                        text: '',
-                                        type: 'warning',
-                                        showCancelButton: false,
-                                        confirmButtonText: 'OK',
-                                        cancelButtonText: '',
-                                        closeOnConfirm: true,
-                                        closeOnCancel: false
+            if(uPerfil == 11){
+                    var table=$('#tablaDetalle').DataTable({
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                    "scrollX": true,
+                    lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],                
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            text: 'Nuevo Pedido',
+                            className: 'orange',
+                            attr:  {
+                                        id: 'btnNuevoPedido'
                                     },
-                                    function(isConfirm)
-                                    {
-                                        if(isConfirm){
-                                            return;                         
+                            action: function ( e, dt, node, config ) {
+                                if( uPerfil==11 || uPerfil==19 ){
+                                    swal(
+                                        {
+                                            title: 'Este perfil no tiene acceso a Crear Pedidos' ,
+                                            text: '',
+                                            type: 'warning',
+                                            showCancelButton: false,
+                                            confirmButtonText: 'OK',
+                                            cancelButtonText: '',
+                                            closeOnConfirm: true,
+                                            closeOnCancel: false
+                                        },
+                                        function(isConfirm)
+                                        {
+                                            if(isConfirm){
+                                                return;                         
+                                            }
                                         }
-                                    }
-                                )   
-                            }else{
-                                location.href="{{ asset('/') }}listarNotasdeVenta";
+                                    )   
+                                }else{
+                                    location.href="{{ asset('/') }}listarNotasdeVenta";
+                                }
                             }
-                        }
-                    },
-                    {
-                        text: 'Actualizar',
-                        action: function ( e, dt, node, config ) {
-                            this.disable();    
-                            location.reload(true);                        
-                        }
-                    },                                 
-                    'pageLength',  
-                    {
-                        extend: 'excelHtml5',
-                        title: 'Pedidos en Proceso',
-                        text: '<i class="fa fa-file-excel-o"></i>',
-                        titleAttr: 'Excel',                           
-                        exportOptions: {
-                            columns: [ 0, 2, 3, 4, 5, 6,7,8,9,10,11,12,13 ]
-                        }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos en Proceso',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                          
-                        exportOptions: {
-                            columns: [ 0, 2, 3, 4, 5, 6,7,8,9,10,11,12,13]
-                        }
-                    },
-                    {
-                        text: 'Próximos pedidos Granel',
-                        action: function ( e, dt, node, config ) {
-                            window.open(urlApp + 'verResumenGranel', "QL Now")                    
-                        }
-                    },
-                    
-                    {
-                        text: 'Pedidos despachados (Granel)',
-                        action: function ( e, dt, node, config ) {
-                            window.open(urlApp + 'verPedidosDespachados', "QL Now")                    
-                        }
-                    }                                        
-                ],                
-                "order": [[ 0, "desc" ]],             
-                language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
-                preDrawCallback: function( settings ) {
-                    document.getElementById('contenidoPrincipal').style.display="block";
-                  },                
-                initComplete: function () {
-                    if( $("#idPerfil").val() == '11' ){
-                        this.api().columns(2).every( function () {
-                            var column = this;
-                            var select = $("#selCliente" ).empty().append( '<option value=""></option>' )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-             
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
+                        },
+                        {
+                            text: 'Actualizar',
+                            action: function ( e, dt, node, config ) {
+                                this.disable();    
+                                location.reload(true);                        
+                            }
+                        },                                 
+                        'pageLength',  
+                        {
+                            extend: 'excelHtml5',
+                            title: 'Pedidos en Proceso',
+                            text: '<i class="fa fa-file-excel-o"></i>',
+                            titleAttr: 'Excel',                           
+                            exportOptions: {
+                                columns: [ 0, 2, 3, 4, 5, 6 ]
+                            }
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            title: 'Pedidos en Proceso',
+                            text:      '<i class="fa fa-file-pdf-o"></i>',
+                            titleAttr: 'PDF',                          
+                            exportOptions: {
+                                columns: [ 0, 2, 3, 4, 5, 6]
+                            }
+                        },
+                        {
+                            text: 'Próximos pedidos Granel',
+                            action: function ( e, dt, node, config ) {
+                                window.open(urlApp + 'verResumenGranel', "QL Now")                    
+                            }
+                        },
+                        
+                        {
+                            text: 'Pedidos despachados (Granel)',
+                            action: function ( e, dt, node, config ) {
+                                window.open(urlApp + 'verPedidosDespachados', "QL Now")                    
+                            }
+                        }                                        
+                    ],                
+                    "order": [[ 0, "desc" ]],             
+                    language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                    preDrawCallback: function( settings ) {
+                        document.getElementById('contenidoPrincipal').style.display="block";
+                    },                
+                    initComplete: function () {
+                        if( $("#idPerfil").val() == '11' ){
+                            this.api().columns(2).every( function () {
+                                var column = this;
+                                var select = $("#selCliente" ).empty().append( '<option value=""></option>' )
+                                    .on( 'change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+                
+                                        column
+                                            .search( val ? '^'+val+'$' : '', true, false )
+                                            .draw();
+                                    } );
+                
+                                column.data().unique().sort().each( function ( d, j ) {
+                                    select.append( '<option value="'+d+'">'+d+'</option>' )
                                 } );
-             
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
                             } );
-                        } );
-                        this.api().columns(3).every( function () {
-                            var column = this;
-                            var select = $("#selObra" ).empty().append( '<option value=""></option>' )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-             
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
+                            this.api().columns(3).every( function () {
+                                var column = this;
+                                var select = $("#selObra" ).empty().append( '<option value=""></option>' )
+                                    .on( 'change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+                
+                                        column
+                                            .search( val ? '^'+val+'$' : '', true, false )
+                                            .draw();
+                                    } );
+                
+                                column.data().unique().sort().each( function ( d, j ) {
+                                    select.append( '<option value="'+d+'">'+d+'</option>' )
                                 } );
-             
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
                             } );
-                        } );
-                      
-                        this.api().columns(6).every( function () {
-                            var column = this;
-                            var select = $("#selEstado" ).empty().append( '<option value=""></option>' )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-             
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
+                        
+                            this.api().columns(6).every( function () {
+                                var column = this;
+                                var select = $("#selEstado" ).empty().append( '<option value=""></option>' )
+                                    .on( 'change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+                
+                                        column
+                                            .search( val ? '^'+val+'$' : '', true, false )
+                                            .draw();
+                                    } );
+                
+                                column.data().unique().sort().each( function ( d, j ) {
+                                    select.append( '<option value="'+d+'">'+d+'</option>' )
                                 } );
-             
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
-                            } );
-                        } );                                              
-                    }else{
+                            } );                                              
+                        }else{
 
-                        this.api().columns(2).every( function () {
-                            var column = this;
-                            var select = $("#selEstado" ).empty().append( '<option value=""></option>' )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-             
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
+                            this.api().columns(2).every( function () {
+                                var column = this;
+                                var select = $("#selEstado" ).empty().append( '<option value=""></option>' )
+                                    .on( 'change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+                
+                                        column
+                                            .search( val ? '^'+val+'$' : '', true, false )
+                                            .draw();
+                                    } );
+                
+                                column.data().unique().sort().each( function ( d, j ) {
+                                    select.append( '<option value="'+d+'">'+d+'</option>' )
                                 } );
-             
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
                             } );
-                        } );
 
-                        this.api().columns(3).every( function () {
-                            var column = this;
-                            var select = $("#selCliente" ).empty().append( '<option value=""></option>' )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-             
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
+                            this.api().columns(3).every( function () {
+                                var column = this;
+                                var select = $("#selCliente" ).empty().append( '<option value=""></option>' )
+                                    .on( 'change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+                
+                                        column
+                                            .search( val ? '^'+val+'$' : '', true, false )
+                                            .draw();
+                                    } );
+                
+                                column.data().unique().sort().each( function ( d, j ) {
+                                    select.append( '<option value="'+d+'">'+d+'</option>' )
                                 } );
-             
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
                             } );
-                        } );
 
-                        this.api().columns(4).every( function () {
-                            var column = this;
-                            var select = $("#selObra" ).empty().append( '<option value=""></option>' )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-             
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
+                            this.api().columns(4).every( function () {
+                                var column = this;
+                                var select = $("#selObra" ).empty().append( '<option value=""></option>' )
+                                    .on( 'change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+                
+                                        column
+                                            .search( val ? '^'+val+'$' : '', true, false )
+                                            .draw();
+                                    } );
+                
+                                column.data().unique().sort().each( function ( d, j ) {
+                                    select.append( '<option value="'+d+'">'+d+'</option>' )
                                 } );
-             
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
                             } );
-                        } );
-                        this.api().columns(5).every( function () {
-                            var column = this;
-                            var select = $("#selProducto" ).empty().append( '<option value=""></option>' )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-             
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
+                            this.api().columns(5).every( function () {
+                                var column = this;
+                                var select = $("#selProducto" ).empty().append( '<option value=""></option>' )
+                                    .on( 'change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+                
+                                        column
+                                            .search( val ? '^'+val+'$' : '', true, false )
+                                            .draw();
+                                    } );
+                
+                                column.data().unique().sort().each( function ( d, j ) {
+                                    select.append( '<option value="'+d+'">'+d+'</option>' )
                                 } );
-             
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
-                            } );
-                        } );                           
+                            } );                           
 
-                        this.api().columns(7).every( function () {
-                            var column = this;
-                            var select = $("#selFormato" ).empty().append( '<option value=""></option>' )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-             
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
+                            this.api().columns(7).every( function () {
+                                var column = this;
+                                var select = $("#selFormato" ).empty().append( '<option value=""></option>' )
+                                    .on( 'change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+                
+                                        column
+                                            .search( val ? '^'+val+'$' : '', true, false )
+                                            .draw();
+                                    } );
+                
+                                column.data().unique().sort().each( function ( d, j ) {
+                                    select.append( '<option value="'+d+'">'+d+'</option>' )
                                 } );
-             
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
                             } );
-                        } );
-                        this.api().columns(9).every( function () {
-                            var column = this;
-                            var select = $("#selFormaEntrega" ).empty().append( '<option value=""></option>' )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-             
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
+                            this.api().columns(9).every( function () {
+                                var column = this;
+                                var select = $("#selFormaEntrega" ).empty().append( '<option value=""></option>' )
+                                    .on( 'change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+                
+                                        column
+                                            .search( val ? '^'+val+'$' : '', true, false )
+                                            .draw();
+                                    } );
+                
+                                column.data().unique().sort().each( function ( d, j ) {
+                                    select.append( '<option value="'+d+'">'+d+'</option>' )
                                 } );
-             
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
                             } );
-                        } );
 
-                        this.api().columns(10).every( function () {
-                            var column = this;
-                            var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-             
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
+                            this.api().columns(10).every( function () {
+                                var column = this;
+                                var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
+                                    .on( 'change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+                
+                                        column
+                                            .search( val ? '^'+val+'$' : '', true, false )
+                                            .draw();
+                                    } );
+                
+                                column.data().unique().sort().each( function ( d, j ) {
+                                    select.append( '<option value="'+d+'">'+d+'</option>' )
                                 } );
-             
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
                             } );
-                        } );
+                        }
+                                    
+
                     }
-                                  
 
+                });
+            }else{
+
+                    var table=$('#tablaDetalle').DataTable({
+                        orderCellsTop: true,
+                        fixedHeader: true,
+                        "scrollX": true,
+                        lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],                
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                text: 'Nuevo Pedido',
+                                className: 'orange',
+                                attr:  {
+                                            id: 'btnNuevoPedido'
+                                        },
+                                action: function ( e, dt, node, config ) {
+                                    if( uPerfil==11 || uPerfil==19 ){
+                                        swal(
+                                            {
+                                                title: 'Este perfil no tiene acceso a Crear Pedidos' ,
+                                                text: '',
+                                                type: 'warning',
+                                                showCancelButton: false,
+                                                confirmButtonText: 'OK',
+                                                cancelButtonText: '',
+                                                closeOnConfirm: true,
+                                                closeOnCancel: false
+                                            },
+                                            function(isConfirm)
+                                            {
+                                                if(isConfirm){
+                                                    return;                         
+                                                }
+                                            }
+                                        )   
+                                    }else{
+                                        location.href="{{ asset('/') }}listarNotasdeVenta";
+                                    }
+                                }
+                            },
+                            {
+                                text: 'Actualizar',
+                                action: function ( e, dt, node, config ) {
+                                    this.disable();    
+                                    location.reload(true);                        
+                                }
+                            },                                 
+                            'pageLength',  
+                            {
+                                extend: 'excelHtml5',
+                                title: 'Pedidos en Proceso',
+                                text: '<i class="fa fa-file-excel-o"></i>',
+                                titleAttr: 'Excel',                           
+                                exportOptions: {
+                                    columns: [ 0, 2, 3, 4, 5, 6,7,8,9,10,11,12,13 ]
+                                }
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                title: 'Pedidos en Proceso',
+                                text:      '<i class="fa fa-file-pdf-o"></i>',
+                                titleAttr: 'PDF',                          
+                                exportOptions: {
+                                    columns: [ 0, 2, 3, 4, 5, 6,7,8,9,10,11,12,13]
+                                }
+                            },
+                            {
+                                text: 'Próximos pedidos Granel',
+                                action: function ( e, dt, node, config ) {
+                                    window.open(urlApp + 'verResumenGranel', "QL Now")                    
+                                }
+                            },
+                            
+                            {
+                                text: 'Pedidos despachados (Granel)',
+                                action: function ( e, dt, node, config ) {
+                                    window.open(urlApp + 'verPedidosDespachados', "QL Now")                    
+                                }
+                            }                                        
+                        ],                
+                        "order": [[ 0, "desc" ]],             
+                        language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                        preDrawCallback: function( settings ) {
+                            document.getElementById('contenidoPrincipal').style.display="block";
+                        },                
+                        initComplete: function () {
+                            if( $("#idPerfil").val() == '11' ){
+                                this.api().columns(2).every( function () {
+                                    var column = this;
+                                    var select = $("#selCliente" ).empty().append( '<option value=""></option>' )
+                                        .on( 'change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+                    
+                                            column
+                                                .search( val ? '^'+val+'$' : '', true, false )
+                                                .draw();
+                                        } );
+                    
+                                    column.data().unique().sort().each( function ( d, j ) {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                    } );
+                                } );
+                                this.api().columns(3).every( function () {
+                                    var column = this;
+                                    var select = $("#selObra" ).empty().append( '<option value=""></option>' )
+                                        .on( 'change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+                    
+                                            column
+                                                .search( val ? '^'+val+'$' : '', true, false )
+                                                .draw();
+                                        } );
+                    
+                                    column.data().unique().sort().each( function ( d, j ) {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                    } );
+                                } );
+                            
+                                this.api().columns(6).every( function () {
+                                    var column = this;
+                                    var select = $("#selEstado" ).empty().append( '<option value=""></option>' )
+                                        .on( 'change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+                    
+                                            column
+                                                .search( val ? '^'+val+'$' : '', true, false )
+                                                .draw();
+                                        } );
+                    
+                                    column.data().unique().sort().each( function ( d, j ) {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                    } );
+                                } );                                              
+                            }else{
+
+                                this.api().columns(2).every( function () {
+                                    var column = this;
+                                    var select = $("#selEstado" ).empty().append( '<option value=""></option>' )
+                                        .on( 'change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+                    
+                                            column
+                                                .search( val ? '^'+val+'$' : '', true, false )
+                                                .draw();
+                                        } );
+                    
+                                    column.data().unique().sort().each( function ( d, j ) {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                    } );
+                                } );
+
+                                this.api().columns(3).every( function () {
+                                    var column = this;
+                                    var select = $("#selCliente" ).empty().append( '<option value=""></option>' )
+                                        .on( 'change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+                    
+                                            column
+                                                .search( val ? '^'+val+'$' : '', true, false )
+                                                .draw();
+                                        } );
+                    
+                                    column.data().unique().sort().each( function ( d, j ) {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                    } );
+                                } );
+
+                                this.api().columns(4).every( function () {
+                                    var column = this;
+                                    var select = $("#selObra" ).empty().append( '<option value=""></option>' )
+                                        .on( 'change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+                    
+                                            column
+                                                .search( val ? '^'+val+'$' : '', true, false )
+                                                .draw();
+                                        } );
+                    
+                                    column.data().unique().sort().each( function ( d, j ) {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                    } );
+                                } );
+                                this.api().columns(5).every( function () {
+                                    var column = this;
+                                    var select = $("#selProducto" ).empty().append( '<option value=""></option>' )
+                                        .on( 'change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+                    
+                                            column
+                                                .search( val ? '^'+val+'$' : '', true, false )
+                                                .draw();
+                                        } );
+                    
+                                    column.data().unique().sort().each( function ( d, j ) {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                    } );
+                                } );                           
+
+                                this.api().columns(7).every( function () {
+                                    var column = this;
+                                    var select = $("#selFormato" ).empty().append( '<option value=""></option>' )
+                                        .on( 'change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+                    
+                                            column
+                                                .search( val ? '^'+val+'$' : '', true, false )
+                                                .draw();
+                                        } );
+                    
+                                    column.data().unique().sort().each( function ( d, j ) {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                    } );
+                                } );
+                                this.api().columns(9).every( function () {
+                                    var column = this;
+                                    var select = $("#selFormaEntrega" ).empty().append( '<option value=""></option>' )
+                                        .on( 'change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+                    
+                                            column
+                                                .search( val ? '^'+val+'$' : '', true, false )
+                                                .draw();
+                                        } );
+                    
+                                    column.data().unique().sort().each( function ( d, j ) {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                    } );
+                                } );
+
+                                this.api().columns(10).every( function () {
+                                    var column = this;
+                                    var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
+                                        .on( 'change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+                    
+                                            column
+                                                .search( val ? '^'+val+'$' : '', true, false )
+                                                .draw();
+                                        } );
+                    
+                                    column.data().unique().sort().each( function ( d, j ) {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                    } );
+                                } );
+                            }
+                                        
+
+                        }
+
+                    });
                 }
-
-            });
                  
             $('.date').datepicker({
                 todayHighlight: true,
