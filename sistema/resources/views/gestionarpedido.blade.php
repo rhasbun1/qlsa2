@@ -152,18 +152,18 @@
                                                 @endforeach 
                                             </select>                                            
                                         @else
-                                            <select class="form-control input-sm">
-                                                @foreach($FormasdeEntrega as $formaEntrega)
-                                                    @if( $item->idFormaEntrega==$formaEntrega->idFormaEntrega )
-                                                        <option value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>
-                                                    @else
-                                                        <option value="{{ $formaEntrega->idFormaEntrega }}">{{ $formaEntrega->nombre }}</option>
-                                                    @endif
-                                                @endforeach 
+                                        <select  id="selectPlanta" class="selectPlanta{{ $item->prod_codigo }} form-control input-sm">
+                                                
                                             </select>
                                         @endif                               
                                     </td>
                                 </tr>
+                                <script  type="text/javascript"> 
+                                        setTimeout(() => {
+                                            val = plantaspedidos("{{ $item->prod_nombre }}","{{$item->u_nombre}}","{{ $item->prod_codigo }}");
+
+                                        }, 5000);
+                                    </script>
                             @endif
                         @endforeach            
                     </tbody>
