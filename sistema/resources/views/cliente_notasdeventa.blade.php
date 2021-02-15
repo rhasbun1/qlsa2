@@ -54,9 +54,11 @@
                                 <td>Pendiente de Aprobación</td>
                             @endif
                             <td>
+                            @if(Session::get('idPerfil') == 14)
                                 @if($item->aprobada==1)
                                     <a href="gestionarpedido/{{ $item->idNotaVenta }}/" class="btn btn-xs btn-success">Crear Pedido</a>
-                                @endif    
+                                @endif 
+                            @endif   
                             </td>
                         </tr>
                     @endforeach
@@ -137,15 +139,8 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ]
                         }
-                    },
-                   
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
                     }
+
                 ],                  
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"},

@@ -1464,16 +1464,6 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4,5,6,7 ]
                         }
-                    },
-                  
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos Pendientes de Preaprobación (ingresados por clientes)',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4,5,6,7 ]
-                        }
                     }
                 ],                
                                 
@@ -1533,16 +1523,6 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ]
                         }
-                    },
-                    
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Notas de Venta pendientes de Aprobación',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
                     }
                 ],                
                                 
@@ -1571,16 +1551,6 @@
                         titleAttr: 'Excel',                        
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4,5,6,7,8,9,10,11,12,13 ]
-                        }
-                    },
-                    
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos en Proceso',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9,10,11,12,13]
                         }
                     }
                 ],                
@@ -1611,16 +1581,6 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4,5,6,7,8 ]
                         }
-                    },
-                    
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Toneladas (granel) despachadas este Mes',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
-                        }
                     }
                 ],                
                                 
@@ -1647,16 +1607,6 @@
                         title: 'Toneladas (granel) despachadas este Año',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
-                        }
-                    },
-                    
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Toneladas (granel) despachadas este Año',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6,7,8]
                         }
@@ -1690,16 +1640,6 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
-                    },
-                   
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos en Proceso',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
-                        }
                     }
                 ],                
                                 
@@ -1726,16 +1666,6 @@
                         title: 'Pedidos Atrasados',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5]
-                        }
-                    },
-                   
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos Atrasados',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5]
                         }
@@ -1768,16 +1698,6 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
                         }
-                    },
-                    
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos en Proceso',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
-                        }
                     }
                 ],                
                                 
@@ -1804,16 +1724,6 @@
                         title: 'Pedidos a granel sin Horario de Carga',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6]
-                        }
-                    },
-                    
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos a granel sin Horario de Carga',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6]
                         }
@@ -1846,16 +1756,6 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
                         }
-                    },
-                   
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos Atrasados (despacho pendiente)',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
-                        }
                     }
                 ],                
                                 
@@ -1882,16 +1782,6 @@
                         title: 'Certificados Pendientes',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
-                        }
-                    },
-                   
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Certificados Pendientes',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
@@ -1925,17 +1815,7 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos Modificados durante las últimas 24 horas',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
-                        }
-                    }
-                   
+                    }               
                 ],                
                                 
                 "order": [[ 0, "desc" ]],
@@ -1961,16 +1841,6 @@
                         title: 'Asignaciones de Flete pendientes',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
-                    },
-                   
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Asignaciones de Flete pendientes',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ]
                         }
@@ -2003,16 +1873,6 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4,5,6 ]
                         }
-                    },
-                   
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos sin Transporte asignado',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6]
-                        }
                     }
                 ],                
                                 
@@ -2039,16 +1899,6 @@
                         title: 'Pedidos Atrasados (aún sin despacharse)',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
-                        }
-                    },
-                    
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos Atrasados (aún sin despacharse)',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
                         }
@@ -2081,16 +1931,6 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ]
                         }
-                    },
-                   
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos sin aprobar',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
                     }
                 ],                
                                 
@@ -2118,16 +1958,6 @@
                         title: 'Pedidos pendientes de Aprobación de Crédito',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7]
-                        }
-                    },
-                    
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos pendientes de Aprobación de Crédito',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4 ,5,6,7]
                         }

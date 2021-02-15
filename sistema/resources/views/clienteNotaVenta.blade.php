@@ -290,16 +290,7 @@
                     exportOptions: {
                         columns: [ 0, 1, 2, 3]
                     }
-                },
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Clientes / Notas de Venta',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3 ]
-                        }
-                    } 
+                }
             ],                  
             language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
         });

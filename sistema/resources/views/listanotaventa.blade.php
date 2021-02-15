@@ -158,15 +158,6 @@
                             exportOptions: {
                                 columns: [ 0, 1, 2, 3, 4,5 ]
                             }
-                        },
-                        {
-                            extend: 'pdfHtml5',
-                            title: 'Notas de Venta Vigentes',
-                            text:      '<i class="fa fa-file-pdf-o"></i>',
-                            titleAttr: 'PDF',                         
-                            exportOptions: {
-                                columns: [ 0, 1, 2, 3, 4,5 ]
-                            }
                         }
                     ],                  
                     "order": [[ 0, "desc" ]],
@@ -265,15 +256,6 @@
                             title: 'Notas de Venta Vigentes',
                             text: '<i class="fa fa-file-excel-o"></i>',
                             titleAttr: 'Excel',                        
-                            exportOptions: {
-                                columns: [ 0, 1, 2, 3, 4,5 ]
-                            }
-                        },
-                        {
-                            extend: 'pdfHtml5',
-                            title: 'Notas de Venta Vigentes',
-                            text:      '<i class="fa fa-file-pdf-o"></i>',
-                            titleAttr: 'PDF',                         
                             exportOptions: {
                                 columns: [ 0, 1, 2, 3, 4,5 ]
                             }

@@ -186,15 +186,6 @@
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4]
                         }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Listado de Clientes',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                         
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
                     }
                 ],                  
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}

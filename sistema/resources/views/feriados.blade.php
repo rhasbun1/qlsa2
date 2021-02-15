@@ -183,16 +183,6 @@
                         exportOptions: {
                             columns: [ 0, 1, 2 ]
                         }
-                    },
-                   
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Listado de Feriados',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF', 
-                        exportOptions: {
-                            columns: [ 0, 1, 2 ]
-                        }
                     }
                 ],                  
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}

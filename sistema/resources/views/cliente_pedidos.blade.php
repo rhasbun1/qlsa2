@@ -7,7 +7,11 @@
     <div class="panel panel-default" id="contenedor3">
         <div class="panel-heading">
             <div class="panel-tab clearfix">
+                <input type="hidden" id="idCliente" data-idperfil="{{Session::get('idPerfil')}}">
+
                 <ul class="tab-bar">
+                                <input type="hidden" id="idCliente" data-idperfil="{{Session::get('idPerfil')}}">
+
                     <li class="active"><a href="#tabAprobados" data-toggle="tab"><b>pedidos despachados</b></a></li> 
                 </ul>
             </div>
@@ -18,6 +22,7 @@
                     <table id="tablaAprobados" class="pedidos table table-hover table-condensed" style="width:100%">
                         <thead>
                             <th style="width:100px">Pedido</th>
+                            <th></th>
                             <th style="width:80px">Estado</th>
                             <th>Fecha Creación</th>
                             <th>Cliente</th>
@@ -43,7 +48,9 @@
                                     @endif
                                     @endif
                                     <td style="width:150px">
-                                        <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/7/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
+                                        <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/7/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>                                   
+                                    </td>                                        
+                                    <td>
                                         @if ( $item->cantidadReal>0 )
                                             <span><img src="{{ asset('/') }}img/iconos/cargacompleta.png" border="0"></span>
                                         @endif
@@ -55,8 +62,11 @@
                                         @endif
                                         @if ( $item->salida==1 )
                                         <span><img src="{{ asset('/') }}img/iconos/enTransporte.png" border="0" onclick="verUbicacionGmaps('{{ $item->Patente }}');" style="cursor:pointer; cursor: hand"></span>                                      
-                                        @endif                                         
-                                    </td>                                        
+                                        @endif  
+                                        @if ($item->tipoTransporte==2)
+                                            <span class="badge badge-danger" title="Pedido Mixto">M</span>
+                                        @endif    
+                                    </td>
                                     <td style="width:80px">{{ $item->estadoPedido }}</td>
                                     <td>{{ $item->fechahora_creacion }}</td>
                                     <td>{{ $item->nombreCliente }}</td>
@@ -116,8 +126,8 @@
              
             } );
 
-                        
-            var table=$('#tablaAprobados').DataTable({
+            if($("#idCliente").val()==14){
+                var table=$('#tablaAprobados').DataTable({
                  orderCellsTop: true,
                  fixedHeader: true,         
                 "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
@@ -138,23 +148,14 @@
                         extend: 'excelHtml5',
                         title: 'Notas de Venta Vigentes',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4,5,6,7,8,9,10,11,12 ]
-                        }
-                    },
-                  
-                    
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Notas de Venta Vigentes',
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4,5,6,7,8,9,10,11,12]
+                            columns: [ 0, 2, 3, 4,5,6,7,8,9,10,11,12,13 ]
                         }
                     }
                 ],                       
                 "order": [[ 0, "desc" ]],                        
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
                 initComplete: function () {
-                    this.api().columns(1).every( function () {
+                    this.api().columns(2).every( function () {
                         var column = this;
 
                         var select = $('<select class="form-control input-sm"><option value=""></option></select>')
@@ -173,7 +174,7 @@
                             select.append( '<option value="'+d+'">'+d+'</option>' )
                         } );
                     } );                    
-                    this.api().columns(4).every( function () {
+                    this.api().columns(5).every( function () {
                         var column = this;
 
                         var select = $('<select class="form-control input-sm"><option value=""></option></select>')
@@ -192,11 +193,114 @@
                             select.append( '<option value="'+d+'">'+d+'</option>' )
                         } );
                     } );
-                    this.api().columns(7).every( function () {
+                    this.api().columns(8).every( function () {
                         var column = this;
 
                         var select = $('<select class="form-control input-sm"><option value=""></option></select>')
                             .appendTo( $( '#tablaAprobados thead tr:eq(1) th:eq(7)' ).empty() )
+                            .on( 'change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+         
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+         
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    } ); 
+                    this.api().columns(9).every( function () {
+                        var column = this;
+
+                        var select = $('<select class="form-control input-sm"><option value=""></option></select>')
+                            .appendTo( $( '#tablaAprobados thead tr:eq(1) th:eq(8)' ).empty() )
+                            .on( 'change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+         
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+         
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    } ); 
+
+                                                                               
+                }
+
+            });
+
+
+            }else{
+                var table=$('#tablaAprobados').DataTable({
+                 orderCellsTop: true,
+                 fixedHeader: true,         
+                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                dom: 'Bfrtip',
+                buttons: [
+                    
+                    'pageLength',
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Notas de Venta Vigentes',
+                        exportOptions: {
+                            columns: [ 0, 2, 3, 4,5,6,7,8,9,10,11,12,13 ]
+                        }
+                    }
+                ],                       
+                "order": [[ 0, "desc" ]],                        
+                language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                initComplete: function () {
+                    this.api().columns(2).every( function () {
+                        var column = this;
+
+                        var select = $('<select class="form-control input-sm"><option value=""></option></select>')
+                            .appendTo( $( '#tablaAprobados thead tr:eq(1) th:eq(2)' ).empty() )
+                            .on( 'change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+         
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+         
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    } );                    
+                    this.api().columns(5).every( function () {
+                        var column = this;
+
+                        var select = $('<select class="form-control input-sm"><option value=""></option></select>')
+                            .appendTo( $( '#tablaAprobados thead tr:eq(1) th:eq(5)' ).empty() )
+                            .on( 'change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+         
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+         
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    } );
+                    this.api().columns(9).every( function () {
+                        var column = this;
+
+                        var select = $('<select class="form-control input-sm"><option value=""></option></select>')
+                            .appendTo( $( '#tablaAprobados thead tr:eq(1) th:eq(9)' ).empty() )
                             .on( 'change', function () {
                                 var val = $.fn.dataTable.util.escapeRegex(
                                     $(this).val()
@@ -236,6 +340,8 @@
 
             });
 
+            }
+            
 
 
 

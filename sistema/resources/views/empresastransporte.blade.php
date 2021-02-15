@@ -154,15 +154,7 @@
                             exportOptions: {
                                 columns: [ 0, 1, 2, 3, 4, 5 ]
                             }
-                        } ,{
-                        extend: 'pdfHtml5',
-                        title: 'Pedidos en Proceso',
-                        text:      '<i class="fa fa-file-pdf-o"></i>',
-                        titleAttr: 'PDF',                          
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5]
-                        }
-                    },
+                        } 
                     ],                  
                     language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
                 });

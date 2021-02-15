@@ -352,7 +352,12 @@
                     </div>                   
                 </div>
                 <div style="padding:18px">
-                    <button id="btnCrearPedido" class="btn btn-success btn-sm" onclick="crearPedido('QL');">Crear Pedido</button>
+                @if( Session::get('idPerfil') == 14 || Session::get('idPerfil')== 15)
+                    <button id="btnCrearPedido" class="btn btn-success btn-sm" onclick="crearPedido('Q');">Crear Pedido</button>
+                @else
+                   <button id="btnCrearPedido" class="btn btn-success btn-sm" onclick="crearPedido('QL');">Crear Pedido</button>
+
+                @endif
                     <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                 </div>
             </div>       
