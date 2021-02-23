@@ -68,7 +68,7 @@
                                 <td>
                                         <a href="gestionarpedido/{{ $item->idNotaVenta }}/" class="btn btn-xs btn-success">Crear Pedido</a>
                                 </td>
-                            @Fendif
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

@@ -73,13 +73,13 @@
                         Observaciones (máx.130 carac.)
                     </div>
                     <div class="col-md-10">
-                        <textarea class="form-control input-sm" id="observacionDespacho" rows="2" readonly maxlength="130"></textarea> 
+                        <textarea class="form-control input-sm" style="resize: none;" id="observacionDespacho" rows="2" readonly maxlength="130"></textarea> 
                     </div>
                 </div> 
                 <div style="padding-top:15px">
                     <table id="tablaDetalleGuia" class="table table-hover table-condensed" style="width: 100%">
                         <thead>
-                            <th style="width: 100px">Cod.Producto</th>
+                            <th style="width: 100px">Cód.Producto</th>
                             <th style="width: 350px">Nombre</th>
                             <th style="width: 100px">Unidad</th>
                             <th style="width: 100px; text-align:right;">Cant.Solicitada</th>
