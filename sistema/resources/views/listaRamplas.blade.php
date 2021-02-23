@@ -65,7 +65,9 @@
                     <h6><b> (*) Dato Obligatorio</b></h6>
                 </div>              
                 <div class="col-md-offset-8" style="padding-top: 0px; padding-bottom: 20px">
-                   <button id="btnGrabarCondicion" type="button" class="btn btn-success btn-sm" onclick="grabarRampla();" style="width: 80px">Guardar</button>
+                   <input id="btnGrabarCondicion" type="button" class="btn btn-success btn-sm" onclick="grabarRampla();" style="width: 80px" value="Guardar">
+                   <input value="Guardar" id="editar"  type="button" class="btn btn-success btn-sm" onclick="editarRampla1();" style="width: 80px">
+
                    <button  type="button" class="btn btn-danger data-dismiss=modal btn-sm" onclick="cerrarMdRampla()" style="width: 80px">Salir</button>
                 </div>
             </div>
@@ -101,6 +103,9 @@
             $("#filaRampla").val(fila);
             $("#numero").val(tabla.rows[fila].cells[0].innerHTML.trim() );
             $("#numeroRampla").val(tabla.rows[fila].cells[0].innerHTML.trim() );
+            $("#btnGrabarCondicion").hide();
+
+            $("#editar").show();
             $("#mdRampla").modal('show');
         }
 
@@ -156,6 +161,45 @@
                     }
                 }
             )        
+        }
+        function editarRampla1(){
+            $("#btnGrabarCondicion").prop("disabled", true);
+            $.ajax({
+                url: urlApp +'editarRampla',
+                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                type: 'POST',
+                dataType: 'json',
+                data: { 
+                        numeroRampla: $("#numeroRampla").val(),
+                        patenteRampla: $("#patenteRampla").val()
+                      },
+                success:function(dato){
+                    
+
+                        if(dato.respuesta==0){
+                            var cadena="<tr>";
+                            cadena+="<td>" + $("#numeroRampla").val() + "</td>";
+                            cadena+="<td>" + $("#patenteRampla").val() + "</td>";
+                            cadena+='<td style="width: 40px">';
+                            cadena+='<button class="btn btn-xs btn btn-warning" onclick="editarRampla(' + $("#numeroRampla").val() +', this.parentNode.parentNode.rowIndex )" title="Editar" ><i class="fa fa-edit fa-lg"></i></button>';
+                            cadena+='<button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarRampla(this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button>';
+                            cadena+='</td>';
+
+                            cadena+="</tr>";
+                            $("#tabla").append(cadena);                            
+                        }else{
+                            tabla.rows[ $("#filaRampla").val() ].cells[0].innerHTML=$("#numeroRampla").val();
+                            tabla.rows[ $("#filaRampla").val() ].cells[1].innerHTML=$("#patenteRampla").val();
+                        }
+                        $("#numeroRampla").val('');
+                        $("#patenteRampla").val('');
+                        cerrarMdRampla();
+                        $("#btnGrabarCondicion").prop("disabled", false);     
+                    }
+
+
+                ,
+            })
         }
 
         function grabarRampla(){
@@ -271,6 +315,8 @@
                     {
                         text: 'Nueva Rampla',
                         action: function ( e, dt, node, config ) {
+                            $("#btnGrabarCondicion").show();
+                            $("#editar").hide();
                             abrirMdRampla(1);
                         }
                     },                 

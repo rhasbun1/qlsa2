@@ -203,7 +203,8 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('listaRamplas', 'RamplasController@listaRamplas');
 	Route::post('guardarRampla', 'RamplasController@guardarRampla');
 	Route::post('eliminarRampla', 'RamplasController@eliminarRampla');
-	
+	Route::post('editarRampla', 'RamplasController@editarRampla');
+
 	Route::get('despachosPorMes', 'ReportesController@despachosPorMes');
 	Route::get('despachosPorAno', 'ReportesController@despachosPorAno');
 	Route::get('notasdeVentaMargenes', 'ReportesController@notasdeVentaMargenes');

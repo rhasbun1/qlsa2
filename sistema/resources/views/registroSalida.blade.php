@@ -33,7 +33,7 @@
                     <tbody>
                         @foreach($guias as $item)
                             <tr>
-                                <td style="width:50px"><button class="btn btn-success btn-sm" style="width: 80px" onclick="registrarSalida({{ $item->tipoGuia }}, {{ $item->numeroGuia }}, this.parentNode.parentNode.rowIndex)">{{ $item->folioDTE }}</button></td>
+                                <td style="width:50px"><button align = "center" class="btn btn-success btn-sm" style="width: 80px" onclick="registrarSalida({{ $item->tipoGuia }}, {{ $item->numeroGuia }}, this.parentNode.parentNode.rowIndex)">{{ $item->folioDTE }}</button></td>
                                 <td style="width: 120px">{{ $item->fechaHoraCreacion }}</td>
                                 <td style="width: 50px">{{ $item->idPedido }}</td>
                                 <td style="width: 100px">{{ $item->nombrePlanta }}</td>

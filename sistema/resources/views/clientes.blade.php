@@ -22,7 +22,12 @@
                     <th style="text-align: center">Solicita OC</th>
                     <th style="text-align: center">Cód. Softland</th>
                     <th style="text-align: center">Ingresar Cód.Soft.<br>al crear la NV</th>
-                    <th></th>
+                    @if (Session::get('idPerfil')=='1' or Session::get('idPerfil')=='2' or
+                                    Session::get('idPerfil')=='3' or Session::get('idPerfil')=='4' or 
+                                    Session::get('idPerfil')=='12' or Session::get('idPerfil')=='18')
+                            
+                            <th></th>
+                    @endif
                 </thead>
                 <tbody>
                     @foreach($listaEmpresas as $item)
@@ -49,13 +54,15 @@
                                     NO
                                 @endif                                  
                             </td>
-                            <td>
-                                @if (Session::get('idPerfil')=='1' or Session::get('idPerfil')=='2' or
+                            @if (Session::get('idPerfil')=='1' or Session::get('idPerfil')=='2' or
                                     Session::get('idPerfil')=='3' or Session::get('idPerfil')=='4' or 
                                     Session::get('idPerfil')=='12' or Session::get('idPerfil')=='18')
-                                <button class="btn btn-xs btn btn-warning" onclick="verDatosCliente( this.parentNode.parentNode );" title="Editar"><i class="fa fa-edit fa-lg"></i></button>
-                                @endif
-                            </td>                                
+                                    <td>
+                                        
+                                        <button class="btn btn-xs btn btn-warning" onclick="verDatosCliente( this.parentNode.parentNode );" title="Editar"><i class="fa fa-edit fa-lg"></i></button>
+                                        
+                                    </td> 
+                            @endif                               
                         </tr>
                     @endforeach
                 </tbody>               

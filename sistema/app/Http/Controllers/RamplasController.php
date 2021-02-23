@@ -20,6 +20,22 @@ class RamplasController extends Controller
         $lista=DB::Select('call spGetRamplas');        
         return view('listaRamplas')->with('ramplas', $lista);
     }
+    public function editarRampla(Request $datos){
+        if($datos->ajax()){
+      
+                $rampla=DB::Select('call spInsRampla(?,?)', array(
+                    $datos->input('numeroRampla'),
+                    $datos->input('patenteRampla')
+                    ) 
+                );  
+
+                return response()->json([
+                    "respuesta" =>  $rampla[0]->respuesta
+                ]);
+          
+           
+        }             
+    }
 
     public function guardarRampla(Request $datos){
         if($datos->ajax()){
@@ -29,7 +45,7 @@ class RamplasController extends Controller
                 ) 
             );  
 
-            if($ramplav == 0){
+            if($ramplav[0]->respuesta == 0){
                 $rampla=DB::Select('call spInsRampla(?,?)', array(
                     $datos->input('numeroRampla'),
                     $datos->input('patenteRampla')

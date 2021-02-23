@@ -625,7 +625,7 @@
             if( $("#nuevoFolioDTE").val().trim()=='' ){
                 swal(
                     {
-                        title: 'Debe ingresar el numero Folio DTE!!' ,
+                        title: '¡¡Debe ingresar el numero Folio DTE!!' ,
                         text: '',
                         type: 'warning',
                         showCancelButton: false,
