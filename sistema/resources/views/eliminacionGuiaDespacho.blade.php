@@ -13,7 +13,7 @@
 					Nº Guía (*)
 				</div>
 				<div class="col-md-2">
-					<input id="numeroGuia" class="form-control input-sm"  maxlength="10">
+					<input id="numeroGuia" type="number" onkeypress='return validaNumericos(event)' oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" min="0"s  class="form-control input-sm"  maxlength="10">
 				</div>
 			</div>
 			<div class="row" style="padding-top: 5px">
@@ -176,6 +176,12 @@
         });
 
 	}
+	function validaNumericos(event) {
+        if(event.charCode >= 48 && event.charCode <= 57){
+          return true;
+         }
+         return false;        
+    }
 
 </script>
 @endsection

@@ -23,15 +23,29 @@ class RamplasController extends Controller
 
     public function guardarRampla(Request $datos){
         if($datos->ajax()){
-            $rampla=DB::Select('call spInsRampla(?,?)', array(
-                            $datos->input('numeroRampla'),
-                            $datos->input('patenteRampla')
-                            ) 
-                        );  
+            $ramplav = DB::Select('call spVerificaRampla(?,?)', array(
+                $datos->input('numeroRampla'),
+                $datos->input('patenteRampla')
+                ) 
+            );  
 
-            return response()->json([
-                "respuesta" =>  $rampla[0]->respuesta
-            ]);
+            if($ramplav == 0){
+                $rampla=DB::Select('call spInsRampla(?,?)', array(
+                    $datos->input('numeroRampla'),
+                    $datos->input('patenteRampla')
+                    ) 
+                );  
+
+                return response()->json([
+                    "respuesta" =>  $rampla[0]->respuesta
+                ]);
+            }else{
+                return response()->json([
+                    "respuesta" =>  $ramplav[0]->respuesta
+                ]);
+            }
+           
+           
         }             
     }
 

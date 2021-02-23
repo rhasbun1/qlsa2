@@ -371,8 +371,13 @@
                             </thead>
                             <tbody>
                                 @foreach($log as $item)
+                                
+                                <?php
+                                    $fecha = explode("-", $item->fechaHora);
+                                    $fecha1 = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+                                ?>
                                 <tr>
-                                    <td style="width:170px"> {{ $item->fechaHora }} </td>
+                                    <td style="width:170px"> {{ $fecha1 }} </td>
                                     <td style="width:200px"> {{ $item->nombreUsuario }} </td>
                                     <td style="width:250px"> {{ $item->accion }} </td>
                                     <td style="width:350px"> {{ $item->motivo }} </td>
@@ -403,8 +408,9 @@
                                 </thead>
                                 <tbody>
                                 @foreach($notas as $item)
+
                                 <tr>
-                                    <td style="width:200px"> {{ $item->fechaHora }} </td>
+                                    <td style="width:200px"> {{$item->fechaHora  }} </td>
                                     <td style="width:200px" data-idUsuario="{{ $item->idUsuario }}"> {{ $item->nombreUsuario }} </td>
                                     <td style="width:100px"> {{ $item->nota }} </td>
                                     <td>

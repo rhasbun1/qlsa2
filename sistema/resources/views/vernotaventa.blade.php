@@ -297,6 +297,7 @@
             </thead>
             <tbody>
                 @if ($notaventa[0]->fechaCierreSistema!='' )
+              
                 <tr>
                     <td style="width:200px"> {{ $notaventa[0]->fechaCierreSistema }} </td>
                     <td style="width:200px">QL Now</td>
@@ -305,8 +306,12 @@
                 </tr>                
                 @endif
                 @foreach($log as $item)
+                <?php
+                    $fecha = explode("-", $item->fechaHora);
+                    $fecha1 = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+                ?>
                 <tr>
-                    <td style="width:200px"> {{ $item->fechaHora }} </td>
+                    <td style="width:200px"> {{ $fecha1 }} </td>
                     <td style="width:200px"> {{ $item->nombreUsuario }} </td>
                     <td style="width:100px"> {{ $item->accion }} </td>
                     <td style="width:350px"> {{ $item->motivo }} </td>

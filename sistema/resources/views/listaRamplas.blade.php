@@ -57,7 +57,7 @@
                             Patente (*)
                         </div>
                         <div class="col-sm-3">
-                            <input type="text" id="patenteRampla" class="form-control input-sm" maxlength="20">
+                            <input type="text" id="patenteRampla" class="form-control input-sm" maxlength="15">
                         </div>
                     </div>
                 </div>        
@@ -174,6 +174,27 @@
                         swal(
                             {
                                 title: 'La patente de la rampla que desea crear ya Existe!!',
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: 'No',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            },
+                            function(isConfirm)
+                            {
+                                if(isConfirm){ 
+                                    $("#btnGrabarCondicion").prop("disabled", false);              
+                                    return;
+                                }
+                            }
+                        )
+
+                    }else if(dato.respuesta==1){
+                        swal(
+                            {
+                                title: 'El numero de la rampla que desea crear ya Existe!!',
                                 text: '',
                                 type: 'warning',
                                 showCancelButton: false,
