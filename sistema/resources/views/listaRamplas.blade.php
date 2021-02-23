@@ -51,7 +51,7 @@
                             Número (*)
                         </div>
                         <div class="col-sm-3">
-                            <input  type="number" id="numeroRampla" class="form-control input-sm" maxlength="3">
+                            <input  type="number" onkeypress='return validaNumericos(event)'  min="0"  oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" id="numeroRampla" class="form-control input-sm" maxlength="3">
                         </div>
                         <div class="col-sm-3">
                             Patente (*)
@@ -268,6 +268,12 @@
 
         } );
 
+        function validaNumericos(event) {
+            if(event.charCode >= 48 && event.charCode <= 57){
+                return true;
+            }
+            return false;        
+        }
     </script>
     
 @endsection

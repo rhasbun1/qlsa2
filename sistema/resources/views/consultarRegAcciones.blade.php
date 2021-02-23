@@ -59,17 +59,22 @@
 
 		$(document).ready(function() {
 
-        	$('#tabla thead tr').clone(true).appendTo( '#tabla thead' );
+			$('#tabla thead tr').clone(true).appendTo( '#tabla thead' );
             $('#tabla thead tr:eq(1) th').each( function (i) {
-                $(this).html( '<input type="text" class="form-control input-sm" placeholder="Buscar..." />' );
-                $( 'input', this ).on( 'keyup change', function () {
-                    if ( tabla.column(i).search() !== this.value ) {
-                        tabla
-                            .column(i)
-                            .search( this.value )
-                            .draw();
-                    }
-                } );                              
+                var title = $(this).text();
+
+                if(title.trim()!='' ){
+                    $(this).html( '<input type="text" class="form-control input-sm" placeholder="Buscar..." />' );
+                    $( 'input', this ).on( 'keyup change', function () {
+                        if ( table.column(i).search() !== this.value ) {
+                            table
+                                .column(i)
+                                .search( this.value )
+                                .draw();
+                        }
+                    } );
+                }
+             
             } );
 
             var table=$('#tabla').DataTable({

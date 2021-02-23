@@ -2,7 +2,7 @@
 
 @section('contenedorprincipal')
 
-
+<input type="text" value="Session::get('empresaUsuario')">
 <div style="padding: 20px">
     <div class="panel panel-default table-responsive">
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
@@ -109,13 +109,6 @@
     <script>
    
        
-
-       
-
-    </script>
-
-	<script>
-
        function resumenGeneral(){
      
            var fechaInicio1 = fechaAtexto($("#fechaInicio").val());
@@ -133,105 +126,108 @@
              
 
            }
-     
+        
            
-            $.ajax({
-                url: urlApp + urll,
-                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    fechaInicio:fechaInicio1,
-                    fechaTermino: fechaTermino1
-                },
-                success:function(dato){
-                   
-                    var tabla=$("#tablaNotas").DataTable();
-                    tabla.clear().draw();
-                    
-                    for(var x=0;x<dato.length;x++){
-                        
-                        var codigo = "<input class='form-control input-sm' style='display: none;' value=" + dato[x].u_codigo + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
-                        var idPlanta = "<input class='form-control input-sm' style='display: none;' value=" + dato[x].idPlanta + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
-                       
-                        var fechamedificada = dato[x].fecha_hora_creacion;
-                        var fecha= fechamedificada.split(" ")[0];
-                        var hora =  fechamedificada.split(" ")[1];
-                        fecha1 = String(fecha);  
-                        var ano = fecha1.split("-")[0];
-                        var mes = fecha1.split("-")[1];
-                        var dia = fecha1.split("-")[2];
-                        var fecha2 = dia+"/"+mes+"/"+ano;
-                        var rowNode= [
-                                        idNotaVenta=dato[x].idNotaVenta ,
-                                        dato[x].nombreCliente,
-                                        dato[x].nombreObra,
-                                        dato[x].nombrePlanta,
-                                        dato[x].nombreUnidad,
-                                        idPlanta,            
-                                        fecha2+" "+hora 
-                                                  
-                                    ];
-                       var flete = "<input class='form-control input-sm' value=" + dato[x].flete + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
-                       var distancia = "<input class='form-control input-sm' value=" + dato[x].distancia + " maxlength='5' onkeypress='return isIntegerKey(event)'>";
-                       var tiempoTraslado = "<input class='form-control input-sm' value=" + dato[x].tiempoTraslado + " maxlength='3' onkeypress='return isIntegerKey(event)'>";
-                       
-                       if($("#perfil").val() == 5 || $("#perfil").val() == 10 || $("#perfil").val() == 18){
-                            var rowNode1=[
-                                            flete,
-                                            distancia,
-                                            tiempoTraslado,
-                                            codigo
-                                        ];
-             
-                       }else{
-                        var rowNode1= [    
-                                         number_format( dato[x].flete, 0, ',', '.' ),
-                                         number_format( dato[x].distancia, 0, ',', '.' ),
-                                         number_format( dato[x].tiempoTraslado, 0, ',', '.' ),
-                                         codigo
+$.ajax({
+    url: urlApp + urll,
+    headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+    type: 'POST',
+    dataType: 'json',
+    data: {
+        fechaInicio:fechaInicio1,
+        fechaTermino: fechaTermino1
+    },
+    success:function(dato){
+       
+        var tabla=$("#tablaNotas").DataTable();
+        tabla.clear().draw();
+        
+        for(var x=0;x<dato.length;x++){
+            
+            var codigo = "<input class='form-control input-sm' style='display: none;' value=" + dato[x].u_codigo + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
+            var idPlanta = "<input class='form-control input-sm' style='display: none;' value=" + dato[x].idPlanta + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
+           
+            var fechamedificada = dato[x].fecha_hora_creacion;
+            var fecha= fechamedificada.split(" ")[0];
+            var hora =  fechamedificada.split(" ")[1];
+            fecha1 = String(fecha);  
+            var ano = fecha1.split("-")[0];
+            var mes = fecha1.split("-")[1];
+            var dia = fecha1.split("-")[2];
+            var fecha2 = dia+"/"+mes+"/"+ano;
+            var rowNode= [
+                            idNotaVenta=dato[x].idNotaVenta ,
+                            dato[x].nombreCliente,
+                            dato[x].nombreObra,
+                            dato[x].nombrePlanta,
+                            dato[x].nombreUnidad,
+                            idPlanta,            
+                            fecha2+" "+hora 
                                       
-                                     ];
+                        ];
+           var flete = "<input class='form-control input-sm' value=" + dato[x].flete + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
+           var distancia = "<input class='form-control input-sm' value=" + dato[x].distancia + " maxlength='5' onkeypress='return isIntegerKey(event)'>";
+           var tiempoTraslado = "<input class='form-control input-sm' value=" + dato[x].tiempoTraslado + " maxlength='3' onkeypress='return isIntegerKey(event)'>";
+           
+           if($("#perfil").val() == 5 || $("#perfil").val() == 10 || $("#perfil").val() == 18){
+                var rowNode1=[
+                                flete,
+                                distancia,
+                                tiempoTraslado,
+                                codigo
+                            ];
+ 
+           }else{
+            var rowNode1= [    
+                             number_format( dato[x].flete, 0, ',', '.' ),
+                             number_format( dato[x].distancia, 0, ',', '.' ),
+                             number_format( dato[x].tiempoTraslado, 0, ',', '.' ),
+                             codigo
+                          
+                         ];
 
-                       }
-                     
-                    
-                      
-                        var nn = tabla.row.add([rowNode[0],
-                                                rowNode[1],
-                                                rowNode[2],
-                                                rowNode[3],
-                                                rowNode[4],
-                                                rowNode[6],
-                                               
-                                                rowNode1[0],
-                                                rowNode1[1],
-                                                rowNode1[2],
-                                                rowNode1[3],
-                                                rowNode[5]
-                                                ]);
+           }
+         
+        
+          
+            var nn = tabla.row.add([rowNode[0],
+                                    rowNode[1],
+                                    rowNode[2],
+                                    rowNode[3],
+                                    rowNode[4],
+                                    rowNode[6],
+                                   
+                                    rowNode1[0],
+                                    rowNode1[1],
+                                    rowNode1[2],
+                                    rowNode1[3],
+                                    rowNode[5]
+                                    ]);
 
-                        var fila=tabla.row( nn ).index();
-                        var celdas=tabla.row( nn).data();
-               
-                        var celda=tabla.cell(fila,0).node();
-                        $( celda ).css( 'text-align', 'right' ).css( 'width', '60px');
+            var fila=tabla.row( nn ).index();
+            var celdas=tabla.row( nn).data();
+   
+            var celda=tabla.cell(fila,0).node();
+            $( celda ).css( 'text-align', 'right' ).css( 'width', '60px');
 
-                        var celda=tabla.cell(fila,4).node();
-                        $( celda ).css( 'text-align', 'right' ).css( 'width', '60px');
+            var celda=tabla.cell(fila,4).node();
+            $( celda ).css( 'text-align', 'right' ).css( 'width', '60px');
 
-                    }
-                  tabla.draw();
-                  
-                  actualizarFiltros( tabla );
-
-                }
-            })
-       }
-        function formato(texto){
-            return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
         }
+      tabla.draw();
+    }
+})
+       }
+       
 
+    </script>
+    <script>
+            function formato(texto){
+            return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+            }
+    
+    </script>
+	<script>
         $('#mdProcesando').on('shown.bs.modal', function (e) {
           guardarCambios();
         })  
@@ -240,39 +236,7 @@
             $("#mdProcesando").modal('show');
         }      
 		$(document).ready(function() {
-
-            var hoy = new Date();
-            hoy.setDate(hoy.getDate() - 3);
-
-            var dd = hoy.getDate();
-            var mm = hoy.getMonth()+1;
-            var yyyy = hoy.getFullYear();
-
-            if (dd < 10) {dd = '0' + dd; }
-            if (mm < 10) {mm = '0' + mm; }
-            if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
-                $("#fechaInicio").val(dd + '/' + mm + '/' + (yyyy-1));
-            }else{
-                $("#fechaInicio").val(dd + '/' + mm + '/' + (yyyy-5));
-            }
-   
-
-            var hoy = new Date();
-            var dd = hoy.getDate();
-            var mm = hoy.getMonth()+1;
-            var yyyy = hoy.getFullYear();
-            if (dd < 10) {dd = '0' + dd; }
-            if (mm < 10) {mm = '0' + mm; }
-
-            $("#fechaTermino").val(dd + '/' + mm + '/' + yyyy);
-
-            $('.date').datepicker({
-                todayHighlight: true,
-                format: "dd/mm/yyyy",
-                weekStart: 1,
-                language: "es",
-                autoclose: true
-            });     
+           
 
 
             $('#tablaNotas thead tr').clone(true).appendTo( '#tablaNotas thead' );
@@ -340,16 +304,47 @@
                 // "order": [[ 0, "desc" ]],                    
                 // // language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
                 initComplete: function () {
-                    actualizarFiltros(this.api())
+                    this.api().columns(4).every( function () {
+                        var column = this;
+                        var select = $("#selUnidad" ).empty().append( '<option value=""></option>' )
+                            .on( 'change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+         
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+         
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    } );
+                    this.api().columns(3).every( function () {
+                        var column = this;
+                        var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
+                            .on( 'change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+         
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+         
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    } );
                 }               
-            });     
-
-            resumenGeneral();
+            });              
 
         } );
  
         function actualizarFiltros(tabla){
-            tabla.columns(4).every( function () {
+            tabla.columns(3).every( function () {
                 var column = this;
                 var select = $("#selUnidad" ).empty().append( '<option value=""></option>' )
                 .on( 'change', function () {
@@ -367,7 +362,7 @@
                 } );
             } );
             
-            tabla.columns(3).every( function () {
+            tabla.columns(4).every( function () {
                 var column = this;
                 var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
                     .on( 'change', function () {
@@ -430,8 +425,8 @@
                     return;                   
                 }
                
-                u_codigo=tabla.cell(i,8).node().getElementsByTagName('input')[0].value;
-                idPlanta=tabla.cell(i,9).node().getElementsByTagName('input')[0].value;
+                u_codigo=tabla.cell(i,9).node().getElementsByTagName('input')[0].value;
+                idPlanta=tabla.cell(i,10).node().getElementsByTagName('input')[0].value;
 
 
 
@@ -478,27 +473,74 @@
 		}
         
 
-        function ordenPorFecha(){
-            var min = document.getElementById('min').value;
-            var max = document.getElementById('max').value;
-            n =  new Date();
-            //Año
-            y = n.getFullYear();
-            //Mes
-            m = n.getMonth() + 1;
-            //Día
-            d = n.getDate();
-            dat = (d + "/" + m + "/" + y);
-          
-            var elem = min.split('/');
-            
-            dia = elem[0];
-            mes = elem[1];
-            anio = elem[2];
-        };
+function ordenPorFecha(){
+    var min = document.getElementById('min').value;
+    var max = document.getElementById('max').value;
+    n =  new Date();
+    //Año
+    y = n.getFullYear();
+    //Mes
+    m = n.getMonth() + 1;
+    //Día
+    d = n.getDate();
+    dat = (d + "/" + m + "/" + y);
+  
+    var elem = min.split('/');
+    
+    dia = elem[0];
+    mes = elem[1];
+    anio = elem[2];
+   
+   
+    
+   
+
+   };
    
 
     </script>
+    <script>
+        $(document).ready(function() {
 
+            var hoy = new Date();
+            hoy.setDate(hoy.getDate() - 3);
+
+            var dd = hoy.getDate();
+            var mm = hoy.getMonth()+1;
+            var yyyy = hoy.getFullYear();
+
+            if (dd < 10) {dd = '0' + dd; }
+            if (mm < 10) {mm = '0' + mm; }
+            if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
+                $("#fechaInicio").val(dd + '/' + mm + '/' + (yyyy-1));
+            }else{
+                $("#fechaInicio").val(dd + '/' + mm + '/' + (yyyy-5));
+}
+   
+
+
+
+
+
+var hoy = new Date();
+var dd = hoy.getDate();
+var mm = hoy.getMonth()+1;
+var yyyy = hoy.getFullYear();
+if (dd < 10) {dd = '0' + dd; }
+if (mm < 10) {mm = '0' + mm; }
+
+$("#fechaTermino").val(dd + '/' + mm + '/' + yyyy);
+
+$('.date').datepicker({
+    todayHighlight: true,
+    format: "dd/mm/yyyy",
+    weekStart: 1,
+    language: "es",
+    autoclose: true
+})
+resumenGeneral();      
+     }); 
+    
+    </script>
 
 @endsection        	
