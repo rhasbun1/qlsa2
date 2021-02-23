@@ -182,9 +182,9 @@
                     @if ( Session::get('idPerfil')=='3' or
                         Session::get('idPerfil')=='5' or
                         Session::get('idPerfil')=='1')
-                        <input class="form-control input-sm" id="tiempoProduccion" onkeypress='return isNumberKey(event)'>
+                        <input class="form-control input-sm" maxlength="10" id="tiempoProduccion" onkeypress='return isNumberKey(event)'>
                     @else
-                        <input class="form-control input-sm" id="tiempoProduccion" onkeypress='return isNumberKey(event)' readonly="true">
+                        <input class="form-control input-sm" maxlength="10" id="tiempoProduccion" onkeypress='return isNumberKey(event)' readonly="true">
                     @endif
                 </div>
             </div>                            
