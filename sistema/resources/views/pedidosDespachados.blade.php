@@ -349,7 +349,7 @@
                 },
                 'pageLength',
                 {
-                    extend: 'excelHtml5',
+                    extend: 'excel',
                     title: 'Pedidos en Proceso',
                     text: '<i class="fa fa-file-excel-o"></i>',
                     titleAttr: 'Excel',                           

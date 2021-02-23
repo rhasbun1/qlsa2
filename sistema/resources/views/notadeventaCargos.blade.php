@@ -430,6 +430,7 @@
                     return;                   
                 }
                
+                
                 u_codigo=tabla.cell(i,9).node().getElementsByTagName('input')[0].value;
                 idPlanta=tabla.cell(i,10).node().getElementsByTagName('input')[0].value;
 

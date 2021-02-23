@@ -851,12 +851,14 @@
                     },
                     'pageLength',
                     {
-                        extend: 'excelHtml5',
-                        title: titulo,
-                        exportOptions: {
-                            columns: [ 0, 2, 3, 4, 5 , 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
-                        }
-                    },
+                            extend: 'excelHtml5',
+                            title: titulo,
+                            text: '<i class="fa fa-file-excel-o"></i>',
+                            titleAttr: 'Excel',                           
+                            exportOptions: {
+                                columns: [ 0, 2, 3, 4, 5, 6 ]
+                            }
+                        },
                     {
                         text: 'Próximos pedidos Granel',
                         action: function ( e, dt, node, config ) {

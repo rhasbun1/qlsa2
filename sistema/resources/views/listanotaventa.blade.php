@@ -44,7 +44,10 @@
                     <th>Obra/Planta</th>
                     <th>Ejecutivo QL</th>
                     <th>Estado</th>
-                    <th></th>
+                    @if( Session::get('grupoUsuario')=='C' and (Session::get("idPerfil")!=11 and Session::get("idPerfil")!=19 )  )
+
+                        <th></th>
+                    @endif
                 </thead>
                 <tbody>
                     @foreach($listaNotasdeVenta as $item)
@@ -60,11 +63,12 @@
                             @else
                                 <td>Pendiente de Aprobación</td>
                             @endif
-                            <td>
-                                @if($item->aprobada==1 and Session::get('grupoUsuario')=='C' and (Session::get("idPerfil")!=11 and Session::get("idPerfil")!=19 )  )
-                                    <a href="gestionarpedido/{{ $item->idNotaVenta }}/" class="btn btn-xs btn-success">Crear Pedido</a>
-                                @endif    
-                            </td>
+                            @if($item->aprobada==1 and Session::get('grupoUsuario')=='C' and (Session::get("idPerfil")!=11 and Session::get("idPerfil")!=19 )  )
+
+                                <td>
+                                        <a href="gestionarpedido/{{ $item->idNotaVenta }}/" class="btn btn-xs btn-success">Crear Pedido</a>
+                                </td>
+                            @Fendif
                         </tr>
                     @endforeach
                 </tbody>

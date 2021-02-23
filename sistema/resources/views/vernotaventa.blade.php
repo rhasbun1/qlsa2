@@ -129,7 +129,7 @@
                         Observaciones <font size="1px">(máx.255 carac)</font>
                     </div>
                     <div class="col-lg-7 col-md-10 col-sm-10">                            
-                        <textarea id="txtObservaciones" maxlength="255" rows="3" class="form-control input-sm" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11') readonly @endif>{{ $notaventa[0]->observaciones }}</textarea>
+                        <textarea id="txtObservaciones" style="resize: none;" maxlength="255" rows="3" class="form-control input-sm" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11') readonly @endif>{{ $notaventa[0]->observaciones }}</textarea>
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-2">
                         <b>Cotización</b>

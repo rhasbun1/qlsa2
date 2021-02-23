@@ -133,7 +133,7 @@
                     <th>Planta de Origen</th>
                     <th>Entrega</th>
                     <th>Transporte</th>
-                    <th>Camion</th>
+                    <th>Camión</th>
                     <th style="text-align: center;">Rampla</th>
                     <th>Conductor</th>
                     <th style="text-align: center;">Fecha Hora Carga<br>Programada</th>
@@ -283,7 +283,7 @@
         </div> 
         
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
-            @if ( ( Session::get('idPerfil')=='2' or Session::get('idPerfil')=='11')  and $pedido[0]->idEstadoPedido==1 )
+            @if ( ( Session::get('idPerfil')=='2' or Session::get('idPerfil')=='11')  and $pedido[0]->idEstadoPedido==1 and $accion!='6' )
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedido({{ $pedido[0]->idPedido }});">Aprobar</button>
             @endif    
 

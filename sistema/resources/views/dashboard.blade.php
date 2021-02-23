@@ -353,7 +353,7 @@
                 <thead>
                 <th >Pedido</th>             
                 <th >Estado</th>
-                <th >Fecha Creacion</th>
+                <th >Fecha Creación</th>
                 <th >Planta de Origen </th>
                 <th >Cliente</th>
                 <th >Obra/Planta</th>
@@ -653,7 +653,7 @@
                 <thead>
                 <th >Pedido</th>             
                 <th >Estado</th>
-                <th >Fecha Creacion</th>
+                <th >Fecha Creación</th>
                 <th>Planta de Origen</th>
                 <th >Cliente</th>
                 <th>Obra/Planta</th>
@@ -771,7 +771,7 @@
                 <th >Pedido</th>
                 <th >planta de origen</th>             
                 <th >Estado</th>
-                <th >Fecha Creacion</th>
+                <th >Fecha Creación</th>
                 <th >Cliente</th>
                 <th> Planta/Obra</th>
                 <th >Producto</th>
@@ -832,7 +832,7 @@
                 <th >Estado</th>
               
                 <th >Cliente</th>
-                <th >Fecha Creacion</th>
+                <th >Fecha Creación</th>
                 <th >Producto</th>
                 
               
@@ -883,7 +883,7 @@
       <table id="tablaModalPedidosSinAprobar" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
                 <th >Pedido</th> 
-                <th >Fecha Creacion</th>            
+                <th >Fecha Creación</th>            
                 <th >Estado</th>
                 <th >Cliente</th>
                 <th>Obra/Planta</th>
@@ -943,7 +943,7 @@
       <table id="tablaModalPedidosSinAprobar1" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
                 <th >Pedido</th> 
-                <th >Fecha Creacion</th>            
+                <th >Fecha Creación</th>            
                 <th >Estado</th>
                 <th >Cliente</th>
                 <th>Obra/Planta</th>
@@ -1009,7 +1009,7 @@
                 <th >Estado</th>
               
                 <th >Cliente</th>
-                <th >Fecha Creacion</th>
+                <th >Fecha Creación</th>
                 <th >Producto</th>
                 <th>total ($)</th>
                 
@@ -1067,7 +1067,7 @@
       <table id="tablaModalClienteEnProceso" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
                 <th >Pedido</th>  
-                <th >Fecha Creacion</th>           
+                <th >Fecha Creación</th>           
                 <th >Estado</th>
                 
                 <th >Obra</th>
