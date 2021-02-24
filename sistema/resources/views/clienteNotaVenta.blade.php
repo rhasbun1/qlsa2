@@ -219,7 +219,7 @@
 
         swal(
             {
-                title: 'Elimina la nota de venta Nº ' + idNotaVenta + ' para el usuario?',
+                title: '¿Elimina la nota de venta Nº ' + idNotaVenta + ' para el usuario?',
                 text: '',
                 type: 'warning',
                 showCancelButton: true,

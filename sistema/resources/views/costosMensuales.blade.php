@@ -419,8 +419,15 @@
 
             // DataTable
             var table=$('#tabla').DataTable({
-                orderCellsTop: true,
-                fixedHeader: true,
+              orderCellsTop: true,
+                 fixedHeader: true,         
+                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                dom: 'Bfrtip',
+                "scrollX": true,
+                buttons: [
+                                 
+                    'pageLength'
+                ],
                 columnDefs: [ {
                                 "targets": [2],
                                 "orderable": false
@@ -430,7 +437,8 @@
 
             var productos=$('#tablaProductos').DataTable({
                 orderCellsTop: true,
-                fixedHeader: true,    
+                fixedHeader: true,  
+                  
                 columnDefs: [ {
                                 "targets": [3],
                                 "orderable": false

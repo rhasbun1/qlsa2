@@ -7,6 +7,7 @@
         <div class="panel-heading">
             <b>Notas de Venta Vigentes</b>
         </div>
+        
         <div class="padding-md clearfix"> 
             <div style="padding-bottom: 15px">
                 <div class="row">

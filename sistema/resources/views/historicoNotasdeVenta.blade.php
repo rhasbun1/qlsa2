@@ -186,14 +186,17 @@
                             this.disable();    
                             location.reload(true);                        
                         }
-                    },                       
+                    },
                     {
-                        extend: 'excelHtml5',
-                        title: tituloArchivo,
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
-                        }
+                    extend: 'excelHtml5',
+                    title: 'Clientes / Notas de Venta',
+                    text: '<i class="fa fa-file-excel-o"></i>',
+                    titleAttr: 'Excel',                         
+                    exportOptions: {
+                        columns: [ 0, 1, 2, 3,4]
                     }
+                }                       
+                    
                 ],                  
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
