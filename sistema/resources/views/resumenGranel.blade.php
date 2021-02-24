@@ -36,7 +36,7 @@
             <div class="row" style="padding-top: 15px; padding-bottom: 15px">
 				<div class="col-md-3" style="display: inline">
                     @if( Session::get('idPlanta')=='0')
-					Planta de origen&nbsp&nbsp&nbsp&nbsp&nbsp
+					Planta de Origen&nbsp&nbsp&nbsp&nbsp&nbsp
 					<select id="idPlanta" class="form-control input-sm" style="display: inline; width: 170px" >
 						<option value="0">Todas</option>
                         @foreach($plantas as $item)

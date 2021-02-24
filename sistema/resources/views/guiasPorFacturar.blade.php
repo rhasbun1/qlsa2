@@ -108,7 +108,7 @@
 				            <th style="width:80px">Nº Devolución</th>
 				            <th style="width:250px">Fecha de devolución</th>
 				            <th style="width:80px">Cliente</th>
-				            <th style="width:100px">Planta de origen</th>
+				            <th style="width:100px">Planta de Origen</th>
 				            <th style="width:100px">Planta de devolución</th>
 				            <th style="width:100px">Obra/Planta</th>
 				            <th style="width:100px">Nº Guía</th>

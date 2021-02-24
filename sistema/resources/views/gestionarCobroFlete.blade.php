@@ -159,7 +159,7 @@
 			            <th style="width:80px">Producto devuelto</th>
 			            <th style="width:80px">Cantidad devuelta</th>
 			            <th style="width:80px">unidad</th>
-			            <th style="width:100px">Planta de origen</th>
+			            <th style="width:100px">Planta de Origen</th>
 			            <th style="width:100px">Planta de devolución</th>
 			        </thead>
 			        <tbody>

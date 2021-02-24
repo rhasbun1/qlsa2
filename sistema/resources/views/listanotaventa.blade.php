@@ -7,7 +7,7 @@
         <div class="panel-heading">
             <b>Notas de Venta Vigentes</b>
         </div>
-        
+
         <div class="padding-md clearfix"> 
             <div style="padding-bottom: 15px">
                 <div class="row">
@@ -48,6 +48,8 @@
                     @if( Session::get('grupoUsuario')=='C' and (Session::get("idPerfil")!=11 and Session::get("idPerfil")!=19 )  )
 
                         <th></th>
+                    @elseif
+                        <th style="display: none;"></th>
                     @endif
                 </thead>
                 <tbody>
@@ -69,7 +71,9 @@
                                 <td>
                                         <a href="gestionarpedido/{{ $item->idNotaVenta }}/" class="btn btn-xs btn-success">Crear Pedido</a>
                                 </td>
-                            @endif
+                                @elseif
+                                    <td style="display: none;"></td>
+                                @endif
                         </tr>
                     @endforeach
                 </tbody>
