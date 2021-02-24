@@ -364,7 +364,7 @@
                                 if( dato[0].idProductoListaPrecios==-1){
                                     swal(
                                         {
-                                            title: 'El producto no puede ser eliminado, ya tiene información relacionada!',
+                                            title: '¡El producto no puede ser eliminado, ya tiene información relacionada!',
                                             text: '',
                                             type: 'warning',
                                             showCancelButton: false,

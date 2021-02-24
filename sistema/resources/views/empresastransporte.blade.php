@@ -25,7 +25,7 @@
                                 <th>Nombre</th>
                                 <th>Rut</th>
                                 <th>Email</th>
-                                <th>Telefono</th>
+                                <th>Teléfono</th>
                                 <th>Nombre Contacto</th>
                                 <th></th>
                             </thead>
@@ -64,7 +64,7 @@
                                 <th>Nombre</th>
                                 <th>Rut</th>
                                 <th>Email</th>
-                                <th>Telefono</th>
+                                <th>Teléfono</th>
                                 <th>Nombre Contacto</th>
                                 <th></th>
                             </thead>

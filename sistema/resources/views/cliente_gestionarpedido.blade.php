@@ -62,7 +62,7 @@
             <div style="padding-top: 10px">
                 <table id="tablaDetalle" class="table table-hover table-condensed table-responsive">
                     <thead>
-                        <th style="display: none">Codigo</th>
+                        <th style="display: none">Código</th>
                         <th width="15%">Producto</th>
                         <th width="5%">Diseño</th>
                         <th width="10%">Precio</th>
@@ -122,7 +122,7 @@
                         <input id="txtCorreoContacto" class="form-control input-sm" value="{{ $NotadeVenta[0]->correoContacto}}">
                     </div>
                     <div class="col-sm-2 col-md-2">
-                        Telefono/Móvil
+                        Teléfono/Móvil
                         <input id="txtTelefono" class="form-control input-sm" value="{{ $NotadeVenta[0]->telefonoContacto}}">
                     </div>
                     <div class="col-sm-2 col-md-2">

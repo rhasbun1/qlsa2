@@ -108,7 +108,7 @@
         <div style="padding: 10px">
             <table id="tablaDetalle" class="table table-hover table-condensed table-responsive">
                 <thead>
-                    <th style="display: none">Codigo</th>
+                    <th style="display: none">Código</th>
                     <th>Producto</th>
                     <th style="width: 60px">Cantidad</th>
                     <th>Unidad</th>

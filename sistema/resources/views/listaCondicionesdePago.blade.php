@@ -108,7 +108,7 @@
             var idCondicion=tabla.rows[fila].cells[0].innerHTML.trim();
             swal(
                 {
-                    title: 'Elimina la Condición seleccionada?',
+                    title: '¿Elimina la Condición seleccionada?',
                     text: '',
                     type: 'warning',
                     showCancelButton: true,

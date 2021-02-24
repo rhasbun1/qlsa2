@@ -99,7 +99,7 @@
         <div style="padding-top: 0px; padding-left: 20px; padding-bottom: 5px; padding-right: 10px">
             <table id="tablaDetalle" class="table table-hover table-condensed" style="width: 100%">
                 <thead>
-                    <th style="display: none">Codigo</th>
+                    <th style="display: none">Código</th>
                     <th style="width:100px">Producto</th>
                     <th style="width:30px; text-align: right;">Cantidad<br>Solicitada</th>
                     <th style="width:40px">Unidad</th>

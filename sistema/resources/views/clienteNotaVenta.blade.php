@@ -280,8 +280,11 @@
         var table=$('#tabla').DataTable({
             orderCellsTop: true,
             fixedHeader: true,  
+            lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+
             dom: 'Bfrtip',
-            buttons: [              
+            buttons: [  
+                'pageLength',            
                 {
                     extend: 'excelHtml5',
                     title: 'Clientes / Notas de Venta',

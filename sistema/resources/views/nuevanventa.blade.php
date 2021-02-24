@@ -97,7 +97,7 @@
             <div style="padding-right: 20px; padding-left: 20px">
                 <table id="tablaDetalle" class="table table-hover table-condensed table-responsive">
                     <thead>
-                        <th style="display: none">Codigo</th>
+                        <th style="display: none">Código</th>
                         <th style="width:80px">Nº de Diseño</th>
                         <th style="width:150px">Producto</th>
                         <th style="width:50px">Cantidad</th>
@@ -129,7 +129,7 @@
                             <input id="txtCorreoContacto" name="txtCorreoContacto" class="form-control input-sm" maxlength="50" readonly>
                         </div>
                         <div class="col-lg-2 col-sm-3">
-                            Telefono/Móvil
+                            Teléfono/Móvil
                             <input id="txtTelefono" name="txtTelefono" class="form-control input-sm" maxlength="30" readonly>
                         </div>
                     </div>

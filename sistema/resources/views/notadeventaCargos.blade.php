@@ -365,7 +365,7 @@
                 column.data().unique().sort().each( function ( d, j ) {
                     select.append( '<option value="'+d+'">'+d+'</option>' )
                 } );
-            } );
+            } ); 
             
             tabla.columns(3).every( function () {
                 var column = this;

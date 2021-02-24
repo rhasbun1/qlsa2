@@ -19,13 +19,13 @@
             			Nombre Empresa
             		</div>
             		<div class="col-sm-3">
-            			<input id="nombre" class="form-control input-sm" value="@isset( $empresa[0]->nombre ) {{ $empresa[0]->nombre }} @endisset">
+            			<input id="nombre" maxlength="30" class="form-control input-sm" value="@isset( $empresa[0]->nombre ) {{ $empresa[0]->nombre }} @endisset">
             		</div>
             		<div class="col-sm-2">
             			Rut
             		</div>
             		<div class="col-sm-2">
-            			<input id="rut" class="form-control input-sm" value="@isset( $empresa[0]->rut ){{$empresa[0]->rut}}@endisset">
+            			<input id="rut" maxlength="10" class="form-control input-sm" value="@isset( $empresa[0]->rut ){{$empresa[0]->rut}}@endisset">
             		</div>        		 		
             	</div>
             	<div class="row" style="padding-top: 5px">
@@ -33,13 +33,13 @@
             			Email
             		</div>
             		<div class="col-sm-3">
-            			<input id="email" class="form-control input-sm" value="@isset( $empresa[0]->email ) {{ $empresa[0]->email }} @endisset">
+            			<input id="email" maxlength="30" class="form-control input-sm" value="@isset( $empresa[0]->email ) {{ $empresa[0]->email }} @endisset">
             		</div>
             		<div class="col-sm-2">
-            			Telefono
+            			Teléfono
             		</div>
             		<div class="col-sm-3">
-            			<input id="telefono" class="form-control  input-sm" value="@isset( $empresa[0]->telefono ) {{ $empresa[0]->telefono }} @endisset">
+            			<input id="telefono" maxlength="12" class="form-control  input-sm" value="@isset( $empresa[0]->telefono ) {{ $empresa[0]->telefono }} @endisset">
             		</div>        		
             	</div>
             	<div class="row" style="padding-top: 5px">
@@ -47,7 +47,7 @@
             			Nombre Contacto
             		</div>
             		<div class="col-sm-3">
-            			<input id="nombreContacto" class="form-control input-sm" value="@isset( $empresa[0]->nombreContacto ) {{ $empresa[0]->nombreContacto }} @endisset">
+            			<input id="nombreContacto" maxlength="30" class="form-control input-sm" value="@isset( $empresa[0]->nombreContacto ) {{ $empresa[0]->nombreContacto }} @endisset">
             		</div>
             	</div>
             @else
@@ -55,13 +55,13 @@
                         Nombre Empresa
                     </div>
                     <div class="col-sm-3">
-                        <input id="nombre" class="form-control input-sm" value="@isset( $empresa[0]->nombre ) {{ $empresa[0]->nombre }} @endisset" readonly>
+                        <input id="nombre" maxlength="30" class="form-control input-sm" value="@isset( $empresa[0]->nombre ) {{ $empresa[0]->nombre }} @endisset" readonly>
                     </div>
                     <div class="col-sm-2">
                         Rut
                     </div>
                     <div class="col-sm-2">
-                        <input id="rut" class="form-control input-sm" value="@isset( $empresa[0]->rut ) {{ $empresa[0]->rut }} @endisset" readonly>
+                        <input id="rut" maxlength="10" class="form-control input-sm" value="@isset( $empresa[0]->rut ) {{ $empresa[0]->rut }} @endisset" readonly>
                     </div>                      
                 </div>
                 <div class="row" style="padding-top: 5px">
@@ -69,13 +69,13 @@
                         Email
                     </div>
                     <div class="col-sm-3">
-                        <input id="email" class="form-control input-sm" value="@isset( $empresa[0]->email ) {{ $empresa[0]->email }} @endisset" readonly>
+                        <input id="email" maxlength="30" class="form-control input-sm" value="@isset( $empresa[0]->email ) {{ $empresa[0]->email }} @endisset" readonly>
                     </div>
                     <div class="col-sm-2">
-                        Telefono
+                        Teléfono
                     </div>
                     <div class="col-sm-3">
-                        <input id="telefono" class="form-control  input-sm" value="@isset( $empresa[0]->telefono ) {{ $empresa[0]->telefono }} @endisset" readonly>
+                        <input id="telefono" maxlength="12" class="form-control  input-sm" value="@isset( $empresa[0]->telefono ) {{ $empresa[0]->telefono }} @endisset" readonly>
                     </div>              
                 </div>
                 <div class="row" style="padding-top: 5px">
@@ -83,7 +83,7 @@
                         Nombre Contacto
                     </div>
                     <div class="col-sm-3">
-                        <input id="nombreContacto" class="form-control input-sm" value="@isset( $empresa[0]->nombreContacto ) {{ $empresa[0]->nombreContacto }} @endisset" readonly>
+                        <input id="nombreContacto" maxlength="30" class="form-control input-sm" value="@isset( $empresa[0]->nombreContacto ) {{ $empresa[0]->nombreContacto }} @endisset" readonly>
                     </div>
                 </div>            
             @endif           	
@@ -300,7 +300,7 @@
                 </div>
                 <div class="row" style="padding:5px">
                     <div class="col-sm-3">
-                        Telefono
+                        Teléfono
                     </div>
                     <div class="col-sm-3 col-md-3">
                         <input type="text" class="form-control input-sm" maxlength="50" id="telefonoConductor">
@@ -489,7 +489,7 @@
             if(!checkRut(rut)){
                 swal(
                     {
-                        title: 'El rut ingresado no es válido!',
+                        title: '¡El rut ingresado no es válido!',
                         text: '',
                         type: 'warning',
                         showCancelButton: false,
@@ -538,7 +538,7 @@
                     if(dato.identificador==-1){
                         swal(
                             {
-                                title: 'El rut ingresado lo tiene otra empresa de transporte creada anteriormente!',
+                                title: '¡El rut ingresado lo tiene otra empresa de transporte creada anteriormente!',
                                 text: '',
                                 type: 'warning',
                                 showCancelButton: false,
@@ -601,7 +601,7 @@
 
                 swal(
                     {
-                        title: 'Falta el GUION en la patente!',
+                        title: '¡Falta el GUION en la patente!',
                         text: '',
                         type: 'warning',
                         showCancelButton: false,
@@ -730,7 +730,7 @@
             if( $("#nombreConductor").val().trim()=="" || $("#apellidoPaterno").val().trim()==""   ){
                 swal(
                     {
-                        title: 'El nombre y apellido paterno es obligatorio!',
+                        title: '!El nombre y apellido paterno es obligatorio!',
                         text: '',
                         type: 'warning',
                         showCancelButton: false,
@@ -814,7 +814,7 @@
 
             swal(
                 {
-                    title: 'Elimina el camión patente ' + tabla.rows[fila].cells[1].innerHTML.trim() +'?',
+                    title: '¿Elimina el camión patente ' + tabla.rows[fila].cells[1].innerHTML.trim() +'?',
                     text: '',
                     type: 'warning',
                     showCancelButton: true,

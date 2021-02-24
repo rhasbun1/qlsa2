@@ -169,9 +169,13 @@
             // DataTable
             var table=$('#tabla').DataTable({
                 orderCellsTop: true,
-                fixedHeader: true,  
+                fixedHeader: true,
+                lengthMenu: [[-1,6, 12, 20], [ "Todos","6", "12", "20"]],
+
                 dom: 'Bfrtip',
                 buttons: [
+                    'pageLength',
+
                     {
                         text: 'Nueva Obra',
                         action: function ( e, dt, node, config ) {

@@ -12,7 +12,7 @@
         <div class="padding-md clearfix" style="width: 1000px">           
             <table id="tabla" class="table table-hover table-condensed table-responsive">
                 <thead>
-                    <th>Codigo</th>
+                    <th>Código</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Email</th>

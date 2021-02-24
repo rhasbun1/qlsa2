@@ -83,7 +83,7 @@
         <div style="padding: 20px">
             <table id="tablaDetalle" class="table table-hover table-condensed table-responsive">
                 <thead>
-                    <th style="display: none">Codigo</th>
+                    <th style="display: none">Código</th>
                     <th>Producto</th>
                     <th style="width: 80px">Diseño</th>
                     <th style="width: 50px">Cant.</th>

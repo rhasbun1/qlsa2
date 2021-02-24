@@ -143,7 +143,7 @@
             <div style="padding-left: 20px;padding-right: 20px">
                 <table id="tablaDetalle" class="table table-hover table-condensed" style="width:100%">
                     <thead>
-                        <th style="display:none">Codigo</th>
+                        <th style="display:none">Código</th>
                         <th style="width: 150px">Producto</th>
                         <th style="width: 80px">Diseño</th>
                         <th style="width: 50px;text-align:right;">Cantidad</th>

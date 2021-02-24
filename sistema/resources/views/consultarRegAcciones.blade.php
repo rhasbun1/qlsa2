@@ -11,7 +11,7 @@
 	        <div>
 	        	<div class="row">
 	        		<div class="col-md-1">
-						Item
+						Ítem
 	        		</div>
 	        		<div class="col-md-3">
 	        			<select id="item" class="form-control input-sm" onchange="limpiarBusqueda();">
@@ -74,12 +74,20 @@
                         }
                     } );
                 }
-             
+              
             } );
 
-            var table=$('#tabla').DataTable({
-                orderCellsTop: true,
-                fixedHeader: true,                        
+			var table=$('#tabla').DataTable({
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                    "scrollX": true,
+                    lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],                
+                    dom: 'Bfrtip',
+                    buttons: [
+           
+					'pageLength'
+				],
+                      
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}              
             });
         } );

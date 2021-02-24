@@ -12,7 +12,7 @@
         <div class="padding-md clearfix">           
             <table id="tabla" class="table table-hover table-condensed table-responsive" style="width: 100%">
                 <thead>
-                    <th style="display: none">Codigo</th>
+                    <th style="display: none">Código</th>
                     <th>Rut</th>
                     <th>Nombre</th>
                     <th>Razón Social</th>
@@ -346,9 +346,12 @@
             var table=$('#tabla').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
+                lengthMenu: [[-1,6, 12, 20], [ "Todos","6", "12", "20"]],
+
                 dom: 'Bfrtip',
                 "order": [[ 2, "asc" ]],
                 buttons: [
+                    'pageLength',
                     {
                         extend: 'excelHtml5',
                         title: 'Listado de Clientes',

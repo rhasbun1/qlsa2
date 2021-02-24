@@ -103,7 +103,7 @@
             <div style="padding-top: 5px; display: none" id="divPedidoProductosporUnidad">
                 <table id="tablaDetallePedidoNormal" class="table table-condensed table-hover table-responsive">
                     <thead>
-                        <th style="display: none">Codigo</th>
+                        <th style="display: none">Código</th>
                         <th width="15%">Producto</th>
                         <th width="5%">Diseño</th>
                         <th style="width:10%;text-align: right;">Precio<br>Reajustado($)</th>
@@ -197,7 +197,7 @@
                 <div style="padding-top: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 5px">
                     <table id="tablaDetallePedidoGranel" class="table table-hover table-condensed  table-responsive" style="width: 100%">
                         <thead>
-                            <th style="display: none">Codigo</th>
+                            <th style="display: none">Código</th>
                             <th style="width:150px">Producto</th>
                             <th style="width:80">Diseño</th>
                             <th style="width:10%;text-align: right;">Precio<br>Reajustado($)</th>
@@ -292,7 +292,7 @@
                             <input id="txtCorreoContacto" class="form-control input-sm" value="{{ $NotadeVenta[0]->correoContacto}}">
                         </div>
                         <div class="col-sm-2 col-md-2">
-                            Telefono/Móvil
+                            Teléfono/Móvil
                             <input id="txtTelefono" class="form-control input-sm" value="{{ $NotadeVenta[0]->telefonoContacto}}">
                         </div>
                         <div class="col-sm-2 col-md-2">

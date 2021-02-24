@@ -156,7 +156,9 @@
             // DataTable
             var table=$('#tabla').DataTable({
                 orderCellsTop: true,
-                fixedHeader: true,  
+                fixedHeader: true, 
+                lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+ 
                 dom: 'Bfrtip',
                 "order": [[ 0, "asc" ]],
                 "columnDefs": [ {
@@ -168,6 +170,7 @@
                     }
                 } ],               
                 buttons: [
+                    'pageLength',
                     {
                         text: 'Nuevo Feriado',
                         className: 'orange',
