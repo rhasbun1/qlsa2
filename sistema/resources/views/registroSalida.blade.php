@@ -153,12 +153,14 @@
                     },
             
                     {
-                        extend: 'excelHtml5',
-                        title: "Registro de Salidas",
-                        exportOptions: {
-                            columns: [ 0, 2, 3, 4, 5 , 6, 7 ]
+                            extend: 'excelHtml5',
+                            title: titulo,
+                            text: '<i class="fa fa-file-excel-o"></i>',
+                            titleAttr: 'Excel',                        
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4,5 ]
+                            }
                         }
-                    }
 
                 ],                   
                 // "order": [[ 0, "asc" ]],              

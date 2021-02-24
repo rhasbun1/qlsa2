@@ -715,7 +715,7 @@
                 <thead>
                 <th >Pedido</th>             
                 <th >Estado</th>
-                <th>planta de origen</th>
+                <th>Planta de Origen</th>
                 <th >Cliente</th>
                 <th>Obra/Planta</th>
                 <th >Producto</th>
@@ -769,7 +769,7 @@
       <table id="tablaModalJefePedidosEnProceso" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
                 <th >Pedido</th>
-                <th >planta de origen</th>             
+                <th >Planta de Origen</th>             
                 <th >Estado</th>
                 <th >Fecha Creación</th>
                 <th >Cliente</th>

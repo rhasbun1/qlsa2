@@ -48,7 +48,7 @@
                     @if( Session::get('grupoUsuario')=='C' and (Session::get("idPerfil")!=11 and Session::get("idPerfil")!=19 )  )
 
                         <th></th>
-                    @elseif
+                    @else
                         <th style="display: none;"></th>
                     @endif
                 </thead>
@@ -71,7 +71,7 @@
                                 <td>
                                         <a href="gestionarpedido/{{ $item->idNotaVenta }}/" class="btn btn-xs btn-success">Crear Pedido</a>
                                 </td>
-                                @elseif
+                                @else
                                     <td style="display: none;"></td>
                                 @endif
                         </tr>
