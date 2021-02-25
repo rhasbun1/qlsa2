@@ -333,11 +333,8 @@
             $('#tablaAprobados thead tr').clone(true).appendTo( '#tablaAprobados thead' );
             $('#tablaAprobados thead tr:eq(1) th').each( function (i) {
                 var title = $(this).text();
-                if(title.trim()!='' && title.trim()=='Planta Origen' ){
-                    $(this).html( '<select id="selPlanta" class="form-control input-sm"></select>' );
-                }else{
-                    if(i>0){
-                        $(this).html( '<input type="text" class="form-control input-sm" placeholder="Buscar..." />' );
+                if(title.trim()!='' && title.trim()!='Planta Origen' ){
+                    $(this).html( '<input type="text" class="form-control input-sm" placeholder="Buscar..." />' );
                         $( 'input', this ).on( 'keyup change', function () {
                             if ( table.column(i).search() !== this.value ) {
                                 table
@@ -345,8 +342,7 @@
                                     .search( this.value )
                                     .draw();
                             }
-                        } ); 
-                    }                  
+                        } );     
                 }
             
             } );
@@ -354,10 +350,9 @@
                         
             var table=$('#tablaAprobados').DataTable({
                  orderCellsTop: true,
-                 fixedHeader: true,         
-                "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
+                fixedHeader: true,
+                lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
                 dom: 'Bfrtip',
-                "scrollX": true,
                 buttons: [
                     {
                         text: 'Actualizar',
@@ -368,10 +363,11 @@
                     },                
                     'pageLength'
                 ],                  
-                "order": [[ 1, "desc" ]],                        
+                "order": [[ 0, "desc" ]],                        
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
                 initComplete: function () {
-                    this.api().columns(3).every( function () {
+                    actualizarFiltros(this.api());
+                    /*this.api().columns(3).every( function () {
                         var column = this;
                         var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
                             .on( 'change', function () {
@@ -387,12 +383,36 @@
                         column.data().unique().sort().each( function ( d, j ) {
                             select.append( '<option value="'+d+'">'+d+'</option>' )
                         } );
-                    } );
+                    } );*/
                 }
 
             });         
 
         } );
+
+        function actualizarFiltros(tabla){
+
+            tabla.columns(3).every( function () {
+                var column = this;
+
+                var select = $('<select class="form-control input-sm"><option value=""></option></select>')
+                    .appendTo( $( '#tablaAprobados thead tr:eq(1) th:eq(3)' ).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+
+        }
 
         function obtenerCertificados(opcion){
 
@@ -401,7 +421,7 @@
 
             var tabla=$("#tablaAprobados").DataTable();
 
-            tabla.rows().remove();
+            tabla.rows().remove().draw();
 
 
             var pedDesde="0";
@@ -474,6 +494,8 @@
                                 dato[x].fechaHoraCarga
                             ] ).index();
 
+
+
                         tabla.cell(fila,0).node().dataset.numguia=dato[x].numeroGuia;
                         tabla.cell(fila,0).node().dataset.prodcodigo=dato[x].prod_codigo;
                         tabla.cell(fila,0).node().dataset.ucodigo=dato[x].u_codigo;
@@ -482,7 +504,7 @@
                      //   tabla.cell(fila,0).node().width=60;
                     }
                     tabla.draw();
-                    //actualizarFiltros(tabla);
+                    actualizarFiltros(tabla);
                     $("#mdProcesando").modal('hide');
                 },
                 error: function(jqXHR, text, error){
