@@ -24,7 +24,7 @@ class EmpresaController extends Controller
 
     public function guardarDatosCliente(Request $datos){
         if($datos->ajax()){
-            $empresa=DB::Select('call spUpdEmpresa(?,?,?,?,?,?,?,?,?,?)', array(
+            $empresa=DB::Select('call spUpdEmpresa(?,?,?,?,?,?,?,?,?)', array(
                             $datos->input('emp_codigo'),
                             $datos->input('rutEmpresa'),
                             $datos->input('razonSocial'),
@@ -33,8 +33,7 @@ class EmpresaController extends Controller
                             $datos->input('comuna'),
                             $datos->input('ciudad'),
                             $datos->input('solicitaOC'),
-                            $datos->input('codigoSoftland'),
-                            $datos->input('crearEnNotaVenta'),
+                            $datos->input('codigoSoftland')
                             ) 
                         );  
 
