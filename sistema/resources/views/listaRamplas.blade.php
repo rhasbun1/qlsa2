@@ -114,7 +114,7 @@
             var numeroRampla=tabla.rows[fila].cells[0].innerHTML.trim();
             swal(
                 {
-                    title: 'Elimina la rampla seleccionada?',
+                    title: '¿Elimina la rampla seleccionada?',
                     text: '',
                     type: 'warning',
                     showCancelButton: true,

@@ -235,7 +235,7 @@
 					<div style="padding-top: 20px">
 						<div class="row" style="padding-top: 10px">
 							<div class="col-md-2">
-								Nº Guia de Despacho
+								Nº Guía de Despacho
 							</div>
 							<div class="col-md-2">
 								<input class="form-control input-sm">
@@ -322,7 +322,7 @@
 					<div style="padding-top: 20px">
 						<div class="row" style="padding-top: 10px">
 							<div class="col-md-2">
-								Nº Guia de Despacho
+								Nº Guía de Despacho
 							</div>
 							<div class="col-md-2">
 								<input class="form-control input-sm">

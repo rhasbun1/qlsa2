@@ -12,7 +12,6 @@
                     <b>Registro de Salidas</b>
                 </div>
                 <div class="col-md-3">
-                    <button id="btnRefresh" class="btn btn-sm btn-success" onclick="reFresh();" style="display: none;">Actualizar</button>
                 </div>
             </div>
 
@@ -160,6 +159,13 @@
                             exportOptions: {
                                 columns: [ 0, 1, 2, 3, 4,5 ]
                             }
+                        },
+                        {
+                            text: 'Actualizar',
+                        action: function ( e, dt, node, config ) {
+                            reFresh();
+                        }
+
                         }
 
                 ],                   

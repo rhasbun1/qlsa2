@@ -111,7 +111,7 @@
                     <th style="width:70px">Conductor</th>
                     <th style="width:70px">Fecha prog. Carga</th>
                     <th style="width:70px">Hora prog. Carga</th>
-                    <th style="width:70px">Select./<br>Guia</th>
+                    <th style="width:70px">Select./<br>Guía</th>
                 </thead>
             
                 <tbody>
@@ -401,7 +401,7 @@
                         <div style="padding-left: 20px;padding-top: 40px;">
                             <table id="tablaNotas" class="table table-hover table-condensed table-responsive" style="width: 900px">
                                 <thead>
-                                    <th style="width:150px">Fecha/Hora</th>
+                                    <th style="width:150px">Fecha</th>
                                     <th style="width:150px">Usuario</th>
                                     <th style="width:600px">Nota</th>
                                     <th></th>

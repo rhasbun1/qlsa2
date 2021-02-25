@@ -127,7 +127,7 @@
                     <input type="hidden" id="codigoProducto" name="codigoProducto">
                     <div class="row" style="padding-top: 5px">
                         <div class="col-md-2">
-                            Guia Nº
+                            Guía Nº
                         </div>
                         <div class="col-md-4">
                             <input class="form-control input-sm" id="numeroGuiaCertificado" name="numeroGuiaCertificado" readonly>

@@ -604,7 +604,7 @@
                 success:function(dato){
                     swal(
                         {
-                            title: 'Los datos han sido guardados!!' ,
+                            title: '¡¡Los datos han sido guardados!!' ,
                             text: '',
                             type: 'warning',
                             showCancelButton: false,

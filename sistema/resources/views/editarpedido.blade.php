@@ -252,7 +252,7 @@
             <b>Registro de acciones sobre este Pedido</b>
             <table id="tablaLog" class="table table-hover table-condensed table-responsive">
                 <thead>
-                    <th style="width:200px">Fecha/Hora</th>
+                    <th style="width:200px">Fecha</th>
                     <th style="width:200px">Usuario</th>
                     <th style="width:100px">Acción</th>
                     <th style="width:350px">Motivo</th>
@@ -260,7 +260,7 @@
                 <tbody>
                     @foreach($log as $item)
                     <tr>
-                        <td style="width:200px"> {{ $item->fechaHora }} </td>
+                        <td style="width:200px"> {{date('d/m/Y', strtotime($item->fechaHora))  }} </td>
                         <td style="width:200px"> {{ $item->nombreUsuario }} </td>
                         <td style="width:100px"> {{ $item->accion }} </td>
                         <td style="width:350px"> {{ $item->motivo }} </td>

@@ -374,7 +374,7 @@
                     <div class="tab-pane active" id="tabLogAcciones" style="padding-top: 5px">
                         <table id="tablaLog" class="table table-hover table-condensed table-responsive" style="width: 850px">
                             <thead>
-                                <th style="width:200px">Fecha/Hora</th>
+                                <th style="width:200px">Fecha</th>
                                 <th style="width:250px">Usuario</th>
                                 <th style="width:350px">Acción</th>
                                 <th style="width:350px">Motivo</th>
@@ -382,7 +382,7 @@
                             <tbody>
                                 @foreach($log as $item)
                                 <tr>
-                                    <td style="width:200px"> {{ $item->fechaHora }} </td>
+                                    <td style="width:200px"> {{ date('d/m/Y', strtotime($item->fechaHora)) }} </td>
                                     <td style="width:250px"> {{ $item->nombreUsuario }} </td>
                                     <td style="width:350px"> {{ $item->accion }} </td>
                                     <td style="width:350px"> {{ $item->motivo }} </td>
@@ -406,7 +406,7 @@
                         <div style="padding-left: 20px;padding-top: 40px;">
                             <table id="tablaNotas" class="table table-hover table-condensed table-responsive" style="width: 900px">
                                 <thead>
-                                    <th style="width:150px">Fecha/Hora</th>
+                                    <th style="width:150px">Fecha</th>
                                     <th style="width:150px">Usuario</th>
                                     <th style="width:600px">Nota</th>
                                     <th></th>
@@ -414,7 +414,7 @@
                                 <tbody>
                                 @foreach($notas as $item)
                                 <tr>
-                                    <td style="width:200px"> {{ $item->fechaHora }} </td>
+                                    <td style="width:200px"> {{  date('d/m/Y', strtotime($item->fechaHora)) }} </td>
                                     <td style="width:200px" data-idUsuario="{{ $item->idUsuario }}"> {{ $item->nombreUsuario }} </td>
                                     <td style="width:100px"> {{ $item->nota }} </td>
                                     <td>

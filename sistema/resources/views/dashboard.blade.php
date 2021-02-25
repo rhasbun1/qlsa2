@@ -440,7 +440,7 @@
                                     <td style="width: 120px">{{ $item->nombreObra }}</td>
                                     <td style="width: 120px">{{ $item->prod_nombre }}</td>
                                     <td style="width: 120px">{{ $item->u_nombre }}</td>
-                                    <td style="width: 120px">{{ $item->fechaCarga }}</td>
+                                    <td style="width: 120px">{{ date('d/m/Y', strtotime($item->fechaCarga)) }}</td>
                                     
                                    
                                     
@@ -543,12 +543,13 @@
                 
                 <tbody>
                 @foreach($listaAccionesHaceUnaHora as $item)
+    
                             
                                 <tr>
                                   <td style="width:50px">{{ $item->idPedido }}</td>
                                   <td style="width:120px ">{{ $item->tipo }}</td>
                                   <td style="width: 120px">{{ $item->motivo }}</td>
-                                  <td style="width:120px ">{{ $item->fechaHora }}</td>
+                                  <td style="width:120px ">{{ date('d/m/Y', strtotime($item->fechaHora))  }}</td>
                                   <td style="width: 120px">{{ $item->nombreUsuario }}</td>
                                   <td style="width: 120px">{{ $item->nombre }}</td>
                                   <td style="width:120px ">{{ $item->nombreEmpresa }}</td>

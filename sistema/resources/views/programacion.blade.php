@@ -189,7 +189,7 @@
                                             <td style="width:120px">{{ $item->fechaCarga }} {{ $item->horaCarga }} </td>
                                             <td style="width:150px">{{ $item->apellidoConductor }} / {{ $item->empresaTransporte }}</td>
                                         @endif
-                                        <td style="width:100px">{{ $item->fecha }} {{ $item->hora}}</td>
+                                        <td style="width:100px">{{ date('d/m/Y', strtotime($item->fecha))}} {{ $item->hora}}</td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -331,7 +331,7 @@
     <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h5><b>Datos de la Guia</b></h5>
+                <h5><b>Datos de la Guía</b></h5>
             </div>
             <div id="bodyModal" class="modal-body">
                 <div class="row">
@@ -574,6 +574,8 @@
                            celdaNumAux='<td style="width: 80px; text-align: center;">' + dato[x].numeroAuxiliar + '</td>';
                         }   
 
+            
+                        
                             var ind=tabla.row.add( [
                                     celdaPedido,
                                     cadena,
@@ -856,7 +858,7 @@
                             text: '<i class="fa fa-file-excel-o"></i>',
                             titleAttr: 'Excel',                           
                             exportOptions: {
-                                columns: [ 0, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14,15 ]
+                                columns: [ 0, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14 ]
                             }
                         },
                     {
@@ -1063,7 +1065,9 @@
             $('.main-menu').find('.openable').removeClass('open');
             $('.main-menu').find('.submenu').removeAttr('style');             
         } );
-
+        function formato(texto){
+			return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+		}
         
     </script>
 

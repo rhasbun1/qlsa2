@@ -6,7 +6,7 @@
     <div class="panel panel-default table-responsive">
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         <div class="panel-heading">
-            <b>HISTóRICO NOTAS DE VENTA</b>
+            <b>HISTÓRICO NOTAS DE VENTA</b>
         </div>
         <div class="padding-md clearfix"> 
             <div> 

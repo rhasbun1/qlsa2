@@ -30,7 +30,7 @@
 		<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         <div style="padding: 10px">
             <div>
-               <h2>Proximos Pedidos (Granel)</h2> 
+               <h2>Próximos Pedidos (Granel)</h2> 
               
             </div>
             <div class="row" style="padding-top: 15px; padding-bottom: 15px">
@@ -161,7 +161,7 @@
 			        var rowNode= tabla.row.add([cadena,
                                                 dato[x].formaEntrega,
 			        							dato[x].idPedido,
-			        							dato[x].fechaCarga + ' ' + dato[x].horaCarga ,
+			        							formato(dato[x].fechaCarga) + ' ' + dato[x].horaCarga ,
 			        							dato[x].nombrePlanta,
 			        							dato[x].prod_nombre,
 			        							dato[x].cantidad,
@@ -189,7 +189,7 @@
                             $( celda ).css('background-color','red').css('color','white');
                         }
                     }   				           	        
-			    }
+			    } 
 			    tabla.draw();
 
 
@@ -354,5 +354,8 @@
                     // document.getElementById('panelBody').style.display="block";
                 }
         });
-	 });
+     });
+     function formato(texto){
+			return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+		}
 </script>

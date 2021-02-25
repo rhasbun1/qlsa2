@@ -5,7 +5,7 @@
 <div class="panel-body">
 	<div id="divSelGuias" style="display: block;">
 		<div>
-			<h3>Guias de despacho por facturar</h3>
+			<h3>Guías de despacho por facturar</h3>
 		</div>
 		<div style="padding-top: 10px">
 			<div class="row" style="padding-top: 5px">

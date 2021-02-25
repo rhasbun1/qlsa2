@@ -12,7 +12,7 @@
             <div class="table-responsive">
                 <table id="tablaAprobados" class="table table-condensed" style="width: 100%">
                     <thead>                      
-                        <th style="width:100px">Guia º</th>
+                        <th style="width:100px">Guía º</th>
                         <th style="width:100px">Pedido/Nota Venta</th>
                         <th style="width:200px">Cliente</th>
                         <th style="width:200px">Obra</th>

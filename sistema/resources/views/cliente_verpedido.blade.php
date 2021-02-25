@@ -27,7 +27,7 @@
                         N.Venta Nº
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-2">
-                        <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}/1/" class="btn btn-xs btn-info">{{ $pedido[0]->idNotaVenta }}</a>
+                        <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-0/1/" class="btn btn-xs btn-info">{{ $pedido[0]->idNotaVenta }}</a>
                     </div>                          			
         		</div>
         		<div class="row" style="padding-top: 5px">
@@ -226,7 +226,7 @@
         <div class="tab-pane active" id="tabLogAcciones" style="padding-top: 5px">
             <table id="tablaLog" class="table table-hover table-condensed table-responsive" style="width: 850px">
                 <thead>
-                    <th style="width:200px">Fecha/Hora</th>
+                    <th style="width:200px">Fecha</th>
                     <th style="width:250px">Usuario</th>
                     <th style="width:350px">Acción</th>
                     <th style="width:350px">Motivo</th>

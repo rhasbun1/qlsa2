@@ -32,7 +32,7 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6">
-                    <b>PEDIDOS INGRESADOS POR CLIENTE EN ESPERA DE PRE-APROBACION</b>
+                    <b>PEDIDOS INGRESADOS POR CLIENTE EN ESPERA DE PRE-APROBACIÓN</b>
                 </div>   
         </div>
         <div class="padding-md clearfix">
@@ -176,10 +176,13 @@
                     {
                         extend: 'excelHtml5',
                         title: 'Pedidos en Proceso',
+                        text: '<i class="fa fa-file-excel-o"></i>',
+                        titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                            columns: [ 0, 1, 2, 3, 4,5,6,7 ]
                         }
                     }
+                   
                 ],                
                 "order": [[ 0, "desc" ]],
                 columnDefs: [

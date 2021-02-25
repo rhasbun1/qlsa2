@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-md-9" style="text-align: right;">
                     @if ($cantidadIngresoCliente>0 and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='12'))
-                         <a href="{{ asset('/') }}listaIngresosClienteporAprobar" class="btn btn-danger btn-sm">EXISTEN {{ $cantidadIngresoCliente }} PEDIDOS INGRESADOS POR CLIENTE EN ESPERA DE PRE-APROBACION</a>
+                         <a href="{{ asset('/') }}listaIngresosClienteporAprobar" class="btn btn-danger btn-sm">EXISTEN {{ $cantidadIngresoCliente }} PEDIDOS INGRESADOS POR CLIENTE EN ESPERA DE PRE-APROBACIÓN</a>
                     @endif
                 </div>
             </div>       
