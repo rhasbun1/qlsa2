@@ -150,7 +150,7 @@
 		</a>
 	</div>
 	<div class="col-md-3">
-	<a href="{{ asset('/') }}clientePedidos"   data-toggle="modal">
+	<a href="{{ asset('/') }}historicoPedidos"   data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
 				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosDespachadosCliente }}</h2>
         <h4>Pedidos Despachados</h4>
@@ -1843,7 +1843,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ]
+                            columns: [ 0, 1, 2, 3 ]
                         }
                     }
                 ],                

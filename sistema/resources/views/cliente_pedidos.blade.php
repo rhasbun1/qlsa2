@@ -12,7 +12,7 @@
                 <ul class="tab-bar">
                                 <input type="hidden" id="idCliente" data-idperfil="{{Session::get('idPerfil')}}">
 
-                    <li class="active"><a href="#tabAprobados" data-toggle="tab"><b>pedidos despachados</b></a></li> 
+                    <li class="active"><a href="#tabAprobados" data-toggle="tab"><b>pedidos Ingresados Aprobados</b></a></li> 
                 </ul>
             </div>
         </div> 
@@ -249,7 +249,7 @@
                     'pageLength',
                     {
                         extend: 'excelHtml5',
-                        title: 'Notas de Venta Vigentes',
+                        title: 'Pedidos Ingresados Aprobados',
                         exportOptions: {
                             columns: [ 0, 2, 3, 4,5,6,7,8,9,10,11,12,13 ]
                         }

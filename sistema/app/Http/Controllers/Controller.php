@@ -54,7 +54,7 @@ class Controller extends BaseController
 
         $listaPedidoAtrasadoTransporte=DB::Select('call spGetPedidosAtrasadoTransporte()', array(0));
 
-        $listaPedidoClienteEnProceso=DB::Select('call spGetPedidoEnProcesoCliente(?)', array(Session::get('idUsuario')));
+        $listaPedidoClienteEnProceso=DB::Select('call spGetProductosconPedidoPendienteCliente(?)', array(Session::get('idUsuario')));
         
         $listaPedidoClienteEnDespacho=DB::Select('call spGetPedidoEnDespachoCliente(?)', array(Session::get('idUsuario')));
 
