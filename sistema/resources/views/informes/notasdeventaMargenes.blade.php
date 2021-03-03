@@ -8,7 +8,7 @@
             <b>Notas de Venta y Márgenes</b>
         </div>  
     </div>
-    <button class="btn btn-success btn-sm" onclick="revisarDatos();">Revisar Datos</button>    	
+    <!-- <button class="btn btn-success btn-sm" onclick="revisarDatos();">Revisar Datos</button>    	 -->
     <div class="content-wrapper">
         <div id="Grid">
         </div>
