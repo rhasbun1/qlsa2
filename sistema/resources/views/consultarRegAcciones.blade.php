@@ -7,7 +7,7 @@
         <div class="panel-heading">
             <b>Consultar Registro de Acciones</b>
         </div>
-        <div class="padding-md clearfix"  style="width:900px">
+        <div class="padding-md clearfix"  style="width:1130px">
 	        <div>
 	        	<div class="row">
 	        		<div class="col-md-1">
