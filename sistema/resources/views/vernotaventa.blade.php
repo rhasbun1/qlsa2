@@ -497,7 +497,6 @@
         function cerrarModalSubirArchivo(){
             $("#modSubirArchivo").modal('hide'); 
         }
-
         function cerrarNotaVenta(idNotaVenta){
             swal(
                 {
