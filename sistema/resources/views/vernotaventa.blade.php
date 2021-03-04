@@ -504,9 +504,6 @@
                     title: 'Pasar la Nota ' + idNotaVenta + ' a historico' ,
                     text: 'Debe ingresar un motivo:',
                     type: 'input',
-                    inputAttributes: {
-                        maxlength: 32
-                    },
                     showCancelButton: true,
                     closeOnConfirm: false,
                     confirmButtonText: 'Continuar',
@@ -514,6 +511,10 @@
                 },
                 function (inputValue) {
                     if (inputValue === false) return false;
+                    if (inputValue.length > 3) {
+                        swal.showInputError("No puede contener más de 3 caracteres.");
+                        return false
+                    }
                     if (inputValue === "") {
                         swal.showInputError("El motivo no puede estar vacío.");
                         return false
