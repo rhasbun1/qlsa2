@@ -388,7 +388,7 @@
                 function(isConfirm)
                 {
                     if(isConfirm){
-                        $("#rutCliente").val(" "); 
+                        $("#rutCliente").val(""); 
                         return;                         
                     }
                 }
