@@ -295,7 +295,7 @@
                         Rut
                     </div>
                     <div class="col-sm-3 col-md-3">
-                        <input type="text" class="form-control input-sm" maxlength="50" id="rutConductor">
+                        <input type="text" class="form-control input-sm" maxlength="10" id="rutConductor">
                     </div>
                 </div>
                 <div class="row" style="padding:5px">
@@ -303,7 +303,7 @@
                         Teléfono
                     </div>
                     <div class="col-sm-3 col-md-3">
-                        <input type="text" class="form-control input-sm" maxlength="50" id="telefonoConductor">
+                        <input type="text" class="form-control input-sm" maxlength="10" id="telefonoConductor">
                     </div>                            
                 </div>
                 <div class="row" style="padding:5px">                     
