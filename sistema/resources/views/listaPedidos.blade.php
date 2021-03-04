@@ -74,7 +74,7 @@
                                         <td style="width: 250px">{{ $item->nombreCliente }}</td>
                                         <td style="width: 250px">{{ $item->nombreObra }}</td>
                                         <td style="width: 100px; text-align: right;"><b>$ {{ number_format( $item->totalNeto + $item->montoIva, 0, ',', '.' ) }}</b></td>
-                                        <td style="width: 100px">{{ $item->fechaEntrega }} {{ $item->horarioEntrega }}</td>
+                                        <td style="width: 100px">{{ date('d/m/Y', strtotime($item->fechaEntrega)) }} {{ $item->horarioEntrega}}</td>
                                         <td style="width: 70px">{{ $item->estado }}</td>
                                     </tr>
                                 @endforeach
@@ -162,7 +162,7 @@
                                     <td style="width: 70px">{{ $item->nombrePlanta }}</td>
                                     <td style="width: 100px">{{ $item->fechaCarga }} {{ $item->horaCarga }} </td>
                                     <td style="width: 150px">{{ $item->apellidoConductor }} / {{ $item->empresaTransporte }}</td>
-                                <td style="width: 50px;text-align: right;">{{ date('d/m/Y', strtotime($item->fecha)) }} {{ $item->hora}}</td>
+                                    <td style="width: 50px;text-align: right;">{{ date('d/m/Y', strtotime($item->fecha)) }} {{ $item->hora}}</td>
                                     <td style="width: 80px;text-align: center;">{{ $item->numeroAuxiliar }}</td>
                                 </tr>
                             @endforeach

@@ -510,8 +510,8 @@
                 },
                 function (inputValue) {
                     if (inputValue === false) return false;
-                    if (inputValue.length > 3) {
-                        swal.showInputError("No puede contener más de 3 caracteres.");
+                    if (inputValue.length > 255) {
+                        swal.showInputError("No puede contener más de 255  caracteres.");
                         return false
                     }
                     if (inputValue === "") {
