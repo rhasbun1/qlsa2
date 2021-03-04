@@ -504,7 +504,9 @@
                     title: 'Pasar la Nota ' + idNotaVenta + ' a historico' ,
                     text: 'Debe ingresar un motivo:',
                     type: 'input',
-                    
+                    inputAttributes: {
+                        maxlength: 32
+                    },
                     showCancelButton: true,
                     closeOnConfirm: false,
                     confirmButtonText: 'Continuar',
