@@ -132,30 +132,31 @@
                                     <td align="right">{{number_format($item->saldo, 0, ',', '.') }}</td>
                                     <td aling="right"><input class="form-control input-sm" onblur="verificarCantidad(this);" onkeypress="return isIntegerKey(event)" maxlength="6" ></td>
                                     <td>
-                                        <select class="form-control input-sm">
-                                            @foreach($Plantas as $planta)
-                                                @if( $item->idPlanta==$planta->idPlanta )
-                                                    <option value="{{ $planta->idPlanta }}" selected>{{ $planta->nombre }}</option>
-                                                @else
-                                                    <option value="{{ $planta->idPlanta }}">{{ $planta->nombre }}</option>
-                                                @endif    
-                                            @endforeach 
-                                        </select>                                    
+                                                <select  id="selectPlanta" class="selectPlanta{{ $item->prod_codigo }} form-control input-sm">
+                                                
+                                                </select>                                    
                                     </td>
                                     <td>
-                                        @if($item->idFormaEntrega==2)
-                                            <select class="form-control input-sm">
-                                                @foreach($FormasdeEntrega as $formaEntrega)
-                                                    @if( $item->idFormaEntrega==$formaEntrega->idFormaEntrega )
-                                                        <option value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>
-                                                    @endif
-                                                @endforeach 
-                                            </select>                                            
-                                        @else
-                                        <select  id="selectPlanta" class="selectPlanta{{ $item->prod_codigo }} form-control input-sm">
-                                                
-                                            </select>
-                                        @endif                               
+                                            @if($item->idFormaEntrega==2)
+                                                <select id="pruebacarga" class="form-control input-sm">
+                                                    @foreach($FormasdeEntrega as $formaEntrega)
+                                                        @if( $item->idFormaEntrega==$formaEntrega->idFormaEntrega )
+                                                            <option value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>
+                                                        @endif
+                                                    @endforeach 
+                                                </select>                                            
+                                            @else
+                                                <select class="form-control input-sm">
+                                                    @foreach($FormasdeEntrega as $formaEntrega)
+                                                        @if( $item->idFormaEntrega==$formaEntrega->idFormaEntrega )
+                                                            <option value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>
+                                                        @else
+                                                            <option value="{{ $formaEntrega->idFormaEntrega }}">{{ $formaEntrega->nombre }}</option>
+                                                        @endif
+                                                    @endforeach 
+                                                </select>
+                                            @endif
+                                                                     
                                     </td>
                                 </tr>
                                 <script  type="text/javascript"> 
@@ -539,10 +540,11 @@
 
                     $(".selectPlanta"+codigo).append('<option value="' + v.idPlanta + '">' + v.nombre + '</option>');
                 })
-                $("#selectPlanta option[value=" + idplanta +"]").attr("selected", true);
 
             }
         }); 
+
+        $("#selectPlanta option[value=" + idplanta +"]").attr("selected", true);
         
 
     }
