@@ -231,7 +231,7 @@
                                         </td>
                                         <td style="width:80px">
                                          
-                                            <select  id="selectPlanta" class="selectPlanta{{ $item->prod_codigo }} form-control input-sm">
+                                            <select  id="selectPlanta"  class="selectPlanta{{ $item->prod_codigo }} form-control input-sm" > 
 
                                     
                                                 
@@ -269,8 +269,13 @@
                                     <script  type="text/javascript"> 
                                         setTimeout(() => {
                                             val = plantaspedidos("{{ $item->prod_nombre }}","{{$item->u_nombre}}","{{ $item->prod_codigo }}");
+                                            alert("{{ $item->idPlanta }}");
 
                                         }, 5000);
+                                        setTimeout(() => {
+                                            $("#selectPlanta option[value='{{ $item->idPlanta }}']").attr("selected", true);
+                                            alert("{{ $item->idPlanta }}");
+                                        }, 6000);
                                     </script>
                                     
                                 @endif
@@ -539,6 +544,11 @@
         }); 
         
 
+    }
+    function seleccionar(idplanta){
+        $("#selectPlanta option[value=" + idplanta +"]").attr("selected", true);
+
+        alert(idplanta);
     }
 
     </script>

@@ -80,6 +80,11 @@
                 </thead>
                 <tbody>
                     @foreach($pedidos as $item)
+
+                    <?php 
+                         $fecha_hora = explode(" ",$item->fechahora_creacion);
+                         $fecha = $fecha_hora[0];
+                    ?>
                         <tr>
                             <td style="width: 80px" data-pedido='{{ $item->idPedido }}'>
                                 <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/6-7/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a> <!-- MATIAS -->
@@ -92,7 +97,7 @@
                                     <span class="badge badge-danger">M</span>
                                 @endif
                             </td>                         
-                            <td>{{ $item->fechahora_creacion }}</td>
+                            <td>{{ $fecha }}</td>
                             <td>{{ $item->emp_nombre }}</td>
                             <td>{{ $item->Obra }}</td>
                             @if( Session::get('idPerfil')=='11' )

@@ -195,7 +195,7 @@
                 }                                
             });
 
-            document.getElementById('btnRefresh').style.display="block";
+            // document.getElementById('btnRefresh').style.display="block";
 
         } );
 
