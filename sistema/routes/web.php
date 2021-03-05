@@ -82,6 +82,8 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('listaConductores',  'ConductorController@listaConductores');
 	Route::post('cotizacionProductos', 'CotizacionController@cotizacionProductos');
 	Route::post('detalleNotaVenta', 'PedidoController@detalleNotaVenta');
+	Route::post('traerPlantaNotaVenta', 'PedidoController@traerPlantaNotaVenta');
+
 	Route::post('actualizarPedido', 'PedidoController@actualizarPedido');
 	Route::post('productosconPedidoPendientePorFechaEntrega', 'PedidoController@productosconPedidoPendientePorFechaEntrega');
 	Route::post('productosconPedidoPendientePorFechaCarga', 'PedidoController@productosconPedidoPendientePorFechaCarga');

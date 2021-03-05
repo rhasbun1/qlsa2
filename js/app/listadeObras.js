@@ -69,7 +69,8 @@
                 $("#mdNuevaObra").modal("show"); 
                 $("#txtNombreObra").focus();
             }
-        })         
+        }) 
+               
     }
 
 
@@ -193,6 +194,25 @@
                     cerrarNuevaObra();
             }
         })
+        swal(
+            {
+                title: 'Se Actualizo La Obra',
+                text: '',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonText: 'ok',
+                cancelButtonText: '',
+                closeOnConfirm: true,
+                closeOnCancel: false
+            },
+            function(isConfirm)
+            {
+                if(isConfirm){
+                    return;
+                    
+                }
+            }
+        ) 
     }
 
     function eliminarObra(idObra, row){

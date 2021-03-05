@@ -39,6 +39,13 @@ class PedidoController extends Controller
             return $NotadeVentaDetalle;
         }
     }
+    public function traerPlantaNotaVenta(Request $datos){
+        if($datos->ajax()){
+            $NotadeVentaDetalle=DB::Select('call spGetNotaVentaDetalleporpedido(?,?)', array($datos->input('idNotaVenta'),$datos->input('idProducto')) );
+            return $NotadeVentaDetalle;
+        }
+    }
+    
 
     public function clienteGestionarPedido($idNotaVenta)
     {

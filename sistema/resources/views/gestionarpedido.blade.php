@@ -544,7 +544,6 @@
             }
         }); 
 
-        $("#selectPlanta option[value=" + idplanta +"]").attr("selected", true);
         
 
     }

@@ -340,6 +340,20 @@
                 break;
             }
         }
+        $.ajax({
+            url: urlApp + "traerPlantaNotaVenta",
+            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+            type: 'POST',
+            dataType: 'json',
+            data: { 
+                    idNotaVenta: $("#txtNumeroNotaVenta").val(),
+                    idProducto: $("#listaProductos").val()
+                  },
+            success:function(dato){
+                $("#selectPlanta option[value='"+ dato[0].idPlanta +"']").attr("selected",true);
+
+            }
+        });
     }
 
     function ocultarFila(fila){
