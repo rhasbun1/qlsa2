@@ -268,14 +268,13 @@
                                     </tr>
                                     <script  type="text/javascript"> 
                                         setTimeout(() => {
-                                            val = plantaspedidos("{{ $item->prod_nombre }}","{{$item->u_nombre}}","{{ $item->prod_codigo }}");
-                                            alert("{{ $item->idPlanta }}");
+                                            val = plantaspedidos("{{ $item->prod_nombre }}","{{$item->u_nombre}}","{{ $item->prod_codigo }}","{{ $item->idPlanta }}");
 
                                         }, 5000);
-                                        setTimeout(() => {
-                                            $("#selectPlanta option[value='{{ $item->idPlanta }}']").attr("selected", true);
-                                            alert("{{ $item->idPlanta }}");
-                                        }, 6000);
+                                        // setTimeout(() => {
+                                        //     $("#selectPlanta option[value='{{ $item->idPlanta }}']").attr("selected", true);
+                                        //     alert("{{ $item->idPlanta }}");
+                                        // }, 6000);
                                     </script>
                                     
                                 @endif
@@ -522,7 +521,7 @@
                 }
             })            
         }
-        function plantaspedidos(nombrePlanta,unidad,codigo){
+        function plantaspedidos(nombrePlanta,unidad,codigo,idplanta){
         
         $.ajax({
             async:false, 
@@ -540,16 +539,14 @@
 
                     $(".selectPlanta"+codigo).append('<option value="' + v.idPlanta + '">' + v.nombre + '</option>');
                 })
+                $("#selectPlanta option[value=" + idplanta +"]").attr("selected", true);
+
             }
         }); 
         
 
     }
-    function seleccionar(idplanta){
-        $("#selectPlanta option[value=" + idplanta +"]").attr("selected", true);
-
-        alert(idplanta);
-    }
+    
 
     </script>
 @endsection
