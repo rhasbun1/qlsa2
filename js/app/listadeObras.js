@@ -43,6 +43,7 @@
                 $("#txtTiempo").val(obra[0].tiempo);
                 $("#txtCostoFlete").val(obra[0].costoFlete);
                 var sel=document.getElementById("idCliente");
+                
 
                 for(var x=0; x<sel.length; x++){
                     if(sel.options[x].value==obra[0].emp_codigo){
@@ -197,7 +198,7 @@
     function eliminarObra(idObra, row){
         swal(
             {
-                title: 'Elimina la obra seleccionada?',
+                title: '¿Elimina la obra seleccionada?',
                 text: '',
                 type: 'warning',
                 showCancelButton: true,

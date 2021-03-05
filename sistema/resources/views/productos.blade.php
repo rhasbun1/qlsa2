@@ -48,7 +48,13 @@
                     <th style="text-align: center;">Granel</th>
                     <th style="text-align: center;">Certificado</th>
                     <th>Tiempo Producción (Horas)</th>
-                    <th style="width:40px"></th>
+                    @if ( Session::get('idPerfil')=='1' or
+                                    Session::get('idPerfil')=='2' or
+                                    Session::get('idPerfil')=='4' or
+                                    Session::get('idPerfil')=='18' or
+                                    Session::get('idPerfil')=='5' ) 
+                        <th style="width:40px"></th>
+                    @endif
                 </thead>
                 <tbody>
                     @foreach($listaProductos as $item)
@@ -67,16 +73,18 @@
                             </td>    
                             <td style="text-align: center;">@if($item->solicitaCertificado==1) SI @else NO @endif</td>
                             <td>{{ $item->tiempoProduccion }}</td>
-                            <td style="width:40px">
-                                @if ( Session::get('idPerfil')=='1' or
+                            @if ( Session::get('idPerfil')=='1' or
                                     Session::get('idPerfil')=='2' or
                                     Session::get('idPerfil')=='4' or
                                     Session::get('idPerfil')=='18' or
-                                    Session::get('idPerfil')=='5' )                                
-                                <button class="btn btn-xs btn btn-warning btnEditar" title="Editar"><i class="fa fa-edit fa-lg"></i></button>
-                                <button class="btn btn-xs btn btn-danger btnEliminar" title="Eliminar"><i class="fa fa-trash-o fa-lg"></i></button>
-                                @endif
-                            </td>                            
+                                    Session::get('idPerfil')=='5' ) 
+                                <td style="width:40px">
+                                                                
+                                    <button class="btn btn-xs btn btn-warning btnEditar" title="Editar"><i class="fa fa-edit fa-lg"></i></button>
+                                    <button class="btn btn-xs btn btn-danger btnEliminar" title="Eliminar"><i class="fa fa-trash-o fa-lg"></i></button>
+                                
+                                </td> 
+                            @endif                           
                         </tr>
                     @endforeach
                 </tbody>              

@@ -225,6 +225,7 @@ Route::group(['middleware' => 'checksession'], function () {
 		return 'Tu email ha sido enviado correctamente';
 	});
 
+	
 	Route::post('obtenerHistoricoPedidos', 'PedidoController@obtenerHistoricoPedidos');
 	Route::get('clienteGestionarPedido/{idNotaVenta}/','PedidoController@clienteGestionarPedido');
 	Route::get('registroAcciones', 'AccionesController@registroAcciones');
