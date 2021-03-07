@@ -335,9 +335,9 @@ function asignarFolio(){
                     retira=true;
                     cont=1;
                  //   if(tabla.rows[i].cells[6].getElementsByTagName('input')[0] ){
-                        if( tabla.rows[i].cells[6].getElementsByTagName('input')[0].value.trim()=='' ||
-                                      tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim()=='' ||
-                                      tabla.rows[i].cells[9].getElementsByTagName('input')[0].value.trim()=='' ){
+                    if( tabla.rows[fila].cells[6].getElementsByTagName('input')[0].value.trim()=='' ||
+                    tabla.rows[fila].cells[7].getElementsByTagName('input')[0].value.trim()==''||
+                    tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value.trim()==''){
 
                             swal(
                                 {
@@ -356,7 +356,7 @@ function asignarFolio(){
                         }                        
                    // }
 
-                }else{
+                }else if(tabla.rows[i].cells[5].innerHTML.trim()!='Retira'){
 
                     if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
                         fila=i;
