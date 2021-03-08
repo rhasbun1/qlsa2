@@ -299,7 +299,19 @@
                 }
             
             } );
+            if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Vigentes)"){
+               var urll = 'notaVentaVigenteCargos1';
+               
+           }else if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
 
+               var urll ='notaVentaCerradaCargos1';
+              
+           }else if($("#b").text()== " Costo Flete y Tiempo de Traslado (Asignaciones Pendientes)"){
+              var urll= 'notaVentaCargosUrgente1'
+              $("#filtro"). hide();
+             
+
+           }
             
             var tabla=$('#tablaNotas').DataTable({
                 orderCellsTop: true,
@@ -328,7 +340,7 @@
                     },
                     {
                         extend: 'excelHtml5',
-                        title: 'Costo Flete y Tiempo de Traslado',
+                        title: urll,
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {

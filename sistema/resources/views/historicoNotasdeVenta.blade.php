@@ -189,7 +189,7 @@
                     },
                     {
                     extend: 'excelHtml5',
-                    title: 'Clientes / Notas de Venta',
+                    title: 'HISTÓRICO NOTAS DE VENTA',
                     text: '<i class="fa fa-file-excel-o"></i>',
                     titleAttr: 'Excel',                         
                     exportOptions: {

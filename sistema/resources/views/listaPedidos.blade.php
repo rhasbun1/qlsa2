@@ -140,7 +140,7 @@
                                         @if ( $item->numeroGuia>0 )
                                             <span name="{{$item->numeroGuia}}" onclick='abrirGuia({{ $item->tipoGuia }}, {{ $item->numeroGuia }}, this.parentNode.parentNode);' style="cursor:pointer; cursor: hand"><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0"></span>
                                         @endif
-                                        @if ( $item->certificado!=''  && $item->certificado!='S/C' )  
+                                        @if ( $item->certificado!='' )  
                                             <a target="_blank" href="{{ asset('/') }}bajarCertificado/{{ $item->certificado }}">
                                                 <img src="{{ asset('/') }}img/iconos/certificado.png" border="0">
                                             </a>

@@ -148,7 +148,7 @@
                                    
                     {
                         extend: 'excelHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Empresas de Transporte',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                             exportOptions: {
@@ -173,7 +173,7 @@
                                    
                     {
                         extend: 'excelHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Empresas de Transporte',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                             exportOptions: {
@@ -211,7 +211,7 @@
                 buttons: [             
                     {
                         extend: 'excelHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Empresas de Transporte',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {

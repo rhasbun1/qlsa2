@@ -46,7 +46,8 @@ class NotaventaController extends Controller
                 $totalNV += ($item->precio);
             }
 
-            $idnotaventa=DB::Select('call spInsNotaVenta(?,?,?,?,?,?,?,?,?,?,?,?,?,?)', array($datos->input('cot_numero'),
+            $idnotaventa=DB::Select('call spInsNotaVenta(?,?,?,?,?,?,?,?,?,?,?,?,?,?)', array(
+                            $datos->input('cot_numero'),
                             $datos->input('cot_ano'),
                             $datos->input('idObra'),
                             $datos->input('observaciones'),

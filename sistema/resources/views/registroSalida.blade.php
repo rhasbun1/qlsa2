@@ -134,7 +134,7 @@
 
 
             // DataTable
-            var titulo="Pedidos en Proceso";
+            var titulo="Registro de Salidas";
 
             var table=$('#tablaDetalle').DataTable({
                  orderCellsTop: true,

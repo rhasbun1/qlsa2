@@ -184,7 +184,7 @@
                     },                 
                     {
                         extend: 'excelHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Obras y Plantas (Clientes)',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {

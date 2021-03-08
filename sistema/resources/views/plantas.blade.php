@@ -253,7 +253,7 @@
                     },                
                     {
                         extend: 'excelHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Plantas QLSA',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {

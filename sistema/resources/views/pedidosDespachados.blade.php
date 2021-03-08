@@ -117,6 +117,7 @@
                         cadena+='<span class="badge badge-danger">M</span>';
                     }
          
+                    
                     if( dato[x].numeroGuia>0 ){
                         cadena+='<a href="'+ urlApp + 'bajarGuiaDespacho/' + dato[x].numeroGuia + '"><img src="' + urlApp + 'img/iconos/guiaDespacho2.png" border="0"></a>';
                     }
