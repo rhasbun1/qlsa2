@@ -332,6 +332,45 @@
 
 
     function crearNotaVenta(){
+        
+        if($("#cot_numero").val().trim()==''){
+            swal(
+                {
+                    title: 'El Campo Cotización es obligatorio!!',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function(isConfirm)
+                {
+                    return;
+                }
+            )
+            return;
+        }
+        if($("#cot_ano").val().trim()==''){
+            swal(
+                {
+                    title: 'El Campo Año es obligatorio!!',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function(isConfirm)
+                {
+                    return;
+                }
+            )
+            return;
+        }
         if($("#txtCodClienteSoftland").val().trim()==''){
             swal(
                 {
