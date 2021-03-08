@@ -333,10 +333,10 @@
 
     function crearNotaVenta(){
         
-        if($("#cot_numero").val().trim()==''){
+        if($("#txtNumeroCotizacion").val()==''){
             swal(
                 {
-                    title: 'El Campo Cotización es obligatorio!!',
+                    title: 'El Campo Cotización es Obligatorio!!',
                     text: '',
                     type: 'warning',
                     showCancelButton: false,
@@ -352,10 +352,10 @@
             )
             return;
         }
-        if($("#cot_ano").val().trim()==''){
+        if($("#txtAno").val()==''){
             swal(
                 {
-                    title: 'El Campo Año es obligatorio!!',
+                    title: 'El Campo Año es Obligatorio!!',
                     text: '',
                     type: 'warning',
                     showCancelButton: false,
