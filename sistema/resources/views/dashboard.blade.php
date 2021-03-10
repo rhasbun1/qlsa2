@@ -1209,6 +1209,10 @@
                 
                 <tbody>
                 @foreach($listaToneladasaMensuales as $item)
+                <?php
+                    $fecha = explode(" ", $item->fechaHoraSalida);
+                
+                ?>
                
 				<tr>  
                             <td>{{ $item->idPedido }}</td>
@@ -1506,6 +1510,33 @@
       //   })
       // });
         
+      var table=$('#tablaModalJefeLabModificadoHaceUnaHora').DataTable({
+                orderCellsTop: true,
+                fixedHeader: true,  
+                lengthMenu: [[6, 12, 20, 40], ["6", "12", "20", "40"]],
+				dom: 'Bfrtip',
+				buttons: [
+                                  
+                                            
+                    'pageLength',                
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Pedidos Modificados durante las últimas 24 horas',
+                        text: '<i class="fa fa-file-excel-o"></i>',
+                        titleAttr: 'Excel',                        
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        }
+                    }
+                ],                
+                                
+                "order": [[ 0, "desc" ]],
+                language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                ,initComplete: function () {
+                    actualizarFiltros(this.api());
+                }  
+                              
+			});
 			 // DataTable
 			 var table=$('#tablaNotaVentaPendiente').DataTable({
                 orderCellsTop: true,
