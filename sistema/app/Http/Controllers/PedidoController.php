@@ -148,7 +148,7 @@ class PedidoController extends Controller
                 ->with('cantidadIngresoCliente', $cantidadIngresoCliente)
                 ->with('parametros', $parametros);
     }    
-
+ 
 
     // Vista para Aprobar pedidos por Usuarios Comerciales  
     public function clientePedidos(){

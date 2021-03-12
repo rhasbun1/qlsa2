@@ -36,7 +36,7 @@ class Controller extends BaseController
 
         $listatoneladasAnuales=DB::Select('call spGetToneladasAnuales()', array(0));
 
-        $listaJefePedidoEnProceso=DB::Select('call spGetPedidoEnProcesoJefe(?,?,?)', array(0, Session::get('idUsuario'), Session::get('idPerfil')  ) );
+        $listaJefePedidoEnProceso=DB::Select('call spGetProductosconPedidoPendiente(?,?,?)', array(0, Session::get('idUsuario'), Session::get('idPerfil')  ) );
 
         $listaClientePedidosEnProceso=DB::Select('call spGetProductosconPedidoPendienteCliente(?)', array(Session::get('idUsuario')));
 
