@@ -1030,7 +1030,7 @@
                                     <td style="width: 120px">{{ $item->fechahora_creacion }}</td>
                                     <td style="width: 120px">{{ $item->prod_nombre }}</td>
 
-                                    <td style="width: 120px">{{ $item->total }}</td>
+                                    <td style="width: 120px">{{ number_format($item->total, 0, ",", ".") }}</td>
                                     
                                   
                                     

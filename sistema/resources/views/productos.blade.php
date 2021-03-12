@@ -286,6 +286,20 @@
                         });
                     return;
                 }
+                if( $("#precioReferencia").val() == 0 ){
+                    swal(
+                        {
+                            title: 'El Precio No Puede Ser 0!',
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: 'NO',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        });
+                    return;
+                }
             }
             $.ajax({
                 url: urlApp + "guardarDatosProductoListaPrecio",
