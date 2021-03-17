@@ -16,6 +16,7 @@ class DevolucionController extends Controller
 	public function devolucionesEnProceso($tipo){
 		return view('devolucionesEnProceso')->with("tipo", $tipo);
 	}
+	
 
 	public function verDevolucion(){
 		return view('verDevolucion');
