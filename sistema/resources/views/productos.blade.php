@@ -238,6 +238,7 @@
         });
 
         function nuevoProducto(){
+ 
             $("#fila").val('-1');
             document.getElementById('selProductos').selectedIndex=0;
             $("#tituloFormProducto").html('<h5><b>Nuevo Producto</b></h5>');
@@ -258,7 +259,8 @@
             document.getElementById('granel').selectedIndex=0;
             document.getElementById('solicitaCertificado').selectedIndex=0;
             $("#modProducto").modal("show");
-          
+         
+
         }
 
         function cerrarModProducto(){
@@ -266,6 +268,18 @@
         }
 
         function guardarDatosProducto(){
+            if($("#codigoSoftland").val()==""){
+                swal(
+                        {
+                            title: 'Codigo softland no puede estar vacio',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: 'NO',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        });
+            }else{
             var fila=$("#fila").val();
             var idPrecio='0';
             var table=$('#tabla').DataTable();
@@ -355,6 +369,7 @@
                 }
 
             })
+         }
         }
 
         function eliminarProductoPrecio(fila){
