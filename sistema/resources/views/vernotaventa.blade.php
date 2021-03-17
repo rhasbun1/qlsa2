@@ -150,7 +150,7 @@
                         <th style="width: 50px">Unidad</th>
                         @if( Session::get('grupoUsuario')=='C' or Session::get('grupoUsuario')=='CL')
                             <th style="width: 50px;text-align:right;">Precio Base ($)</th>
-                            <th style="width: 50px;text-align:right;">Precio Reajustado ($)</th>
+                            <th style="width: 50px;text-align:right;">Precio Reajustado *($)</th>
                             <th style="width: 50px;text-align:right;">% var</th>
                         @endif
                         <th style="width: 50px;text-align:right;">Por entregar</th>
