@@ -32,8 +32,6 @@ class RamplasController extends Controller
                 return response()->json([
                     "respuesta" =>  $rampla[0]->respuesta
                 ]);
-          
-           
         }             
     }
 
