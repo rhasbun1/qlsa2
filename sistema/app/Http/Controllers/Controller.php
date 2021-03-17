@@ -28,6 +28,7 @@ class Controller extends BaseController
         $datos1=DB::Select('call spGetProductosconPedidoPendienteCount(?,?,?)', array(0,Session::get('idUsuario'), Session::get('idPerfil')));
 
         
+        
         $listaNotasdeVenta=DB::Select('call spGetNotasdeVentasPendientesAprobacion(?)', array(0) );
         
         $listaPedidosIngresadosporClientesSinAprobar=DB::Select('call spGetpedidosIngresadosporClientesSinAprobar', array(0) );
