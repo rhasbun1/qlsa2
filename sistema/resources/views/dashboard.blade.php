@@ -189,7 +189,7 @@
 		<div class="col-md-3">
 		<a href="#modalPedidosAGranelSinAsignacionHorario"  data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
-				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosGranelSinAsignacion }}</h2>
+				<h2 class="m-top-none">{{ $datos2[0]->cantidadPedidosGranelSinAsignacion }}</h2>
         <h4>Pedidos a granel </h4>
         <br>
 			</div>
@@ -199,7 +199,7 @@
 	<div class="col-md-3">
 	<a href="#modalJefePedidosAtrasados" data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
-				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasados }}</h2>
+				<h2 class="m-top-none">{{ $datos3[0]->cantidadPedidosAtrasados }}</h2>
 
 				<h4>Pedidos Atrasados </h4>
         <br>

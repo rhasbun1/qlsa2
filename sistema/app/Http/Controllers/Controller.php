@@ -26,8 +26,10 @@ class Controller extends BaseController
         
         $datos=DB::Select('call sp_GetDatosDashboard(?,?,?)', array(0,Session::get('idUsuario'), Session::get('idPerfil')));
         $datos1=DB::Select('call spGetProductosconPedidoPendienteCount(?,?,?)', array(0,Session::get('idUsuario'), Session::get('idPerfil')));
+        $datos2=DB::Select('call spGetGranelSinAsignacionDeHorariocount(?,?,?)', array(0,Session::get('idUsuario'), Session::get('idPerfil')));
+        $datos3=DB::Select('call spGetPedidosAtrasadosJefeCount(?,?,?)', array(0,Session::get('idUsuario'), Session::get('idPerfil')));
 
-        
+
         
         $listaNotasdeVenta=DB::Select('call spGetNotasdeVentasPendientesAprobacion(?)', array(0) );
         
@@ -91,6 +93,8 @@ class Controller extends BaseController
         return view('dashboard')->with('nombreUsuario', $nombreUsuario[0])
                                 ->with('datos', $datos)
                                 ->with('datos1', $datos1)
+                                ->with('datos2', $datos2)
+                                ->with('datos3', $datos3)
                                 ->with('listaNotasdeVenta', $listaNotasdeVenta)
                                 ->with('listaPedidosIngresadosporClientesSinAprobar', $listaPedidosIngresadosporClientesSinAprobar)
                                 ->with('listaPedidosEnProceso', $listaPedidosEnProceso)
