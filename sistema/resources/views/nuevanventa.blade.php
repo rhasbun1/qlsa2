@@ -130,7 +130,7 @@
                         </div>
                         <div class="col-lg-2 col-sm-3">
                             Teléfono/Móvil
-                            <input id="txtTelefono" name="txtTelefono" class="form-control input-sm" maxlength="30" readonly>
+                            <input id="txtTelefono" name="txtTelefono" class="form-control input-sm" maxlength="50" readonly>
                         </div>
                     </div>
                     <div class="row">
