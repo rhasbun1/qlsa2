@@ -40,9 +40,9 @@
         		</div>
         		<div class="col-md-2">
         			<select id="tipo" class="form-control input-sm">
+        				<option value="3">Especialidad</option>
         				<option value="1">Granel</option>
         				<option value="2">Tambor</option>
-        				<option value="3">Especialidad</option>
         			</select>
         		</div>
         		<div class="col-md-1">

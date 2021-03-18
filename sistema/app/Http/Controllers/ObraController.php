@@ -55,7 +55,7 @@ class ObraController extends Controller
 
     public function listadeObras(){
         $obras=DB::Select('call spGetObras()');
-        $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->orderBy('emp_nombre')->get();
+        $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->orderBy(DB::raw("TRIM(emp_nombre)"))->get();
         return view('listadeObras')->with('listaObras', $obras)->with('clientes', $clientes);
     }
 
