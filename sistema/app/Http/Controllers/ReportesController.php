@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class ReportesController extends Controller
 {
     public function despachosPorMes(){
-        $plantas=DB::table('plantas')->select('idPlanta', 'nombre')->get();
+        $plantas=DB::table('plantas')->select('idPlanta', 'nombre')->orderBy('nombre','asc')->get();
         return view('informes.despachosporMes')->with('plantas', $plantas);
     }
 

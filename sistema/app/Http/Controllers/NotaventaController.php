@@ -129,9 +129,9 @@ class NotaventaController extends Controller
         $fecha_termino = date('Y-m-d'); 
         $fecha_inicio = date("Y-m-d",strtotime($fecha_termino));
         if(Session::get('empresaUsuario')=='0'){
-            $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->orderBy('emp_nombre')->get();
+            $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->orderBy(DB::raw("TRIM(emp_nombre)"))->get();
         }else{
-            $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->where('emp_codigo',"=",Session::get('empresaUsuario') )->get();
+            $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->where('emp_codigo',"=",Session::get('empresaUsuario') )->orderBy(DB::raw("TRIM(emp_nombre)"))->get();
         }
         $parametros=DB::table('parametros')->select('version')->get();
 

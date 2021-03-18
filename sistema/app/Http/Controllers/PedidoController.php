@@ -83,7 +83,7 @@ class PedidoController extends Controller
         $fecha_termino = date('Y-m-d'); 
         $fecha_inicio = date("Y-m-d",strtotime($fecha_termino."- 60 days"));
         if( Session::get('empresaUsuario')!='0' ){
-            $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->where('emp_codigo',"=",Session::get('empresaUsuario') )->get();
+            $clientes=DB::table('empresas')->select('emp_codigo', 'emp_nombre')->where('emp_codigo',"=",Session::get('empresaUsuario') )->orderBy(DB::raw("TRIM(emp_nombre)"))->get();
         }else{
             $clientes=DB::Select('call spGetClientesPlantas(?)', array( Session::get('idUsuario') ) );
         }
@@ -321,7 +321,7 @@ class PedidoController extends Controller
 
         $emptransporte = DB::table('empresastransporte')->select('idEmpresaTransporte','nombre', 'habilitada')->orderBy('nombre', 'ASC')->get();
 
-        $plantas=DB::table('plantas')->select('idPlanta', 'nombre')->get();
+        $plantas=DB::table('plantas')->select('idPlanta', 'nombre')->orderBy('nombre', 'asc')->get();
         $parametros=DB::table('parametros')->select('version')->get();
         $ramplas=DB::Select('call spGetRamplas()');
         return view('programacionPedido')->with('pedido', $pedido)
@@ -575,8 +575,8 @@ class PedidoController extends Controller
     public function costosMensuales(){
         $costosMensuales=DB::Select('call spGetCostosMensuales()');
         $periodo=date('Ym');
-        $unidades=Unidad::All();
-        $plantas=Planta::All();
+        $unidades=Unidad::orderBy('u_nombre','asc')->get();
+        $plantas=Planta::orderBy('nombre','asc')->get();
 
         $productos=Producto::orderBy('prod_nombre', 'ASC')->get();
 

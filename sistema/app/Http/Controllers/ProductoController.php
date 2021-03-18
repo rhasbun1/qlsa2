@@ -26,9 +26,9 @@ class ProductoController extends Controller
     {
         //
         $listaProductos=DB::Select('call spGetProductosPrecios()' );
-        $unidades=Unidad::All();
-        $plantas=Planta::All();
-        $productos=Producto::All();
+        $unidades=Unidad::orderBy('u_nombre','asc')->get();
+        $plantas=Planta::orderBy('nombre','asc')->get();
+        $productos=Producto::orderBy('prod_nombre','asc')->get();
         $planta = DB::select('call spGetPlantas' );
 
         return view('productos')->with('listaProductos', $listaProductos)->with('unidades', $unidades)->with('plantas', $plantas)
