@@ -73,13 +73,13 @@
                         Observaciones (máx.130 carac.)
                     </div>
                     <div class="col-md-10">
-                        <textarea class="form-control input-sm" id="observacionDespacho" rows="2" readonly maxlength="130"></textarea> 
+                        <textarea class="form-control input-sm" style="resize: none;" id="observacionDespacho" rows="2" readonly maxlength="130"></textarea> 
                     </div>
                 </div> 
                 <div style="padding-top:15px">
                     <table id="tablaDetalleGuia" class="table table-hover table-condensed" style="width: 100%">
                         <thead>
-                            <th style="width: 100px">Cod.Producto</th>
+                            <th style="width: 100px">Cód.Producto</th>
                             <th style="width: 350px">Nombre</th>
                             <th style="width: 100px">Unidad</th>
                             <th style="width: 100px; text-align:right;">Cant.Solicitada</th>
@@ -115,8 +115,9 @@
                         Rampla
                     </div>
                     <div class="col-md-1">
-                        <input class="form-control input-sm" id="guiaRampla" maxlength="3">
-                    </div>
+                            <input class="form-control input-sm" id="guiaRampla" readonly maxlength="3">
+                        </div>
+                    
                     <div class="col-md-2">
                         Retira (máx.30 carac.)
                     </div>
@@ -155,12 +156,12 @@
             </div>
             <div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; text-align: right;">
                <button id="btnGuardarDatosGuia" type="button" class="btn btn-success btn-sm" onclick="actualizarDatosGuiaDespacho(true)">Actualizar Datos</button>
-               <button id="btnEmitirGuia" type="button" class="btn btn-warning btn-sm" onclick="emitirGuiaDespacho()" data-idperfil=<?php echo e(Session::get('idPerfil')); ?>>Emitir Guía</button>
+               <button id="btnEmitirGuia" type="button" class="btn btn-warning btn-sm" onclick="emitirGuiaDespacho()" data-idperfil="<?php echo e(Session::get('idPerfil')); ?>">Emitir Guía</button>
                <button id="btnSubirPdf" type="button" class="btn btn-info btn-sm" onclick="abrirSubirGuiaPdf()">Subir PDF</button>  
                <button id="btnBajar" type="button" class="btn btn-primary btn-sm" onclick="bajarGuiaPdf();">Ver Guia PDF</button> 
                <button id="btnRegistrarSalida" type="button" class="btn btn-default btn-sm" onclick="registrarSalida();">Registrar Salida</button>
                <button id="btnCerrarCajaGuia" type="button" class="btn btn-danger data-dismiss=modal btn-sm" onclick="cerrarCajaGuia()" style="width: 80px">Salir</button>
-               <button id="btnAnularGuiaTemporal" type="button" class="btn btn-default btn-sm" onclick="abrirModalAnularGuia();" title="Anular guía temporal">Anular Guía</button>
+               <button id="btnAnularGuiaTemporal" type="button" class="btn btn-default btn-sm" onclick="abrirModalAnularGuia();" title="Anula la guía">Deshacer datos</button>
             </div>
         </div>
     </div>
@@ -229,7 +230,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header" style="height: 45px">
-                <h5><b>Anular Guía</b></h5>
+                <h5><b>Deshacer Guía</b></h5>
             </div>
             <div id="bodyGuia" class="modal-body">
                 Indique el motivo (máx.200 caract.)
@@ -238,7 +239,7 @@
                         <input class="form-control input-sm" id="obsAnulacion" maxlength="200">
                     </div> 
                 </div>
-                <b>Al anular la guía temporal, se liberarán los productos del pedido para poder modificar sus datos, y luego podrá volver a asignarle una guía.</b>
+                <b>Al deshacer la guía temporal, se liberarán los productos del pedido para poder modificar sus datos, y luego podrá volver a asignarle una guía.</b>
             </div>
             <div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; text-align: right;">
                <button type="button" class="btn btn-success btn-sm" onclick="anularGuiaTemporal()" style="width: 80px">Aceptar</button>                

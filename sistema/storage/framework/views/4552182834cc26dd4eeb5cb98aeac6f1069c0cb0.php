@@ -34,27 +34,25 @@
 	
 	<!-- Timepicker -->
 	<link href="<?php echo e(asset('/')); ?>css/bootstrap-timepicker.css" rel="stylesheet"/>
-
     <script type="text/javascript" src="<?php echo e(asset('/')); ?>js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/')); ?>css/sweetalert.css"> 
- 
-    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
-    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
-	<link href="<?php echo e(asset('/')); ?>js/syncfusion/bootstrap-theme/ej.web.all.min.css" rel="stylesheet" />
-	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
-
-   <!-- <script src="https://cdn.syncfusion.com/js/assets/external/jquery-1.10.2.min.js"></script>
-    <script src="http://cdn.syncfusion.com/js/assets/external/jsrender.min.js"></script>
-    <script src="http://cdn.syncfusion.com/17.3.0.9/js/web/ej.web.all.min.js"></script>
-	<script src="<?php echo e(asset('/')); ?>js/es/i18n/ej.culture.es-CL.js"></script> 
-	<script src="<?php echo e(asset('/')); ?>js/es/l10n/ej.localetexts.es-ES.js"></script>-->
 
 	<!-- Datatable -->
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-	
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-	<link href="<?php echo e(asset('/')); ?>css/datatables.min.css" rel="stylesheet">    
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">    
+	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	<link href="<?php echo e(asset('/')); ?>css/datatables.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
+
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+    <link href="<?php echo e(asset('/')); ?>js/syncfusion/bootstrap-theme/ej.web.all.min.css" rel="stylesheet" />
+
+    <script src="<?php echo e(asset('/')); ?>js/ca-gregorian.json"></script>
+    <script src="<?php echo e(asset('/')); ?>js/numbers.json"></script>
+    <script src="<?php echo e(asset('/')); ?>js/timeZoneNames.json"></script>
+    <script src="<?php echo e(asset('/')); ?>js/weekData.json"></script>  
+	
 	<style>
 		.dt-button.red {
 	        color: red;
@@ -138,7 +136,6 @@
 				<div class="main-menu">
 					<ul>
 						<?php if( Session::get('idPerfil')!='13' ): ?>
-							<?php if( Session::get('grupoUsuario')!='CL' and Session::get('idPerfil')!='6' ): ?>
 								<li class="active">
 									<a href="<?php echo e(asset('/')); ?>dashboard">
 										<span class="menu-icon">
@@ -150,7 +147,7 @@
 										<span class="menu-hover"></span>
 									</a>
 								</li>
-							<?php endif; ?>
+							
 							<?php if( Session::get('grupoUsuario')=='C' ): ?>
 								<li class="openable open">
 									<a href="#">
@@ -235,7 +232,7 @@
 								    <?php if( Session::get('idPerfil')!='6' and Session::get('idPerfil')!='9' ): ?>
 									<li><a href="<?php echo e(asset('/')); ?>historicoNotasdeVenta"><span class="submenu-label">Histórico de Notas de Venta</span></a></li>
 									<?php endif; ?>
-									<li><a href="<?php echo e(asset('/')); ?>historicoPedidos"><span class="submenu-label">Histórico de Pedidos Despachados</span></a></li>
+									<li><a href="<?php echo e(asset('/')); ?>historicoPedidos"><span class="submenu-label">Pedidos Despachados</span></a></li>
 									<?php if( Session::get('idPerfil')=='2' or
 										Session::get('idPerfil')=='3' or
 										Session::get('idPerfil')=='4' or 
@@ -280,7 +277,10 @@
 											Session::get('idPerfil')=='18'): ?>
 										    <li><a href="<?php echo e(asset('/')); ?>listaCondicionesdePago"><span class="submenu-label">Condiciones de Pago</span></a></li>
 										<?php endif; ?>
-										<li><a href="<?php echo e(asset('/')); ?>listadeObras"><span class="submenu-label">Obras y Plantas (Clientes)</span></a></li>
+										<?php if( Session::get('idPerfil')!='5' and Session::get('idPerfil')!='7' and Session::get('idPerfil')!='8' and Session::get('idPerfil')!='10' and Session::get('idPerfil')!='11'): ?>
+											<li><a href="<?php echo e(asset('/')); ?>listadeObras"><span class="submenu-label">Obras y Plantas (Clientes)</span></a></li>
+										<?php endif; ?>
+
 										<?php if( Session::get('idPerfil')=='1' or Session::get('idPerfil')=='18'): ?>
 											<li><a href="<?php echo e(asset('/')); ?>listaPlantas"><span class="submenu-label">Plantas QLSA</span></a></li>
 										<?php endif; ?>
@@ -292,10 +292,7 @@
 											Session::get('idPerfil')=='18'): ?>
 											<li><a href="<?php echo e(asset('/')); ?>listaProductos"><span class="submenu-label">Productos</span></a></li>
 										<?php endif; ?>
-										<?php if( Session::get('idPerfil')=='1' or
-											Session::get('idPerfil')=='2' or
-											Session::get('idPerfil')=='3' or
-											Session::get('idPerfil')=='18' ): ?>																				
+										<?php if( Session::get('idPerfil')=='1' ): ?>																				
 											<li><a href="<?php echo e(asset('/')); ?>listaUsuarios"><span class="submenu-label">Usuarios</span></a></li>
 										<?php endif; ?>
 
@@ -321,16 +318,21 @@
 											or Session::get('idPerfil')=='10' ): ?>
 											<li><a href="<?php echo e(asset('/')); ?>listaRamplas"><span class="submenu-label">Ramplas</span></a></li>
 										<?php endif; ?>
+										<?php if( Session::get('idPerfil')!='11' and Session::get('idPerfil')!='12'): ?>										
 										<li class="openable">
 											<a href="#">
-												<span class="submenu-label">Fletes, Distancias y Tiempos</span>
+												<span class="submenu-label"> Costo Flete y Tiempo de Traslado</span>
 											</a>
 											<ul class="submenu third-level">
 												<li><a href="<?php echo e(asset('/')); ?>notaVentaVigenteCargos"><span class="submenu-label">Notas de Venta Vigentes</span></a></li>
 												<li><a href="<?php echo e(asset('/')); ?>notaVentaCerradaCargos"><span class="submenu-label">Notas de Venta Cerradas</span></a></li>
 												<li><a href="<?php echo e(asset('/')); ?>notaVentaCargosUrgente"><span class="submenu-label">Asignaciones Pendientes</span></a></li>
 											</ul>
-										</li>							
+										</li>
+										<?php endif; ?>
+										<li><a href="<?php echo e(asset('/')); ?>listaFeriados"><span class="submenu-label">Feriados</span></a></li>
+										<li><a href="<?php echo e(asset('/')); ?>clienteNotaVentas"><span class="submenu-label">Cliente/Nota Venta</span></a></li>		
+
 									</ul>
 								</li>
 							<?php endif; ?>

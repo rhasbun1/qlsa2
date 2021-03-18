@@ -312,6 +312,53 @@
                 }
             }
 
+          var existe=true;  
+          var urlApiSoft;
+          urlApiSoft="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datosdte";
+          $.ajax({
+                async: false,
+                url: urlApiSoft,
+                type: 'POST',
+                dataType: 'json',
+                data: { 
+                    tipoDocumento: 52,
+                    folio: $("#nuevoFolioDTE").val().trim()
+                      },
+                headers: { 
+                    'X-CSRF-TOKEN' : 'WiyfqvBuHrUnzT6zCvidq9lMVIQSB220Wtsx8EK5'
+                },
+              success:function(data){
+                if(!data[0]){
+
+                    existe=false;
+                    swal(
+                        {
+                            title: '¡El Número de guía ingresado no existe en contabilidad!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            if(isConfirm){
+                              return;
+                            }
+                        }
+                    );                    
+                }
+              },
+              error: function(jqXHR, text, error){
+                  alert('Error!, No se pudo Añadir los datos');
+              }
+          });
+          if(!existe){
+            return;
+          }            
+
             // Aqui se actualizan los cantidades ingresadas en la guía de despacho   
 
             actualizarDatosGuiaDespacho(false);

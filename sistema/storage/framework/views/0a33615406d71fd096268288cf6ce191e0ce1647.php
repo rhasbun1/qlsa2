@@ -76,7 +76,7 @@
                         <thead>
                             <th style="width:80px">Pedido</th>
                             <th style="width:120px"></th>
-                            <th style="width:100px">Nº Auxiliar</th>
+                            <th style="width:80px">Nº Auxiliar</th>
                             <th style="width:50px">Estado</th>
                             <th style="width:200px">Cliente</th>
                             <th style="width:200px">Obra/Planta</th>
@@ -117,7 +117,7 @@
                                     <?php endif; ?>  
                                         <td style="width:80px" data-idpedido="<?php echo e($item->idPedido); ?>" >
                                             <?php if( $item->idEstadoPedido=='0' or Session::get('idPerfil')=='9' ): ?>
-                                                <a href="<?php echo e(asset('/')); ?>verpedido/<?php echo e($item->idPedido); ?>/3/" class="btn btn-xs btn-success"><?php echo e($item->idPedido); ?></a>
+                                                <a href="<?php echo e(asset('/')); ?>verpedido/<?php echo e($item->idPedido); ?>/3-2/" class="btn btn-xs btn-success"><?php echo e($item->idPedido); ?></a>
                                             <?php else: ?>
                                                 <a href="<?php echo e(asset('/')); ?>programarpedido/<?php echo e($item->idPedido); ?>/3/" class="btn btn-xs btn-success"><?php echo e($item->idPedido); ?></a>
                                             <?php endif; ?>
@@ -153,9 +153,9 @@
                                             <span><img src="<?php echo e(asset('/')); ?>img/iconos/enTransporte.png" border="0" onclick="verUbicacionGmaps('<?php echo e($item->Patente); ?>');" style="cursor:pointer; cursor: hand"></span>                                      
                                             <?php endif; ?>    
                                         </td> 
-                                        <td style="width:100px; text-align: center">
+                                        <td style="width:70px; text-align: center">
                                             <?php if( Session::get('idPerfil')>='5' and Session::get('idPerfil')<='7' ): ?>
-                                                <a class="btn btn-xs btn-default" style="height: 25px;width:100px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );"><?php echo e($item->numeroAuxiliar); ?></a>
+                                                <a class="btn btn-xs btn-default" style="height: 25px;width:80px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );"><?php echo e($item->numeroAuxiliar); ?></a>
                                             <?php else: ?>
                                                 <?php echo e($item->numeroAuxiliar); ?>
 
@@ -191,7 +191,7 @@
                                             <td style="width:120px"><?php echo e($item->fechaCarga); ?> <?php echo e($item->horaCarga); ?> </td>
                                             <td style="width:150px"><?php echo e($item->apellidoConductor); ?> / <?php echo e($item->empresaTransporte); ?></td>
                                         <?php endif; ?>
-                                        <td style="width:100px"><?php echo e($item->fechahora_creacion); ?></td>
+                                        <td style="width:100px"><?php echo e(date('d/m/Y', strtotime($item->fecha))); ?> <?php echo e($item->hora); ?></td>
                                     </tr>
                                 <?php endif; ?>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -218,7 +218,7 @@
                                 <?php $__currentLoopData = $pedidos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php if( $item->idEstadoPedido == '1' ): ?>
                                         <tr>
-                                            <td><a href="<?php echo e(asset('/')); ?>verpedido/<?php echo e($item->idPedido); ?>/3/" class="btn btn-xs btn-success"><?php echo e($item->idPedido); ?></a></td>
+                                            <td><a href="<?php echo e(asset('/')); ?>verpedido/<?php echo e($item->idPedido); ?>/3-2/" class="btn btn-xs btn-success"><?php echo e($item->idPedido); ?></a></td>
                                             <td></td>
                                             <td><?php echo e($item->fechahora_creacion); ?></td>
                                             <td><?php echo e($item->nombreCliente); ?></td>
@@ -334,7 +334,7 @@
     <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h5><b>Datos de la Guia</b></h5>
+                <h5><b>Datos de la Guía</b></h5>
             </div>
             <div id="bodyModal" class="modal-body">
                 <div class="row">
@@ -548,9 +548,15 @@
                                 cadena+='<span onclick="abrirGuia(1, ' + dato[x].numeroGuia + ', this.parentNode.parentNode);" style="cursor:pointer; cursor: hand"><img src="'+ urlApp + 'img/iconos/guiaDespacho2.png" border="0"></span>';
                             }
 
-                            if( dato[x].certificado!='' ){  
-                                cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/"' + dato[x].certificado + '">';
-                                cadena+='<img src="'+ urlApp + 'img/iconos/certificado.png" border="0"></a>';
+                            if( dato[x].certificado!='' ){
+                                if(dato[x].certificado == 'S/C'){
+                                      
+
+                                    cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/"' + dato[x].certificado + '">';
+                                cadena+='<img src="'+ urlApp + 'img/iconos/cerwtificado.png" border="0"></a>';
+                                }  
+                                
+                                
                             }
 
                             if( dato[x].salida==1 ){
@@ -566,11 +572,13 @@
                         celdaNumAux="";
 
                         if(document.getElementById('idPerfilSession').value>=5 && document.getElementById('idPerfilSession').value<=7 ){
-                            celdaNumAux='<a class="btn btn-xs btn-default" style="height: 25px;width:100px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );">' + dato[x].numeroAuxiliar + '</a>';                                   
+                            celdaNumAux='<a class="btn btn-xs btn-default" style="height: 25px;width:80px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );">' + dato[x].numeroAuxiliar + '</a>';                                   
                         }else{
                            celdaNumAux='<td style="width: 80px; text-align: center;">' + dato[x].numeroAuxiliar + '</td>';
                         }   
 
+            
+                        
                             var ind=tabla.row.add( [
                                     celdaPedido,
                                     cadena,
@@ -622,7 +630,7 @@
             if( $("#nuevoFolioDTE").val().trim()=='' ){
                 swal(
                     {
-                        title: 'Debe ingresar el numero Folio DTE!!' ,
+                        title: '¡¡Debe ingresar el numero Folio DTE!!' ,
                         text: '',
                         type: 'warning',
                         showCancelButton: false,
@@ -703,7 +711,7 @@
                 cadena=table.cell(i,1).data();
                 table.cell(i,1).data( cadena.replace(numeroGuiaOrigen, nuevoNumeroGuia) );
             }
-
+    
             // Aqui se actualizan los cantidades ingresadas en la guía de despacho   
 
             actualizarDatosGuiaDespacho(false);
@@ -743,6 +751,18 @@
                     }                 
 
                     $("#folioDTE").val( $("#nuevoFolioDTE").val() );
+                    if(document.getElementById('btnAnularGuiaTemporal')){
+                      document.getElementById('btnAnularGuiaTemporal').style.display='none';
+                    }
+                    if(document.getElementById('btnGuardarDatosGuia')){
+                      document.getElementById('btnGuardarDatosGuia').style.display='none';
+                    }
+
+                    if( document.getElementById('btnEmitirGuia').dataset.idperfil=='5' || 
+                        document.getElementById('btnEmitirGuia').dataset.idperfil=='6' || 
+                        document.getElementById('btnEmitirGuia').dataset.idperfil=='7'){
+                        document.getElementById('btnRegistrarSalida').style.display='inline';
+                    }
 
                     document.getElementById('btnRegistrarSalida').style.display='none';
                     document.getElementById('btnGuardarDatosGuia').style.display='none';
@@ -771,7 +791,8 @@
         });
         
         $(document).ready(function() {
-            var idPerfil=<?php echo e(Session::get('idPerfil')); ?>;
+            
+            var idPerfil=$("#idPerfil").val();
             var tablaDetalle="#tablaAprobados";
             // Setup - add a text input to each footer cell
 
@@ -816,10 +837,16 @@
             var table=$('#tablaAprobados').DataTable({
                  orderCellsTop: true,
                  fixedHeader: true,         
-                "lengthMenu": [[-1, 6, 12, 20, -1], ["Todos", "6", "12", "20"]],
+                "lengthMenu": [[-1, 6, 12, 20], ["Todos", "6", "12", "20"]],
                 dom: 'Bfrtip',
                 "scrollX": true,
                 buttons: [
+                    {
+                        text: 'Atras',
+                        action: function ( e, dt, node, config ) {
+                            location.href=("<?php echo e(asset('/')); ?>dashboard");
+                        }
+                    },
                     {
                         text: 'Actualizar',
                         action: function ( e, dt, node, config ) {
@@ -829,19 +856,14 @@
                     },
                     'pageLength',
                     {
-                        extend: 'excelHtml5',
-                        title: titulo,
-                        exportOptions: {
-                            columns: [ 0, 2, 3, 4, 5 , 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
-                        }
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        title: titulo,
-                        exportOptions: {
-                            columns: [ 0, 2, 3, 4, 5 , 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
-                        }
-                    },
+                            extend: 'excelHtml5',
+                            title: titulo,
+                            text: '<i class="fa fa-file-excel-o"></i>',
+                            titleAttr: 'Excel',                           
+                            exportOptions: {
+                                columns: [ 0, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14 ]
+                            }
+                        },
                     {
                         text: 'Próximos pedidos Granel',
                         action: function ( e, dt, node, config ) {
@@ -1046,8 +1068,10 @@
             $('.main-menu').find('.openable').removeClass('open');
             $('.main-menu').find('.submenu').removeAttr('style');             
         } );
-
-
+        function formato(texto){
+			return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+		}
+        
     </script>
 
 <?php $__env->stopSection(); ?>
