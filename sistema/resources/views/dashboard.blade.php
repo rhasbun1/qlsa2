@@ -303,7 +303,7 @@
 
         <a href="#modalAtrasadoTransporte" data-toggle="modal">
           <div class="panel-stat3 bg-info btn" style="width:100%">
-            <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasadosTransporte }}</h2>
+            <h2 class="m-top-none">{{ $datos3[0]->cantidadPedidosAtrasadosTransporte }}</h2>
               
             <h4>Pedidos Atrasados</h4>
             <h4>(despacho pendiente)</h4>

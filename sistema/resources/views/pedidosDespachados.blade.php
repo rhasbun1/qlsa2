@@ -359,7 +359,7 @@
                     }
                 }                
             ],                  
-            "order": [[ 0, "asc" ]],                        
+            "order": [[ 9, "asc" ]],                        
             language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
 
         });
