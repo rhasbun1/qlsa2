@@ -916,7 +916,7 @@
                         }
                     },
                     {
-                        text: 'Pedidos despachados',
+                        text: 'Pedidos despachados (granel)',
                         action: function ( e, dt, node, config ) {
                             window.open(urlApp + 'verPedidosDespachados', "QL Now")                    
                         }
