@@ -296,7 +296,7 @@
                 <th style="width:350px">Motivo</th>
             </thead>
             <tbody>
-                @if ($notaventa[0]->fechaCierreSistema!='' )
+                @if ($notaventa[0]->fechaCierreSistema!='')
               
                 <tr>
                     <td style="width:200px"> {{ $notaventa[0]->fechaCierreSistema }} </td>
@@ -307,8 +307,10 @@
                 @endif
                 @foreach($log as $item)
                 <?php
-                    $fecha = explode("-", $item->fechaHora);
-                    $fecha1 = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+                    $fecha = $item->fechaHora;
+                    $newDate = date("d/m/Y h:m:s", strtotime($fecha));
+                    $fecha1 = $newDate
+                    
                 ?>
                 <tr>
                     <td style="width:200px"> {{ $fecha1 }} </td>

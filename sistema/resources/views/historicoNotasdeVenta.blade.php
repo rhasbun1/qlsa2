@@ -138,6 +138,9 @@
             var dd = hoy.getDate();
             var mm = hoy.getMonth()+1;
             var yyyy = hoy.getFullYear();
+            var primerDia = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+            var dia = primerDia.getDate();
+            console.log(dia);
 
             if (dd < 10) {dd = '0' + dd; }
             if (mm < 10) {mm = '0' + mm; }
@@ -149,7 +152,7 @@
             var yyyy = hoy.getFullYear()+1;
             if (dd < 10) {dd = '0' + dd; }
             if (mm < 10) {mm = '0' + mm; }
-            $("#min").val(dd + '/' + mm + '/' + yyyy);
+            $("#min").val(dia + '/' + mm + '/' + yyyy);
 
             // Setup - add a text input to each footer cell
             $('#tablaDetalle thead tr').clone(true).appendTo( '#tablaDetalle thead' );
