@@ -47,7 +47,7 @@
   <div class="col-md-3">
     <a href="#modalJefePedidosAtrasados" data-toggle="modal">
         <div class="panel-stat3 bg-info btn" style="width:100%">
-          <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasados }}</h2>
+          <h2 class="m-top-none">{{ $datos3[0]->cantidadPedidosAtrasados }}</h2>
           <h3>Pedidos Atrasados</h3>
           <br>
           
@@ -113,7 +113,7 @@
   <div class="col-md-3">
     <a href="#modalJefePedidosAtrasados" data-toggle="modal">
         <div class="panel-stat3 bg-info btn" style="width:100%">
-          <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosAtrasados }}</h2>
+          <h2 class="m-top-none">{{ $datos3[0]->cantidadPedidosAtrasados }}</h2>
           <br>
           <h4>Pedidos Atrasados </h4>
           <br>
