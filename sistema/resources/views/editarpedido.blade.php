@@ -116,7 +116,7 @@
                         <th>Precio ($)</th>
                         <th>Total</th>
                     @endif
-                    <th>Planta de Origen</th>
+                    <th>Planta d44e Origen</th>
                     <th>Entrega</th>
                     <th>Transporte</th>
                     <th>Camion</th>
