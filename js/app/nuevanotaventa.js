@@ -391,6 +391,54 @@
             return;
         }
 
+          var existe=true;  
+          var urlApiSoft;
+          urlApiSoft="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datoscliente";
+          //urlApiSoft="http://svdev.ddns.net:88/qrysoftland/api/datosdte";
+          $.ajax({
+                async: false,
+                url: urlApiSoft,
+                type: 'POST',
+                dataType: 'json',
+                data: { 
+                    codigoSoftland: txtCodClienteSoftland.value
+                      },
+                headers: { 
+                    'X-CSRF-TOKEN' : 'WiyfqvBuHrUnzT6zCvidq9lMVIQSB220Wtsx8EK5'
+                },
+              success:function(data){
+                if(!data[0]){
+
+                    existe=false;
+                    swal(
+                        {
+                            title: '¡El código softland del cliente no existe en contabilidad!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            if(isConfirm){
+                              return;
+                            }
+                        }
+                    );                    
+                }
+              },
+              error: function(jqXHR, text, error){
+                  alert('Error!, No se pudo Añadir los datos');
+              }
+          });
+          if(!existe){
+            return;
+          }
+
+
         if( document.getElementById('idUsuarioEncargado').selectedIndex<1 ){
             swal(
                 {

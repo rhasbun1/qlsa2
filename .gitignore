@@ -3,4 +3,5 @@ guias/*
 certificados/*
 js/app/funciones.js
 sistema/public/*
+sistema/storage/*
 .env

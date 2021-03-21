@@ -280,96 +280,146 @@
                             closeOnCancel: false
                         });
             }else{
-            var fila=$("#fila").val();
-            var idPrecio='0';
-            var table=$('#tabla').DataTable();
-            var buscar=$("#selProductos option:selected").html().trim()+$("#selUnidades option:selected").html().trim()+$("#selPlantas option:selected").html().trim();
 
-            for (var i = 0; i < table.rows().count(); i++){
-                if( (buscar==table.cell(i,1).data().trim()+table.cell(i,2).data().trim()+table.cell(i,3).data().trim()) && fila!=i ){
-                    swal(
-                        {
-                            title: '¡Producto existente!',
-                            text: 'El producto ya se encuentra en la lista',
-                            type: 'warning',
-                            showCancelButton: false,
-                            confirmButtonText: 'OK',
-                            cancelButtonText: 'NO',
-                            closeOnConfirm: true,
-                            closeOnCancel: false
-                        });
-                    return;
-                }
-                if( $("#precioReferencia").val() == 0 ){
-                    swal(
-                        {
-                            title: 'El Precio No Puede Ser 0!',
-                            text: '',
-                            type: 'warning',
-                            showCancelButton: false,
-                            confirmButtonText: 'OK',
-                            cancelButtonText: 'NO',
-                            closeOnConfirm: true,
-                            closeOnCancel: false
-                        });
-                    return;
-                }
-            }
-            $.ajax({
-                url: urlApp + "guardarDatosProductoListaPrecio",
-                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
-                type: 'POST',
-                dataType: 'json',
-                data: { 
-                        idProductoListaPrecios: productoListaPrecioID,    
-                        codigoProducto: $("#selProductos").val(),
-                        nombreProducto: $("#selProductos option:selected").text(),
-                        unidad: $("#selUnidades option:selected").html(),
-                        idPlanta: $("#selPlantas").val(),
-                        precioReferencia: $("#precioReferencia").val(),
-                        requiereDiseno: $("#requiereDiseno").val(),
-                        granel: $("#granel").val(),
-                        solicitaCertificado: $("#solicitaCertificado").val(),
-                        codigoSoftland: $("#codigoSoftland").val(),
-                        tiempoProduccion: $("#tiempoProduccion").val()
+                  var existe=true;  
+                  var urlApiSoft;
+                  urlApiSoft="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datosproducto";
+                  //urlApiSoft="http://svdev.ddns.net:88/qrysoftland/api/datosdte";
+                  $.ajax({
+                        async: false,
+                        url: urlApiSoft,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { 
+                            codigoProducto: codigoSoftland.value
+                              },
+                        headers: { 
+                            'X-CSRF-TOKEN' : 'WiyfqvBuHrUnzT6zCvidq9lMVIQSB220Wtsx8EK5'
+                        },
+                      success:function(data){
+                        if(!data[0]){
+
+                            existe=false;
+                            swal(
+                                {
+                                    title: '¡El codigo softland ingresado no existe en contabilidad!' ,
+                                    text: '',
+                                    type: 'warning',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'OK',
+                                    cancelButtonText: '',
+                                    closeOnConfirm: true,
+                                    closeOnCancel: false
+                                },
+                                function(isConfirm)
+                                {
+                                    if(isConfirm){
+                                      return;
+                                    }
+                                }
+                            );                    
+                        }
                       },
-                success:function(dato){
-                    var table = $('#tabla').DataTable();
-                    if(fila.toString()=='-1'){
-                       //ff=table.row.add( [ 
-                       table.row.add( [
-                                dato[0].idProductoListaPrecios,
-                                $("#selProductos option:selected").html(),
-                                $("#selUnidades option:selected").html(),
-                                $("#selPlantas option:selected").html() ,
-                                $("#precioReferencia").val(),
-                                $("#codigoSoftland").val(),
-                                $("#requiereDiseno option:selected").html(),
-                                $("#granel option:selected").html(),
-                                $("#solicitaCertificado option:selected").html(),
-                                $("#tiempoProduccion").val(),
-                                '<td style="width:40px"><button class="btn btn-xs btn btn-warning btnEditar" title="Editar"><i class="fa fa-edit fa-lg"></i></button>' + 
-                                '<button class="btn btn-xs btn btn-danger btnEliminar" title="Eliminar"><i class="fa fa-trash-o fa-lg"></i></button></td>'
-                                ] ).draw();
-                                                                          
-                    }else{
+                      error: function(jqXHR, text, error){
+                          alert('Error!, No se pudo Añadir los datos');
+                      }
+                  });
+                  if(!existe){
+                    return;
+                  }
 
-                        table.cell(fila,1).data( $("#selProductos option:selected").html() );
-                        table.cell(fila,2).data( $("#selUnidades option:selected").html() );                 
-                        table.cell(fila,3).data( $("#selPlantas option:selected").html() );
-                        table.cell(fila,4).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
-                        table.cell(fila,5).data( $("#codigoSoftland").val() );
-                        table.cell(fila,6).data( $("#requiereDiseno option:selected").html() );
-                        table.cell(fila,7).data( $("#granel option:selected").html() );
-                        table.cell(fila,8).data( $("#solicitaCertificado option:selected").html() ); 
-                        table.cell(fila,9).data( $("#tiempoProduccion").val() );
-                        table.cell(fila,10).draw();                
+
+
+                var fila=$("#fila").val();
+                var idPrecio='0';
+                var table=$('#tabla').DataTable();
+                var buscar=$("#selProductos option:selected").html().trim()+$("#selUnidades option:selected").html().trim()+$("#selPlantas option:selected").html().trim();
+
+                for (var i = 0; i < table.rows().count(); i++){
+                    if( (buscar==table.cell(i,1).data().trim()+table.cell(i,2).data().trim()+table.cell(i,3).data().trim()) && fila!=i ){
+                        swal(
+                            {
+                                title: '¡Producto existente!',
+                                text: 'El producto ya se encuentra en la lista',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: 'NO',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            });
+                        return;
                     }
-                    cerrarModProducto();
+                    if( $("#precioReferencia").val() == 0 ){
+                        swal(
+                            {
+                                title: 'El Precio No Puede Ser 0!',
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: 'NO',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            });
+                        return;
+                    }
                 }
+                $.ajax({
+                    url: urlApp + "guardarDatosProductoListaPrecio",
+                    headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 
+                            idProductoListaPrecios: productoListaPrecioID,    
+                            codigoProducto: $("#selProductos").val(),
+                            nombreProducto: $("#selProductos option:selected").text(),
+                            unidad: $("#selUnidades option:selected").html(),
+                            idPlanta: $("#selPlantas").val(),
+                            precioReferencia: $("#precioReferencia").val(),
+                            requiereDiseno: $("#requiereDiseno").val(),
+                            granel: $("#granel").val(),
+                            solicitaCertificado: $("#solicitaCertificado").val(),
+                            codigoSoftland: $("#codigoSoftland").val(),
+                            tiempoProduccion: $("#tiempoProduccion").val()
+                          },
+                    success:function(dato){
+                        var table = $('#tabla').DataTable();
+                        if(fila.toString()=='-1'){
+                           //ff=table.row.add( [ 
+                           table.row.add( [
+                                    dato[0].idProductoListaPrecios,
+                                    $("#selProductos option:selected").html(),
+                                    $("#selUnidades option:selected").html(),
+                                    $("#selPlantas option:selected").html() ,
+                                    $("#precioReferencia").val(),
+                                    $("#codigoSoftland").val(),
+                                    $("#requiereDiseno option:selected").html(),
+                                    $("#granel option:selected").html(),
+                                    $("#solicitaCertificado option:selected").html(),
+                                    $("#tiempoProduccion").val(),
+                                    '<td style="width:40px"><button class="btn btn-xs btn btn-warning btnEditar" title="Editar"><i class="fa fa-edit fa-lg"></i></button>' + 
+                                    '<button class="btn btn-xs btn btn-danger btnEliminar" title="Eliminar"><i class="fa fa-trash-o fa-lg"></i></button></td>'
+                                    ] ).draw();
+                                                                              
+                        }else{
 
-            })
-         }
+                            table.cell(fila,1).data( $("#selProductos option:selected").html() );
+                            table.cell(fila,2).data( $("#selUnidades option:selected").html() );                 
+                            table.cell(fila,3).data( $("#selPlantas option:selected").html() );
+                            table.cell(fila,4).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
+                            table.cell(fila,5).data( $("#codigoSoftland").val() );
+                            table.cell(fila,6).data( $("#requiereDiseno option:selected").html() );
+                            table.cell(fila,7).data( $("#granel option:selected").html() );
+                            table.cell(fila,8).data( $("#solicitaCertificado option:selected").html() ); 
+                            table.cell(fila,9).data( $("#tiempoProduccion").val() );
+                            table.cell(fila,10).draw();                
+                        }
+                        cerrarModProducto();
+                    }
+
+                })
+            }
         }
 
         function eliminarProductoPrecio(fila){
