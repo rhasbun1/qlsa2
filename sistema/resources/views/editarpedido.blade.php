@@ -327,7 +327,7 @@
                         if(tabla.rows[1].cells[6].getElementsByTagName('select')[0].value != tabla.rows[2].cells[6].getElementsByTagName('select')[0].value){
                             swal(
                                 {
-                                    title: 'prueba!!' ,
+                                    title: 'La Planta De Origen Tiene Que Ser La Misma Para Ambos Productos!!' ,
                                     text: '',
                                     type: 'warning',
                                     showCancelButton: false,
