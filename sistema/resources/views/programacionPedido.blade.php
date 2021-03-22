@@ -122,6 +122,8 @@
                         $sinDespachar=0;
                     ?>
                     @foreach($listaDetallePedido as $item)
+                   
+
                     <?php
                         if($item->salida==1){$despachado++;}
                         if($item->salida==0){$sinDespachar++;}
@@ -287,7 +289,7 @@
                             <td>
                                 @if( $item->existeEnListaPrecios )
                                     @if( (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') )
-                                        <label class="label-checkbox" style="display: inline;"><input type="checkbox"><span class="custom-checkbox"></span></label>
+                                        <label class="label-checkbox"  style="display: inline;"><input type="checkbox"><span class="custom-checkbox"></span></label>
                                     @else
                                         <label class="label-checkbox" style="display: none;"><input type="checkbox"><span class="custom-checkbox"></span></label>    
                                     @endif

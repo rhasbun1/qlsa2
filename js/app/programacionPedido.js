@@ -331,6 +331,7 @@ function asignarFolio(){
             if(tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked){
 
                 if(tabla.rows[i].cells[5].innerHTML.trim()=='Retira'){
+                    fila = i;
 
                     retira=true;
                     cont=1;
