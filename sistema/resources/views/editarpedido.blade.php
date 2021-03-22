@@ -116,7 +116,7 @@
                         <th>Precio ($)</th>
                         <th>Total</th>
                     @endif
-                    <th>Planta d44e Origen</th>
+                    <th>Planta de Origen</th>
                     <th>Entrega</th>
                     <th>Transporte</th>
                     <th>Camion</th>
@@ -319,6 +319,31 @@
         var tiempoProduccion_val =new Array();
         var arrFeriados =new Array();
         function guardarCambios(){
+            var tabla=document.getElementById('tablaDetalle');
+        
+                  
+                    var cantidad = tabla.rows.length;
+                    if(cantidad > 5){
+                        if(tabla.rows[1].cells[6].getElementsByTagName('select')[0].value != tabla.rows[2].cells[6].getElementsByTagName('select')[0].value){
+                            swal(
+                                {
+                                    title: 'prueba!!' ,
+                                    text: '',
+                                    type: 'warning',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'OK',
+                                    cancelButtonText: '',
+                                    closeOnConfirm: true,
+                                    closeOnCancel: false
+                                }
+                            )
+                            return; 
+
+                        }
+                     }
+          
+
+            
 
             if($("#motivo").val().trim()=='' ){
                 swal(
