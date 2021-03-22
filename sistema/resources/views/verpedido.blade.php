@@ -507,9 +507,44 @@
                                   },
                             success:function(data){
                                 if(document.getElementById('idPerfilSession').dataset.grupo=='P'){
-                                    location.href=urlApp+"programacion";
+                                    swal(
+                                        {
+                                            title: 'el pedido ha pasado a Historico!!' ,
+                                            text: '',
+                                            type: 'warning',
+                                            showCancelButton: false,
+                                            confirmButtonText: 'OK',
+                                            cancelButtonText: '',
+                                            closeOnConfirm: true,
+                                            closeOnCancel: false
+                                        },
+                                        function(isConfirm)
+                                        {
+                                            if(isConfirm){
+                                                location.href=urlApp+"programacion";                                                                    
+                                            }
+                                        }
+                                    );
+                                    
                                 }else{
-                                    location.href=urlApp+"listarPedidos";
+                                    swal(
+                                        {
+                                            title: 'el pedido ha pasado a Historico!!' ,
+                                            text: '',
+                                            type: 'warning',
+                                            showCancelButton: false,
+                                            confirmButtonText: 'OK',
+                                            cancelButtonText: '',
+                                            closeOnConfirm: true,
+                                            closeOnCancel: false
+                                        },
+                                        function(isConfirm)
+                                        {
+                                            if(isConfirm){
+                                                location.href=urlApp+"listarPedidos";
+                                            }
+                                        }
+                                    );
                                 }
                             },
                             error: function(jqXHR, text, error){
@@ -779,7 +814,25 @@
                             motivo: $("#obsSuspension").val().trim()
                           },
                     success:function(dato){
-                        location.href=dato.url;
+                        swal(
+                        {
+                            title: 'el pedido ha sido suspendido!!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            if(isConfirm){
+                                location.href=dato.url;
+                                                     
+                            }
+                        }
+                    );
                     }
                 })                
             }
