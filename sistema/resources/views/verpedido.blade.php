@@ -192,8 +192,8 @@
                         <td style="width:50px">{{ $item->cantidad }}</td>   
                         <td> {{ $item->u_nombre }} </td>
                         @if( Session::get('grupoUsuario')=='C' or Session::get('grupoUsuario')=='CL' )   
-                            <td align="right">{{ number_format( $item->cp_precio, 0, ',', '.' ) }}</td>
-                            <td align="right">{{ number_format( $item->cp_precio * $item->cantidad , 0, ',', '.' ) }}</td>
+                            <td align="right">{{ number_format( $item->precioActual, 0, ',', '.' ) }}</td>
+                            <td align="right">{{ number_format( $item->precioActual * $item->cantidad , 0, ',', '.' ) }}</td>
                         @endif    
                         <td> {{ $item->nombrePlanta }} </td>
                         <td> {{ $item->nombreFormaEntrega }} </td>
