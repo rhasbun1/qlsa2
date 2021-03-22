@@ -364,6 +364,10 @@
           });
         });
 
+        const formatter = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2
+        })
+
         function obtenerHistorico(opcion){
 
 
@@ -469,17 +473,18 @@
 
                         celdaNumAux="";
                         if(document.getElementById('idPerfilSession').value>=5 && document.getElementById('idPerfilSession').value<=7 ){
-                            celdaNumAux='<a class="btn btn-xs btn-default" style="height: 25px;width:100px" onclick="ingresarNumeroAuxiliar(this.parentNode.parentNode );">' + dato[x].numeroAuxiliar + '</a>';                                   
+                            celdaNumAux='<td style="width: 80px; text-align: center;">' + dato[x].numeroAuxiliar + '</td>';                                  
                         }else{
                            celdaNumAux='<td style="width: 80px; text-align: center;">' + dato[x].numeroAuxiliar + '</td>';
                         }                        
+                        num = dato[x].cantidadReal;
                         var fila=tabla.row.add( [
                                 celdaPedido,
                                 "<div style='white-space:normal;width:100%'>" + cadena + "</div>",
                                 dato[x].emp_nombre,
                                 dato[x].nombreObra,
                                 dato[x].prod_nombre,
-                                dato[x].cantidadReal,
+                                formatter.format(num),
                                 dato[x].unidad,
                                 dato[x].fechaEntrega,
                                 dato[x].fechaHoraSalida,

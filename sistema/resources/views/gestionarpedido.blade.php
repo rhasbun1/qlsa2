@@ -330,7 +330,7 @@
                     <div class="row">
                         <div class="col-sm-4 col-md-3" style="padding-top: 20px"> 
                             <h5><b> (*) Dato Obligatorio</b></h5>
-                            <h5><b> ** Precio indicado es el reajustado a la fecha de creación del pedido. Pueden existir diferencias con el precio final de facturación si el despacho se realiza en un mes distinto.</b></h5>
+                            <h5><b> (**) Precio indicado es el reajustado a la fecha de creación del pedido. Pueden existir diferencias con el precio final de facturación si el despacho se realiza en un mes distinto.</b></h5>
                         </div>                          
                     </div>                    
 

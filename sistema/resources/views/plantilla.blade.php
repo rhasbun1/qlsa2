@@ -96,7 +96,7 @@
 						<strong>{{ Session::get('nombreUsuario') }}</strong>
 						<span><i class="fa fa-chevron-down"></i></span>
 					</a>
-					<ul class="dropdown-menu">
+					<ul style="min-width: 240px !important" class="dropdown-menu">
 						<li>
 							<a class="clearfix" href="#">
 								<input type="hidden" id="idUsuarioSession" name="idUsuarioSession" value="{{ Session::get('idUsuario') }}" >
