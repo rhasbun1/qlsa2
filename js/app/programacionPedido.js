@@ -313,11 +313,6 @@ function guardarDatosProgramacion(idPedido, origen){
 }
 
 function asignarFolio(){
-
-    document.getElementById("btnAsignarGuia").disabled=true;
-
-    guardarDatosProgramacion( $("#idPedido").val() , 2);
-
     var tabla=document.getElementById('tablaDetalle');
 
     var retira=false;
@@ -326,12 +321,39 @@ function asignarFolio(){
     var cont=0;
     var compara='';
 
+    document.getElementById("btnAsignarGuia").disabled=true;
+
+    if(tabla.rows[1].cells[13].innerHTML.trim() == "2"){
+
+            
+            if(tabla.rows[1].cells[4].getElementsByTagName('select')[0].value.trim()!= 
+            tabla.rows[2].cells[4].getElementsByTagName('select')[0].value.trim()){
+                swal(
+                    {
+                        title: 'las plantas de origentienen que ser las mismas' ,
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                            confirmButtonText: 'OK',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    });
+                    document.getElementById("btnAsignarGuia").disabled=false;
+
+                    return;
+            }
+        }
+    guardarDatosProgramacion( $("#idPedido").val() , 2);
+
+   
     for (var i = 1; i < tabla.rows.length; i++){
         if(tabla.rows[i].cells[12].getElementsByTagName('input')[0]){
             if(tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked){
 
                 if(tabla.rows[i].cells[5].innerHTML.trim()=='Retira'){
-                    if(tabla.rows[i].cells[3].innerHTML.trim()!='tonelada'){
+                    if(tabla.rows[i].cells[3].innerHTML.trim()=='tonelada'){
+                       
                         fila=i;
                     }else{
                         fila=1;
@@ -362,6 +384,7 @@ function asignarFolio(){
                    // }
 
                 }else if(tabla.rows[i].cells[5].innerHTML.trim()!='Retira'){
+                   
 
                     if(tabla.rows[i].cells[6].getElementsByTagName('select')[0]){
                         fila=i;

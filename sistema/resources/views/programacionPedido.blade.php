@@ -112,6 +112,7 @@
                     <th style="width:70px">Fecha prog. Carga</th>
                     <th style="width:70px">Hora prog. Carga</th>
                     <th style="width:70px">Select./<br>Guía</th>
+                    <th style="display: none;"></th>
                 </thead>
             
                 <tbody>
@@ -162,6 +163,7 @@
                         </td>
                         <td style="width:30px; text-align: right;"> {{ $item->cantidad }} </td>
                         <td style="width:40px"> {{ $item->u_nombre }} </td>
+                       
                         <td style="width:100px" data-idplanta="{{ $item->idPlanta }}">
                             @if( Session::get('idPerfil')=='8' )
                                 {{ $item->nombrePlanta }}
@@ -177,6 +179,7 @@
                             </select>
                             @endif
                         </td>
+
                         <td style="width:70px"> {{ $item->nombreFormaEntrega }} </td>
                         @if ( $item->numeroGuia==0 and $pedido[0]->bloqueado==0)
                             <?php $productosSinGuia+=1; ?>
@@ -316,6 +319,7 @@
                             @endif    
                             <td></td>
                         @endif    
+                        <td style="display: none;">{{$item->tipoTransporte}}</td>
 
                     </tr>
                     <?php $ln+=1; ?>
