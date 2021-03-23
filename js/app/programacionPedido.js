@@ -331,7 +331,11 @@ function asignarFolio(){
             if(tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked){
 
                 if(tabla.rows[i].cells[5].innerHTML.trim()=='Retira'){
-                    fila = i;
+                    if(tabla.rows[i].cells[3].innerHTML.trim()!='tonelada'){
+                        fila=i;
+                    }else{
+                        fila=1;
+                    } 
 
                     retira=true;
                     cont=1;
@@ -346,7 +350,7 @@ function asignarFolio(){
                                     text: '',
                                     type: 'warning',
                                     showCancelButton: false,
-                                    confirmButtonText: 'OK',
+                                        confirmButtonText: 'OK',
                                     cancelButtonText: '',
                                     closeOnConfirm: true,
                                     closeOnCancel: false
