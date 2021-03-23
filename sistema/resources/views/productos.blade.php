@@ -43,6 +43,7 @@
                     <th style="width:70px">Unidad</th>
                     <th style="width:70px">Planta</th>
                     <th style="text-align: right;">Precio Ref. ($)</th>
+                    <th style="text-align: right; display:none;">Precio Ref. ($)</th>
                     <th>Cód.Softland</th>
                     <th style="text-align: center;">Requiere Diseño</th>
                     <th style="text-align: center;">Granel</th>
@@ -63,7 +64,8 @@
                             <td style="width:150px">{{ $item->prod_nombre }}</td>
                             <td style="width:70px">{{ $item->u_nombre }}</td>
                             <td style="width:70px">{{ $item->nombrePlanta }}</td>
-                            <td style="text-align: right;">{{ number_format( $item->precioReferencia, 0, ',', '.' ) }}</td>
+                            <td style="text-align: right;">{{ number_format( $item->precioReferencia, 0, ',', '.')  }}</td>
+                            <td style="text-align: right; display:none;">{{ number_format( $item->precioReferencia, 0, '.', ',')  }}</td>
                             <td>{{ $item->codigoSoftland }}</td>
                             <td style="text-align: center;">
                                 @if($item->requiereDiseno==1) SI @else NO @endif
@@ -562,9 +564,13 @@
 
             // DataTable
             var table=$('#tabla').DataTable({
-                orderCellsTop: true,
+                orderCellsTop: true,        
                 fixedHeader: true,  
                 dom: 'Bfrtip',
+                "language": {
+                  "thousands": ".",
+                  "decimal": ","
+                 },
                 "order": [[ 1, "asc" ]],
                 "columnDefs": [ {
                     "targets": 0,
@@ -588,8 +594,18 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-                        }
+                            columns: [ 0, 1, 2, 3, 5, 6, 7, 8, 9 ],
+                            /*format: {
+                                body: function(data, row, column, node) {
+                                    data = $('<p>' + data + '</p>').text();
+                                    
+                                    return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+                                }
+                           }  */
+
+
+                         }
+                        
                     }
                 ],                  
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}

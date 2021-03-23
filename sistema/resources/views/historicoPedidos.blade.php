@@ -411,7 +411,7 @@
           });
         });
 
-        const formatter = new Intl.NumberFormat('en-US', {
+        const formatter = new Intl.NumberFormat('es-CL', {
         minimumFractionDigits: 2
         })
 
@@ -531,7 +531,7 @@
                                 dato[x].emp_nombre,
                                 dato[x].nombreObra,
                                 dato[x].prod_nombre,
-                                formatter.format(num),
+                                dato[x].cantidadReal,
                                 dato[x].unidad,
                                 dato[x].fechaEntrega,
                                 dato[x].fechaHoraSalida,
