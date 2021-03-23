@@ -21,7 +21,7 @@ class ConductorController extends Controller
 
     public function grabarConductor(Request $datos){
         if( $datos->ajax() ){
-            $conductor=DB::Select('call spInsConductor(?,?,?,?,?,?,?,?)', array(
+            $conductor=DB::Select('call spInsConductor(?,?,?,?,?,?,?,?,?)', array(
                             $datos->input('idConductor'),
                             $datos->input('idEmpresaTransporte'),
                             $datos->input('nombre'),
@@ -29,7 +29,8 @@ class ConductorController extends Controller
                             $datos->input('apellidoMaterno'),
                             $datos->input('rut'),
                             $datos->input('telefono'),
-                            $datos->input('email')
+                            $datos->input('email'),
+                            $datos->input('habilitada')
                             ) 
                         );
 
