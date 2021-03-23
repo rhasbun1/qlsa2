@@ -373,8 +373,10 @@
                                 @foreach($log as $item)
                                 
                                 <?php
-                                    $fecha = explode("-", $item->fechaHora);
-                                    $fecha1 = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+                                    $fecha = $item->fechaHora;
+                                    $newDate = date("d/m/Y h:m:s", strtotime($fecha));
+                                    $fecha1 = $newDate
+                                 
                                 ?>
                                 <tr>
                                     <td style="width:170px"> {{ $fecha1 }} </td>
