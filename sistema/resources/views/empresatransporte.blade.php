@@ -124,7 +124,8 @@
                     <th>Patente Camión</th>
                     <th>Patente Rampla</th>
                     <th style="text-align: center;">Seguimiento<br>GPS</th>
-                    <th></th>
+                    <th style="text-align: center;">Habilitado</th>
+                    
                 </thead>
                 <tbody>
                     @foreach($camiones as $item)
@@ -139,13 +140,20 @@
                                     No
                                @endif 
                            </td>
+                           <td style="text-align: center;"> 
+                            @if ($item->habilitada==1)
+                                 Si
+                            @else
+                                 No
+                            @endif 
+                            </td>
                            <td>
                                 @if ( Session::get('idPerfil')=='1' or 
                                     Session::get('idPerfil')=='10' or 
                                     Session::get('idPerfil')=='5' or 
                                     Session::get('idPerfil')=='7')                            
                                <button onclick="editarCamion({{ $item->idCamion }}, this.parentNode.parentNode.rowIndex);" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-edit fa-lg"></i></button>
-                               <button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarCamion({{ $item->idCamion }}, this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button>
+                               
                                @endif
                            </td>
                        </tr>
@@ -176,7 +184,8 @@
                     <th>Rut</th>
                     <th>Teléfono</th>
                     <th>email</th>
-                    <th></th>
+                    <th style="text-align: center;">Habilitado</th>
+      
                 </thead>
                 <tbody>
                     @foreach($conductores as $item)
@@ -188,13 +197,20 @@
                            <td> {{ $item->rut }} </td>
                            <td> {{ $item->telefono }} </td>
                            <td> {{ $item->email }} </td>
+                           <td style="text-align: center;"> 
+                            @if ($item->habilitada==1)
+                                 Si
+                            @else
+                                 No
+                            @endif 
+                            </td>
                            <td>
                                 @if ( Session::get('idPerfil')=='1' or 
                                     Session::get('idPerfil')=='10' or 
                                     Session::get('idPerfil')=='5' or 
                                     Session::get('idPerfil')=='7')                            
                                <button onclick="editarConductor({{ $item->idConductor }}, this.parentNode.parentNode.rowIndex);" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-edit fa-lg"></i></button>
-                               <button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarConductor({{ $item->idConductor }}, this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button>
+                               
                                @endif
                            </td>
                        </tr>
@@ -241,6 +257,19 @@
                     </div>
                     <div class="col-sm-3">
                         <select class="form-control input-sm" id="gps">
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>    
+                
+                </div>
+
+                <div class="row" style="padding:10px">
+                    <div class="col-sm-2">
+                        Habilitado
+                    </div>
+                    <div class="col-sm-3">
+                        <select class="form-control input-sm" id="habilitada">
                             <option value="1">Si</option>
                             <option value="0">No</option>
                         </select>
@@ -314,6 +343,18 @@
                         <input type="text" class="form-control input-sm" maxlength="50" id="emailConductor">
                     </div>                    
                 </div>
+                <div class="row" style="padding:10px">
+                    <div class="col-sm-2">
+                        Habilitado
+                    </div>
+                    <div class="col-sm-3">
+                        <select style="margin-left: 39.5%;" class="form-control input-sm" id="habilitadaConductor">
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>    
+                
+                </div>
 
             </div>
             <div style="text-align: right;padding: 15px">
@@ -355,6 +396,11 @@
                 document.getElementById("gps").selectedIndex=0;
             }else{
                 document.getElementById("gps").selectedIndex=1;
+            }
+            if (tabla.rows[fila].cells[4].innerHTML.trim()=='Si') {
+                document.getElementById("habilitada").selectedIndex=0;
+            }else{
+                document.getElementById("habilitada").selectedIndex=1;
             }
             $("#idFilaCamion").val(fila);
             $("#modCamion").modal("show");
@@ -459,6 +505,11 @@
             $("#emailConductor").val( tabla.rows[fila].cells[6].innerHTML.trim()  );
          
             $("#modConductor").modal("show");
+            if (tabla.rows[fila].cells[7].innerHTML.trim()=='Si') {
+                document.getElementById("habilitadaConductor").selectedIndex=0;
+            }else{
+                document.getElementById("habilitadaConductor").selectedIndex=1;
+            }
         }
 
 		function cerrar_formConductor(){
@@ -655,7 +706,8 @@
                         idEmpresaTransporte: $("#idEmpresaTransporte").val(),
                         patente: p2,
                         patenteRampla: $("#patenteRampla").val(),
-                        gps: document.getElementById('gps').value
+                        gps: document.getElementById('gps').value,
+                        habilitada: document.getElementById('habilitada').value
                       },
                 success:function(dato){
                     
@@ -757,7 +809,8 @@
                         apellidoMaterno: $("#apellidoMaterno").val(),
                         rut: $("#rutConductor").val(),
                         telefono: $("#telefonoConductor").val(),
-                        email: $("#emailConductor").val()
+                        email: $("#emailConductor").val(),
+                        habilitada: document.getElementById('habilitadaConductor').value
                       },
                 success:function(dato){
                     var tabla=document.getElementById("tablaConductores");

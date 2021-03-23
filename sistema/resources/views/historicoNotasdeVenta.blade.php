@@ -149,10 +149,10 @@
             hoy.setMonth(hoy.getMonth() - 12);
             var dd = hoy.getDate();
             var mm = hoy.getMonth()+1;
-            var yyyy = hoy.getFullYear()+1;
+            var yyyy = hoy.getFullYear();
             if (dd < 10) {dd = '0' + dd; }
             if (mm < 10) {mm = '0' + mm; }
-            $("#min").val(dia + '/' + mm + '/' + yyyy);
+            $("#min").val(dd + '/' + mm + '/' + yyyy);
 
             // Setup - add a text input to each footer cell
             $('#tablaDetalle thead tr').clone(true).appendTo( '#tablaDetalle thead' );

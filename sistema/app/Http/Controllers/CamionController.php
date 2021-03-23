@@ -21,12 +21,13 @@ class CamionController extends Controller
 
     public function grabarCamion(Request $datos){
         if( $datos->ajax() ){
-            $camion=DB::Select('call spInsCamion(?,?,?,?,?)', array(
+            $camion=DB::Select('call spInsCamion(?,?,?,?,?,?)', array(
                             $datos->input('idCamion'),
                             $datos->input('idEmpresaTransporte'),
                             $datos->input('patente'),
                             $datos->input('patenteRampla'),
-                            $datos->input('gps')
+                            $datos->input('gps'),
+                            $datos->input('habilitada')
                             ) 
                         );
 

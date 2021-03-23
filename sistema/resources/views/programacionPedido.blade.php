@@ -818,7 +818,7 @@
                                     selConductor.appendChild(opt);
 
                                     for(var x=0;x<arrConductores.length;x++){
-                                        if(arrConductores[x][0]==idEmpresa){
+                                        if(arrConductores[x][0]==idEmpresa ){
                                             var opt = document.createElement('option');
                                             opt.value = arrConductores[x][1];
                                             opt.innerHTML = arrConductores[x][2]+' '+arrConductores[x][3]+' ' +arrConductores[x][4];
