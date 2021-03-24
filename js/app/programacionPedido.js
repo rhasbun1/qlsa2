@@ -352,7 +352,7 @@ function asignarFolio(){
             if(tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked){
 
                 if(tabla.rows[i].cells[5].innerHTML.trim()=='Retira'){
-                    if(tabla.rows[i].cells[3].innerHTML.trim()=='tonelada'){
+                    if(tabla.rows[i].cells[3].innerHTML.trim()!='tonelada'){
                        
                         fila=i;
                     }else{
@@ -462,6 +462,10 @@ function asignarFolio(){
 
 
     var cadena='[';
+    var transporte = "";
+    var camion = "";
+    var conductor = "";
+    var contador = 1;
     for (var i = 1; i < tabla.rows.length; i++){
         if(tabla.rows[i].cells[12].getElementsByTagName('input')[0]){
             if(tabla.rows[i].cells[12].getElementsByTagName('input')[0].checked){
@@ -471,6 +475,29 @@ function asignarFolio(){
                 cadena+='"unidad":"'+  tabla.rows[i].cells[3].innerHTML.trim()  + '", ';
                 cadena+='"cantidad":"0"';
                 cadena+='}, ';
+            
+                if(contador>1){
+                    if(transporte != tabla.rows[i].cells[6].getElementsByTagName('input')[0].value.trim() || camion != tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() || conductor !=tabla.rows[i].cells[9].getElementsByTagName('input')[0].value.trim()){
+                        swal(
+                            {
+                                title: 'los datos de transporte deben ser los mismos!!' ,
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                    confirmButtonText: 'OK',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            });
+        
+                            return;                   
+                         }
+                    
+                }
+                transporte = tabla.rows[i].cells[6].getElementsByTagName('input')[0].value.trim();
+                camion =tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
+                conductor =tabla.rows[i].cells[9].getElementsByTagName('input')[0].value.trim();
+                contador++;
             }
         }
     }
