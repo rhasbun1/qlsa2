@@ -172,9 +172,9 @@
                                         fecha2+" "+hora 
                                                   
                                     ];
-                       var flete = "<input class='form-control input-sm' value=" + dato[x].flete + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
-                       var distancia = "<input class='form-control input-sm' value=" + dato[x].distancia + " maxlength='5' onkeypress='return isIntegerKey(event)'>";
-                       var tiempoTraslado = "<input class='form-control input-sm' value=" + dato[x].tiempoTraslado + " maxlength='3' onkeypress='return isIntegerKey(event)'>";
+                       var flete = "<input class='form-control input-sm' value=" + number_format( dato[x].flete, 0, '.', ',' ) + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
+                       var distancia = "<input class='form-control input-sm' value=" + number_format( dato[x].distancia, 0, '.', ',' ) + " maxlength='5' onkeypress='return isIntegerKey(event)'>";
+                       var tiempoTraslado = "<input class='form-control input-sm' value=" + number_format( dato[x].tiempoTraslado, 0, '.', ',' ) + " maxlength='3' onkeypress='return isIntegerKey(event)'>";
                        
                        if($("#perfil").val() == 5 || $("#perfil").val() == 10 || $("#perfil").val() == 18){
                             var rowNode1=[
@@ -186,9 +186,9 @@
              
                        }else{
                         var rowNode1= [    
-                                         number_format( dato[x].flete, 0, ',', '.' ),
-                                         number_format( dato[x].distancia, 0, ',', '.' ),
-                                         number_format( dato[x].tiempoTraslado, 0, ',', '.' ),
+                                         number_format( dato[x].flete, 0, '.', ',' ),
+                                         number_format( dato[x].distancia, 0, '.', ',' ),
+                                         number_format( dato[x].tiempoTraslado, 0, '.', ',' ),
                                          codigo
                                       
                                      ];
