@@ -301,15 +301,18 @@
             } );
             if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Vigentes)"){
                var urll = 'notaVentaVigenteCargos1';
+               var titulo = 'nota Venta Vigente Cargos'
                
            }else if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
 
                var urll ='notaVentaCerradaCargos1';
-              
+               var titulo = 'nota Venta Cerrada Cargos'
+
            }else if($("#b").text()== " Costo Flete y Tiempo de Traslado (Asignaciones Pendientes)"){
               var urll= 'notaVentaCargosUrgente1'
               $("#filtro"). hide();
-             
+              var titulo = 'nota Venta Cargo sUrgente'
+
 
            }
             
@@ -340,7 +343,7 @@
                     },
                     {
                         extend: 'excelHtml5',
-                        title: urll,
+                        title: titulo,
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {

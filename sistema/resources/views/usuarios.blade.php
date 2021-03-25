@@ -253,7 +253,7 @@
                 buttons: [              
                     {
                         extend: 'excelHtml5',
-                        title: 'Listado de Clientes',
+                        title: 'Listado de Usuarios',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                         
                         exportOptions: {
