@@ -479,7 +479,7 @@ function asignarFolio(){
                 if(tabla.rows[1].cells[5].innerHTML.trim()=='En Obra'){
                     if(tabla.rows[1].cells[3].innerHTML.trim()!='tonelada'){
                         if(contador>1){
-                            if(transporte != tabla.rows[i].cells[6].getElementsByTagName('input')[0].value.trim() || camion != tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() || conductor !=tabla.rows[i].cells[9].getElementsByTagName('input')[0].value.trim()){
+                            if(transporte != tabla.rows[i].cells[6].getElementsByTagName('select')[0].value.trim() || camion != tabla.rows[i].cells[7].getElementsByTagName('select')[0].value.trim() || conductor !=tabla.rows[i].cells[9].getElementsByTagName('select')[0].value.trim()){
         
                                 swal(
                                     {

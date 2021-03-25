@@ -311,7 +311,7 @@
            }else if($("#b").text()== " Costo Flete y Tiempo de Traslado (Asignaciones Pendientes)"){
               var urll= 'notaVentaCargosUrgente1'
               $("#filtro"). hide();
-              var titulo = 'nota Venta Cargo sUrgente'
+              var titulo = 'nota Venta Asignaciones Pendientes '
 
 
            }

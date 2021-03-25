@@ -211,7 +211,7 @@
                 buttons: [             
                     {
                         extend: 'excelHtml5',
-                        title: 'Empresas de Transporte',
+                        title: 'Empresas de Transporte Deshabilitadas',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
