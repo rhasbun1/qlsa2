@@ -594,7 +594,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 5, 6, 7, 8, 9 ],
+                            columns: [ 1, 2, 3, 4, 6, 7, 8, 9,10 ],
                             /*format: {
                                 body: function(data, row, column, node) {
                                     data = $('<p>' + data + '</p>').text();
