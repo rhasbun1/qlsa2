@@ -119,7 +119,7 @@
          
                     
                     if( dato[x].numeroGuia>0 ){
-                        cadena+='<a href="'+ urlApp + 'bajarGuiaDespacho/' + dato[x].numeroGuia + '"><img src="' + urlApp + 'img/iconos/guiaDespacho2.png" border="0"></a>';
+                        cadena+='<a target="_blank" href="'+ urlApp + 'bajarGuiaDespacho/' + dato[x].numeroGuia + '"><img src="' + urlApp + 'img/iconos/guiaDespacho2.png" border="0"></a>';
                     }
 
                     if( dato[x].certificado!='' ){
