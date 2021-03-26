@@ -13,6 +13,8 @@
                                 <input type="hidden" id="idCliente" data-idperfil="{{Session::get('idPerfil')}}">
 
                     <li class="active"><a href="#tabAprobados" data-toggle="tab"><b>pedidos Ingresados Aprobados</b></a></li> 
+                    <li><a href="#tabPendientes" data-toggle="tab"><b>pedidos pendientes de preaprobación</b></a></li>
+
                 </ul>
             </div>
         </div> 
@@ -84,6 +86,41 @@
                         </tbody>            
                     </table>
                 </div>
+                <div class="tab-pane" id="tabPendientes" style="padding-top: 5px">
+                        <table id="tablaPendientes" class="pedidos table table-hover table-condensed">
+                            <thead>
+                                <th >Pedido</th> 
+                                <th >Fecha Creación</th>            
+                                <th >Estado</th>
+                                <th >Cliente</th>
+                                <th>Obra/Planta</th>
+                                <th >Producto</th>
+                                <th>Fecha de Entrega</th>
+                                <th>Total ($)</th>
+                            </thead>
+                            <tbody>
+                            @foreach($listaPedidoSinAprobarClientes as $item)
+                                <tr>
+                                
+                                    <td style="width: 50px">{{ $item->idPedido }}</td>
+                                    <td style="width: 120px">{{ $item->fechahora_creacion }}</td>
+                                    <td style="width: 120px">{{ $item->estado }}</td>
+                                    <td style="width: 120px">{{ $item->emp_nombre }}</td>
+                                    <td style="width: 120px">{{ $item->Obra }}</td>
+                                    <td style="width: 120px">{{ $item->prod_nombre }}</td>
+                                    <td style="width: 120px">{{ $item->fechaEntrega }}</td>
+                                    <td style="width: 120px">{{ number_format($item->total, 0, ",", ".") }}</td>
+
+
+
+                                    
+                                  
+                                    
+                                </tr>
+
+                                @endforeach    
+                            </tbody>              
+                        </table>      
             </div>
         </div>
         <a href="{{ asset('/') }}dashboard" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>

@@ -154,7 +154,9 @@ class PedidoController extends Controller
     public function clientePedidos(){
 
         $pedidos=DB::Select('call spGetProductosconPedidoPendienteCliente(?)', array( Session::get('idUsuario') ) );
-        return view('cliente_pedidos')->with('pedidos', $pedidos);  
+        $listaPedidoSinAprobarClientes=DB::Select('call spGetPedidoSinAprobarClientes(?)', array(Session::get('empresaUsuario')));
+
+        return view('cliente_pedidos')->with('pedidos', $pedidos)->with('listaPedidoSinAprobarClientes',$listaPedidoSinAprobarClientes);  
     }    
 
     public function programacion(){
