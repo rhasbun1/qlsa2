@@ -158,12 +158,12 @@
     })    
   }
 
-
   function totalLinea(cantidad, precio){
     var fila=cantidad.parentNode.parentNode.rowIndex;
     var tabla=document.getElementById(`tablaDetalleGuia`);
     var cant=cantidad.value;
-    tabla.rows[fila].cells[6].innerHTML= number_format(cant * precio,0);
+   
+    tabla.rows[fila].cells[6].innerHTML= number_format((cant.replace(",",".")) * precio);
   }
 
   function cerrarCajaGuia(){
