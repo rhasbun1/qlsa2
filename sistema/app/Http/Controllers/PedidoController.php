@@ -305,6 +305,7 @@ class PedidoController extends Controller
 
     public function clienteVerPedido($idPedido, $accion){
         $pedido=DB::Select('call spGetPedido(?)', array($idPedido) );
+        
         $listaDetallePedido=DB::Select('call spGetPedidoDetalle(?)', array($idPedido) );
         $emptransporte = DB::table('empresastransporte')->select('idEmpresaTransporte','nombre')->get();
         $log = DB::Select('call spGetPedidoLog(?)', array($idPedido) );

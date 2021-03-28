@@ -99,7 +99,17 @@
                 </thead>
             
                 <tbody>
+                <?php
+                        $despachado=0;
+                        $sinDespachar=0;
+                        $guiaEmitida=0;
+                    ?>
                     @foreach($listaDetallePedido as $item)
+                    <?php
+                        if($item->salida==1){$despachado++;}
+                        if($item->salida==0){$sinDespachar++;}
+                        if($item->numeroGuia>0){$guiaEmitida++;}
+                    ?>
                     <tr>
                         <td style="display: none"> 
                             {{ $item->prod_codigo }}                         
@@ -221,6 +231,9 @@
         </div> 
 
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
+            <!-- @if (  $pedido[0]->idEstadoPedido>0 and $guiaEmitida==0 )
+                <a href="{{ asset('/') }}editarPedido/{{ $pedido[0]->idPedido }}/" class="btn btn-sm btn-success" style="width:100px">Modificar</a>
+            @endif -->
             <a href="{{ asset('/') }}clientePedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                    
             <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>
 
@@ -264,6 +277,7 @@
                 </div>
             </div>
             <div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; text-align: right;">
+            
                <button type="button" class="btn btn-success btn-sm" onclick="SuspenderPedido({{ $pedido[0]->idPedido }})" style="width: 80px">Suspender</button>                
                <button id="btnCerrarCajaSuspender" type="button" class="btn btn-danger btn-sm" onclick="cerrarCajaSuspender()" style="width: 80px">Cancelar</button>
             </div>
