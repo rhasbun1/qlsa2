@@ -993,65 +993,6 @@
 
 
 
-<!-- <div class="modal fade" id="modalPedidosSinAprobarCliente"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" style="width:90%" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-
-        <h2 class="modal-title" id="exampleModalLabel">Pedidos sin aprobar</h2>
-
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <table id="tablaModalClienteSinAprobar" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-                <thead>
-                <th >Pedido</th>             
-                <th >Estado</th>
-              
-                <th >Cliente</th>
-                <th >Fecha Creación</th>
-                <th >Producto</th>
-                <th>total ($)</th>
-                
-              
-               
-                    
-                </thead>
-                
-                <tbody>
-                @foreach($listaPedidoSinAprobarCliente as $item)
-                                <tr>
-                                
-                                    <td style="width: 50px">{{ $item->idPedido }}</td>
-                                    <td style="width: 120px">{{ $item->estado }}</td>
-                                    
-                                    <td style="width: 120px">{{ $item->emp_nombre }}</td>
-                                    <td style="width: 120px">{{ $item->fechahora_creacion }}</td>
-                                    <td style="width: 120px">{{ $item->prod_nombre }}</td>
-
-                                    <td style="width: 120px">{{ number_format($item->total, 0, ",", ".") }}</td>
-                                    
-                                  
-                                    
-                                  
-                                    
-                                </tr>
-
-                                @endforeach         
-                </tbody>
-               
-         </table>  
-      </div> -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
 
 
 
