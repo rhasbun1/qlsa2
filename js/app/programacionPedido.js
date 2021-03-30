@@ -330,7 +330,7 @@ function asignarFolio(){
             tabla.rows[2].cells[4].getElementsByTagName('select')[0].value.trim()){
                 swal(
                     {
-                        title: 'las plantas de origentienen que ser las mismas' ,
+                        title: 'las plantas de origen tienen que ser las mismas' ,
                         text: '',
                         type: 'warning',
                         showCancelButton: false,
