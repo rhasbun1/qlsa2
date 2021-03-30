@@ -951,7 +951,7 @@
                 <th>Obra/Planta</th>
                 <th >Producto</th>
                 <th>Fecha de Entrega</th>
-                <th>Total ($)</th>
+                <th>Total Neto($)</th>
 
 
                
@@ -969,7 +969,7 @@
                                     <td style="width: 120px">{{ $item->Obra }}</td>
                                     <td style="width: 120px">{{ $item->prod_nombre }}</td>
                                     <td style="width: 120px">{{ $item->fechaEntrega }}</td>
-                                    <td style="width: 120px">{{ number_format($item->total,0,",",".") }}</td>
+                                    <td style="width: 120px">{{ number_format($item->totalNeto,0,",",".") }}</td>
 
 
 

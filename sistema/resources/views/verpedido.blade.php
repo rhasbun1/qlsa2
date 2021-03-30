@@ -381,8 +381,14 @@
                             </thead>
                             <tbody>
                                 @foreach($log as $item)
+                                <?php
+                                    $fechahora=explode(" " ,$item->fechaHora);
+                                    $fechaseparar = explode("-",$fechahora[0]);
+                                    $fecha = ($fechaseparar[2]."/".$fechaseparar[1]."/".$fechaseparar[0]);
+                                ?>
+
                                 <tr>
-                                    <td style="width:200px"> {{ date('d/m/Y h:m:s', strtotime($item->fechaHora)) }} </td>
+                                    <td style="width:200px"> {{$fecha." ". $fechahora[1]}} </td>
                                     <td style="width:250px"> {{ $item->nombreUsuario }} </td>
                                     <td style="width:350px"> {{ $item->accion }} </td>
                                     <td style="width:350px"> {{ $item->motivo }} </td>

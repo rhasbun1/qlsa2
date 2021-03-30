@@ -6,6 +6,7 @@
 <div style="padding: 20px">
     <div class="panel panel-default table-responsive">
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
+        <input type="text" id="txtPerfil" value="{{Session::get('idPerfil')}}" hidden>
         <div class="panel-heading">
             <b>Productos</b>
         </div>
@@ -56,6 +57,8 @@
                                     Session::get('idPerfil')=='5' ) 
                         <th style="width:40px"></th>
                     @endif
+                    <th style="display: none;">Precio Ref. ($)</th>
+
                 </thead>
                 <tbody>
                     @foreach($listaProductos as $item)
@@ -86,7 +89,9 @@
                                     <button class="btn btn-xs btn btn-danger btnEliminar" title="Eliminar"><i class="fa fa-trash-o fa-lg"></i></button>
                                 
                                 </td> 
-                            @endif                           
+                            @endif    
+                            <td style="display: none;">{{ number_format( $item->precioReferencia, 0, ',', ',')  }}</td>
+                       
                         </tr>
                     @endforeach
                 </tbody>              
@@ -563,6 +568,8 @@
             } );            
 
             // DataTable
+           if($("#txtPerfil").val() == 1 || $("#txtPerfil").val() == 2 || $("#txtPerfil").val() == 4 ||
+           $("#txtPerfil").val() == 5 ||$("#txtPerfil").val() == 18 ){
             var table=$('#tabla').DataTable({
                 orderCellsTop: true,        
                 fixedHeader: true,  
@@ -594,7 +601,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',
                         exportOptions: {
-                            columns: [ 1, 2, 3, 4, 6, 7, 8, 9,10 ],
+                            columns: [ 1, 2, 3, 12, 6, 7, 8, 9,10 ],
                             /*format: {
                                 body: function(data, row, column, node) {
                                     data = $('<p>' + data + '</p>').text();
@@ -610,6 +617,57 @@
                 ],                  
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
             });
+
+
+           }else{         
+            var table=$('#tabla').DataTable({
+                orderCellsTop: true,        
+                fixedHeader: true,  
+                dom: 'Bfrtip',
+                "language": {
+                  "thousands": ".",
+                  "decimal": ","
+                 },
+                "order": [[ 1, "asc" ]],
+                "columnDefs": [ {
+                    "targets": 0,
+                    "createdCell": function (td, cellData, rowData, row, col) {
+
+                        $(td).css('display', 'none')
+
+                    }
+                } ],               
+                buttons: [
+                    {
+                        text: 'Nuevo Producto',
+                        className: 'orange',
+                        action: function ( e, dt, node, config ) {
+                            nuevoProducto();
+                        }
+                    },                
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Listado de Productos',
+                        text: '<i class="fa fa-file-excel-o"></i>',
+                        titleAttr: 'Excel',
+                        exportOptions: {
+                            columns: [ 1, 2, 3, 11, 6, 7, 8, 9,10 ],
+                            /*format: {
+                                body: function(data, row, column, node) {
+                                    data = $('<p>' + data + '</p>').text();
+                                    
+                                    return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+                                }
+                           }  */
+
+
+                         }
+                        
+                    }
+                ],                  
+                language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+            });
+        }
              
 
         } );

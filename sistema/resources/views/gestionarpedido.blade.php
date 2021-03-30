@@ -201,7 +201,7 @@
                             <th style="display: none">Código</th>
                             <th style="width:150px">Producto</th>
                             <th style="width:80">Diseño</th>
-                            <th style="width:10%;text-align: right;">Precio<br>Reajustado($)</th>
+                            <th style="width:10%;text-align: right;">Precio<br>Reajustado($ **)</th>
                             <th style="width:5%;text-align: right;">Cantidad</th>
                             <th style="width:80px">Unidad</th>
                             <th style="width:40px;text-align: right;">Saldo</th>
