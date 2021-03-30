@@ -393,7 +393,7 @@
 
           var existe=true;  
           var urlApiSoft;
-          urlApiSoft="https://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datoscliente";
+          urlApiSoft="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datoscliente";
           //urlApiSoft="http://svdev.ddns.net:88/qrysoftland/api/datosdte";
           $.ajax({
                 async: false,
