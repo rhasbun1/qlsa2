@@ -214,6 +214,7 @@
                         var fila=tabla.row( nn ).index();
                         var celdas=tabla.row( nn).data();
                
+                     
                         var celda=tabla.cell(fila,0).node();
                         $( celda ).css( 'text-align', 'right' ).css( 'width', '60px');
 

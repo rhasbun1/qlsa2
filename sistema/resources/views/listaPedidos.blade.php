@@ -73,7 +73,7 @@
                                         <td style="width: 100px">{{ $item->fechahora_creacion }}</td>
                                         <td style="width: 250px">{{ $item->nombreCliente }}</td>
                                         <td style="width: 250px">{{ $item->nombreObra }}</td>
-                                        <td style="width: 100px; text-align: right;"><b>$ {{number_format( $item->totalNeto + $item->montoIva, 0, ',', '.' )  }}</b></td>
+                                        <td style="width: 100px; text-align: right;"><b>$ {{number_format( $item->totalNeto + $item->montoIva, 0, ',', ',' )  }}</b></td>
                                         <td style="width: 100px">{{ date('d/m/Y', strtotime($item->fechaEntrega)) }} {{ $item->horarioEntrega}}</td>
                                         <td style="width: 70px">{{ $item->estado }}</td>
                                     </tr>
@@ -155,7 +155,7 @@
                                     <td style="width: 70px">
                                         {{ $item->prod_nombre }}                                   
                                     </td>
-                                    <td style="width: 30px;text-align: right;">{{number_format( $item->cantidad, 0, ',', '.' ) }}</td>
+                                    <td style="width: 30px;text-align: right;">{{number_format( $item->cantidad, 0, ',', ',' ) }}</td>
                                     <td style="width: 30px;text-align: center">{{ $item->u_abre }}</td>
                                     <td style="width: 100px">{{ $item->fechaEntrega }} {{ $item->horarioEntrega }}</td>
                                     <td style="width: 70px">{{ $item->formaEntrega }}</td>

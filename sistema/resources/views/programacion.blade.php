@@ -180,7 +180,7 @@
                                             <td style="width:100px">
                                                 {{$item->prod_nombre}} 
                                             </td>
-                                            <td style="width:50px;text-align: right;">{{ number_format( $item->cantidad, 0, ',', '.' ) }}</td>
+                                            <td style="width:50px;text-align: right;">{{ number_format( $item->cantidad, 0, ',', ',' ) }}</td>
                                             <td style="width:50px">{{ $item->u_abre }}</td>
                                             <td style="width:50px">{{ $item->nombrePlanta }}</td>
                                             
@@ -211,9 +211,15 @@
                                 <th>Forma Entrega</th>
                                 <th>Fecha Entrega</th>
                                 <th>Horario</th>
+                                <th style="display: none;" >Cantidad</th>
+
                             </thead>
                             <tbody>
                                 @foreach($pedidos as $item)
+
+                                    <?php
+
+                                    ?>
                                     @if( $item->idEstadoPedido == '1' )
                                         <tr>
                                             <td><a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/3-2/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a></td>
@@ -227,11 +233,13 @@
                                                     <span class="badge badge-danger">M</span>
                                                 @endif                                             
                                             </td>
-                                            <td style="text-align: right;">{{ number_format( $item->cantidad, 0, ',', '.' ) }}</td>
+                                            <td style="text-align: right;">{{ number_format( $item->cantidad, 0, ',', ',' ) }}</td>
                                             <td>{{ $item->nombrePlanta }}</td>
                                             <td>{{ $item->formaEntrega }}</td>
                                             <td>{{ $item->fechaEntrega }}</td>
                                             <td>{{ $item->horarioEntrega }}</td>
+                                            <td style="display: none;">{{ number_format( $item->cantidad, 0, ',', ',' ) }}</td>
+
                                         </tr>
                                     @endif
                                 @endforeach
