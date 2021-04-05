@@ -174,7 +174,7 @@
                                     ];
                        var flete = "<input class='form-control input-sm' value=" + number_format( dato[x].flete, 0, '.', ',' ) + "  maxlength='7' onkeypress='return isIntegerKey(event)'>";
                        var distancia = "<input class='form-control input-sm' value=" + number_format( dato[x].distancia, 0, '.', ',' ) + " maxlength='5' onkeypress='return isIntegerKey(event)'>";
-                       var tiempoTraslado = "<input class='form-control input-sm' value=" + number_format( dato[x].tiempoTraslado, 0, '.', ',' ) + " maxlength='3' onkeypress='return isIntegerKey(event)'>";
+                       var tiempoTraslado = "<input class='form-control input-sm' value=" + number_format( dato[x].tiempoTraslado, 0, '.', ',' ) + " maxlength='4' onkeypress='return isIntegerKey(event)'>";
                        
                        if($("#perfil").val() == 5 || $("#perfil").val() == 10 || $("#perfil").val() == 18){
                             var rowNode1=[
@@ -413,18 +413,25 @@
 		    	if(tabla.cell(i,6).node().getElementsByTagName('input')[0].value==''){
 		    		flete="0";
 		    	}else{
-		    		flete=tabla.cell(i,6).node().getElementsByTagName('input')[0].value;
+		    		flete1=tabla.cell(i,6).node().getElementsByTagName('input')[0].value;
+                    flete2=flete1.toString();
+                    flete = flete2.replace(".","");
 		    	}
 
                 if(tabla.cell(i,7).node().getElementsByTagName('input')[0].value==''){
                     distancia="0";
                 }else{
-                    distancia=tabla.cell(i,7).node().getElementsByTagName('input')[0].value;
+                    distancia1=tabla.cell(i,7).node().getElementsByTagName('input')[0].value;
+                    distancia2=distancia1.toString();
+                    distancia = distancia2.replace(".","");
                 }
                 if(tabla.cell(i,8).node().getElementsByTagName('input')[0].value==''){
                     tiempoTraslado="0";
                 }else{
-                    tiempoTraslado=tabla.cell(i,8).node().getElementsByTagName('input')[0].value;
+                    tiempoTraslado1=tabla.cell(i,8).node().getElementsByTagName('input')[0].value;
+                    tiempoTraslado2=tiempoTraslado1.toString();
+                    tiempoTraslado = tiempoTraslado2.replace(".","");
+                    // tiempoTraslado= tiempoTraslado.remplace(".","");
                 }   
 
 
