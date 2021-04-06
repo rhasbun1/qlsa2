@@ -166,6 +166,7 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('editarPedido/{idPedido}/', 'PedidoController@editarPedido');
 	Route::get('verResumenGranel', 'PedidoController@verResumenGranel');
 	Route::post('resumenGranel', 'PedidoController@resumenGranel');
+	Route::post('validarProductoCodigoSoftland', 'ProductoController@validarProductoCodigoSoftland');
 
 
 
