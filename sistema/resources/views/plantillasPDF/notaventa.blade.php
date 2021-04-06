@@ -92,7 +92,7 @@ body{
     <th class="tg-s268">Unidad</th>
     @if( Session::get('grupoUsuario')=='C' or Session::get('grupoUsuario')=='CL')
         <th class="tg-s268" style="text-align:right;">Precio Base ($)</th>
-        <th class="tg-s268" style="text-align:right;">Precio Reajustado ($)</th>
+        <th class="tg-s268" style="text-align:right;">Precio Reajustado *($)</th>
         <th class="tg-s268" style="text-align:right;">% var</th>
     @endif    
     <th class="tg-s268">Por Entregar</th>
