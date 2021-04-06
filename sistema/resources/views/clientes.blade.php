@@ -232,53 +232,6 @@
             var codsoft=rutCliente.value.split(".").join("");
             codsoft=codsoft.slice(0, -2);
 
-            var existe=true;  
-            var urlApiSoft;
-            urlApiSoft="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datoscliente";
-              //urlApiSoft="http://svdev.ddns.net:88/qrysoftland/api/datosdte";
-            $.ajax({
-                    async: false,
-                    url: urlApiSoft,
-                    type: 'POST',
-                    dataType: 'json',
-                    data: { 
-                        codigoSoftland: codigoSoftland.value
-                          },
-                    headers: { 
-                        'X-CSRF-TOKEN' : 'WiyfqvBuHrUnzT6zCvidq9lMVIQSB220Wtsx8EK5'
-                    },
-                  success:function(data){
-                    if(!data[0]){
-
-                        existe=false;
-                        swal(
-                            {
-                                title: '¡El codigo softland ingresado no existe en contabilidad!' ,
-                                text: '',
-                                type: 'warning',
-                                showCancelButton: false,
-                                confirmButtonText: 'OK',
-                                cancelButtonText: '',
-                                closeOnConfirm: true,
-                                closeOnCancel: false
-                            },
-                            function(isConfirm)
-                            {
-                                if(isConfirm){
-                                  return;
-                                }
-                            }
-                        );                    
-                    }
-                  },
-                  error: function(jqXHR, text, error){
-                      alert('Error!, No se pudo Añadir los datos');
-                  }
-            });
-            if(!existe){
-               return;
-            }
-
             if ($("#crearEnNotaVenta").val()==0 && codsoft!=codigoSoftland.value){
                 swal(
                     {
@@ -313,17 +266,41 @@
                                         crearEnNotaVenta: $("#crearEnNotaVenta").val()
                                       },
                                 success:function(dato){
-                                    tabla.cell(fila,1).data( $("#rutCliente").val() );
-                                    tabla.cell(fila,2).data( $("#nombre").val() );
-                                    tabla.cell(fila,3).data( $("#razonSocial").val() );
-                                    tabla.cell(fila,4).data( $("#direccion").val() );
-                                    tabla.cell(fila,5).data( $("#comuna").val() );
-                                    tabla.cell(fila,6).data( $("#ciudad").val() );
-                                    tabla.cell(fila,7).data( $("#solicitaOC option:selected").html() );
-                                    tabla.cell(fila,8).data( $("#codigoSoftland").val() );
-                                    tabla.cell(fila,9).data( $("#crearEnNotaVenta option:selected").html() );
-                                    tabla.row(fila).draw();
-                                    cerrarModCliente();
+                                    if(dato.identificador==-1){
+                                        
+                                        swal(
+                                            {
+                                                title: '¡El codigo softland ingresado no existe en contabilidad!' ,
+                                                text: '',
+                                                type: 'warning',
+                                                showCancelButton: false,
+                                                confirmButtonText: 'OK',
+                                                cancelButtonText: '',
+                                                closeOnConfirm: true,
+                                                closeOnCancel: false
+                                            },
+                                            function(isConfirm)
+                                            {
+                                                if(isConfirm){
+                                                  return;
+                                                }
+                                            }
+                                        );
+
+                                    }else{                                    
+
+                                        tabla.cell(fila,1).data( $("#rutCliente").val() );
+                                        tabla.cell(fila,2).data( $("#nombre").val() );
+                                        tabla.cell(fila,3).data( $("#razonSocial").val() );
+                                        tabla.cell(fila,4).data( $("#direccion").val() );
+                                        tabla.cell(fila,5).data( $("#comuna").val() );
+                                        tabla.cell(fila,6).data( $("#ciudad").val() );
+                                        tabla.cell(fila,7).data( $("#solicitaOC option:selected").html() );
+                                        tabla.cell(fila,8).data( $("#codigoSoftland").val() );
+                                        tabla.cell(fila,9).data( $("#crearEnNotaVenta option:selected").html() );
+                                        tabla.row(fila).draw();
+                                        cerrarModCliente();
+                                    }
 
                                 }
                             })                                
