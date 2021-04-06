@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use SoapClient;
 use File;
 use \Mailjet\Resources;
-
+use GuzzleHttp\Client;
 
 class GuiaController extends Controller
 {
@@ -37,6 +37,42 @@ class GuiaController extends Controller
                 "nuevaGuia" => $guia[0]->nuevaGuia
             ]);
         }          
+    }
+    
+    public function validarNumeroGuia(Request $datos){
+        if($datos->ajax()){
+
+
+            $client = new Client();
+            $url="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datosdte";
+
+            $params=[
+                    "tipoDocumento" => 52,
+                    "folio" => $datos->input('numeroGuia')                
+            ];
+
+            $headers = [
+                'X-CSRF-TOKEN' => 'WiyfqvBuHrUnzT6zCvidq9lMVIQSB220Wtsx8EK5'
+            ];
+
+            $response= $client->request('POST', $url, [
+                'json' => $params,
+                'headers' => $headers,
+                'verify' => false
+            ]);
+
+            $respuesta=json_decode( $response->getBody() );
+            $cont=0;
+            foreach($respuesta as $item){
+                $cont++;
+            }
+
+
+            return response()->json([
+                    "identificador" =>  $cont
+                ]);                
+
+        }
     }
 
 

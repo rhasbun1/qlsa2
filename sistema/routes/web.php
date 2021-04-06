@@ -105,6 +105,7 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('eliminarGuiaDespacho', 'GuiaController@eliminarGuiaDespacho');
 	Route::post('obtenerCertificados', 'GuiaController@obtenerCertificados');
 	Route::post('productoSinCertificado', 'GuiaController@productoSinCertificado');
+	Route::post('validarNumeroGuia', 'GuiaController@validarNumeroGuia');
 
 	Route::post('grabarCamion', 'CamionController@grabarCamion');
 	Route::post('eliminarCamion', 'CamionController@eliminarCamion');
