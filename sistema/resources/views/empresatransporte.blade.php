@@ -749,10 +749,16 @@
                         var fila=$("#idFilaCamion").val();
                         tabla.rows[fila].cells[1].innerHTML=p2;
                         tabla.rows[fila].cells[2].innerHTML=$("#patenteRampla").val();
+                        
                         if(document.getElementById('gps').value==1){
                             tabla.rows[fila].cells[3].innerHTML='Si';  
                         }else{
                             tabla.rows[fila].cells[3].innerHTML='No';
+                        }
+                        if(document.getElementById('habilitadaConductor').value==1){
+                            tabla.rows[fila].cells[4].innerHTML='Si';  
+                        }else{
+                            tabla.rows[fila].cells[4].innerHTML='No';
                         }
                     }
 
