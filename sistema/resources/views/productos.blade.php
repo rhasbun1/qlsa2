@@ -289,22 +289,18 @@
             }else{
 
                   var existe=true;  
-                  var urlApiSoft;
-                  urlApiSoft="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datosproducto";
-                  //urlApiSoft="http://svdev.ddns.net:88/qrysoftland/api/datosdte";
+
                   $.ajax({
-                        async: false,
-                        url: urlApiSoft,
+                        async: false, 
+                        url: urlApp + "validarProductoCodigoSoftland",
+                        headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
                         type: 'POST',
                         dataType: 'json',
                         data: { 
-                            codigoProducto: codigoSoftland.value
-                              },
-                        headers: { 
-                            'X-CSRF-TOKEN' : 'WiyfqvBuHrUnzT6zCvidq9lMVIQSB220Wtsx8EK5'
+                            codigoProducto: $("#codigoSoftland").val()
                         },
                       success:function(data){
-                        if(!data[0]){
+                        if(data.identificador==0){
 
                             existe=false;
                             swal(

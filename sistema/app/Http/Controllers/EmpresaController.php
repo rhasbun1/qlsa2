@@ -6,6 +6,7 @@ use App\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use GuzzleHttp\Client;
 
 class EmpresaController extends Controller
 {
@@ -24,6 +25,36 @@ class EmpresaController extends Controller
 
     public function guardarDatosCliente(Request $datos){
         if($datos->ajax()){
+
+            $client = new Client();
+            $url="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datoscliente";
+
+            $params=[
+                "codigoSoftland" => $datos->input('codigoSoftland')
+            ];
+
+            $headers = [
+                'X-CSRF-TOKEN' => 'WiyfqvBuHrUnzT6zCvidq9lMVIQSB220Wtsx8EK5'
+            ];
+
+            $response= $client->request('POST', $url, [
+                'json' => $params,
+                'headers' => $headers,
+                'verify' => false
+            ]);
+
+            $respuesta=json_decode( $response->getBody() );
+            $cont=0;
+            foreach($respuesta as $item){
+                $cont++;
+            }
+
+            if($cont==0){
+                return response()->json([
+                    "identificador" =>  -1
+                ]);                
+            }
+
             $empresa=DB::Select('call spUpdEmpresa(?,?,?,?,?,?,?,?,?,?  )', array(
                             $datos->input('emp_codigo'),
                             $datos->input('rutEmpresa'),

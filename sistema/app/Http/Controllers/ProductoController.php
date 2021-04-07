@@ -16,6 +16,7 @@ use File;
 use App\Costo;
 use App\Imports\CostoImport;
 use Maatwebsite\Excel\Facades\Excel;
+use GuzzleHttp\Client;
 
 class ProductoController extends Controller
 {
@@ -34,6 +35,42 @@ class ProductoController extends Controller
         return view('productos')->with('listaProductos', $listaProductos)->with('unidades', $unidades)->with('plantas', $plantas)
             ->with('productos', $productos)->with('planta',$planta);
     }
+
+
+    public function validarProductoCodigoSoftland(Request $datos){
+        if($datos->ajax()){
+
+
+            $client = new Client();
+            $url="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datosproducto";
+
+            $params=[
+                    "codigoProducto" => $datos->input('codigoProducto')       
+            ];
+
+            $headers = [
+                'X-CSRF-TOKEN' => 'WiyfqvBuHrUnzT6zCvidq9lMVIQSB220Wtsx8EK5'
+            ];
+
+            $response= $client->request('POST', $url, [
+                'json' => $params,
+                'headers' => $headers,
+                'verify' => false
+            ]);
+
+            $respuesta=json_decode( $response->getBody() );
+            $cont=0;
+            foreach($respuesta as $item){
+                $cont++;
+            }
+
+            return response()->json([
+                    "identificador" =>  $cont
+                ]);                
+
+        }
+    }
+
 
     public function guardarDatosProducto(Request $datos){
         if($datos->ajax()){
