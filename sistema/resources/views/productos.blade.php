@@ -506,7 +506,7 @@
                 eliminarProductoPrecio(table.row( $(this).parents('tr') ).index() );
             } );
 
-            $('#tabla tbody').on( 'click', '.btnEditar', function () {
+            $('#tabla tbody').on( 'click', '.btnEditar', function () { 
                 var data=table.row( $(this).parents('tr') ).data();
                 $("#fila").val( table.row( $(this).parents('tr') ).index() );
                 $("#tituloFormProducto").html('<h5><b>Editar Datos del Producto</b></h5>');
@@ -515,7 +515,7 @@
                     value: data[4].trim().replace('.','')
                 });                
 
-                $("#codigoSoftland").val( data[5].trim() );
+                $("#codigoSoftland").val( data[6].trim() );
                 if( data[6].trim()=='NO' ){
                     document.getElementById('requiereDiseno').selectedIndex=1;
                 }else{

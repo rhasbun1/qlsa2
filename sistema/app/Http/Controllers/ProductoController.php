@@ -24,7 +24,7 @@ class ProductoController extends Controller
 
     public function listaProductos()
     {
-        //
+        // 
         $listaProductos=DB::Select('call spGetProductosPrecios()' );
         $unidades=Unidad::orderBy('u_nombre','asc')->get();
         $plantas=Planta::orderBy('nombre','asc')->get();
