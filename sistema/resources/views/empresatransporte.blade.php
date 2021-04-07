@@ -842,8 +842,13 @@
                         tabla.rows[fila].cells[4].innerHTML=$("#rutConductor").val();
                         tabla.rows[fila].cells[5].innerHTML=$("#telefonoConductor").val();
                         tabla.rows[fila].cells[6].innerHTML=$("#emailConductor").val();
+                        if(document.getElementById('habilitadaConductor').value==1){
+                            tabla.rows[fila].cells[7].innerHTML='Si';  
+                        }else{
+                            tabla.rows[fila].cells[7].innerHTML='No';
+                        }
                     }
-
+                    
                     $("#nombreConductor").val('');
                     $("#apellidoPaterno").val('');
                     $("#apellidoMaterno").val('');
