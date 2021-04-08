@@ -511,25 +511,25 @@
                     value: data[4].trim().replace('.','')
                 });                
 
-                $("#codigoSoftland").val( data[6].trim() );
-                if( data[7].trim()=='NO' ){
+                $("#codigoSoftland").val( data[7].trim() );
+                if( data[8].trim()=='NO' ){
                     document.getElementById('requiereDiseno').selectedIndex=1;
                 }else{
                     document.getElementById('requiereDiseno').selectedIndex=0;
                 }
-                if( data[8].trim()=='NO' ){
+                if( data[9].trim()=='NO' ){
                     document.getElementById('granel').selectedIndex=1;
                 }else{
                     document.getElementById('granel').selectedIndex=0;
                 }
 
-                if( data[9].trim()=='NO' ){
+                if( data[10].trim()=='NO' ){
                     document.getElementById('solicitaCertificado').selectedIndex=1;
                 }else{
                     document.getElementById('solicitaCertificado').selectedIndex=0;
                 }
 
-                $("#tiempoProduccion").val( data[10].trim() );
+                $("#tiempoProduccion").val( data[11].trim() );
 
                 var lista=document.getElementById('selProductos');
                 for (var i = 0; i < lista.length; i++){
