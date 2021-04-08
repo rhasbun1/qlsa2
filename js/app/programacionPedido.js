@@ -126,6 +126,7 @@ function guardarDatosProgramacion(idPedido, origen){
     var cadena='[';
 
     if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=="2"){
+
         for (var i = 1; i < tabla.rows.length; i++){
 
                 if ( parseInt(tabla.rows[i].cells[1].dataset.guia)==0 ){
@@ -140,6 +141,23 @@ function guardarDatosProgramacion(idPedido, origen){
                     nombreConductor="";
                     patente="";
                     idPlanta=tabla.rows[i].cells[4].getElementsByTagName('select')[0].value;
+                    if(tabla.rows[1].cells[4].getElementsByTagName('select')[0].value.trim()!= 
+                        tabla.rows[2].cells[4].getElementsByTagName('select')[0].value.trim()){
+                        swal(
+                            {
+                                title: 'las plantas de origen tienen que ser las mismas' ,
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                    confirmButtonText: 'OK',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            });
+                            document.getElementById("btnAsignarGuia").disabled=false;
+
+                            return;
+                    }
                     if( tabla.rows[i].cells[5].innerHTML.trim()!="Retira"  ){
                         fila=1;
                         idTransporte=tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value;
@@ -194,6 +212,7 @@ function guardarDatosProgramacion(idPedido, origen){
         cadena+=']';
 
     }else{
+        
         for (var i = 1; i < tabla.rows.length; i++){
 
                 if ( parseInt(tabla.rows[i].cells[1].dataset.guia)==0 ){            
@@ -207,6 +226,7 @@ function guardarDatosProgramacion(idPedido, origen){
                     nombreEmpresaTransporte="";
                     nombreConductor="";
                     patente="";
+                    
                     if(tabla.rows[i].cells[4].getElementsByTagName('select')[0]){
                         idPlanta=tabla.rows[i].cells[4].getElementsByTagName('select')[0].value;  
                     }else{
