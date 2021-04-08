@@ -411,11 +411,11 @@
                             table.cell(fila,2).data( $("#selUnidades option:selected").html() );                 
                             table.cell(fila,3).data( $("#selPlantas option:selected").html() );
                             table.cell(fila,4).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
-                            table.cell(fila,5).data( $("#codigoSoftland").val() );
-                            table.cell(fila,6).data( $("#requiereDiseno option:selected").html() );
-                            table.cell(fila,7).data( $("#granel option:selected").html() );
-                            table.cell(fila,8).data( $("#solicitaCertificado option:selected").html() ); 
-                            table.cell(fila,9).data( $("#tiempoProduccion").val() );
+                            table.cell(fila,6).data( $("#codigoSoftland").val() );
+                            table.cell(fila,7).data( $("#requiereDiseno option:selected").html() );
+                            table.cell(fila,8).data( $("#granel option:selected").html() );
+                            table.cell(fila,9).data( $("#solicitaCertificado option:selected").html() ); 
+                            table.cell(fila,10).data( $("#tiempoProduccion").val() );
                             table.cell(fila,10).draw();                
                         }
                         cerrarModProducto();
@@ -511,25 +511,25 @@
                     value: data[4].trim().replace('.','')
                 });                
 
-                $("#codigoSoftland").val( data[7].trim() );
-                if( data[8].trim()=='NO' ){
+                $("#codigoSoftland").val( data[6].trim() );
+                if( data[7].trim()=='NO' ){
                     document.getElementById('requiereDiseno').selectedIndex=1;
                 }else{
                     document.getElementById('requiereDiseno').selectedIndex=0;
                 }
-                if( data[9].trim()=='NO' ){
+                if( data[8].trim()=='NO' ){
                     document.getElementById('granel').selectedIndex=1;
                 }else{
                     document.getElementById('granel').selectedIndex=0;
                 }
 
-                if( data[10].trim()=='NO' ){
+                if( data[9].trim()=='NO' ){
                     document.getElementById('solicitaCertificado').selectedIndex=1;
                 }else{
                     document.getElementById('solicitaCertificado').selectedIndex=0;
                 }
 
-                $("#tiempoProduccion").val( data[11].trim() );
+                $("#tiempoProduccion").val( data[10].trim() );
 
                 var lista=document.getElementById('selProductos');
                 for (var i = 0; i < lista.length; i++){
