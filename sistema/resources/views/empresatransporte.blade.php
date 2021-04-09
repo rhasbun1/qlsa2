@@ -350,7 +350,7 @@
                     <div class="col-sm-3">
                         <select style="margin-left: 39.5%;" class="form-control input-sm" id="habilitadaConductor">
                             <option value="1">Si</option>
-                            <option value="0">No</option>
+                            <option value="9">No</option>
                         </select>
                     </div>    
                 
@@ -755,7 +755,7 @@
                         }else{
                             tabla.rows[fila].cells[3].innerHTML='No';
                         }
-                        if(document.getElementById('habilitadaConductor').value==1){
+                        if(document.getElementById('habilitada').value==1){
                             tabla.rows[fila].cells[4].innerHTML='Si';  
                         }else{
                             tabla.rows[fila].cells[4].innerHTML='No';
