@@ -11,6 +11,7 @@
             <div>
             <input type="hidden" id="idCliente" value="{{Session::get('idPerfil')}}">
 
+
                 <input type="hidden" id="idPedido" value="{{ $pedido[0]->idPedido }}">
                 <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                 <div class="row" style="padding-top: 5px">
@@ -126,7 +127,7 @@
                     <th>Fecha Carga</th>
                     <th>Hora Carga</th>
                 </thead>
-            
+        
                 <tbody>
                     @foreach($listaDetallePedido as $item)
                     <tr>
@@ -193,8 +194,7 @@
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot> 
-                    @if( Session::get('grupoUsuario')=='C' )   
+                <tfoot id="tfootp"> 
                         <tr>
                             <td></td>
                             <td></td>
@@ -237,19 +237,18 @@
                             <td></td>
                             <td></td>                        
                         </tr> 
-                    @endif                     
                 </tfoot>
             </table>
         </div> 
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
             Indique el motivo de la modificación de este pedido (máx.150 letras):
             <input id="motivo" class="form-control input-sm" maxlength="150" style="width: 80%">
+            <button class="btn btn-sm btn-success" style="width:80px" onclick="guardarCambios();">Guardar</button>         
+
             <div id="cliocul" style="padding-top:18px; padding-bottom: 20px">
-                <button class="btn btn-sm btn-success" style="width:80px" onclick="guardarCambios();">Guardar</button>         
                 <a href="{{ asset('/') }}listarPedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                                  
             </div>
             <div id="clienteocultar" style="padding-top:18px; padding-bottom: 20px">
-                <button class="btn btn-sm btn-success" style="width:80px" onclick="guardarCambios();">Guardar</button>         
                 <a href="{{ asset('/') }}clientePedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                                  
             </div>
         </div>        
@@ -420,6 +419,14 @@
             }
 
             var cont=0;
+            if($("#idCliente").val() == 14){
+                var planta = 4;
+                var entrega = 5;
+             }else{
+                var planta = 6;
+                var entrega = 7;
+
+            }
             var cadena='[';
 
             for (var i = 1; i <(tabla.rows.length-3); i++){
@@ -427,8 +434,8 @@
                     cadena+='{';
                     cadena+='"prod_codigo":"'+  tabla.rows[i].cells[0].innerHTML  + '", ';
                     cadena+='"cantidad":"'+  tabla.rows[i].cells[2].getElementsByTagName('input')[0].value + '", ';
-                    cadena+='"idPlanta":"'+  tabla.rows[i].cells[6].getElementsByTagName('select')[0].value  + '",';
-                    cadena+='"idFormaEntrega":"'+  tabla.rows[i].cells[7].getElementsByTagName('select')[0].value  + '"';                    
+                    cadena+='"idPlanta":"'+  tabla.rows[i].cells[planta].getElementsByTagName('select')[0].value  + '",';
+                    cadena+='"idFormaEntrega":"'+  tabla.rows[i].cells[entrega].getElementsByTagName('select')[0].value  + '"';                    
                     cadena+='}, ';   
                     total+= ( parseInt(tabla.rows[i].cells[4].innerHTML.replace('.','')) * parseInt( tabla.rows[i].cells[2].getElementsByTagName('input')[0].value ) );             
                 }
@@ -439,6 +446,7 @@
 
             //Validar la Fecha Entrega
             var fechaCreacionPedido = new Date();
+            alert(fechaCreacionPedido);
             //console.log("fecha creacion al tiro: ", fechaCreacionPedido);
             var fechaEntrega = $("#txtFechaEntrega").val();
             var fechaEntregaMaxima;
@@ -451,6 +459,8 @@
             //console.log("Fecha Creacion Pedido: ", fechaCreacionPedido);
             //console.log("Fecha Entrega Maximo: ", fechaEntregaMaxima);
             var listTiempoPlanta = [];
+
+        
             for (var j=1; j<(tabla.rows.length-3); j++){
                 $.ajax({
                     async:false,
@@ -460,7 +470,7 @@
                     dataType: 'json',
                     data: { 
                             nombreProducto: tabla.rows[j].cells[1].innerHTML.trim(),
-                            idPlanta: tabla.rows[j].cells[6].getElementsByTagName('select')[0].value,
+                            idPlanta: tabla.rows[j].cells[planta].getElementsByTagName('select')[0].value,
                             nombre: tabla.rows[j].cells[3].innerHTML.trim()
                     },
                     success:function(dato){
@@ -477,7 +487,9 @@
                     }
                 });
             }
+            alert(tiempoProduccion_val);
             fechaCreacionPedido.setHours(fechaCreacionPedido.getHours() + Math.max.apply(Math, tiempoProduccion_val));
+            alert(fechaCreacionPedido);
             //console.log("fecha que lleva despues del tiempo de produccion: ", fechaCreacionPedido);
             var mayorTiempoP = Math.max.apply(Math, tiempoProduccion_val);
             var auxTiempo = 0;
@@ -600,18 +612,18 @@
             var grabar = true;
             if (new Date(fechaCreacionPedido) >= new Date(fechaEntregaMaxima)){
                 if($("#idCliente").val() == 14){
-
                     swal(
-                    {
-                        title: 'no puede modificar la entrega fuera de plazo!!!',
-                        text: '',
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'SI',
-                        cancelButtonText: 'NO',
-                        closeOnConfirm: true,
-                        closeOnCancel: true
-                    },
+                            {
+                                title: 'no puede modificar la entrega fuera de plazo!!!',
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            },
+                   
                     function(isConfirm)
                     {
                         if (isConfirm){
@@ -708,15 +720,19 @@
 
 
         $(document).ready(function() {
+
+            $("#tfootp").hide();
             if($("#idCliente").val() == 14){
                 $("#clienteocultar").show();
                 $("#cliocul").hide();
-
+                $("#tfootp").hide();
                 
             }else{
 
                 $("#clienteocultar").hide();
                 $("#cliocul").show();
+                $("#tfootp").show();
+
 
                 
             }
