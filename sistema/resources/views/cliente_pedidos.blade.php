@@ -180,6 +180,7 @@
                                 location.href="{{ asset('/') }}clienteNotasdeVenta";
                             }
                     },
+                   
                     'pageLength',
                     {
                         extend: 'excelHtml5',
@@ -282,6 +283,13 @@
                 "lengthMenu": [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
                 dom: 'Bfrtip',
                 buttons: [
+                    {
+                        text: 'Actualizar',
+                        action: function ( e, dt, node, config ) {
+                            this.disable();    
+                            location.reload(true);                        
+                        }
+                    },
                     
                     'pageLength',
                     {
