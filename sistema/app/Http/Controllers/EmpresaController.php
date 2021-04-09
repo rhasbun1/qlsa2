@@ -23,6 +23,39 @@ class EmpresaController extends Controller
         return view('clientes')->with('listaEmpresas', $listaEmpresas);
     }
 
+
+
+    public function validarCodigoSoftlandEmpresa(Request $datos){
+        if($datos->ajax()){
+            $client = new Client();
+            $url="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datoscliente";
+
+            $params=[
+                "codigoSoftland" => $datos->input('codigoSoftland')
+            ];
+
+            $headers = [
+                'X-CSRF-TOKEN' => 'WiyfqvBuHrUnzT6zCvidq9lMVIQSB220Wtsx8EK5'
+            ];
+
+            $response= $client->request('POST', $url, [
+                'json' => $params,
+                'headers' => $headers,
+                'verify' => false
+            ]);
+
+            $respuesta=json_decode( $response->getBody() );
+            $cont=0;
+            foreach($respuesta as $item){
+                $cont++;
+            }
+
+            return response()->json([
+                "identificador" =>  $cont
+            ]);
+        }
+    }    
+
     public function guardarDatosCliente(Request $datos){
         if($datos->ajax()){
 

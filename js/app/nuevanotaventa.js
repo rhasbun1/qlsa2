@@ -392,22 +392,18 @@
         }
 
           var existe=true;  
-          var urlApiSoft;
-          urlApiSoft="http://webservice.quimicalatinoamericana.cl:8082/qrysoftland/api/datoscliente";
-          //urlApiSoft="http://svdev.ddns.net:88/qrysoftland/api/datosdte";
+
           $.ajax({
                 async: false,
-                url: urlApiSoft,
+                url: urlApp + 'validarCodigoSoftlandEmpresa',
+                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
                 type: 'POST',
                 dataType: 'json',
                 data: { 
                     codigoSoftland: txtCodClienteSoftland.value
                       },
-                headers: { 
-                    'X-CSRF-TOKEN' : 'WiyfqvBuHrUnzT6zCvidq9lMVIQSB220Wtsx8EK5'
-                },
               success:function(data){
-                if(!data[0]){
+                if(data.identificador==0){
 
                     existe=false;
                     swal(
