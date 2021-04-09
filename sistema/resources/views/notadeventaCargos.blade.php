@@ -302,12 +302,12 @@
             } );
             if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Vigentes)"){
                var urll = 'notaVentaVigenteCargos1';
-               var titulo = 'nota Venta Vigente Cargos'
+               var titulo = 'nota Venta Vigente '
                
            }else if($("#b").text() == " Costo Flete y Tiempo de Traslado (Notas de Venta Cerradas)"){
 
                var urll ='notaVentaCerradaCargos1';
-               var titulo = 'nota Venta Cerrada Cargos'
+               var titulo = 'nota Venta Cerrada '
 
            }else if($("#b").text()== " Costo Flete y Tiempo de Traslado (Asignaciones Pendientes)"){
               var urll= 'notaVentaCargosUrgente1'

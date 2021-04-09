@@ -331,8 +331,10 @@
 										</li>
 										@endif
 										<li><a href="{{ asset('/') }}listaFeriados"><span class="submenu-label">Feriados</span></a></li>
-										<li><a href="{{ asset('/') }}clienteNotaVentas"><span class="submenu-label">Cliente/Nota Venta</span></a></li>		
-
+										@if ( Session::get('idPerfil') =='3' or Session::get('idPerfil') =='18' or Session::get('idPerfil') =='2' or
+										Session::get('idPerfil') =='4' or Session::get('idPerfil') =='1' or Session::get('idPerfil') =='12')
+											<li><a href="{{ asset('/') }}clienteNotaVentas"><span class="submenu-label">Cliente/Nota Venta</span></a></li>		
+										@endif
 									</ul>
 								</li>
 							@endif

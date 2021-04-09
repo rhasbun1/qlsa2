@@ -221,6 +221,11 @@
         </div> 
 
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
+            @if (  Session::get('idPerfil')=='14')
+
+                <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>
+                <a href="{{ asset('/') }}editarPedido/{{ $pedido[0]->idPedido }}/" class="btn btn-sm btn-success" style="width:100px">Modificar</a>
+            @endif
             <a href="{{ asset('/') }}clientePedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                    
         </div>  
         <div class="tab-pane active" id="tabLogAcciones" style="padding-top: 5px">
@@ -243,6 +248,32 @@
                 </tbody>
             </table>
         </div>      
+    </div>
+</div>
+
+<div id="mdSuspender" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="height: 45px">
+                <h5><b>Suspender pedido</b></h5>
+            </div>
+            <div id="bodyGuia" class="modal-body">
+                Indique el motivo (máx.200 caract.)
+                <div class="row">
+                    <div class="col-md-12">
+                        <input class="form-control input-sm" id="obsSuspension" maxlength="200">
+                    </div> 
+
+                </div>
+            </div>
+            <div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; text-align: right;">
+               <button type="button" class="btn btn-success btn-sm" onclick="SuspenderPedido({{ $pedido[0]->idPedido }})" style="width: 80px">Suspender</button>  
+              
+               <button id="btnCerrarCajaSuspender" type="button" class="btn btn-danger btn-sm" onclick="cerrarCajaSuspender()" style="width: 80px">Cancelar</button>
+            </div>
+
+        </div>
     </div>
 </div>
 
@@ -272,7 +303,63 @@
                 startDate: '+0d'
             }) 
             cargarListas();
-        });         
+        });  
+        function SuspenderPedido(idPedido){
+            if($("#obsSuspension").val().trim()=='' ){
+                swal(
+                    {
+                        title: 'Es obligatorio ingresar el motivo!!' ,
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        closeOnConfirm: true,
+                        confirmButtonText: '',
+                        cancelButtonText: '',
+                    });
+            }else{
+                $.ajax({
+                    url: urlApp + "suspenderPedido",
+                    headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 
+                            idPedido: idPedido,
+                            motivo: $("#obsSuspension").val().trim()
+                          },
+                    success:function(dato){
+                        swal(
+                        {
+                            title: 'el pedido ha sido suspendido!!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            if(isConfirm){
+                                location.href=dato.url;
+                                                     
+                            }
+                        }
+                    );
+                    }
+                })                
+            }
+        }       
+        function abrirCajaSuspender(){
+            $("#mdSuspender").modal('show');
+            $("#obsSuspension").val('');
+            $("#obsSuspension").focus();
+        }
+
+        function cerrarCajaSuspender(){
+            $("#obsSuspension").val('');
+            $("#mdSuspender").modal('hide');
+        }
     </script>
        
 @endsection

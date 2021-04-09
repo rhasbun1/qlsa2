@@ -9,6 +9,8 @@
         </div>
         <div class="padding-md clearfix">
             <div>
+            <input type="hidden" id="idCliente" value="{{Session::get('idPerfil')}}">
+
                 <input type="hidden" id="idPedido" value="{{ $pedido[0]->idPedido }}">
                 <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                 <div class="row" style="padding-top: 5px">
@@ -242,9 +244,13 @@
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
             Indique el motivo de la modificación de este pedido (máx.150 letras):
             <input id="motivo" class="form-control input-sm" maxlength="150" style="width: 80%">
-            <div style="padding-top:18px; padding-bottom: 20px">
+            <div id="cliocul" style="padding-top:18px; padding-bottom: 20px">
                 <button class="btn btn-sm btn-success" style="width:80px" onclick="guardarCambios();">Guardar</button>         
                 <a href="{{ asset('/') }}listarPedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                                  
+            </div>
+            <div id="clienteocultar" style="padding-top:18px; padding-bottom: 20px">
+                <button class="btn btn-sm btn-success" style="width:80px" onclick="guardarCambios();">Guardar</button>         
+                <a href="{{ asset('/') }}clientePedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                                  
             </div>
         </div>        
 
@@ -593,7 +599,28 @@
             var atrasado = 0;
             var grabar = true;
             if (new Date(fechaCreacionPedido) >= new Date(fechaEntregaMaxima)){
-                swal(
+                if($("#idCliente").val() == 14){
+
+                    swal(
+                    {
+                        title: 'no puede modificar la entrega fuera de plazo!!!',
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'SI',
+                        cancelButtonText: 'NO',
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function(isConfirm)
+                    {
+                        if (isConfirm){
+                          return;
+                        }
+                    });
+
+                }else{
+                    swal(
                     {
                         title: 'Está creando un pedido fuera de plazo, ¿Desea continuar con la creación del pedido?',
                         text: '',
@@ -611,6 +638,9 @@
                             actualizarPedido(total, cadena, atrasado);
                         }
                     });
+
+                }
+               
                     $("#btnCrearPedido").attr("disabled", false);
             }
             else{
@@ -655,7 +685,17 @@
                             function(isConfirm)
                             {
                                 if(isConfirm){
-                                    location.href=urlApp + "listarPedidos";
+                                    if($("#idCliente").val() == 14){
+                                        location.href=urlApp + "clientePedidos";
+
+                                    }else{
+
+                                        location.href=urlApp + "listarPedidos";
+
+
+                                        
+                                    }
+                                    
                                     return;
                                 }
                             }
@@ -668,6 +708,18 @@
 
 
         $(document).ready(function() {
+            if($("#idCliente").val() == 14){
+                $("#clienteocultar").show();
+                $("#cliocul").hide();
+
+                
+            }else{
+
+                $("#clienteocultar").hide();
+                $("#cliocul").show();
+
+                
+            }
             // Datepicker      
             $('.date').datepicker({
                 todayHighlight: true,

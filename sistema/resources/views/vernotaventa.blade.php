@@ -115,7 +115,7 @@
                         Teléfono
                     </div>
                     <div class="col-lg-3 col-sm-4 col-md-5">                        
-                        <input id="txtTelefonoContacto" class="form-control input-sm" value="{{ $notaventa[0]->telefonoContacto }}" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11') readonly @endif>
+                        <input id="txtTelefonoContacto" class="form-control input-sm" maxlength="12" value="{{ $notaventa[0]->telefonoContacto }}" @if(Session::get('grupoUsuario')!='C' or Session::get('idPerfil')=='11') readonly @endif>
                     </div>                    
                     <div class="col-lg-1 col-sm-2 col-md-1">
                         Email
