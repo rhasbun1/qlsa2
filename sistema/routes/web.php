@@ -35,8 +35,7 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::get('datosUsuario', 'UsuarioController@datosUsuario');
 	Route::post('obtenerParametros', 'Controller@obtenerParametros');
 	Route::post('grabarParametros', 'Controller@grabarParametros');
-	Route::post('validarProductoCodigoSoftland', 'ProductoController@validarProductoCodigoSoftland');
-	
+	Route::post('validarCodigoSoftlandEmpresa','EmpresaController@validarCodigoSoftlandEmpresa');
 	Route::post('cargarPerfil', 'UsuarioController@cargarPerfil');
 	Route::post('usuarioPlantas', 'UsuarioController@usuarioPlantas');
 	Route::post('usuarioAvisosCorreo', 'UsuarioController@usuarioAvisosCorreo');
