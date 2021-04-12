@@ -534,7 +534,6 @@
                 <th>Planta de Origen</th>
                 <th>Cliente</th>
                 <th>Obra Planta </th>
-                <th>Producto </th>
                
                
                     
@@ -555,7 +554,6 @@
                                   <td style="width: 120px">{{ $item->nombre }}</td>
                                   <td style="width:120px ">{{ $item->nombreEmpresa }}</td>
                                   <td style="width: 120px">{{ $item->nombreObra }}</td>
-                                  <td style="width:120px ">{{ $item->nombreProducto }}</td>
                                    
                                     
                                 </tr>
@@ -780,6 +778,7 @@
                 <th >Cantidad</th>
                 <th>Unidad</th>
                 <th>Fecha de Entrega</th>
+                <th style="display: none;">Cantidad</th>
                
                     
                 </thead>
@@ -801,6 +800,8 @@
                                     <td style="width: 30px;text-align: right;">{{number_format( $item->cantidad, 0, ',', '.' ) }}</td>
                                     <td style="width: 120px">{{ $item->u_nombre }}</td>
                                     <td style="width: 120px">{{ $item->fechaEntrega }}</td>
+                                    <td style="display: none;">{{ $item->cantidad }}</td>
+
                                 </tr>
                 @endforeach         
                 </tbody>
@@ -1670,7 +1671,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4 ,5,6,7,8,9]
+                            columns: [ 0, 1, 2, 3, 4 ,5,6,10,8,9]
                         }
                     }
                 ],                

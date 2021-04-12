@@ -446,7 +446,6 @@
 
             //Validar la Fecha Entrega
             var fechaCreacionPedido = new Date();
-            alert(fechaCreacionPedido);
             //console.log("fecha creacion al tiro: ", fechaCreacionPedido);
             var fechaEntrega = $("#txtFechaEntrega").val();
             var fechaEntregaMaxima;
@@ -487,9 +486,7 @@
                     }
                 });
             }
-            alert(tiempoProduccion_val);
             fechaCreacionPedido.setHours(fechaCreacionPedido.getHours() + Math.max.apply(Math, tiempoProduccion_val));
-            alert(fechaCreacionPedido);
             //console.log("fecha que lleva despues del tiempo de produccion: ", fechaCreacionPedido);
             var mayorTiempoP = Math.max.apply(Math, tiempoProduccion_val);
             var auxTiempo = 0;
