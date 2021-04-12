@@ -13,6 +13,8 @@ use \Mailjet\Resources;
 use App\Producto;
 use App\Unidad;
 use App\Planta;
+use App\Parametro;
+
 
 class PedidoController extends Controller
 {
@@ -22,6 +24,7 @@ class PedidoController extends Controller
         //
         $NotadeVenta=DB::Select('call spGetNotaVenta(?)', array($idNotaVenta) );
         $NotadeVentaDetalle=DB::Select('call spGetNotaVentaDetalle(?)', array($idNotaVenta) );
+        $param=Parametro::All();
         $plantas=DB::table('plantas')->select('idPlanta', 'nombre')->get();
         $formaEntrega=DB::table('formasdeentrega')->select('idFormaEntrega', 'nombre')->get();
         $parametros=DB::table('parametros')->select('iva', 'maximo_toneladas_por_pedido', 'maximo_productos_por_pedido', 'notaPedido1', 'notaPedido2','consideracionesPedidosGranel','version')->get();
@@ -29,7 +32,8 @@ class PedidoController extends Controller
                                       ->with('NotadeVentaDetalle', $NotadeVentaDetalle)
                                       ->with('FormasdeEntrega', $formaEntrega)
                                       ->with('Plantas', $plantas)
-                                      ->with('parametros', $parametros);
+                                      ->with('parametros', $parametros)
+                                      ->with('param', $param);
     }
 
 

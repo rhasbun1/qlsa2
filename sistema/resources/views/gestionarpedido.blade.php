@@ -10,6 +10,8 @@
         <div> 
             <div style="padding: 10px" class="panel panel-default panel-stat2"> 
                 <input type="hidden" id="idCliente" data-idperfil="{{Session::get('idPerfil')}}">
+                <input class="form-control input-sm"   min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="hidden" id="cmgttn" value="{{ $param[0]->carga_max_granel_tte_normal }}">
+
                 <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                 <div class="row">
                     <div class="col-sm-1 col-lg-1">
@@ -249,7 +251,7 @@
                                                     @endforeach 
                                                 </select>                                            
                                             @else
-                                                <select class="form-control input-sm">
+                                                <select id="pruebacarga" class="form-control input-sm">
                                                     @foreach($FormasdeEntrega as $formaEntrega)
                                                         @if( $item->idFormaEntrega==$formaEntrega->idFormaEntrega )
                                                             <option value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>

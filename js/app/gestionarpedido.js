@@ -364,6 +364,63 @@
 
 
     function crearPedido(Origen){
+        var tabla=document.getElementById('tablaDetallePedidoGranel');
+        if($("#tipoTransporte").val() == 1){
+            if($("#pruebacarga").val() == 1){
+                if(tabla.rows[1].cells[7].getElementsByTagName('input')[0].value.trim() != $("#cmgttn").val()){
+                   swal(
+                    {
+                        title: 'no puede crear pedidos con carga mayor o menor a '+$("#cmgttn").val()+' toneladas',
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'Cerrar',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    },
+                    function(isConfirm)
+                    {
+                        if(isConfirm){
+                            return;
+                            
+                        }
+                    }
+                )
+                   return;
+                 
+                }
+            
+            }
+        }else{
+            if($("#pruebacarga").val() == 1){
+                if((tabla.rows[2].cells[7].getElementsByTagName('input')[0].value.trim()+tabla.rows[1].cells[7].getElementsByTagName('input')[0].value.trim()) != $("#cmgttn").val()){
+                    swal(
+                     {
+                         title: 'no puede crear pedidos mixtos donde la suma de los productos no sea igual a '+$("#cmgttn").val()+' toneladas',
+                         text: '',
+                         type: 'warning',
+                         showCancelButton: false,
+                         confirmButtonText: 'Cerrar',
+                         cancelButtonText: '',
+                         closeOnConfirm: true,
+                         closeOnCancel: false
+                     },
+                     function(isConfirm)
+                     {
+                         if(isConfirm){
+                             return;
+                             
+                         }
+                     }
+                 )
+                    return;
+                  
+                 }
+            }
+
+        }
+
 
         $("#btnCrearPedido").attr("disabled", true);
         if($("#txtFechaEntrega").val().trim()=='' ){
