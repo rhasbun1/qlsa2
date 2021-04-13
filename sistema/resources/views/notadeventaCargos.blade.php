@@ -458,7 +458,6 @@
                 idPlanta=tabla.cell(i,10).node().getElementsByTagName('input')[0].value;
 
 
-                alert(flete);
 
                 cadena+='{';
                 cadena+='"idNotaVenta":"'+ tabla.cell(i,0).data() + '", ';
