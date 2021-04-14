@@ -341,7 +341,7 @@
                         function(isConfirm)
                         {
                             if(isConfirm){
-                                location.href=dato.url;
+                                location.href= urlApp + "clientePedidos/";
                                                      
                             }
                         }

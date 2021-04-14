@@ -115,10 +115,8 @@
                     <th>Producto</th>
                     <th style="width: 60px">Cantidad</th>
                     <th>Unidad</th>
-                    @if( Session::get('grupoUsuario')=='C' )   
-                        <th>Precio ($)</th>
-                        <th>Total</th>
-                    @endif
+                        <th id="precio">Precio ($)</th>
+                        <th id="totalt">Total</th>
                     <th>Planta de Origen</th>
                     <th>Entrega</th>
                     <th>Transporte</th>
@@ -141,10 +139,8 @@
                             @endif    
                         </td>   
                         <td> {{ $item->u_nombre }} </td>
-                        @if( Session::get('grupoUsuario')=='C' )   
-                            <td align="right">{{ number_format( $item->cp_precio, 0, ',', '.' ) }}</td>
-                            <td align="right">{{ number_format( $item->cp_precio * $item->cantidad , 0, ',', '.' ) }}</td>
-                        @endif
+                            <td id="preciot" align="right">{{ number_format( $item->cp_precio, 0, ',', '.' ) }}</td>
+                            <td id="totalta" align="right">{{ number_format( $item->cp_precio * $item->cantidad , 0, ',', '.' ) }}</td>
                         <td> 
                             @if( $item->numeroGuia==0 )
                                 <select id="listaPlantas" class="form-control input-sm">
@@ -243,12 +239,13 @@
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
             Indique el motivo de la modificación de este pedido (máx.150 letras):
             <input id="motivo" class="form-control input-sm" maxlength="150" style="width: 80%">
-            <button class="btn btn-sm btn-success" style="width:80px" onclick="guardarCambios();">Guardar</button>         
 
             <div id="cliocul" style="padding-top:18px; padding-bottom: 20px">
+                <button class="btn btn-sm btn-success" style="width:80px" onclick="guardarCambios();">Guardar</button>         
                 <a href="{{ asset('/') }}listarPedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                                  
             </div>
             <div id="clienteocultar" style="padding-top:18px; padding-bottom: 20px">
+                <button class="btn btn-sm btn-success" style="width:80px" onclick="guardarCambios();">Guardar</button>        
                 <a href="{{ asset('/') }}clientePedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                                  
             </div>
         </div>        
@@ -420,8 +417,8 @@
 
             var cont=0;
             if($("#idCliente").val() == 14){
-                var planta = 4;
-                var entrega = 5;
+                var planta = 6;
+                var entrega = 7;
              }else{
                 var planta = 6;
                 var entrega = 7;
@@ -438,9 +435,11 @@
                     cadena+='"idFormaEntrega":"'+  tabla.rows[i].cells[entrega].getElementsByTagName('select')[0].value  + '"';                    
                     cadena+='}, ';   
                     total+= ( parseInt(tabla.rows[i].cells[4].innerHTML.replace('.','')) * parseInt( tabla.rows[i].cells[2].getElementsByTagName('input')[0].value ) );             
+                    alert( parseInt(tabla.rows[i].cells[4].innerHTML.replace('.','')));
+            alert( tabla.rows[i].cells[2].getElementsByTagName('input')[0].value );
                 }
             }
-
+           
             cadena=cadena.slice(0,-2);
             cadena+=']';
 
@@ -662,7 +661,7 @@
 
         function actualizarPedido(total, cadena, atrasado){
             var ruta= urlApp + "actualizarPedido";
-
+alert(total);
             $.ajax({
                 url: ruta,
                 headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
@@ -723,13 +722,22 @@
                 $("#clienteocultar").show();
                 $("#cliocul").hide();
                 $("#tfootp").hide();
+                $("#precio").hide();
+                $("#totalt").hide();
+                $("#preciot").hide();
+                $("#totalta").hide();
+
+                
+                
                 
             }else{
-
+                $("#precio").show();
+                $("#totalt").show();
                 $("#clienteocultar").hide();
                 $("#cliocul").show();
                 $("#tfootp").show();
-
+                $("#preciot").show();
+                $("#totalta").show();
 
                 
             }

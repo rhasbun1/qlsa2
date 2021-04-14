@@ -250,7 +250,7 @@
                     @if( $notaventa[0]->cerrada==0 and $notaventa[0]->aprobada==1 and Session::get('grupoUsuario')=='C' and (Session::get("idPerfil")!=11 and Session::get("idPerfil")!=19 ) )
                         <a href="{{ asset('/') }}gestionarpedido/{{ $notaventa[0]->idNotaVenta }}/" class="btn btn-sm btn-primary">Crear Pedido</a>
                     @endif
-                @elseif ( Session::get('grupoUsuario')=='CL')
+                @elseif ( Session::get('idPerfil')=='14')
                     @if( $notaventa[0]->cerrada==0 and $notaventa[0]->aprobada==1 )
                         <a href="{{ asset('/') }}gestionarpedido/{{ $notaventa[0]->idNotaVenta }}/" class="btn btn-sm btn-primary">Crear Pedido</a>
                     @endif                    
