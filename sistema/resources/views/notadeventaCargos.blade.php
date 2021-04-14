@@ -47,6 +47,9 @@
                         <th style="width:80px">Tiempo Traslado (horas)</th>
                         <th style="display: none;">id usuario</th>
                         <th style="display: none;">id planta</th>
+                        <th style="display: none;">Costo Flete ($/Unidad)</th>
+                        <th style="display: none;">Distancia (km)</th>
+                        <th style="display: none;">Tiempo Traslado (horas)</th>
 
 	                </thead>
 	                <tbody id="tablan">
@@ -181,7 +184,10 @@
                                             flete,
                                             distancia,
                                             tiempoTraslado,
-                                            codigo
+                                            codigo,
+                                            number_format( dato[x].flete, 0, '.', ',' ),
+                                         number_format( dato[x].distancia, 0, '.', ',' ),
+                                         number_format( dato[x].tiempoTraslado, 0, '.', ',' )
                                         ];
              
                        }else{
@@ -189,7 +195,10 @@
                                          number_format( dato[x].flete, 0, '.', ',' ),
                                          number_format( dato[x].distancia, 0, '.', ',' ),
                                          number_format( dato[x].tiempoTraslado, 0, '.', ',' ),
-                                         codigo
+                                         codigo,
+                                         number_format( dato[x].flete, 0, '.', ',' ),
+                                         number_format( dato[x].distancia, 0, '.', ',' ),
+                                         number_format( dato[x].tiempoTraslado, 0, '.', ',' ),
                                       
                                      ];
 
@@ -208,8 +217,13 @@
                                                 rowNode1[1],
                                                 rowNode1[2],
                                                 rowNode1[3],
-                                                rowNode[5]
+                                                rowNode[5],
+                                                rowNode1[4],
+                                                rowNode1[5],
+                                                rowNode1[6]
+                                                
                                                 ]);
+                        tabla.columns([9,10,11,12,13]).visible(false, false);
 
                         var fila=tabla.row( nn ).index();
                         var celdas=tabla.row( nn).data();
@@ -348,7 +362,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         titleAttr: 'Excel',                        
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4,5,6,7,8]
+                            columns: [ 0, 1, 2, 3, 4,5,11,12,13]
                         }
                     }                    
                     
