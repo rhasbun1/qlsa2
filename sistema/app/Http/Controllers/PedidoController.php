@@ -157,7 +157,7 @@ class PedidoController extends Controller
     // Vista para Aprobar pedidos por Usuarios Comerciales  
     public function clientePedidos(){
 
-        $pedidos=DB::Select('call spGetProductosconPedidoPendienteCliente(?)', array( Session::get('idUsuario') ) );
+        $pedidos=DB::Select('call spGetPedidosCliente(?)', array( Session::get('idUsuario') ) );
         $listaPedidoSinAprobarClientes=DB::Select('call spGetPedidoSinAprobarClientes(?)', array(Session::get('empresaUsuario')));
 
         return view('cliente_pedidos')->with('pedidos', $pedidos)->with('listaPedidoSinAprobarClientes',$listaPedidoSinAprobarClientes);  
