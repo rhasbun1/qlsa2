@@ -8,9 +8,14 @@
             <b>Nuevo Pedido</b>
         </div>
         <div> 
-            <div style="padding: 10px" class="panel panel-default panel-stat2"> 
+            <div style="padding: 10px" class="panel panel-default panel-stat2" > 
+            <input  id="idempresa" value="{{Session::get('empresaUsuario')}}" hidden>
+            <input type="hidden" id="idCliente1" value="{{Session::get('idPerfil')}}">
+
                 <input type="hidden" id="idCliente" data-idperfil="{{Session::get('idPerfil')}}">
                 <input class="form-control input-sm"   min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="hidden" id="cmgttn" value="{{ $param[0]->carga_max_granel_tte_normal }}">
+                <input class="form-control input-sm"  min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="hidden" id="cmgttm2" value="{{ $param[0]->carga_max_granel_tte_mixto_2 }}">
+                <input class="form-control input-sm"   min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="hidden" id="cmgttm1" value="{{ $param[0]->carga_max_granel_tte_mixto_1 }}">
 
                 <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                 <div class="row">

@@ -365,62 +365,109 @@
 
     function crearPedido(Origen){
         var tabla=document.getElementById('tablaDetallePedidoGranel');
-        if($("#tipoTransporte").val() == 1){
-            if($("#pruebacarga").val() == 1){
-                if(tabla.rows[1].cells[7].getElementsByTagName('input')[0].value.trim() != $("#cmgttn").val()){
-                   swal(
-                    {
-                        title: 'no puede crear pedidos con carga mayor o menor a '+$("#cmgttn").val()+' toneladas',
-                        text: '',
-                        type: 'warning',
-                        showCancelButton: false,
-                        confirmButtonText: 'Cerrar',
-                        cancelButtonText: '',
-                        closeOnConfirm: true,
-                        closeOnCancel: false
-                    },
-                    function(isConfirm)
-                    {
-                        if(isConfirm){
-                            return;
-                            
+        if($("#idCliente1").val() == 14){
+            if($("#tipoTransporte").val() == 1){
+                if($("#pruebacarga").val() == 1){
+                    if(tabla.rows[1].cells[7].getElementsByTagName('input')[0].value.trim() != $("#cmgttn").val()){
+                       swal(
+                        {
+                            title: 'no puede crear pedidos con carga mayor o menor a '+$("#cmgttn").val()+' toneladas',
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'Cerrar',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            if(isConfirm){
+                                return;
+                                
+                            }
+                        }
+                    )
+                       return;
+                      
+                    }
+                
+                }
+            }else{
+                if($("#pruebacarga").val() == 1){
+                    var dato = "";
+                    var dato1 = "";
+
+                    for (var i = 1; i < tabla.rows.length; i++){
+                      if(dato == ""){
+                          
+                        if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
+                            dato = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
+                        }
+                        
+                      }
+                      if(dato != ""){
+                        if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
+                            dato1 = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
                         }
                     }
-                )
-                   return;
-                 
-                }
-            
-            }
-        }else{
-            if($("#pruebacarga").val() == 1){
-                if((tabla.rows[2].cells[7].getElementsByTagName('input')[0].value.trim()+tabla.rows[1].cells[7].getElementsByTagName('input')[0].value.trim()) != $("#cmgttn").val()){
-                    swal(
-                     {
-                         title: 'no puede crear pedidos mixtos donde la suma de los productos no sea igual a '+$("#cmgttn").val()+' toneladas',
-                         text: '',
-                         type: 'warning',
-                         showCancelButton: false,
-                         confirmButtonText: 'Cerrar',
-                         cancelButtonText: '',
-                         closeOnConfirm: true,
-                         closeOnCancel: false
-                     },
-                     function(isConfirm)
-                     {
-                         if(isConfirm){
-                             return;
-                             
-                         }
-                     }
-                 )
-                    return;
                   
-                 }
+                    }
+                
+                    if(dato != $("#cmgttm1").val()){
+                        swal(
+                         {
+                             title: 'las toneladas para el producto 1 debe ser  '+$("#cmgttm1").val()+' toneladas',
+                             text: '',
+                             type: 'warning',
+                             showCancelButton: false,
+                             confirmButtonText: 'Cerrar',
+                             cancelButtonText: '',
+                             closeOnConfirm: true,
+                             closeOnCancel: false
+                         },
+                         function(isConfirm)
+                         {
+                             if(isConfirm){
+                                 return;
+                                 
+                             }
+                         }
+                     )
+                        return;
+                      
+                     }
+                     if((parseFloat(dato1)) != $("#cmgttm2").val()){
+                        swal(
+                         {
+                             title: 'las toneladas para el producto 2 debe ser  '+$("#cmgttm2").val()+' toneladas',
+                             text: '',
+                             type: 'warning',
+                             showCancelButton: false,
+                             confirmButtonText: 'Cerrar',
+                             cancelButtonText: '',
+                             closeOnConfirm: true,
+                             closeOnCancel: false
+                         },
+                         function(isConfirm)
+                         {
+                             if(isConfirm){
+                                 return;
+                                 
+                             }
+                         }
+                     )
+                        return;
+                      
+                     }
+
+                }
+    
             }
+    
 
         }
-
+        
 
         $("#btnCrearPedido").attr("disabled", true);
         if($("#txtFechaEntrega").val().trim()=='' ){

@@ -119,6 +119,9 @@
                                         @endif                                        
                                     </td>
                                     <td style="width: 60px;text-align: left;">
+                                    <?php
+                                        $fechacarga =  explode( " ",$item->fechaCarga_dma);
+                                    ?>
                                         @if ($item->modificado>0)
                                             <span class="badge badge-primary">{{$item->modificado}}</span>
                                         @endif                                        
@@ -132,7 +135,7 @@
                                             <span><img src="{{ asset('/') }}img/iconos/cargacompleta.png" border="0"></span>
                                         @endif
                                         @if ( $item->horaCarga!='' )
-                                            <span><img src="{{ asset('/') }}img/iconos/time.png" border="0" title="{{$item->fechaCarga_dma}} {{$item->horaCarga}}"></span>
+                                            <span><img src="{{ asset('/') }}img/iconos/time.png" border="0" title="{{$fechacarga[0] }} {{$item->horaCarga}}"></span>
                                         @endif
                                         @if ( $item->empresaTransporte!='' )
                                             <span><img src="{{ asset('/') }}img/iconos/user.png" border="0" title="{{$item->empresaTransporte}} / {{$item->apellidoConductor}}"></span>

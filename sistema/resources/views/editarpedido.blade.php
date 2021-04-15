@@ -435,8 +435,6 @@
                     cadena+='"idFormaEntrega":"'+  tabla.rows[i].cells[entrega].getElementsByTagName('select')[0].value  + '"';                    
                     cadena+='}, ';   
                     total+= ( parseInt(tabla.rows[i].cells[4].innerHTML.replace('.','')) * parseInt( tabla.rows[i].cells[2].getElementsByTagName('input')[0].value ) );             
-                    alert( parseInt(tabla.rows[i].cells[4].innerHTML.replace('.','')));
-            alert( tabla.rows[i].cells[2].getElementsByTagName('input')[0].value );
                 }
             }
            
@@ -661,7 +659,7 @@
 
         function actualizarPedido(total, cadena, atrasado){
             var ruta= urlApp + "actualizarPedido";
-alert(total);
+
             $.ajax({
                 url: ruta,
                 headers: { 'X-CSRF-TOKEN' : $("#_token").val() },

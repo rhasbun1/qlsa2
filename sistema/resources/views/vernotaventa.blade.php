@@ -270,6 +270,8 @@
                     @else
                         <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                     @endif
+                @elseif( Session::get('idPerfil')=='14' or Session::get('idPerfil')=='15')
+                    <a href="{{ asset('/') }}clienteNotasdeVenta/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                 @else
                     @if ($accion == 1)
                         <a href="{{ asset('/') }}listarNotasdeVenta/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
