@@ -185,9 +185,9 @@
                                             distancia,
                                             tiempoTraslado,
                                             codigo,
-                                            number_format( dato[x].flete, 0, '.', ',' ),
-                                         number_format( dato[x].distancia, 0, '.', ',' ),
-                                         number_format( dato[x].tiempoTraslado, 0, '.', ',' )
+                                            dato[x].flete,
+                                            dato[x].distancia,
+                                            dato[x].tiempoTraslado, 
                                         ];
              
                        }else{
@@ -196,9 +196,9 @@
                                          number_format( dato[x].distancia, 0, '.', ',' ),
                                          number_format( dato[x].tiempoTraslado, 0, '.', ',' ),
                                          codigo,
-                                         number_format( dato[x].flete, 0, '.', ',' ),
-                                         number_format( dato[x].distancia, 0, '.', ',' ),
-                                         number_format( dato[x].tiempoTraslado, 0, '.', ',' ),
+                                         dato[x].flete,
+                                         dato[x].distancia,
+                                         dato[x].tiempoTraslado, 
                                       
                                      ];
 

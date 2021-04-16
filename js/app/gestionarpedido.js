@@ -366,114 +366,118 @@
     function crearPedido(Origen){
         var tabla=document.getElementById('tablaDetallePedidoGranel');
         if($("#idCliente1").val() == 14){
-            var dato = "";
-            if($("#tipoTransporte").val() == 1){
-                if($("#pruebacarga").val() == 1){
-                    for (var i = 1; i < tabla.rows.length; i++){
-                        if(dato == ""){
-                            
-                          if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
-                              dato = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
-                          }
-                          
-                        }
-                    }
-                    if(dato != $("#cmgttn").val()){
-                       swal(
-                        {
-                            title: 'no puede crear pedidos con carga mayor o menor a '+$("#cmgttn").val()+' toneladas',
-                            text: '',
-                            type: 'warning',
-                            showCancelButton: false,
-                            confirmButtonText: 'Cerrar',
-                            cancelButtonText: '',
-                            closeOnConfirm: true,
-                            closeOnCancel: false
-                        },
-                        function(isConfirm)
-                        {
-                            if(isConfirm){
-                                return;
+            if($("#tipoCarga").val() == 1){
+                var dato = "";
+                if($("#tipoTransporte").val() == 1){
+                    if($("#pruebacarga").val() == 1){
+                        for (var i = 1; i < tabla.rows.length; i++){
+                            if(dato == ""){
                                 
+                              if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
+                                  dato = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
+                              }
+                              
                             }
                         }
-                    )
-                       return;
-                      
-                    }
-                
-                }
-            }else{
-                if($("#pruebacarga").val() == 1){
-                    var dato = "";
-                    var dato1 = "";
-
-                    for (var i = 1; i < tabla.rows.length; i++){
-                      if(dato == ""){
+                        if(dato != $("#cmgttn").val()){
+                           swal(
+                            {
+                                title: 'no puede crear pedidos con carga mayor o menor a '+$("#cmgttn").val()+' toneladas',
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'Cerrar',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            },
+                            function(isConfirm)
+                            {
+                                if(isConfirm){
+                                    return;
+                                    
+                                }
+                            }
+                        )
+                           return;
                           
-                        if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
-                            dato = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
                         }
-                        
-                      }
-                      if(dato != ""){
-                        if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
-                            dato1 = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
-                        }
+                    
                     }
-                  
-                    }
-                
-                    if(dato != $("#cmgttm1").val()){
-                        swal(
-                         {
-                             title: 'las toneladas para el producto 1 debe ser  '+$("#cmgttm1").val()+' toneladas',
-                             text: '',
-                             type: 'warning',
-                             showCancelButton: false,
-                             confirmButtonText: 'Cerrar',
-                             cancelButtonText: '',
-                             closeOnConfirm: true,
-                             closeOnCancel: false
-                         },
-                         function(isConfirm)
-                         {
-                             if(isConfirm){
-                                 return;
-                                 
-                             }
-                         }
-                     )
-                        return;
-                      
-                     }
-                     if((parseFloat(dato1)) != $("#cmgttm2").val()){
-                        swal(
-                         {
-                             title: 'las toneladas para el producto 2 debe ser  '+$("#cmgttm2").val()+' toneladas',
-                             text: '',
-                             type: 'warning',
-                             showCancelButton: false,
-                             confirmButtonText: 'Cerrar',
-                             cancelButtonText: '',
-                             closeOnConfirm: true,
-                             closeOnCancel: false
-                         },
-                         function(isConfirm)
-                         {
-                             if(isConfirm){
-                                 return;
-                                 
-                             }
-                         }
-                     )
-                        return;
-                      
-                     }
-
-                }
+                }else{
+                    if($("#pruebacarga").val() == 1){
+                        var dato = "";
+                        var dato1 = "";
     
+                        for (var i = 1; i < tabla.rows.length; i++){
+                          if(dato == ""){
+                              
+                            if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
+                                dato = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
+                            }
+                            
+                          }
+                          if(dato != ""){
+                            if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
+                                dato1 = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
+                            }
+                        }
+                      
+                        }
+                    
+                        if(dato != $("#cmgttm1").val()){
+                            swal(
+                             {
+                                 title: 'las toneladas para el producto 1 debe ser  '+$("#cmgttm1").val()+' toneladas',
+                                 text: '',
+                                 type: 'warning',
+                                 showCancelButton: false,
+                                 confirmButtonText: 'Cerrar',
+                                 cancelButtonText: '',
+                                 closeOnConfirm: true,
+                                 closeOnCancel: false
+                             },
+                             function(isConfirm)
+                             {
+                                 if(isConfirm){
+                                     return;
+                                     
+                                 }
+                             }
+                         )
+                            return;
+                          
+                         }
+                         if((parseFloat(dato1)) != $("#cmgttm2").val()){
+                            swal(
+                             {
+                                 title: 'las toneladas para el producto 2 debe ser  '+$("#cmgttm2").val()+' toneladas',
+                                 text: '',
+                                 type: 'warning',
+                                 showCancelButton: false,
+                                 confirmButtonText: 'Cerrar',
+                                 cancelButtonText: '',
+                                 closeOnConfirm: true,
+                                 closeOnCancel: false
+                             },
+                             function(isConfirm)
+                             {
+                                 if(isConfirm){
+                                     return;
+                                     
+                                 }
+                             }
+                         )
+                            return;
+                          
+                         }
+    
+                    }
+        
+                }
+
             }
+            
     
 
         }
