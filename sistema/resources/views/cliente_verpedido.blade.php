@@ -9,6 +9,8 @@
         </div>
         <div class="padding-md clearfix">
         	<div>
+                <input class="form-control input-sm"  id="estadoped" value="{{ $pedido[0]->idEstadoPedido }}" type="hidden">
+
                 <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         		<div class="row" style="padding-top: 5px">
         			<div class="col-sm-2 col-md-2 col-lg-1">
@@ -223,8 +225,8 @@
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
             @if (  Session::get('idPerfil')=='14')
 
-                <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>
-                <a href="{{ asset('/') }}editarPedido/{{ $pedido[0]->idPedido }}/" class="btn btn-sm btn-success" style="width:100px">Modificar</a>
+                <button class="btn btn-sm btn-danger" id="suspender" onclick="abrirCajaSuspender();">Suspender</button>
+                <a href="{{ asset('/') }}editarPedido/{{ $pedido[0]->idPedido }}/" id="modificar" class="btn btn-sm btn-success" style="width:100px">Modificar</a>
             @endif
             <a href="{{ asset('/') }}clientePedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                    
         </div>  
@@ -293,6 +295,18 @@
     <script src="{{ asset('/') }}js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
+
+            if($("#estadoped").val()==1){
+                $("#modificar").show();
+                $("#suspender").show();
+
+            }else{
+
+                $("#modificar").hide();
+                $("#suspender").hide();
+
+            }
+            
             // Datepicker      
             $('.date').datepicker({
                 todayHighlight: true,

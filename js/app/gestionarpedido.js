@@ -366,9 +366,19 @@
     function crearPedido(Origen){
         var tabla=document.getElementById('tablaDetallePedidoGranel');
         if($("#idCliente1").val() == 14){
+            var dato = "";
             if($("#tipoTransporte").val() == 1){
                 if($("#pruebacarga").val() == 1){
-                    if(tabla.rows[1].cells[7].getElementsByTagName('input')[0].value.trim() != $("#cmgttn").val()){
+                    for (var i = 1; i < tabla.rows.length; i++){
+                        if(dato == ""){
+                            
+                          if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
+                              dato = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
+                          }
+                          
+                        }
+                    }
+                    if(dato != $("#cmgttn").val()){
                        swal(
                         {
                             title: 'no puede crear pedidos con carga mayor o menor a '+$("#cmgttn").val()+' toneladas',
@@ -1116,13 +1126,11 @@
                         function(isConfirm)
                         {
                             if(isConfirm){
-                                if(Origen=='QL'){
+                               
                                     //location.href= urlApp + "gestionarpedido/"+ $("#txtNumeroNotaVenta").val() + "/"; 
                                     actualizarDetalleNotaVenta();
 
-                                }else{
-                                    location.href= urlApp + "clienteGestionarPedido/"+ $("#txtNumeroNotaVenta").val() + "/"; 
-                                }
+                                
                             }else{
                                 if(Origen=='QL'){
                                     location.href= urlApp + "listarPedidos";

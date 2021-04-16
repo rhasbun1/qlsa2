@@ -94,7 +94,6 @@
                                 <th >Estado</th>
                                 <th >Cliente</th>
                                 <th>Obra/Planta</th>
-                                <th >Producto</th>
                                 <th>Fecha de Entrega</th>
                                 <th>Total ($)</th>
                             </thead>
@@ -107,7 +106,6 @@
                                     <td style="width: 120px">{{ $item->estado }}</td>
                                     <td style="width: 120px">{{ $item->emp_nombre }}</td>
                                     <td style="width: 120px">{{ $item->Obra }}</td>
-                                    <td style="width: 120px">{{ $item->prod_nombre }}</td>
                                     <td style="width: 120px">{{ $item->fechaEntrega }}</td>
                                     <td style="width: 120px">{{ number_format($item->total, 0, ",", ".") }}</td>
 
