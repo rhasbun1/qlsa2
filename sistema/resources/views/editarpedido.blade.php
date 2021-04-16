@@ -139,8 +139,8 @@
                             @endif    
                         </td>   
                         <td> {{ $item->u_nombre }} </td>
-                            <td id="preciot" align="right">{{ number_format( $item->cp_precio, 0, ',', '.' ) }}</td>
-                            <td id="totalta" align="right">{{ number_format( $item->cp_precio * $item->cantidad , 0, ',', '.' ) }}</td>
+                            <td id="preciot"  align="right">{{ number_format( $item->cp_precio, 0, ',', '.' ) }}</td>
+                            <td id="totalta"  align="right">{{ number_format( $item->cp_precio * $item->cantidad , 0, ',', '.' ) }}</td>
                         <td> 
                             @if( $item->numeroGuia==0 )
                                 <select id="listaPlantas" class="form-control input-sm">
@@ -714,6 +714,7 @@
 
 
         $(document).ready(function() {
+            var tabla=$("#tablaDetalle").DataTable();
 
             $("#tfootp").hide();
             if($("#idCliente").val() == 14){
@@ -722,8 +723,7 @@
                 $("#tfootp").hide();
                 $("#precio").hide();
                 $("#totalt").hide();
-                $("#preciot").hide();
-                $("#totalta").hide();
+                tabla.columns([4,5]).visible(false, false);
 
                 
                 
@@ -734,11 +734,11 @@
                 $("#clienteocultar").hide();
                 $("#cliocul").show();
                 $("#tfootp").show();
-                $("#preciot").show();
-                $("#totalta").show();
+               
 
                 
             }
+            
             // Datepicker      
             $('.date').datepicker({
                 todayHighlight: true,

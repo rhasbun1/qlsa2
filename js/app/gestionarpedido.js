@@ -368,44 +368,49 @@
         if($("#idCliente1").val() == 14){
             if($("#tipoCarga").val() == 1){
                 var dato = "";
+                var dato9 = "";
                 if($("#tipoTransporte").val() == 1){
-                    if($("#pruebacarga").val() == 1){
                         for (var i = 1; i < tabla.rows.length; i++){
                             if(dato == ""){
                                 
                               if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
                                   dato = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
+                                  dato9 = tabla.rows[x].cells[9].getElementsByTagName('select')[0].value;
                               }
                               
                             }
                         }
-                        if(dato != $("#cmgttn").val()){
-                           swal(
-                            {
-                                title: 'no puede crear pedidos con carga mayor o menor a '+$("#cmgttn").val()+' toneladas',
-                                text: '',
-                                type: 'warning',
-                                showCancelButton: false,
-                                confirmButtonText: 'Cerrar',
-                                cancelButtonText: '',
-                                closeOnConfirm: true,
-                                closeOnCancel: false
-                            },
-                            function(isConfirm)
-                            {
-                                if(isConfirm){
-                                    return;
-                                    
-                                }
-                            }
-                        )
-                           return;
-                          
+                        if(dato9 == 1){
+                            if(dato != $("#cmgttn").val()){
+                                swal(
+                                 {
+                                     title: 'no puede crear pedidos con carga mayor o menor a '+$("#cmgttn").val()+' toneladas',
+                                     text: '',
+                                     type: 'warning',
+                                     showCancelButton: false,
+                                     confirmButtonText: 'Cerrar',
+                                     cancelButtonText: '',
+                                     closeOnConfirm: true,
+                                     closeOnCancel: false
+                                 },
+                                 function(isConfirm)
+                                 {
+                                     if(isConfirm){
+                                         return;
+                                         
+                                     }
+                                 }
+                             )
+                                return;
+                               
+                             }
+                         
+
                         }
+                       
                     
-                    }
                 }else{
-                    if($("#pruebacarga").val() == 1){
+                   
                         var dato = "";
                         var dato1 = "";
     
@@ -414,6 +419,8 @@
                               
                             if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
                                 dato = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
+                                dato9 = tabla.rows[x].cells[9].getElementsByTagName('select')[0].value;
+
                             }
                             
                           }
@@ -424,7 +431,7 @@
                         }
                       
                         }
-                    
+                    if(dato9 == 1){
                         if(dato != $("#cmgttm1").val()){
                             swal(
                              {
@@ -472,7 +479,7 @@
                           
                          }
     
-                    }
+                        }
         
                 }
 
