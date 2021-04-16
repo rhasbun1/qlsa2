@@ -124,6 +124,8 @@
                     <th>Conductor</th>
                     <th>Fecha Carga</th>
                     <th>Hora Carga</th>
+                    <th style="display: none;">Total</th>
+
                 </thead>
         
                 <tbody>
@@ -187,6 +189,8 @@
                         <td> {{ $item->nombreConductor }} </td>
                         <td> {{ $item->fechaCarga }} </td>
                         <td> {{ $item->horaCarga }} </td>
+                        <td style="display: none;">{{ number_format( $item->cp_precio * $item->cantidad , 0, ',', '.' ) }}</td>
+
                     </tr>
                     @endforeach
                 </tbody>
@@ -325,8 +329,15 @@
         
                   
                     var cantidad = tabla.rows.length;
+                    if($("#idCliente").val() == 14){
+                        var fila = 4;
+                    }else{
+                        var fila = 6;
+                    }
+
+
                     if(cantidad > 5){
-                        if(tabla.rows[1].cells[6].getElementsByTagName('select')[0].value != tabla.rows[2].cells[6].getElementsByTagName('select')[0].value){
+                        if(tabla.rows[1].cells[fila].getElementsByTagName('select')[0].value != tabla.rows[2].cells[fila].getElementsByTagName('select')[0].value){
                             swal(
                                 {
                                     title: 'La Planta De Origen Tiene Que Ser La Misma Para Ambos Productos!!' ,
@@ -417,11 +428,13 @@
 
             var cont=0;
             if($("#idCliente").val() == 14){
-                var planta = 6;
-                var entrega = 7;
+                var planta = 4;
+                var entrega = 5;
+                var tot = 11;
              }else{
                 var planta = 6;
                 var entrega = 7;
+                var tot = 4;
 
             }
             var cadena='[';
@@ -434,7 +447,7 @@
                     cadena+='"idPlanta":"'+  tabla.rows[i].cells[planta].getElementsByTagName('select')[0].value  + '",';
                     cadena+='"idFormaEntrega":"'+  tabla.rows[i].cells[entrega].getElementsByTagName('select')[0].value  + '"';                    
                     cadena+='}, ';   
-                    total+= ( parseInt(tabla.rows[i].cells[4].innerHTML.replace('.','')) * parseInt( tabla.rows[i].cells[2].getElementsByTagName('input')[0].value ) );             
+                    total+= ( parseInt(tabla.rows[i].cells[tot].innerHTML.replace('.','')) * parseInt( tabla.rows[i].cells[2].getElementsByTagName('input')[0].value ) );             
                 }
             }
            
