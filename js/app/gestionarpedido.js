@@ -375,7 +375,7 @@
                                 
                               if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
                                   dato = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
-                                  dato9 = tabla.rows[x].cells[9].getElementsByTagName('select')[0].value;
+                                  dato9 = tabla.rows[i].cells[9].getElementsByTagName('select')[0].value;
                               }
                               
                             }
@@ -419,7 +419,7 @@
                               
                             if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim() !=  ""){
                                 dato = tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim();
-                                dato9 = tabla.rows[x].cells[9].getElementsByTagName('select')[0].value;
+                                dato9 = tabla.rows[i].cells[9].getElementsByTagName('select')[0].value;
 
                             }
                             
