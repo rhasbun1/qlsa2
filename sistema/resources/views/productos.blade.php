@@ -374,17 +374,16 @@
                     type: 'POST',
                     dataType: 'json',
                     data: { 
-                            idProductoListaPrecios: productoListaPrecioID,    
-                            codigoProducto: $("#selProductos").val(),
-                            nombreProducto: $("#selProductos option:selected").text(),
-                            unidad: $("#selUnidades option:selected").html(),
-                            idPlanta: $("#selPlantas").val(),
-                            precioReferencia: $("#precioReferencia").val(),
-                            requiereDiseno: $("#requiereDiseno").val(),
-                            granel: $("#granel").val(),
-                            solicitaCertificado: $("#solicitaCertificado").val(),
-                            codigoSoftland: $("#codigoSoftland").val(),
-                            tiempoProduccion: $("#tiempoProduccion").val()
+                             idProductoListaPrecios: productoListaPrecioID,    
+                             nombreProducto: $("#selProductos option:selected").text(),
+                             unidad: $("#selUnidades option:selected").html(),
+                             idPlanta: $("#selPlantas").val(),
+                             precioReferencia: $("#precioReferencia").val(),
+                             requiereDiseno: $("#requiereDiseno").val(),
+                             granel: $("#granel").val(),
+                             solicitaCertificado: $("#solicitaCertificado").val(),
+                             codigoSoftland: $("#codigoSoftland").val(),
+                             tiempoProduccion: $("#tiempoProduccion").val()
                           },
                     success:function(dato){
                         var table = $('#tabla').DataTable();
@@ -396,13 +395,17 @@
                                     $("#selUnidades option:selected").html(),
                                     $("#selPlantas option:selected").html() ,
                                     $("#precioReferencia").val(),
+                                    $("#precioReferencia").val(),
+
                                     $("#codigoSoftland").val(),
                                     $("#requiereDiseno option:selected").html(),
                                     $("#granel option:selected").html(),
                                     $("#solicitaCertificado option:selected").html(),
                                     $("#tiempoProduccion").val(),
                                     '<td style="width:40px"><button class="btn btn-xs btn btn-warning btnEditar" title="Editar"><i class="fa fa-edit fa-lg"></i></button>' + 
-                                    '<button class="btn btn-xs btn btn-danger btnEliminar" title="Eliminar"><i class="fa fa-trash-o fa-lg"></i></button></td>'
+                                    '<button class="btn btn-xs btn btn-danger btnEliminar" title="Eliminar"><i class="fa fa-trash-o fa-lg"></i></button></td>',
+                                    $("#precioReferencia").val()
+
                                     ] ).draw();
                                                                               
                         }else{
@@ -411,11 +414,15 @@
                             table.cell(fila,2).data( $("#selUnidades option:selected").html() );                 
                             table.cell(fila,3).data( $("#selPlantas option:selected").html() );
                             table.cell(fila,4).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
+                            table.cell(fila,5).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
+
                             table.cell(fila,6).data( $("#codigoSoftland").val() );
                             table.cell(fila,7).data( $("#requiereDiseno option:selected").html() );
                             table.cell(fila,8).data( $("#granel option:selected").html() );
                             table.cell(fila,9).data( $("#solicitaCertificado option:selected").html() ); 
                             table.cell(fila,10).data( $("#tiempoProduccion").val() );
+                            table.cell(fila,11).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
+
                             table.cell(fila,10).draw();                
                         }
                         cerrarModProducto();
