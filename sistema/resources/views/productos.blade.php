@@ -43,12 +43,12 @@
                     <th style="width:150px">Producto</th>
                     <th style="width:70px">Unidad</th>
                     <th style="width:70px">Planta</th>
-                    <th style="text-align: right;">Precio Ref. ($)</th>
+                    <th style="width:70px">Precio Ref. ($)</th>
                     <th style="text-align: right; display:none;">Precio Ref. ($)</th>
                     <th>Cód.Softland</th>
-                    <th style="text-align: center;">Requiere Diseño</th>
-                    <th style="text-align: center;">Granel</th>
-                    <th style="text-align: center;">Certificado</th>
+                    <th style="width:70px">Requiere Diseño</th>
+                    <th style="width:70px">Granel</th>
+                    <th style="width:70px">Certificado</th>
                     <th>Tiempo Producción (Horas)</th>
                     @if ( Session::get('idPerfil')=='1' or
                                     Session::get('idPerfil')=='2' or
@@ -67,16 +67,16 @@
                             <td style="width:150px">{{ $item->prod_nombre }}</td>
                             <td style="width:70px">{{ $item->u_nombre }}</td>
                             <td style="width:70px">{{ $item->nombrePlanta }}</td>
-                            <td style="text-align: right;">{{ number_format( $item->precioReferencia, 0, ',', '.')  }}</td>
+                            <td style="width:70px">{{ number_format( $item->precioReferencia, 0, ',', '.')  }}</td>
                             <td style="text-align: right; display:none;">{{ number_format( $item->precioReferencia, 0, '.', ',')  }}</td>
                             <td>{{ $item->codigoSoftland }}</td>
-                            <td style="text-align: center;">
+                            <td style="width:70px">
                                 @if($item->requiereDiseno==1) SI @else NO @endif
                             </td>
-                            <td style="text-align: center;">
+                            <td style="width:70px">
                                 @if($item->granel==1) SI @else NO @endif
                             </td>    
-                            <td style="text-align: center;">@if($item->solicitaCertificado==1) SI @else NO @endif</td>
+                            <td style="width:70px">@if($item->solicitaCertificado==1) SI @else NO @endif</td>
                             <td>{{ $item->tiempoProduccion }}</td>
                             @if ( Session::get('idPerfil')=='1' or
                                     Session::get('idPerfil')=='2' or
@@ -425,6 +425,8 @@
 
                             table.cell(fila,10).draw();                
                         }
+                        table.columns([5,12]).visible(false, false);
+
                         cerrarModProducto();
                     }
 
