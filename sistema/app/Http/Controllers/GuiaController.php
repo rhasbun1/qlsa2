@@ -607,7 +607,7 @@ class GuiaController extends Controller
 
         $guia=DB::Select('call spGetGuiaDespacho(?, ?)', array(1, $numeroGuia));
 
-        $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
+        $mj = new \Mailjet\Client('a72036914344c6d8d14466fdd90a9515','a058d7e4f920dfc4a0f34995c92034f8',true,['version' => 'v3.1']);
 
         $correoDestinatario=$guia[0]->usu_correo;
 

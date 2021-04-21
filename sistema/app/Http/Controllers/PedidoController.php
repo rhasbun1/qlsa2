@@ -608,7 +608,7 @@ class PedidoController extends Controller
     }
 
     public function correoPedidoSuspendido($idPedido, $motivo, $correoDestinatario){
-        $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
+        $mj = new \Mailjet\Client('a72036914344c6d8d14466fdd90a9515','a058d7e4f920dfc4a0f34995c92034f8',true,['version' => 'v3.1']);
 
         $mensaje="<h3>AVISO DE PEDIDO SUSPENDIDO</h3><br><br>";
         $mensaje=$mensaje."Estimado Usuario,<br><br>";
@@ -656,7 +656,7 @@ class PedidoController extends Controller
         //accion 1 indica que corresponde a una solicitud de autorización de un pedido urgente
         $datos=DB::Select('call spInsSolicitudCorreo(?,?,?)', array( $idUsuario, $idPedido, $accion ) );
 
-        $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
+        $mj = new \Mailjet\Client('a72036914344c6d8d14466fdd90a9515','a058d7e4f920dfc4a0f34995c92034f8',true,['version' => 'v3.1']);
 
         $correoDestinatario=$datos[0]->correoUsuarioAutoriza;
 
@@ -728,7 +728,7 @@ class PedidoController extends Controller
         
         $datos=DB::Select('call spUpdAutorizaPedidoUrgente(?)', array( $token ) );
 
-        $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
+        $mj = new \Mailjet\Client('a72036914344c6d8d14466fdd90a9515','a058d7e4f920dfc4a0f34995c92034f8',true,['version' => 'v3.1']);
 
         $perfilesNotificacion='5, 7';
         $usuariosDestinatarios=DB::Select('call spGetDestinatariosNotificacion(?,?)', array( $datos[0]->idPedido, $perfilesNotificacion ) ) ;
@@ -773,7 +773,7 @@ class PedidoController extends Controller
 
 
     public function correoResumenActividad(){
-        $mj = new \Mailjet\Client('7e1b8279de89cc11edbbdd25707e64fe','f38f51863583fedaf2fa16d41525964e',true,['version' => 'v3.1']);
+        $mj = new \Mailjet\Client('a72036914344c6d8d14466fdd90a9515','a058d7e4f920dfc4a0f34995c92034f8',true,['version' => 'v3.1']);
 
         $correoDestinatario='nbastias@spsgroup.cl';
 
