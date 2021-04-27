@@ -304,7 +304,7 @@
 									    @if ( Session::get('idPerfil')=='1')									
 											<li><a href="{{ asset('/') }}parametros"><span class="submenu-label">Parámetros</span></a></li>
 										@endif
-									    @if ( Session::get('idPerfil')!='0')									
+									    @if ( Session::get('idPerfil')=='1')									
 											<li><a href="{{ asset('/') }}registroAcciones"><span class="submenu-label">Consultar Registro de Acciones</span></a></li>
 										@endif										
 										@if (Session::get('idPerfil')=='1' or Session::get('idPerfil')=='5' or Session::get('idPerfil')=='7' or Session::get('idPerfil')=='12')

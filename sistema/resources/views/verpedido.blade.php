@@ -105,7 +105,7 @@
                         Observaciones
                     </div>
                     <div class="col-lg-8 col-md-7 col-sm-6">
-                        <textarea class="form-control input-sm" readonly rows="2">{{ $pedido[0]->observaciones }}</textarea>
+                        <textarea style="background-color:white !important; color:red; border:solid 1px orange;" class="form-control input-sm" readonly rows="2">{{ $pedido[0]->observaciones }}</textarea>
                     </div>                                                      
                 </div>
                 @if ($pedido[0]->noExcederCantidadSolicitada==1)
@@ -303,7 +303,8 @@
                     @endif
                 @endif
             @elseif ($accion=='6')
-                <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedidoCliente();">Aprobar</button>                                      
+                <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedidoCliente();">Aprobar</button>
+                <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>                                      
             @endif
 
             <!-- Mostrar boton "Pasar a Historico" sólo si NO es pedido en historico -->

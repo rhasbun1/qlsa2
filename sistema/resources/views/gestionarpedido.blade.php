@@ -330,8 +330,14 @@
                             Observaciones (máx.100 carac.)
                             <input id="txtObservaciones" class="form-control input-sm" maxlength="100">
                         </div>
-                        <div class="col-sm-4 col-md-3" style="padding-top: 20px">  
-                            <label class="label-checkbox"><input type="checkbox" id="noExcederCantidad"><span class="custom-checkbox"></span>No exceder la cantidad solicitada</label>                 
+                        <div class="col-sm-4 col-md-3" style="padding-top: 20px">
+                            @foreach($NotadeVenta as $item)
+                                @if($item->condiciondePago == "contado" || $item->condiciondePago == "Contado")
+                                    <label class="label-checkbox"><input checked type="checkbox" id="noExcederCantidad"><span class="custom-checkbox"></span>No exceder la cantidad solicitada</label>
+                                @else
+                                    <label class="label-checkbox"><input type="checkbox" id="noExcederCantidad"><span class="custom-checkbox"></span>No exceder la cantidad solicitada</label>
+                                @endif
+                            @endforeach                 
                         </div>                     
                     </div>
                     <div class="row">
