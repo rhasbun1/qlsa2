@@ -213,7 +213,7 @@ class PedidoController extends Controller
     public function aprobarPedido(Request $datos){
         if($datos->ajax()){
             $pedido=DB::Select("call spUpdAprobarPedido(?,?)", array( $datos->input('idPedido'), Session::get('idUsuario')  ));
-         //   $this->avisoPedidoAprobado($datos->input('idPedido'));                     
+         //   $this->avisoPedidoAprobado($datos->input('idPedido'));                         
             return response()->json([
                 "identificador" => $pedido[0]->idPedido
             ]);
@@ -386,7 +386,7 @@ class PedidoController extends Controller
                             $datos->input('atrasado')
                             ) 
                         ); 
-
+          
             if ($detalle != null){
                 foreach ( $detalle as $item){
                     DB::Select("call spInsPedidoDetalle(?,?,?,?,?,?,?,?)", array( $idPedido[0]->idPedido, $item->idNotaVenta, $item->prod_codigo, $item->u_codigo, $item->cantidad, $item->precio, $item->idPlanta, $item->idFormaEntrega) );

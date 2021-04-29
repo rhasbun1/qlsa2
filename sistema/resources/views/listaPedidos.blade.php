@@ -207,7 +207,31 @@
                 data: { idPedido: idPedido
                       },
                 success:function(dato){
-                    btn.style.visibility = 'hidden';   
+                    console.log(dato.identificador);
+                    if(dato.identificador == 0){
+                        swal(
+                                {
+                                    title: '¡¡El pedido ya fue aprobado!!' ,
+                                    text: 'por favor refresque la pagina',
+                                    type: 'warning',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'OK',
+                                    cancelButtonText: '',
+                                    closeOnConfirm: true,
+                                    closeOnCancel: false
+                                },
+                                function(isConfirm)
+                                {
+                                    if(isConfirm){
+                                        return;                         
+                                    }
+                                }
+                            );
+                    }else{
+                     btn.style.visibility = 'hidden';
+                   // location.reload(true);     
+                    }
+                   
                 }
             })
         }

@@ -160,23 +160,45 @@ function aprobarPedido(idPedido){
         data: { idPedido: idPedido
               },
         success:function(dato){
-            swal(
-                {            
-                    title: 'El pedido ha sido Aprobado!' ,
-                    text: '',
-                    type: 'warning',
-                    showCancelButton: false,
-                    confirmButtonText: 'OK',
-                    cancelButtonText: '',
-                    closeOnConfirm: true,
-                    closeOnCancel: false
-                },
-                function(isConfirm)
-                {
-                    location.href= urlApp + "listarPedidos";
-                    return;
-                }
-            )            
+            console.log(dato.identificador);
+            if(dato.identificador == 0){
+                swal(
+                    {
+                        title: '¡¡El pedido ya fue aprobado!!' ,
+                        text: 'por favor refresque la pagina',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    },
+                    function(isConfirm)
+                    {
+                        if(isConfirm){
+                            return;                         
+                        }
+                    }
+                );
+            }else{
+                swal(
+                    {            
+                        title: 'El pedido ha sido Aprobado!' ,
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    },
+                    function(isConfirm)
+                    {
+                        location.href= urlApp + "listarPedidos";
+                        return;
+                    }
+                )               
+            }
         }
     })
 }

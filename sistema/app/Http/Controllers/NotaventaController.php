@@ -64,7 +64,7 @@ class NotaventaController extends Controller
                             ) 
                         );  
 
-
+           
             foreach ( $detalle as $item){
                 DB::Select("call spInsNotaVentaDetalle(?,?,?,?,?,?,?,?)", array( $idnotaventa[0]->idNotaVenta, $item->prod_codigo, $item->formula, $item->cantidad, $item->u_codigo, $item->precio, $item->idPlanta, $item->idFormaEntrega ) );
             }

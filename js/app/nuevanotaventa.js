@@ -515,13 +515,16 @@
             cadena+='"cantidad":"'+  tabla.rows[i].cells[3].getElementsByTagName('input')[0].value  + '", ';
             cadena+='"formula":"'+  tabla.rows[i].cells[1].getElementsByTagName('input')[0].value + '", ';
             cadena+='"u_codigo":"'+  tabla.rows[i].cells[4].innerHTML  + '", ';
-            cadena+='"precio":"'+  tabla.rows[i].cells[5].innerHTML.replace('.','')  + '", ';
+            cadena+='"precio":"'+  tabla.rows[i].cells[5].innerHTML.replace('.','').replace('.','')  + '", ';
             cadena+='"idPlanta":"'+  tabla.rows[i].cells[7].getElementsByTagName('select')[0].value + '", ';
             cadena+='"idFormaEntrega":"'+  tabla.rows[i].cells[8].getElementsByTagName('select')[0].value + '"';
             cadena+='}, ';
-
+           
 
         }
+     
+
+        
 
 
         if (errorPlantaFormaEntrega){
