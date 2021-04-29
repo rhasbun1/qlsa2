@@ -333,7 +333,7 @@
                         <div class="col-sm-4 col-md-3" style="padding-top: 20px">
                             @foreach($NotadeVenta as $item)
                                 @if($item->condiciondePago == "contado" || $item->condiciondePago == "Contado")
-                                    <label class="label-checkbox"><input checked type="checkbox" id="noExcederCantidad"><span class="custom-checkbox"></span>No exceder la cantidad solicitada</label>
+                                    <label class="label-checkbox"><input disabled checked type="checkbox" id="noExcederCantidad"><span class="custom-checkbox"></span>No exceder la cantidad solicitada</label>
                                 @else
                                     <label class="label-checkbox"><input type="checkbox" id="noExcederCantidad"><span class="custom-checkbox"></span>No exceder la cantidad solicitada</label>
                                 @endif

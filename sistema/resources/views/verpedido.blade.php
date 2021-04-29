@@ -232,7 +232,7 @@
                             <td></td>
                             <td></td>
                             <td align="right"><b>Neto $</b></td>
-                            <td align="right"><b>{{ number_format( $pedido[0]->totalNeto, 0, ',', '.' ) }} </b></td>
+                            <td align="right"><b>{{ number_format($pedido[0]->totalNeto, 0, ',', '.' ) }} </b></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -312,8 +312,7 @@
             @if($plantilla!='plantilla2') 
                 @if ($accion=='3' or $accion=='1')
                     @if ( ( $pedido[0]->cerrada==0 and $pedido[0]->idEstadoPedido <= '3') and 
-                        (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7' or 
-                         Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3') )
+                        (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') )
 
                         @if( $pedido[0]->idEstadoPedido <= '0' or ( $despachado>0 and $sinDespachar>0) )
                             <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>

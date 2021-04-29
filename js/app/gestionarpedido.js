@@ -607,7 +607,7 @@
                     cont++;
                 }else{
                     productosSolicitados++;
-                    total+= ( parseInt(tabla.rows[x].cells[3].innerHTML.replace('.','')) * parseInt( tabla.rows[x].cells[7].getElementsByTagName('input')[0].value ) );
+                    total+= ( parseInt(tabla.rows[x].cells[3].innerHTML.replace('.','').replace('.','')) * parseInt( tabla.rows[x].cells[7].getElementsByTagName('input')[0].value ) );
                     if(tabla.rows[x].cells[5].innerHTML.trim()=='tonelada'){
                         if ($("#tipoCarga").val()=='1'){
                             toneladas+=parseInt( tabla.rows[x].cells[7].getElementsByTagName('input')[0].value )
@@ -877,7 +877,7 @@
                 cadena+='"prod_codigo":"'+  tabla.rows[i].cells[0].innerHTML  + '", ';
                 cadena+='"u_codigo":"'+  tabla.rows[i].cells[5].innerHTML  + '", ';
                 cadena+='"cantidad":"'+  tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.replace(",", ".") + '", ';
-                cadena+='"precio":"'+  tabla.rows[i].cells[3].innerHTML.replace('.','')  + '", ';
+                cadena+='"precio":"'+  tabla.rows[i].cells[3].innerHTML.replace('.','').replace('.','')   + '", ';
 
                 if($("#tipoCarga").val()=='1'){
                     cadena+='"idPlanta":"'+  tabla.rows[i].cells[8].getElementsByTagName('select')[0].value  + '",';
@@ -891,6 +891,7 @@
         }
         cadena=cadena.slice(0,-2);
         cadena=cadena+="]";
+        console.log(cadena);
 
         var noExceder=0;
 
