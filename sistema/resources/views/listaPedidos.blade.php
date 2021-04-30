@@ -211,7 +211,7 @@
                     if(dato.identificador == 0){
                         swal(
                                 {
-                                    title: '¡¡El pedido ya fue aprobado!!' ,
+                                    title: '¡¡El pedido fue modificado anteriormente porfavor actualizar pagina!!' ,
                                     text: 'por favor refresque la pagina',
                                     type: 'warning',
                                     showCancelButton: false,
@@ -223,13 +223,14 @@
                                 function(isConfirm)
                                 {
                                     if(isConfirm){
+                                        location.reload(true); 
                                         return;                         
                                     }
                                 }
                             );
                     }else{
                      btn.style.visibility = 'hidden';
-                   // location.reload(true);     
+                     location.reload(true);     
                     }
                    
                 }
