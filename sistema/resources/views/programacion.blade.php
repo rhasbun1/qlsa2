@@ -8,7 +8,7 @@
             <div class="panel-tab clearfix">
                 <ul class="tab-bar">
                     <li class="active"><a href="#tabAprobados" data-toggle="tab"><b>Pedidos Aprobados</b></a></li>
-                    @if(Session::get('idPerfil')!='9' and Session::get('idPerfil')!='6') 
+                    @if(Session::get('idPerfil')!='6') 
                         <li><a href="#tabPendientes" data-toggle="tab"><b>Pedidos Pendientes de Aprobación</b></a></li>
                     @endif     
                 </ul>
@@ -19,7 +19,7 @@
             <input type="hidden" id="idPerfil" value="{{ Session::get('idPerfil') }}">            
             <div class="tab-content clearfix">
 
-                @if(Session::get('idPerfil')=='10') 
+                @if(Session::get('idPerfil')=='10' and Session::get('idPerfil')=='9') 
                     <div class="tab-pane active" id="tabAprobados" style="padding-top: 5px;max-width: 1720px">
                 @else
                     <div class="tab-pane active" id="tabAprobados" style="padding-top: 5px;max-width: 1820px">
@@ -81,7 +81,7 @@
                             <th style="width:200px">Cliente</th>
                             <th style="width:200px">Obra/Planta</th>
 
-                            @if( Session::get('idPerfil')=='10' )
+                            @if( Session::get('idPerfil')=='10' and Session::get('idPerfil')=='9' )
                                 <th style="width:120px">Fecha Carga</th>
                                 <th style="width:150px">Transporte</th>
                                 <th style="width:50px">Planta Origen</th>
@@ -196,7 +196,7 @@
                         </tbody>            
                     </table>
                 </div>
-                @if(Session::get('idPerfil')!='9' and Session::get('idPerfil')!='6') 
+                @if(Session::get('idPerfil')!='6') 
                     <div class="tab-pane" id="tabPendientes" style="padding-top: 5px">
                         <table id="tablaPendientes" class="pedidos table table-hover table-condensed">
                             <thead>

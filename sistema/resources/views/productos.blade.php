@@ -36,7 +36,7 @@
             
         </div>
 
-        <div class="padding-md clearfix">           
+        <div id="divTabla" style="display:none;" class="padding-md clearfix">           
             <table id="tabla" class="table table-hover table-condensed table-responsive"  style="width: 100%">
                 <thead>
                     <th style="display: none">ID</th>
@@ -574,7 +574,7 @@
 
             // DataTable
            if($("#txtPerfil").val() == 1 || $("#txtPerfil").val() == 2 || $("#txtPerfil").val() == 4 ||
-           $("#txtPerfil").val() == 5 ||$("#txtPerfil").val() == 18 ){
+           $("#txtPerfil").val() == 5 ||$("#txtPerfil").val() == 18 ){          
             var table=$('#tabla').DataTable({
                 orderCellsTop: true,        
                 fixedHeader: true,  
@@ -582,7 +582,7 @@
                 "language": {
                   "thousands": ".",
                   "decimal": ","
-                 },
+                 },              
                 "order": [[ 1, "asc" ]],
                 "columnDefs": [ {
                     "targets": 0,
@@ -620,7 +620,13 @@
                         
                     }
                 ],                  
-                language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                initComplete: function( settings, json){
+                    var divTabla = document.getElementById('divTabla');
+                     divTabla.style.display="block";
+                     var api = this.api();
+                     api.draw();
+                 }
             });
 
 
@@ -670,7 +676,12 @@
                         
                     }
                 ],                  
-                language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
+                language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                initComplete: function( settings, json){
+                     divTabla.style.display="block";
+                     var api = this.api();
+                     api.draw();
+                 }
             });
         }
              

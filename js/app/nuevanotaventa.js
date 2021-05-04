@@ -326,12 +326,70 @@
         // evito que propague el submit
         e.preventDefault();
         // agrego la data del form a formData
-        crearNotaVenta();
+        verSiExistePlanta();
+
+        
 
     });    
 
+    function verSiExistePlanta(){
+        var tabla = document.getElementById('tablaDetalle');
+        var seguir = 1;
+
+        for (var i = 1; i < tabla.rows.length; i++){
+                var codigoPlanta = tabla.rows[i].cells[7].getElementsByTagName('select')[0].value;
+                var codigoUnidad = tabla.rows[i].cells[4].innerHTML;
+                var codigoProducto =  tabla.rows[i].cells[0].innerHTML;
+            $.ajax({
+                async: false,
+                url: urlApp + 'selectPlantas',
+                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                type: 'POST',
+                dataType: 'json',
+                data: { 
+                    codigoProducto: codigoProducto,                
+                    codigoUnidad: codigoUnidad,
+                    codigoPlanta: codigoPlanta
+                    },
+            success:function(data){
+                if(data.identificador==0){
+                    seguir= 0;
+                    swal(
+                        {
+                            title: 'El producto no esta en la planta seleccionada',
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            return;
+                        }
+                    )
+                    return; 
+                }
+
+                if(seguir == 1){
+                    crearNotaVenta();
+                }else{
+                    return;
+                }
+            },
+            error: function(jqXHR, text, error){
+                alert('Error!, No se pudo Añadir los datos');
+            }
+        });
+
+        }
+    }
+
 
     function crearNotaVenta(){
+
         
         if($("#txtNumeroCotizacion").val()==''){
             swal(
@@ -433,6 +491,7 @@
           if(!existe){
             return;
           }
+         
 
 
         if( document.getElementById('idUsuarioEncargado').selectedIndex<1 ){
@@ -518,10 +577,53 @@
             cadena+='"precio":"'+  tabla.rows[i].cells[5].innerHTML.replace('.','').replace('.','')  + '", ';
             cadena+='"idPlanta":"'+  tabla.rows[i].cells[7].getElementsByTagName('select')[0].value + '", ';
             cadena+='"idFormaEntrega":"'+  tabla.rows[i].cells[8].getElementsByTagName('select')[0].value + '"';
-            cadena+='}, ';
-           
+            cadena+='}, ';  
+            
+            
+                var codigoPlanta = tabla.rows[i].cells[7].getElementsByTagName('select')[0].value;
+                var codigoUnidad = tabla.rows[i].cells[4].innerHTML;
+                var codigoProducto =  tabla.rows[i].cells[0].innerHTML;
+            $.ajax({
+                async: false,
+                url: urlApp + 'selectPlantas',
+                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                type: 'POST',
+                dataType: 'json',
+                data: { 
+                    codigoProducto: codigoProducto,                
+                    codigoUnidad: codigoUnidad,
+                    codigoPlanta: codigoPlanta
+                    },
+            success:function(data){
+                if(data.identificador==0){
+                    swal(
+                        {
+                            title: 'El producto no esta en la planta seleccionada',
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            return;
+                        }
+                    )
+                    return; 
+                }
+            },
+            error: function(jqXHR, text, error){
+                alert('Error!, No se pudo Añadir los datos');
+            }
+        });
 
         }
+
+       
+      
      
 
         
