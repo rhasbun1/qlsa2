@@ -26,6 +26,19 @@ class PlantaController extends Controller
         return Planta::All();
     }    
 
+    public function selectPlantas(Request $datos)
+    {
+        $planta=DB::Select('call spGetPlantasSelect(?,?,?)', array(
+            $datos->input('codigoProducto'),
+            $datos->input('codigoUnidad'),
+            $datos->input('codigoPlanta'),
+            ) 
+        );
+        return response()->json([
+            "identificador" => $planta[0]->identificador
+        ]);
+    }  
+
    
     public function grabarPlanta(Request $datos){
         if( $datos->ajax() ){

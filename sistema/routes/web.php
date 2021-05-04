@@ -74,6 +74,7 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('actualizarNumeroAuxiliar', 'PedidoController@actualizarNumeroAuxiliar');
 	Route::post('agregarEmpresaTransporte',  'EmpresaTransporteController@agregarEmpresaTransporte');
 	Route::post('apiPlantas', 'PlantaController@apiPlantas');
+	Route::post('selectPlantas', 'PlantaController@selectPlantas');
 	Route::post('apiFormadeEntrega', 'FormadeentregaController@apiFormadeEntrega');
 	Route::post('datosCotizacion', 'CotizacionController@datosCotizacion');
 	Route::post('EmpresaConductores',  'EmpresaTransporteController@EmpresaConductores');
