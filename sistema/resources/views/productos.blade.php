@@ -387,6 +387,8 @@
                           },
                     success:function(dato){
                         var table = $('#tabla').DataTable();
+                        var chain = '<td style="width:40px"><button class="btn btn-xs btn btn-warning btnEditar" title="Editar"><i class="fa fa-edit fa-lg"></i></button>' + 
+                                    '<button class="btn btn-xs btn btn-danger btnEliminar" title="Eliminar"><i class="fa fa-trash-o fa-lg"></i></button></td>';
                         if(fila.toString()=='-1'){
                            //ff=table.row.add( [ 
                            table.row.add( [
@@ -421,7 +423,7 @@
                             table.cell(fila,8).data( $("#granel option:selected").html() );
                             table.cell(fila,9).data( $("#solicitaCertificado option:selected").html() ); 
                             table.cell(fila,10).data( $("#tiempoProduccion").val() );
-                            table.cell(fila,11).data( number_format($("#precioReferencia").data("ejNumericTextbox").model.value) );
+                            table.cell(fila,11).data(chain);
 
                             table.cell(fila,10).draw();                
                         }

@@ -72,7 +72,8 @@
             }           
         }           
                 
-    });    
+    });
+    
 
     function verificarCantidad(valor){
         if ($("#tipoCarga").val()=='1'){
@@ -556,13 +557,15 @@
 
             for(var x=1; x<tabla.rows.length; x++){
                 if(tabla.rows[x].style.display!='none'){
-                    if(plantaSel!=tabla.rows[x].cells[8].getElementsByTagName('select')[0].value){
-                        plantaSel=tabla.rows[x].cells[8].getElementsByTagName('select')[0].value;
-                        cont1++;
-                    }
-                    if(entregaSel!=tabla.rows[x].cells[9].getElementsByTagName('select')[0].value){
-                        entregaSel=tabla.rows[x].cells[9].getElementsByTagName('select')[0].value;
-                        cont2++;
+                    if(tabla.rows[x].cells[7].getElementsByTagName('input')[0].value.trim()!="" ){
+                        if(plantaSel!=tabla.rows[x].cells[8].getElementsByTagName('select')[0].value ){
+                            plantaSel=tabla.rows[x].cells[8].getElementsByTagName('select')[0].value;
+                            cont1++;
+                        }
+                        if(entregaSel!=tabla.rows[x].cells[9].getElementsByTagName('select')[0].value){
+                            entregaSel=tabla.rows[x].cells[9].getElementsByTagName('select')[0].value;
+                            cont2++;
+                        }
                     }
                 }
             }
@@ -599,6 +602,7 @@
         var toneladas=0;
         var productos=0;
         var productosSolicitados=0;
+        var noPuedePonerCero = 0;
         //var lineasDetalle=0;
         for(var x=1; x<tabla.rows.length; x++){
             if(tabla.rows[x].style.display!='none'){
@@ -618,6 +622,15 @@
 
                 }
             }
+        }
+
+        for(var x=1; x<tabla.rows.length; x++){
+               
+                if(tabla.rows[x].cells[7].getElementsByTagName('input')[0].value.trim()=="0"  ){
+                    noPuedePonerCero++;     
+                    console.log(noPuedePonerCero);
+                }      
+            
         }
 
 
@@ -654,6 +667,21 @@
                 )
                 $("#btnCrearPedido").attr("disabled", false);
                 return;             
+            } else if(noPuedePonerCero>0){
+                swal(
+                    {
+                        title: 'No puede poner 0 en la catidad si no desea el producto deje la caja vacia' ,
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    }
+                )
+                $("#btnCrearPedido").attr("disabled", false);
+                return;  
             }
         }
 
