@@ -670,7 +670,7 @@
             } else if(noPuedePonerCero>0){
                 swal(
                     {
-                        title: 'No puede poner 0 en la catidad si no desea el producto deje la caja vacia' ,
+                        title: 'No puede poner 0 en la cantidad si no desea el producto deje la caja vacia' ,
                         text: '',
                         type: 'warning',
                         showCancelButton: false,
