@@ -492,6 +492,45 @@
         
 
         $("#btnCrearPedido").attr("disabled", true);
+        var verificadorFlete = 1;
+        $.ajax({
+            async:false,
+            url: urlApp + "verificarFlete",
+            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+            type: 'POST',
+            dataType: 'json',
+            data: { 
+                idNotaVenta: $("#txtNumeroNotaVenta").val()
+            },
+            success:function(dato){
+                verificadorFlete = dato[0].verificador;
+
+            }
+        });
+        if(verificadorFlete==0){
+            swal(
+                {
+                    title: 'Debe ingresar el flete primero',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'Cerrar',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function(isConfirm)
+                {
+                    if(isConfirm){
+                        $("#btnCrearPedido").attr("disabled", false);
+                        return;
+                        
+                    }
+                }
+            )
+            $("#btnCrearPedido").attr("disabled", false);
+            return
+        }
         if($("#txtFechaEntrega").val().trim()=='' ){
             swal(
                 {

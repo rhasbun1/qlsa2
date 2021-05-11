@@ -338,7 +338,12 @@ class PedidoController extends Controller
                                 ->with('plantas', $plantas)
                                 ->with('parametros', $parametros)
                                 ->with('ramplas', $ramplas);
-    }    
+    }
+    
+    public function verificarFlete(Request $datos){
+        $verificarFleteYhora=DB::Select('call spGetFleteNotasDeVentas(?)', array($datos->input('idNotaVenta')));
+        return $verificarFleteYhora;
+    }
 
 
     public function grabarNuevoPedido(Request $datos){
@@ -348,7 +353,7 @@ class PedidoController extends Controller
             if(isset($archivo)){
                 $extension = $archivo->getClientOriginalExtension();               
             }
-
+             
             //$detalle = json_decode($datos->input('detalle'));
             $detalle=$datos->input('detalle');
             $detalle= json_decode($detalle);

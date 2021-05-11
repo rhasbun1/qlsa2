@@ -96,6 +96,7 @@ Route::group(['middleware' => 'checksession'], function () {
 	Route::post('buscarTiempoTraslado', 'PedidoController@buscarTiempoTraslado');
 	Route::post('guardarAcciones', 'PedidoController@guardarAcciones');
 	Route::post('buscarFeriados', 'PedidoController@buscarFeriados');
+	Route::post('verificarFlete', 'PedidoController@verificarFlete');
 	Route::post('crearGuiaDespachoElectronica', 'GuiaController@crearGuiaDespachoElectronica');
 	Route::post('registrarSalidaDespacho', 'GuiaController@registrarSalidaDespacho');
 	Route::post('actualizarDatosGuiaDespacho', 'GuiaController@actualizarDatosGuiaDespacho');
