@@ -264,7 +264,7 @@
                 
                 </div>
 
-                <div class="row" style="padding:10px">
+                <div id="divHabilitado" class="row" style="padding:10px">
                     <div class="col-sm-2">
                         Habilitado
                     </div>
@@ -381,14 +381,17 @@
             $("#idCamion").val("0");
             $("#patente").val('');
             $("#patenteRampla").val('');
-            $("#idFilaCamion").val('0');
+            $("#idFilaCamion").val('0');           
             document.getElementById('gps').selectedIndex=1;
+            document.getElementById('habilitada').selectedIndex=1;
+            document.getElementById("divHabilitado").style.display = "none";
 			$("#modCamion").modal("show");
 		}
 
         function editarCamion(idCamion, fila){
             var tabla=document.getElementById("tablaCamiones");
 
+            document.getElementById("divHabilitado").style.display = "block";
             $("#idCamion").val(idCamion);
             $("#patente").val( tabla.rows[fila].cells[1].innerHTML.trim() );
             $("#patenteRampla").val(tabla.rows[fila].cells[2].innerHTML.trim());
@@ -711,11 +714,10 @@
                       },
                 success:function(dato){
                     
-
                     if(dato.idCamion==-1){
                         swal(
                             {
-                                title: 'Esta patente ya existe en la empresa ' + dato.nombreEmpresa,
+                                title: 'Esta patente ya esta habilitada en la empresa ' + dato.nombreEmpresa,
                                 text: '',
                                 type: 'warning',
                                 showCancelButton: false,
@@ -740,9 +742,14 @@
                         }else{
                             cadena+="<td style='text-align: center;'>No</td>";
                         }
+                        if(document.getElementById('habilitada').value==1){
+                            cadena+="<td style='text-align: center;'>Si</td>";
+                        }else{
+                            cadena+="<td style='text-align: center;'>No</td>";
+                        }
 
                         cadena+='<td><button onclick="editarCamion('+ dato.idCamion + ', this.parentNode.parentNode.rowIndex);" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-edit fa-lg"></i></button>';
-                        cadena+='<button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarCamion(' + dato.idCamion + ', this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button><td>';
+                        //cadena+='<button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarCamion(' + dato.idCamion + ', this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button><td>';
                         cadena+="</tr>";
                         $("#tablaCamiones").append(cadena);
                     }else{
