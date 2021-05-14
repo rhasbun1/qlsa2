@@ -49,7 +49,7 @@ class Controller extends BaseController
 
         $listaJefePedidosAtrasados=DB::Select('call spGetPedidosAtrasadosJefe(?,?,?)', array(0, Session::get('idUsuario'), Session::get('idPerfil')  ) );
 
-        $listaJefeLabCertificadosPorSubir=DB::Select('call spCertificadosPendienteSubir(?,?,?)', array(0, Session::get('idUsuario'), Session::get('idPerfil')  ) );
+        $listaJefeLabCertificadosPorSubir=DB::Select('call spGetGuiasEnProceso(?,?)', array(Session::get('idUsuario'), Session::get('idPerfil')  ) );
 
         $listaAccionesHaceUnaHora=DB::Select('call spAccionesHaceUnaHora()', array(0));
 
@@ -68,6 +68,8 @@ class Controller extends BaseController
         $listaPedidoSinAprobarCliente=DB::Select('call spGetClientePedidosSinAprobar(?)', array(Session::get('idUsuario')));
 
         $listaPedidoSinAprobarClientes=DB::Select('call spGetPedidoSinAprobarClientes(?)', array(Session::get('empresaUsuario')));
+
+        $cantidadPedidosSinCertificado=DB::Select('call countPedidosSinCertificado(?,?)', array(Session::get('idUsuario'), Session::get('idPerfil')  ) );
 
         
         
@@ -113,7 +115,9 @@ class Controller extends BaseController
                                 ->with('listaPedidoClienteEnDespacho', $listaPedidoClienteEnDespacho)
                                 ->with('listaPedidoSinAprobar', $listaPedidoSinAprobar)
                                 ->with('listaPedidoSinAprobarClientes', $listaPedidoSinAprobarClientes)
-                                ->with('listaPedidoSinAprobarCliente', $listaPedidoSinAprobarCliente);
+                                ->with('listaPedidoSinAprobarCliente', $listaPedidoSinAprobarCliente)
+                                ->with('cantidadPedidosSinCertificado', $cantidadPedidosSinCertificado);
+                                
     }
     public function notaVentas(){
         $listaNotasdeVenta=DB::Select('call spGetNotasdeVentas(?)', array(0) );

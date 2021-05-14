@@ -28,45 +28,46 @@
                     </thead>
                     <tbody>
                         @foreach($guias as $item)
-                            <tr>                                    
-                                <td style="width:50px"
-                                        data-numguia="{{ $item->numeroGuia }}" 
-                                        data-prodcodigo="{{ $item->prod_codigo }}" 
-                                        data-ucodigo="{{ $item->u_codigo }}" 
-                                        data-idplanta="{{ $item->idPlanta }}"
-                                >
-                                    @if( $item->certificado=='' )
-                                        <button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1, {{ $item->prod_codigo }} );" title="Subir Certificado"><span class="glyphicon glyphicon-arrow-up"></span></button>
-                                        <button class="btn btn-danger btn-xs" onclick="productoSinCertificado(this.parentNode.parentNode, {{ $item->prod_codigo }} );" title="Producto Sin Certificado"><span class="glyphicon glyphicon-arrow-down"></span></button>                                        
-                                    @else
-                                        <a target="_blank" href="{{ asset('/') }}bajarCertificado/{{ $item->certificado }}">
-                                            <img src="{{ asset('/') }}img/iconos/certificado.png" border="0">
-                                        </a>
-                                        <button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this, this.parentNode.parentNode);" data-archivo="{{$item->certificado}}">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button> 
-                                    @endif                                    
-                                </td>
-                                <td style="width:50px">
-                                    <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/8-5/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
-                                    <span name="{{$item->numeroGuia}}" onclick='abrirGuia(1, {{ $item->numeroGuia }}, this.parentNode.parentNode);' style="cursor:pointer; cursor: hand" title="Ver guía"><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0"></span>
-                                </td>
-                                <td style="width:70px;text-align: right;">
-                                    @if( $item->folioDTE>0)
-                                        {{ $item->folioDTE }}
-                                    @endif
-                                </td>
-                                <td style="width:70px">{{ $item->plantaOrigen }}</td>
-                                <td style="width:200px">{{ $item->emp_nombre }}</td>
-                                <td style="width:200px">{{ $item->obra }}</td>
-                                <td style="width:80px">{{ $item->prod_nombre }}</td>
-                                <td style="width:50px; text-align: right;">{{ number_format( $item->cantidadDespachada, 0, ',', '.' )}}</td>
-                                <td style="width:50px">{{ $item->unidad }}</td>
-                                <td style="width:100px">{{ $item->formula }}</td>
-                                <td style="width:80px">{{ $item->retiradoPor }}</td>
-                                <td style="width:50px">{{ $item->patenteCamionDespacho }}</td>
-                                <th style="width:100px">{{ $item->fechaHoraCarga }}</th>
-                            </tr>
+                            
+                                <tr>                                    
+                                    <td style="width:50px"
+                                            data-numguia="{{ $item->numeroGuia }}" 
+                                            data-prodcodigo="{{ $item->prod_codigo }}" 
+                                            data-ucodigo="{{ $item->u_codigo }}" 
+                                            data-idplanta="{{ $item->idPlanta }}"
+                                    >
+                                        @if( $item->certificado=='')
+                                            <button class="btn btn-warning btn-xs" onclick="abrirModalSubirArchivo(this.parentNode.parentNode.rowIndex, 1, {{ $item->prod_codigo }} );" title="Subir Certificado"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                            <button class="btn btn-danger btn-xs" onclick="productoSinCertificado(this.parentNode.parentNode, {{ $item->prod_codigo }} );" title="Producto Sin Certificado"><span class="glyphicon glyphicon-arrow-down"></span></button>                                        
+                                        @else
+                                            <a target="_blank" href="{{ asset('/') }}bajarCertificado/{{ $item->certificado }}">
+                                                <img src="{{ asset('/') }}img/iconos/certificado.png" border="0">
+                                            </a>
+                                            <button type="button" class="btn btn-danger btn-xs" onclick="eliminarCertificado(this, this.parentNode.parentNode);" data-archivo="{{$item->certificado}}">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button> 
+                                        @endif                                    
+                                    </td>
+                                    <td style="width:50px">
+                                        <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/8-5/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>
+                                        <span name="{{$item->numeroGuia}}" onclick='abrirGuia(1, {{ $item->numeroGuia }}, this.parentNode.parentNode);' style="cursor:pointer; cursor: hand" title="Ver guía"><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0"></span>
+                                    </td>
+                                    <td style="width:70px;text-align: right;">
+                                        @if( $item->folioDTE>0)
+                                            {{ $item->folioDTE }}
+                                        @endif
+                                    </td>
+                                    <td style="width:70px">{{ $item->plantaOrigen }}</td>
+                                    <td style="width:200px">{{ $item->emp_nombre }}</td>
+                                    <td style="width:200px">{{ $item->obra }}</td>
+                                    <td style="width:80px">{{ $item->prod_nombre }}</td>
+                                    <td style="width:50px; text-align: right;">{{ number_format( $item->cantidadDespachada, 0, ',', '.' )}}</td>
+                                    <td style="width:50px">{{ $item->unidad }}</td>
+                                    <td style="width:100px">{{ $item->formula }}</td>
+                                    <td style="width:80px">{{ $item->retiradoPor }}</td>
+                                    <td style="width:50px">{{ $item->patenteCamionDespacho }}</td>
+                                    <th style="width:100px">{{ $item->fechaHoraCarga }}</th>
+                                </tr>
                         @endforeach
                     </tbody>            
                 </table>

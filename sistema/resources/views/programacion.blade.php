@@ -167,7 +167,8 @@
                                         </td>
                                         
                                        {{-- se cae aqui en transporte --}}
-                                        @if( Session::get('idPerfil')=='10' )
+                                      {{--@if( Session::get('idPerfil')=='10' )--}}
+                                        @if( Session::get('idPerfil')=='50' )
                                             <td style="width:120px">{{ $item->fechaCarga }} {{ $item->horaCarga }} </td>
                                             <td style="width:150px">{{ $item->apellidoConductor }} / {{ $item->empresaTransporte }}</td>
                                             <td style="width:50px">{{ $item->nombrePlanta }}</td>

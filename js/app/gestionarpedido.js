@@ -973,9 +973,11 @@
         var fechaEntregaMaxima;
         if ($("#horario option:selected").html() == "AM"){
             fechaEntregaMaxima = new Date(fechaEntrega.split('/')[2], fechaEntrega.split('/')[1]-1, fechaEntrega.split('/')[0], 11, 59, 0, 0);
+            console.log(fechaEntregaMaxima);
         }
         else{
             fechaEntregaMaxima = new Date(fechaEntrega.split('/')[2], fechaEntrega.split('/')[1]-1, fechaEntrega.split('/')[0], 23, 59, 0, 0);   
+            console.log(fechaEntregaMaxima);
         }
         //console.log("Fecha Creacion Pedido: ", fechaCreacionPedido);
         //console.log("Fecha Entrega Maximo: ", fechaEntregaMaxima);
@@ -1163,7 +1165,12 @@
         formData.append("idPlanta", $("#idPlanta").val() );
         formData.append("idFormaEntrega", $("#idTransaccion").val() );
         formData.append("horarioEntrega", $("#horario option:selected").html() );
-        formData.append("idEstadoPedido", '1');
+        if(Origen=='QL'){
+            formData.append("idEstadoPedido", '1');
+        }else{
+            formData.append("idEstadoPedido", '-1');
+        }
+        
         formData.append("usu_codigo_estado", $("#idUsuarioSession").val() );
         formData.append("totalNeto", total);
         formData.append("contacto", $("#txtNombreContacto").val() );

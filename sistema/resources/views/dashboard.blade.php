@@ -216,7 +216,7 @@
 <div class="col-md-3">
 		<a href="#modalJefeLabCertificados"  data-toggle="modal">	
 			<div class="panel-stat3 bg-info btn" style="width:100%">
-				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinCertificados }}</h2>
+				<h2 class="m-top-none">{{ $cantidadPedidosSinCertificado[0]->cantidad }}</h2>
         <h4>Certificados pendientes</h4>
         <br>
 			</div>
@@ -588,15 +588,13 @@
       <table id="tablaModalJefeLabCertificados" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
                 <th >Pedido</th>             
-                <th >Estado</th>
                 <th >Planta de Origen</th>
                 <th >Cliente</th>
                 <th >Obra/Planta</th>
                 <th >Producto</th>
                 <th >Cantidad</th>
-                <th>Unidad</th>
-                
-                <th >Horario de Salida</th>
+                <th>Unidad</th>               
+                <th >Fecha de carga</th>
 
                 
                
@@ -610,15 +608,13 @@
                             
                                 <tr>
                                     <td style="width: 50px">{{ $item->idPedido }}</td>
-                                    <td style="width:120px ">{{ $item->estadoPedido }}</td>
-                                    <td style="width: 120px">{{ $item->nombrePlanta }}</td>
-                                    <td style="width: 120px">{{ $item->nombreCliente }}</td>
-                                    <td style="width: 120px">{{ $item->nombreObra }}</td>
-                                    <td style="width:120px ">{{ $item->prod_nombre }}</td>
-                                    
-                                    <td style="width: 120px;text-align: right;">{{number_format( $item->cantidad, 0, ',', '.' ) }}</td>
-                                    <td style="width: 120px">{{ $item->u_nombre }}</td>
-                                    <td style="width: 120px">{{ $item->fechaHoraSalida }}</td>
+                                    <td style="width: 120px">{{ $item->plantaOrigen }}</td>
+                                    <td style="width: 120px">{{ $item->emp_nombre }}</td>
+                                    <td style="width: 120px">{{ $item->obra }}</td>
+                                    <td style="width:120px ">{{ $item->prod_nombre }}</td>           
+                                    <td style="width: 120px;text-align: right;">{{number_format( $item->cantidadDespachada, 0, ',', '.' ) }}</td>
+                                    <td style="width: 120px">{{ $item->unidad }}</td>
+                                    <td style="width: 120px">{{ $item->fechaHoraCarga }}</td>
 
                                 </tr>
                 @endforeach            
