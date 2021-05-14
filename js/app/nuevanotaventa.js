@@ -373,17 +373,17 @@
                     return; 
                 }
 
-                if(seguir == 1){
-                    crearNotaVenta();
-                }else{
-                    return;
-                }
             },
             error: function(jqXHR, text, error){
                 alert('Error!, No se pudo Añadir los datos');
             }
         });
 
+        }
+        if(seguir == 1){
+            crearNotaVenta();
+        }else{
+            return;
         }
     }
 

@@ -158,6 +158,7 @@
                         <th style="width: 80px">Forma de<br>Entrega</th>
                         <th style="width: 80px">Planta de Origen</th>
                         <th style="width: 80px">Estado</th>
+                        <th style="width: 80px;">Estado2</th>
                         <th style="width: 60px; text-align: right;">Nº Nota<br>de Venta</th>
                         <th style="width: 60px; text-align: right;">Nº de guía</th>
                         <th style="width: 80px; text-align: right;">Nº Aux.</th>
@@ -531,6 +532,7 @@
                                 dato[x].formaEntrega,
                                 dato[x].nombrePlanta,
                                 dato[x].estadoPedido,
+                                dato[x].estadoAtrasado,
                                 dato[x].idNotaVenta,
                                 dato[x].numeroGuia,
                                 celdaNumAux
@@ -548,9 +550,10 @@
                         tabla.cell(fila,9).node().width='80px';
                         tabla.cell(fila,10).node().width='80px';
                         tabla.cell(fila,11).node().width='80px';
-                        tabla.cell(fila,12).node().width='60px';tabla.cell(fila,12).node().style.textAlign="right";
+                        tabla.cell(fila,12).node().width='80px';
                         tabla.cell(fila,13).node().width='60px';tabla.cell(fila,13).node().style.textAlign="right";
-                        tabla.cell(fila,14).node().width='80px';
+                        tabla.cell(fila,14).node().width='60px';tabla.cell(fila,14).node().style.textAlign="right";
+                        tabla.cell(fila,15).node().width='80px';
 
                     }
                     tabla.draw();
