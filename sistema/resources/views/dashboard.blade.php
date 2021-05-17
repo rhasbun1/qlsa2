@@ -144,7 +144,7 @@
 	<div class="col-md-3">
 	<a href="#modalPedidoClienteEnProceso"   data-toggle="modal">
 			<div class="panel-stat3 bg-info btn" style="width:100%">
-				<h2 class="m-top-none">{{ $datos[0]->cantidadPedidosProcesoCliente }}</h2>
+				<h2 class="m-top-none">{{ $CantidadPedidosEnProcesoCliente[0]->cantidadPedidos }}</h2>
         <h4>Pedidos en Proceso</h4>
         <br>
 			</div>

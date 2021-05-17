@@ -81,7 +81,7 @@
                             <th style="width:200px">Cliente</th>
                             <th style="width:200px">Obra/Planta</th>
 
-                            @if( Session::get('idPerfil')=='10' and Session::get('idPerfil')=='9' )
+                            @if( Session::get('idPerfil')=='10' )
                                 <th style="width:120px">Fecha Carga</th>
                                 <th style="width:150px">Transporte</th>
                                 <th style="width:50px">Planta Origen</th>
@@ -168,7 +168,7 @@
                                         
                                        {{-- se cae aqui en transporte --}}
                                       {{--@if( Session::get('idPerfil')=='10' )--}}
-                                        @if( Session::get('idPerfil')=='50' )
+                                        @if( Session::get('idPerfil')=='10' )
                                             <td style="width:120px">{{ $item->fechaCarga }} {{ $item->horaCarga }} </td>
                                             <td style="width:150px">{{ $item->apellidoConductor }} / {{ $item->empresaTransporte }}</td>
                                             <td style="width:50px">{{ $item->nombrePlanta }}</td>
