@@ -10,6 +10,8 @@
         <div class="padding-md clearfix">
             <div>
             <input type="hidden" id="idCliente" value="{{Session::get('idPerfil')}}">
+            <input type="hidden" id="tipoCarga" value="{{ $pedido[0]->tipoCarga }}">
+            <input type="hidden" id="tipoTransporte" value="{{ $pedido[0]->tipoTransporte }}">
 
 
                 <input type="hidden" id="idPedido" value="{{ $pedido[0]->idPedido }}">
@@ -326,6 +328,80 @@
         var arrFeriados =new Array();
         function guardarCambios(){
             var tabla=document.getElementById('tablaDetalle');
+            var cantidadMod = 0; 
+            var cantidadTabla;
+            var tipoCarga = document.getElementById('tipoCarga').value;
+            var tipoTransporte = document.getElementById('tipoTransporte').value;
+            var cmtten=0;
+            var cmttem1=0;
+            var cmttem2=0;
+            var valorFleteFalso;
+            console.log(tipoCarga);
+
+            $.ajax({
+            async:false, 
+            url: urlApp + 'obtenerParametros',
+            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+            type: 'POST',
+            dataType: 'json',
+            data: {},
+            success:function(dato){
+                if(dato.length>0){
+                    cmtten=dato[0].carga_max_granel_tte_normal;
+                    cmttem1=dato[0].carga_max_granel_tte_mixto_1;
+                    cmttem2=dato[0].carga_max_granel_tte_mixto_2;
+                    valorFleteFalso=dato[0].valorFleteFalso;
+                }
+            }
+            }); 
+
+            for (var i = 1; i <(tabla.rows.length-3); i++){
+                if(tabla.rows[i].cells[2].getElementsByTagName('input')[0].value!=""){
+                    cantidadTabla=  tabla.rows[i].cells[2].getElementsByTagName('input')[0].value;     
+                    cantidadMod= cantidadMod+parseFloat(cantidadTabla);
+                }
+            }
+
+            console.log(cantidadMod);
+            console.log(cmtten);
+            if(tipoCarga==1){
+                if(tipoTransporte==1){
+                    if(cantidadMod>cmtten){
+                        swal(
+                        {
+                            title: 'La cantidad de toneladas excede el máximo permitido por pedido (máx. ' + cmtten +')!!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                            }
+                        )
+                        return;
+                    }          
+                }else{
+                    if(cantidadMod-1>(cmttem1+cmttem2))
+                    {
+                        swal(
+                            {
+                                title: 'La cantidad total de toneladas excede el máximo permitido por pedido (máx. ' + cmtten +')!!' ,
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: '',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            }
+                        )
+                        return;
+                    }  
+                }
+            }
+
+            
         
                   
                     var cantidad = tabla.rows.length;
