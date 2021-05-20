@@ -680,6 +680,7 @@
 
             var tabla=document.getElementById('tablaDetalleGuia');
             for (var i = 1; i < tabla.rows.length; i++){
+               
                 if(tabla.rows[i].cells[4].getElementsByTagName('input')[0]){
                   cantidad=tabla.rows[i].cells[4].getElementsByTagName('input')[0].value.trim().replace(".", "").replace(",",".");
                   if(cantidad=='' || parseFloat(cantidad)<=0){

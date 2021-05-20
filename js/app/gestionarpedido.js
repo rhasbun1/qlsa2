@@ -510,7 +510,7 @@
         if(verificadorFlete==0){
             swal(
                 {
-                    title: 'Debe ingresar el flete primero',
+                    title: 'Debe ingresar los valores del costo flete y translado en el maestro',
                     text: '',
                     type: 'warning',
                     showCancelButton: false,

@@ -189,7 +189,7 @@
                     <div class="row" style="padding: 5px">
                         <div class="col-md-12"> 
                             <div class="upload-file">
-                                <input type="file" id="upload-demo" name="upload-demo" class="upload-demo">
+                                <input type="file" id="upload-demo" name="upload-demo" class="upload-demo" accept="application/pdf">
                                 <label data-title="Buscar" for="upload-demo">
                                     <span id="mensajeUpload" data-title="No ha seleccionado un archivo..."></span>
                                 </label>
