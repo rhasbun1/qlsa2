@@ -247,11 +247,11 @@
             <input id="motivo" class="form-control input-sm" maxlength="150" style="width: 80%">
 
             <div id="cliocul" style="padding-top:18px; padding-bottom: 20px">
-                <button class="btn btn-sm btn-success" style="width:80px" onclick="guardarCambios();">Guardar</button>         
+                <button class="btn btn-sm btn-success" style="width:80px" onclick="verSiExistePlanta();">Guardar</button>         
                 <a href="{{ asset('/') }}listarPedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                                  
             </div>
             <div id="clienteocultar" style="padding-top:18px; padding-bottom: 20px">
-                <button class="btn btn-sm btn-success" style="width:80px" onclick="guardarCambios();">Guardar</button>        
+                <button class="btn btn-sm btn-success" style="width:80px" onclick="verSiExistePlanta();">Guardar</button>        
                 <a href="{{ asset('/') }}clientePedidos" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>                                                  
             </div>
         </div>        
@@ -326,6 +326,74 @@
     <script>
         var tiempoProduccion_val =new Array();
         var arrFeriados =new Array();
+
+
+
+        
+    function verSiExistePlanta(){
+        if($("#idCliente").val() == 14){
+                        var fila = 4;
+                    }else{
+                        var fila = 6;
+                    }
+        var tabla = document.getElementById('tablaDetalle');
+        var seguir = 1;
+        console.log(tabla.rows.length);
+
+        for (var i = 1; i < tabla.rows.length-4; i++){
+                var codigoPlanta = tabla.rows[1].cells[fila].getElementsByTagName('select')[0].value
+                var codigoUnidad = tabla.rows[i].cells[3].innerHTML;
+                var codigoProducto =  tabla.rows[i].cells[0].innerHTML;
+                console.log(codigoPlanta);
+                console.log(codigoUnidad);
+                console.log(codigoProducto);
+            $.ajax({
+                async: false,
+                url: urlApp + 'selectPlantas',
+                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                type: 'POST',
+                dataType: 'json',
+                data: { 
+                    codigoProducto: codigoProducto,                
+                    codigoUnidad: codigoUnidad,
+                    codigoPlanta: codigoPlanta
+                    },
+            success:function(data){
+                if(data.identificador==0){
+                    seguir= 0;
+                    swal(
+                        {
+                            title: 'El producto no esta en la planta seleccionada',
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            return;
+                        }
+                    )
+                    return; 
+                }
+
+            },
+            error: function(jqXHR, text, error){
+                alert('Error!, No se pudo Añadir los datos');
+            }
+        });
+
+        }
+        if(seguir == 1){
+            guardarCambios();
+        }else{
+            return;
+        }
+    }
+
         function guardarCambios(){
             var tabla=document.getElementById('tablaDetalle');
             var cantidadMod = 0; 
@@ -362,8 +430,7 @@
                 }
             }
 
-            console.log(cantidadMod);
-            console.log(cmtten);
+            
             if(tipoCarga==1){
                 if(tipoTransporte==1){
                     if(cantidadMod>cmtten){
@@ -803,7 +870,7 @@
 
 
         $(document).ready(function() {
-            var tabla=$("#tablaDetalle").DataTable();
+            var tabla=$("#tablaDetalle").DataTable({"bLengthChange" : false,searching: false, paging: false, info: false});
 
             $("#tfootp").hide();
             if($("#idCliente").val() == 14){
