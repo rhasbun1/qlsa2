@@ -21,7 +21,7 @@
         <div class="panel-body">
             <div class="tab-content clearfix">
                 <div class="tab-pane active" id="tabAprobados" style="padding-top: 5px">
-                    <table id="tablaAprobados" class="pedidos table table-hover table-condensed" style="width:100%">
+                    <table id="tablaAprobados" class="pedidos table table-condensed" style="width:100%">
                         <thead>
                             <th style="width:100px">Pedido</th>
                             <th></th>
