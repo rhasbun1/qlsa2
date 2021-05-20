@@ -340,7 +340,7 @@
         var seguir = 1;
         console.log(tabla.rows.length);
 
-        for (var i = 1; i < tabla.rows.length-4; i++){
+        for (var i = 1; i < tabla.rows.length-3; i++){
                 var codigoPlanta = tabla.rows[1].cells[fila].getElementsByTagName('select')[0].value
                 var codigoUnidad = tabla.rows[i].cells[3].innerHTML;
                 var codigoProducto =  tabla.rows[i].cells[0].innerHTML;
