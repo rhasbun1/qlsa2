@@ -94,6 +94,10 @@
     window.resizeTo(screen.width,screen.height);
     }
 
+    window.setInterval(function () {
+        resumenGeneral();
+    }, 15000);
+
     function resumenGeneral(){
     	var incluirPedidosSinFechaCarga='0';
     	if( document.getElementById("incluirSinFecha").checked ){

@@ -85,6 +85,11 @@
 <script src="{{ asset('/') }}js/dataTables.buttons.min.js"></script>
 <script src="{{ asset('/') }}js/buttons.html5.min.js"></script>
 <script>
+    window.setInterval(function () {
+        resumenGeneral();
+   
+    }, 15000);
+
     function resumenGeneral(){
 
         var codPlanta={{Session::get('idPlanta')}};
