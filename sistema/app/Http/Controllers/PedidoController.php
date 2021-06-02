@@ -14,6 +14,9 @@ use App\Producto;
 use App\Unidad;
 use App\Planta;
 use App\Parametro;
+use App\Console\Commands\SendReminderEmails;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\enviarMailPedidoCreado;
 
 
 class PedidoController extends Controller
@@ -426,6 +429,11 @@ class PedidoController extends Controller
             if($datos->input('atrasado')==1){
                 $this->correoAutorizacionPedidoUrgente($idPedido[0]->idPedido, Session::get('idUsuario') );
             }
+
+            $usuario = "2eee28cdd9-c936e7@inbox.mailtrap.io";
+            //Mail::to($usuario)->queue(new enviarMailPedidoCreado($idPedido));
+
+          
 
             return response()->json([
                 "identificador" => $idPedido[0]->idPedido,
