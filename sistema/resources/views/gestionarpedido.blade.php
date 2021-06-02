@@ -139,7 +139,7 @@
                                     <td align="right">{{number_format($item->saldo, 0, ',', '.') }}</td>
                                     <td aling="right"><input class="form-control input-sm" onblur="verificarCantidad(this);" onkeypress="return isIntegerKey(event)" maxlength="6" ></td>
                                     <td>
-                                                <select  id="selectPlanta" class="selectPlanta{{ $item->prod_codigo }} form-control input-sm">
+                                                <select disabled id="selectPlanta" class="selectPlanta{{ $item->prod_codigo }} form-control input-sm">
                                                 
                                                 </select>                                    
                                     </td>
@@ -148,7 +148,7 @@
                                                 <select id="pruebacarga" class="form-control input-sm">
                                                     @foreach($FormasdeEntrega as $formaEntrega)
                                                         @if( $item->idFormaEntrega==$formaEntrega->idFormaEntrega )
-                                                            <option value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>
+                                                            <option  value="{{ $formaEntrega->idFormaEntrega }}" selected>{{ $formaEntrega->nombre }}</option>
                                                         @endif
                                                     @endforeach 
                                                 </select>                                            
@@ -239,7 +239,7 @@
                                         </td>
                                         <td style="width:80px">
                                          
-                                            <select  id="selectPlanta"  class="selectPlanta{{ $item->prod_codigo }} form-control input-sm" > 
+                                            <select disabled  id="selectPlanta"  class="selectPlanta{{ $item->prod_codigo }} form-control input-sm" > 
 
                                     
                                                 
