@@ -164,11 +164,11 @@
                         <td style="width:30px; text-align: right;"> {{ $item->cantidad }} </td>
                         <td style="width:40px"> {{ $item->u_nombre }} </td>
                        
-                        <td style="width:100px" data-idplanta="{{ $item->idPlanta }}">
+                        <td style="width:100px" disabled data-idplanta="{{ $item->idPlanta }}">
                             @if( Session::get('idPerfil')=='8' )
                                 {{ $item->nombrePlanta }}
                             @else
-                            <select id="idPlanta" class="form-control input-sm">  
+                            <select disabled id="idPlanta" class="form-control input-sm">  
                                 @foreach($plantas as $planta)
                                     @if( $item->nombrePlanta==$planta->nombre )
                                         <option value="{{ $planta->idPlanta }}" selected>{{ $planta->nombre }}</option>

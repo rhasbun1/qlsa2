@@ -13,7 +13,7 @@
                     <b>Pedidos en Proceso</b>
                 </div>
                 <div class="col-md-9" style="text-align: right;">
-                    @if ($cantidadIngresoCliente>0 and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='12'))
+                    @if ($cantidadIngresoCliente>0 and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='12' or Session::get('idPerfil')=='4' or Session::get('idPerfil')=='18'))
                          <a href="{{ asset('/') }}listaIngresosClienteporAprobar" class="btn btn-danger btn-sm">EXISTEN {{ $cantidadIngresoCliente }} PEDIDOS INGRESADOS POR CLIENTE EN ESPERA DE PRE-APROBACIÓN</a>
                     @endif
                 </div>
@@ -60,6 +60,7 @@
                                 <th style="width: 100px"><b>Total c/IVA</b></th>
                                 <th style="width: 100px">Fecha Entrega</th>
                                 <th style="width: 70px">Estado</th>
+                                <th style="width: 70px">Estado2</th>
                             </thead>
                             <tbody>
                                 @foreach($pedidos as $item)
@@ -76,6 +77,7 @@
                                         <td style="width: 100px; text-align: right;"><b>$ {{number_format( $item->totalNeto + $item->montoIva, 0, ',', ',' )  }}</b></td>
                                         <td style="width: 100px">{{ date('d/m/Y', strtotime($item->fechaEntrega)) }} {{ $item->horarioEntrega}}</td>
                                         <td style="width: 70px">{{ $item->estado }}</td>
+                                        <td style="width: 70px">{{ $item->estadoAtrasado }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>            
@@ -88,6 +90,7 @@
                             <th style="width:20px;text-align: center;">Pedido</th>
                             <th style="width: 60px;text-align: left;"></th>
                             <th style="width: 50px;text-align: center;">Estado</th>
+                            <th style="width: 70px">Estado2</th>
                             <th style="width: 120px">Cliente</th>
                             <th style="width: 120px">Obra/Planta</th>
                             <th style="width: 70px">Producto</th>
@@ -153,6 +156,7 @@
                                         @endif
                                     </td>                                        
                                     <td style="width: 50px">{{ $item->estadoPedido }}</td>
+                                    <td style="width: 70px">{{ $item->estadoAtrasado }}</td>
                                     <td style="width: 120px">{{ $item->nombreCliente }}</td>
                                     <td style="width: 120px">{{ $item->nombreObra }}</td>
                                     <td style="width: 70px">
