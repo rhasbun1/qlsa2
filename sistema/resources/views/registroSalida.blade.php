@@ -64,6 +64,9 @@
 
     <script src="{{ asset('/') }}js/app/funciones.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/3.2.5/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/locale/es.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.15/sorting/datetime-moment.js"></script>
 
 
     <!-- Timepicker -->
@@ -135,7 +138,7 @@
 
             // DataTable
             var titulo="Registro de Salidas";
-
+            $.fn.dataTable.moment('DD/MM/YYYY HH:mm');
             var table=$('#tablaDetalle').DataTable({
                  orderCellsTop: true,
                  fixedHeader: true, 

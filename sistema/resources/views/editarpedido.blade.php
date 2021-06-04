@@ -271,7 +271,7 @@
                         <td style="width:200px"> {{date('d/m/Y', strtotime($item->fechaHora))  }} </td>
                         <td style="width:200px"> {{ $item->nombreUsuario }} </td>
                         <td style="width:100px"> {{ $item->accion }} </td>
-                        <td style="width:350px"> {{ $item->motivo }} </td>
+                        <td style="width:500px"> {{ $item->motivo }} </td>
                     </tr>
                     @endforeach  
                 </tbody>
