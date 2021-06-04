@@ -54,7 +54,7 @@
                             <td>{{ $item->fechaEntrega }}</td>
                             <td>{{ $item->Planta }}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary" style="width: 80px" onclick="aprobarPedido({{ $item->idPedido }}, this.parentNode.parentNode.rowIndex)">Aprobar</button>
+                                <button class="btn btn-sm btn-primary" style="width: 80px" onclick="aprobarPedido({{ $item->idPedido }}, this.parentNode.parentNode.rowIndex)">Aprobar VB</button>
                                 <a href="{{ asset('/') }}verpedido/{{ $item->idPedido }}/2/" class="btn btn-sm btn-success">Ver</a>
                             </td>
                         </tr>

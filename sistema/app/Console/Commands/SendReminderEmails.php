@@ -44,9 +44,9 @@ class SendReminderEmails extends Command
     public function handle()
     {
         //conseguir lor recordatorio ejemplo usar una query para traere los datos en un array
-        $pedido = DB::Select('call spGetPedidosNoEnviados()');
+        //$pedido = DB::Select('call spGetPedidosNoEnviados()');
 
-        $pedidosPorHabilitar = DB::Select('call spGetPedidosCorreo()'); 
+        $pedidosCreados = DB::Select('call spGetPedidosCorreo()'); 
 
         //agrupar por user
 

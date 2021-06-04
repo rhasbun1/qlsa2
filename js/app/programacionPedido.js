@@ -384,7 +384,9 @@ function asignarFolio(){
                  //   if(tabla.rows[i].cells[6].getElementsByTagName('input')[0] ){
                     if( tabla.rows[fila].cells[6].getElementsByTagName('input')[0].value.trim()=='' ||
                     tabla.rows[fila].cells[7].getElementsByTagName('input')[0].value.trim()==''||
-                    tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value.trim()==''){
+                    tabla.rows[fila].cells[9].getElementsByTagName('input')[0].value.trim()==''||
+                    tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim()==''||
+                    tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()==''){
 
                             swal(
                                 {
@@ -414,7 +416,9 @@ function asignarFolio(){
 
                     if( tabla.rows[fila].cells[6].getElementsByTagName('select')[0].value.trim()=='0' ||
                                   tabla.rows[fila].cells[7].getElementsByTagName('select')[0].value.trim()=='0' ||
-                                  tabla.rows[fila].cells[9].getElementsByTagName('select')[0].value.trim()=='0' ) {
+                                  tabla.rows[fila].cells[9].getElementsByTagName('select')[0].value.trim()=='0'||
+                                  tabla.rows[fila].cells[10].getElementsByTagName('input')[0].value.trim()==''||
+                                  tabla.rows[fila].cells[11].getElementsByTagName('input')[0].value.trim()=='' ) {
 
                         swal(
                             {

@@ -243,7 +243,6 @@
       <div class="panel-stat3 bg-warning btn" style="width:102%">
         <h2 class="m-top-none">{{ $datos[0]->cantidadPedidosSinAprobar}}</h2>
         <h3><strong>Pedidos pendientes de Aprobación de Crédito</strong></h3>
-        
       </div>
     </a>
   </div>

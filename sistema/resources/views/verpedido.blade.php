@@ -284,7 +284,7 @@
         
         <div style="padding-top:18px; padding-bottom: 20px;padding-left: 20px">
             @if ( ( Session::get('idPerfil')=='2' or Session::get('idPerfil')=='11')  and $pedido[0]->idEstadoPedido==1 and $accion!='6' )
-                <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedido({{ $pedido[0]->idPedido }});">Aprobar</button>
+                <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedido({{ $pedido[0]->idPedido }});">Aprobar VB</button>
             @endif    
 
             @if ( (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='4') and $pedido[0]->idEstadoPedido>0 and $guiaEmitida==0 )
