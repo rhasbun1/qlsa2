@@ -59,7 +59,7 @@
                     <input type="hidden" id="filaObra">                    
                     <div class="row">
                         <div class="col-md-1">
-                            Cliente
+                            Cliente(*)
                         </div>
                         <div class="col-md-4">
                             <select id="idCliente" class="form-control input-sm">

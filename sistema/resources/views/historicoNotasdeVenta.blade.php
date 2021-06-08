@@ -130,7 +130,6 @@
     <script src="{{ asset('/') }}js/app/funciones.js"></script>
 
     <script>
-
         $(document).ready(function() {
 
 
@@ -145,6 +144,13 @@
             if (dd < 10) {dd = '0' + dd; }
             if (mm < 10) {mm = '0' + mm; }
             $("#max").val(dd + '/' + mm + '/' + yyyy);
+            $('#divFechaMax').datepicker({
+                format: 'dd/mm/yyyy',
+                endDate: '+0d',
+                autoclose: true
+            });
+           
+            
 
             hoy.setMonth(hoy.getMonth() - 12);
             var dd = hoy.getDate();
