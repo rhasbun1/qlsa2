@@ -89,8 +89,7 @@
                         <thead>
                             <th style="width:20px;text-align: center;">Pedido</th>
                             <th style="width: 60px;text-align: left;"></th>
-                            <th style="width: 50px;text-align: center;">Estado</th>
-                            <th style="width: 70px">Estado2</th>
+                            <th style="width: 50px;text-align: center;">Estado</th>                            
                             <th style="width: 120px">Cliente</th>
                             <th style="width: 120px">Obra/Planta</th>
                             <th style="width: 70px">Producto</th>
@@ -103,6 +102,7 @@
                             <th style="width: 150px">Transporte</th>
                             <th style="width: 50px;text-align: right;">Fecha Creación</th>
                             <th style="width: 80px">Nº Aux.</th>
+                            <th style="width: 70px">Estado2</th>
                         </thead>
                         <tbody>
                             @foreach($pedidos as $item)
@@ -156,7 +156,7 @@
                                         @endif
                                     </td>                                        
                                     <td style="width: 50px">{{ $item->estadoPedido }}</td>
-                                    <td style="width: 70px">{{ $item->estadoAtrasado }}</td>
+                                   
                                     <td style="width: 120px">{{ $item->nombreCliente }}</td>
                                     <td style="width: 120px">{{ $item->nombreObra }}</td>
                                     <td style="width: 70px">
@@ -171,6 +171,7 @@
                                     <td style="width: 150px">{{ $item->apellidoConductor }} / {{ $item->empresaTransporte }}</td>
                                     <td style="width: 50px;text-align: right;">{{ date('d/m/Y', strtotime($item->fecha)) }} {{ $item->hora}}</td>
                                     <td style="width: 80px;text-align: center;">{{ $item->numeroAuxiliar }}</td>
+                                    <td style="width: 70px">{{ $item->estadoAtrasado }}</td>
                                 </tr>
                             @endforeach
                         </tbody>            
@@ -467,7 +468,7 @@
                     var min = fechaIngles( $('#min').val().trim() );
                     var max = fechaIngles( $('#max').val().trim() );
 
-                    if ( document.getElementById('tablaDetalle').rows[0].cells.length==7 ){
+                    if (document.getElementById('tablaDetalle').rows[0].cells.length==8 ){
                         var startDate=fechaIngles(data[5].substr(0,10));
                     }else{
                         var startDate=fechaIngles(data[8].substr(0,10));

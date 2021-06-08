@@ -79,8 +79,8 @@
     }
 
     function agregarNuevaObra(){
-
-        if($("#txtNombreObra").val().trim()=='' || $("#txtNombreContactoObra").val().trim()=='' || $("#txtTelefonoObra").val().trim()=='' ){
+        
+        if($("#idCliente").val()==null || $("#txtNombreObra").val().trim()=='' || $("#txtNombreContactoObra").val().trim()=='' || $("#txtTelefonoObra").val().trim()=='' ){
             swal(
                 {
                     title: 'Debe ingresar todos los datos exigidos (*).',

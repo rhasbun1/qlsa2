@@ -203,6 +203,27 @@
         }
 
         function grabarRampla(){
+            if($("#numeroRampla").val()=='' || $("#patenteRampla").val()==''){
+                swal(
+                            {
+                                title: 'Los campos no pueden estar vacios',
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: 'No',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            },
+                            function(isConfirm)
+                            {
+                                if(isConfirm){                                             
+                                    return;
+                                }
+                            }
+                        )
+                        return;
+            }
             $("#btnGrabarCondicion").prop("disabled", true);
             $.ajax({
                 url: urlApp +'guardarRampla',

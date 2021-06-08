@@ -158,6 +158,27 @@
         }
 
         function grabarCondicion(){
+            if($("#txtNombre").val()==''){
+                swal(
+                            {
+                                title: 'Todos los campos son obligatorios',
+                                text: '',
+                                type: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: 'No',
+                                closeOnConfirm: true,
+                                closeOnCancel: false
+                            },
+                            function(isConfirm)
+                            {
+                                if(isConfirm){               
+                                    return;
+                                }
+                            }
+                        )
+                        return;
+            }
             $("#btnGrabarCondicion").prop("disabled", true);
             $.ajax({
                 url: urlApp +'guardarDatosCondicionPago',
