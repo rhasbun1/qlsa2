@@ -16,13 +16,13 @@
                     Session::get('idPerfil')=='5' or 
                     Session::get('idPerfil')=='7')                   
             		<div class="col-sm-2">
-            			Nombre Empresa
+            			Nombre Empresa (*)
             		</div>
             		<div class="col-sm-3">
             			<input id="nombre" maxlength="30" class="form-control input-sm" value="@isset( $empresa[0]->nombre ) {{ $empresa[0]->nombre }} @endisset">
             		</div>
             		<div class="col-sm-2">
-            			Rut
+            			Rut (*)
             		</div>
             		<div class="col-sm-2">
             			<input id="rut" maxlength="10" class="form-control input-sm" value="@isset( $empresa[0]->rut ){{$empresa[0]->rut}}@endisset">
@@ -792,10 +792,10 @@
 
         function grabarConductor(){
 
-            if( $("#nombreConductor").val().trim()=="" || $("#apellidoPaterno").val().trim()==""   ){
+            if( $("#nombreConductor").val().trim()=="" || $("#apellidoPaterno").val().trim()=="" || $("#rutConductor").val().trim()==""  ){
                 swal(
                     {
-                        title: '!El nombre y apellido paterno es obligatorio!',
+                        title: '!El rut, nombre y apellido  paterno es obligatorio!',
                         text: '',
                         type: 'warning',
                         showCancelButton: false,

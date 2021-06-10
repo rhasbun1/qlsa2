@@ -96,7 +96,7 @@
                     Nombre
                 </div>
                 <div class="col-md-4">
-                    <input class="form-control input-sm" id="nombre">
+                    <input class="form-control input-sm" id="nombre" maxlength="50">
                 </div>
             </div>            
             <div class="row" style="padding-top: 5px">
@@ -104,7 +104,7 @@
                     Razón Social
                 </div>
                 <div class="col-md-7">
-                    <input class="form-control input-sm" id="razonSocial">
+                    <input class="form-control input-sm" id="razonSocial" maxlength="50">
                 </div>
             </div>
             <div class="row" style="padding-top: 5px">
@@ -112,7 +112,7 @@
                     Dirección
                 </div>
                 <div class="col-md-7">
-                    <input class="form-control input-sm" id="direccion">
+                    <input class="form-control input-sm" id="direccion" maxlength="100">
                 </div>
             </div>
             <div class="row" style="padding-top: 5px">
@@ -180,9 +180,16 @@
 
     <script src="{{ asset('/') }}js/app/funciones.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
+
 
 
     <script>
+    $(document).ready(function () {
+        $("#rutCliente").mask("00.000.000-A", { reverse: true });
+    });
+
 
         function verDatosCliente(fila){
             var tabla=$('#tabla').DataTable();
@@ -223,8 +230,26 @@
         }
 
         function guardarDatosCliente(){
-
-         
+            if( $("#rutCliente").val()=="" || $("#razonSocial").val()==""
+                || $("#nombre").val()==""  || $("#direccion").val()==""
+                || $("#comuna").val()==""  || $("#ciudad").val()==""
+                || $("#solicitaOC").val()=="" || $("#codigoSoftland").val()==""
+                || $("#crearEnNotaVenta").val()=="")
+                {
+                    swal(
+                        {
+                            title: 'Todos los campos son obligatorios',
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                            }
+                        )
+                        return;
+                }
 
             var tabla=$('#tabla').DataTable();
             var fila=$("#fila").val();

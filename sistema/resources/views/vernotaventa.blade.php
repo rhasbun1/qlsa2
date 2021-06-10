@@ -340,7 +340,7 @@
                     <div class="row" style="padding: 15px">
                         Imagen o Pdf de la Orden de Compra
                         <div class="upload-file">
-                            <input type="file" id="upload-demo" name="upload-demo" class="upload-demo">
+                            <input type="file" id="upload-demo" name="upload-demo" class="upload-demo" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps">
                             <label data-title="Buscar" for="upload-demo">
                                 <span id="mensajeUpload" data-title="No ha seleccionado un archivo..."></span>
                             </label>

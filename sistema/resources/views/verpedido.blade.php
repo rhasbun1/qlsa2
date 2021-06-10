@@ -379,7 +379,7 @@
             <div class="panel-body">
                 <div class="tab-content clearfix">
                     <div class="tab-pane active" id="tabLogAcciones" style="padding-top: 5px">
-                        <table id="tablaLog" class="table table-hover table-condensed table-responsive" style="width: 850px">
+                        <table id="tablaLog" class="table table-hover table-condensed table-responsive" style="width: 850px;">
                             <thead>
                                 <th style="width:200px">Fecha</th>
                                 <th style="width:250px">Usuario</th>
@@ -398,7 +398,7 @@
                                     <td style="width:200px"> {{$fecha." ". $fechahora[1]}} </td>
                                     <td style="width:250px"> {{ $item->nombreUsuario }} </td>
                                     <td style="width:350px"> {{ $item->accion }} </td>
-                                    <td style="width:350px"> {{ $item->motivo }} </td>
+                                    <td style="width:350px;word-break: break-all;"> {{ $item->motivo }} </td>
                                 </tr>
                                 @endforeach  
                             </tbody>
