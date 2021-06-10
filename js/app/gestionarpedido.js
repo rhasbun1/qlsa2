@@ -490,6 +490,37 @@
 
         }
         
+        var verificadorFeriado;
+        $.ajax({
+            async:false,
+            url: urlApp + "verificarFeriado",
+            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+            type: 'POST',
+            dataType: 'json',
+            data: { 
+                fecha: $("#txtFechaEntrega").val()
+            },
+            success:function(dato){
+             verificadorFeriado=dato[0].verificador;
+            }
+        });
+
+        if(verificadorFeriado==1){
+            swal(
+                {
+                    title: 'No puede hacer un pedido en un dia feriado' ,
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                }
+            )
+            $("#btnCrearPedido").attr("disabled", false);
+            return;
+        }
 
         $("#btnCrearPedido").attr("disabled", true);
         var verificadorFlete = 1;
@@ -540,7 +571,7 @@
                     }
                 )
                 $("#btnCrearPedido").attr("disabled", false);
-                return
+                return;
             }
         }
         if($("#txtFechaEntrega").val().trim()=='' ){
@@ -874,8 +905,7 @@
                 total+=(cantFleteFalso*valFleteFalso);       
 
             }
-
-
+         
             //Verificacion de carga máxima para pedidos tipo transporte MIXTO
             if($("#tipoCarga").val()=="1" && $("#tipoTransporte").val()=='2'){
                 if( (toneladas+cantFleteFalso) > (cmttem1+cmttem2) ){
@@ -1045,6 +1075,8 @@
 
             }
         });
+       
+        
         //console.log("Feriados: ", arrFeriados);
         if (fechaCreacionPedido.getHours() >= 17 && fechaCreacionPedido.getMinutes() >= 0){
             fechaCreacionPedido.setDate(fechaCreacionPedido.getDate() + 1);

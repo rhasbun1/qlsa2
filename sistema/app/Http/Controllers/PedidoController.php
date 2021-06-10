@@ -886,6 +886,16 @@ class PedidoController extends Controller
         }         
     }
 
+    public function verificarFeriado(Request $datos){
+        if($datos->ajax()){
+            $respuesta=DB::Select('call spGetVerificarFeriado(?)', array(
+                            $datos->input('fecha')
+                            ) 
+                        );
+            return response()->json($respuesta);
+        }         
+    }
+
     public function buscarTiempoTraslado(Request $datos){
         if($datos->ajax()){
             $respuesta=DB::Select('call spGetTiempoTraslado(?,?)', array(

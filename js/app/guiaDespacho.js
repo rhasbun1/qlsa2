@@ -103,14 +103,20 @@
                 document.getElementById('btnEmitirGuia').onclick = function() { emitirGuiaDespacho(true); }     
               }
 
-              if( document.getElementById('btnEmitirGuia').dataset.idperfil=='1' || 
+             
+              if(dato[0].nombreArchivo==""){
+                if(document.getElementById('btnEmitirGuia').dataset.idperfil=='1' || 
                   document.getElementById('btnEmitirGuia').dataset.idperfil=='5' ||
                   document.getElementById('btnEmitirGuia').dataset.idperfil=='6' ||
                   document.getElementById('btnEmitirGuia').dataset.idperfil=='7'){
-                document.getElementById('btnSubirPdf').style.display='inline';
+                  document.getElementById('btnSubirPdf').style.display='inline';
+                }else{
+                  document.getElementById('btnSubirPdf').style.display='none';
+                }
               }else{
                 document.getElementById('btnSubirPdf').style.display='none';
               }
+            
 
               cargarDetalleGuia(numeroGuia, dato[0].folioDTE);               
             }
