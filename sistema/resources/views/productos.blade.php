@@ -509,6 +509,7 @@
              
             } );
 
+
             $('#tabla tbody').on( 'click', '.btnEliminar', function () {
                 eliminarProductoPrecio(table.row( $(this).parents('tr') ).index() );
             } );
@@ -594,7 +595,7 @@
 
                     }
                 } ],               
-                buttons: [
+                buttons: [                   
                     {
                         text: 'Nuevo Producto',
                         className: 'orange',
@@ -650,14 +651,7 @@
 
                     }
                 } ],               
-                buttons: [
-                    {
-                        text: 'Nuevo Producto',
-                        className: 'orange',
-                        action: function ( e, dt, node, config ) {
-                            nuevoProducto();
-                        }
-                    },                
+                buttons: [                                 
                     {
                         extend: 'excelHtml5',
                         title: 'Listado de Productos',

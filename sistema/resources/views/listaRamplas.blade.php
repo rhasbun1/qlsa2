@@ -47,10 +47,10 @@
                     <input type="hidden" id="numero">
                     <input type="hidden" id="filaRampla">         
                     <div class="row" style="padding-top: 5px">
-                        <div class="col-sm-3">
+                        <div style="display:none"  class="col-sm-3">
                             Número (*)
                         </div>
-                        <div class="col-sm-3">
+                        <div style="display:none"  class="col-sm-3">
                             <input  type="number" onkeypress='return validaNumericos(event)'  min="0"  oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" id="numeroRampla" class="form-control input-sm" maxlength="3">
                         </div>
                         <div class="col-sm-3">

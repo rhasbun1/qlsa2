@@ -39,9 +39,7 @@
                         <th style="width:250px">Obra/Planta</th>
                         <th style="width:120px">Planta QLSA</th>
                         <th style="width:120px">Unidad</th>
-                        <th style="width:120px">Fecha Creación</th>
-                     
-                        
+                        <th style="width:120px">Fecha Creación</th>           
                         <th style="width:80px">Costo Flete ($/Unidad)</th>
                         <th style="width:80px">Distancia (km)</th>
                         <th style="width:80px">Tiempo Traslado (horas)</th>
@@ -176,7 +174,7 @@
                                                   
                                     ];
                        var flete = "<input class='form-control input-sm' value=" + number_format( dato[x].flete, 0, '.', ',' ) + "  maxlength='9' onkeypress='return isIntegerKey(event)'>";
-                       var distancia = "<input class='form-control input-sm' value=" + number_format( dato[x].distancia, 0, '.', ',' ) + " maxlength='9' onkeypress='return isIntegerKey(event)'>";
+                       var distancia = "<input class='form-control input-sm' value=" + number_format(dato[x].distancia, 0, '.', ',' ) + " maxlength='9' onkeypress='return isIntegerKey(event)'>";
                        var tiempoTraslado = "<input class='form-control input-sm' value=" + number_format( dato[x].tiempoTraslado, 0, '.', ',' ) + " maxlength='9' onkeypress='return isIntegerKey(event)'>";
                        
                        if($("#perfil").val() == 5 || $("#perfil").val() == 10 || $("#perfil").val() == 18){
@@ -197,8 +195,8 @@
                                          number_format( dato[x].tiempoTraslado, 0, '.', ',' ),
                                          codigo,
                                          dato[x].flete,
-                                         dato[x].distancia,
-                                         dato[x].tiempoTraslado, 
+                                         Math.round(dato[x].distancia),
+                                         Math.round(dato[x].tiempoTraslado), 
                                       
                                      ];
 
@@ -219,8 +217,8 @@
                                                 rowNode1[3],
                                                 rowNode[5],
                                                 rowNode1[4],
-                                                rowNode1[5],
-                                                rowNode1[6]
+                                                Math.round(rowNode1[5]),
+                                                Math.round(rowNode1[6])
                                                 
                                                 ]);
                         tabla.columns([9,10,11,12,13]).visible(false, false);
