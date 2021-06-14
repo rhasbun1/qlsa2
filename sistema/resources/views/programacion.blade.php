@@ -110,7 +110,7 @@
                                         <tr style="background-color: #A93226; color: #FDFEFE">
                                     @else
                                         @if ( $item->modificado>0)
-                                            <tr style="background-color: #F5CBA7">
+                                            <tr style="background-color: yellow">
                                         @else
                                             <tr>
                                         @endif
@@ -680,7 +680,6 @@
 
             var tabla=document.getElementById('tablaDetalleGuia');
             for (var i = 1; i < tabla.rows.length; i++){
-               
                 if(tabla.rows[i].cells[4].getElementsByTagName('input')[0]){
                   cantidad=tabla.rows[i].cells[4].getElementsByTagName('input')[0].value.trim().replace(".", "").replace(",",".");
                   if(cantidad=='' || parseFloat(cantidad)<=0){
@@ -704,6 +703,25 @@
                     );
                     return;            
                   }
+                }
+                if(tabla.rows[i].cells[4].getElementsByTagName('input')[0].value.trim().replace(".", "")>parseInt(tabla.rows[i].cells[3].innerHTML)){
+                        swal(
+                        {
+                            title: 'La cantidad pedida no puede ser mayor a la solicitada',
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            return;
+                        }
+                        )
+                        return; 
                 }
             }
 

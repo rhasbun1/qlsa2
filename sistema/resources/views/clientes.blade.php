@@ -29,7 +29,7 @@
                             <th></th>
                     @endif
                 </thead>
-                <tbody>
+                <tbody style="word-break: break-all;">
                     @foreach($listaEmpresas as $item)
                         <tr>
                             <td style="display: none">{{ $item->emp_codigo }}</td>

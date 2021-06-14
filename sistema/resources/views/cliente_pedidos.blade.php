@@ -44,7 +44,7 @@
                                     <tr style="background-color: #A93226; color: #FDFEFE">
                                 @else
                                     @if ( $item->modificado>0)
-                                        <tr style="background-color: #F5CBA7">
+                                        <tr style="background-color: yellow">
                                     @else
                                         <tr>
                                     @endif

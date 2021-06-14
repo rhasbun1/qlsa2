@@ -376,7 +376,14 @@
     <script src="{{ asset('/') }}js/app/funciones.js"></script>
     <!-- Datatable -->
     <script src="{{ asset('/') }}js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
 	<script>
+        $(document).ready(function () {
+            $("#rutConductor").mask("00.000.000-A", { reverse: true });
+        });
+
 		function formCamion(){
             $("#idCamion").val("0");
             $("#patente").val('');

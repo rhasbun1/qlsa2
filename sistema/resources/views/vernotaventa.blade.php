@@ -515,7 +515,7 @@
                 function (inputValue) {
                     if (inputValue === false) return false;
                     if (inputValue.length > 255) {
-                        swal.showInputError("No puede contener más de 255  caracteres.");
+                        swal.showInputError("No puede contener más de 200 caracteres.");
                         return false
                     }
                     if (inputValue === "") {
