@@ -59,7 +59,7 @@
 	                            <td style="width:40px">
 	                            	<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-search fa-lg"></i></button>
                                 @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
-                                  <button class="btn btn-xs btn btn-warning btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>                                    
+                                  <button class="btn btn-xs btn btn-warning btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-file-archive-o"></i></button>                                    
                                 @endif
                                 <button type="button"  class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">Revision Costos en 0</button>
                                 
@@ -669,8 +669,8 @@
                 var nodo=table.row.add( [
                         $("#ano").val(),
                         $("#mes option:selected").html(),
-                        '<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>' + 
-                        '<button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-edit fa-lg"></i></button>' +
+                        '<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-file-archive-o"></i></button>' + 
+                        '<button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-file-archive-o"></i></button>' +
                         '<button type="button" class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">revisar prueba</button>'           
                         ] ).draw().node();
 

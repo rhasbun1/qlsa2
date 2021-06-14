@@ -525,6 +525,8 @@
         $("#btnCrearPedido").attr("disabled", true);
         var verificadorFlete = 1;
         var verificarRetiro = 1;
+       
+        
         $.ajax({
             async:false,
             url: urlApp + "verificarFlete",
@@ -539,41 +541,8 @@
 
             }
         });
-        for (var i = 1; i < tabla.rows.length; i++){
-            if(verificarRetiro == 1){
-                
-              if(tabla.rows[i].cells[9].getElementsByTagName('select')[0].value != 2){
-                verificarRetiro = 0;
-              }
-              
-            }
-        }
-        if(verificarRetiro==0){
-            if(verificadorFlete==0){
-                swal(
-                    {
-                        title: 'Debe ingresar los valores del costo flete y translado en el maestro',
-                        text: '',
-                        type: 'warning',
-                        showCancelButton: false,
-                        confirmButtonText: 'Cerrar',
-                        cancelButtonText: '',
-                        closeOnConfirm: true,
-                        closeOnCancel: false
-                    },
-                    function(isConfirm)
-                    {
-                        if(isConfirm){
-                            $("#btnCrearPedido").attr("disabled", false);
-                            return;
-                            
-                        }
-                    }
-                )
-                $("#btnCrearPedido").attr("disabled", false);
-                return;
-            }
-        }
+       
+      
         if($("#txtFechaEntrega").val().trim()=='' ){
             swal(
                 {
@@ -604,6 +573,43 @@
             var tabla=document.getElementById('tablaDetallePedidoGranel');             
         }else{
             var tabla=document.getElementById('tablaDetallePedidoNormal'); 
+        }
+
+        for (var i = 1; i < tabla.rows.length; i++){
+            console.log(verificarRetiro);
+            if(verificarRetiro==1){      
+                console.log(verificarRetiro);        
+              if(tabla.rows[i].cells[9].getElementsByTagName('select')[0].value == "2"){
+                verificarRetiro = 0;
+              }
+              
+            }
+        }
+        if(verificarRetiro==1){
+            if(verificadorFlete==0){
+                swal(
+                    {
+                        title: 'Debe ingresar los valores del costo flete y translado en el maestro',
+                        text: '',
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'Cerrar',
+                        cancelButtonText: '',
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    },
+                    function(isConfirm)
+                    {
+                        if(isConfirm){
+                            $("#btnCrearPedido").attr("disabled", false);
+                            return;
+                            
+                        }
+                    }
+                )
+                $("#btnCrearPedido").attr("disabled", false);
+                return;
+            }
         }
         
         var ind1=0;

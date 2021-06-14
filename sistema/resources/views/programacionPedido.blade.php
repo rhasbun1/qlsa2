@@ -630,6 +630,25 @@
                     return;            
                   }
                 }
+                if(tabla.rows[i].cells[4].getElementsByTagName('input')[0].value.trim().replace(".", "")>parseInt(tabla.rows[i].cells[3].innerHTML)){
+                        swal(
+                        {
+                            title: 'La cantidad pedida no puede ser mayor a la solicitada',
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            return;
+                        }
+                        )
+                        return; 
+                }
             }
 
           var existe=true;  

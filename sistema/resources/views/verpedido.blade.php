@@ -626,30 +626,47 @@
             var tabla=document.getElementById('tablaDetalleGuia');
             for (var i = 1; i < tabla.rows.length; i++){
                 if(tabla.rows[i].cells[4].getElementsByTagName('input')[0]){
-                    cantidad=tabla.rows[i].cells[4].getElementsByTagName('input')[0].value.trim().replace(".", "").replace(",",".");
-                    if(cantidad=='' || parseFloat(cantidad)<=0){
-                        swal(
-                            {
-                                title: '¡Debe completar las cantidades y actualizar antes de subir el archivo!' ,
-                                text: '',
-                                type: 'warning',
-                                showCancelButton: false,
-                                confirmButtonText: 'OK',
-                                cancelButtonText: '',
-                                closeOnConfirm: true,
-                                closeOnCancel: false
-                            },
-                            function(isConfirm)
-                            {
-                                if(isConfirm){
-                                    document.getElementById('btnSubirGuia').disabled=false;
-                                    return;
-                                }
+                  cantidad=tabla.rows[i].cells[4].getElementsByTagName('input')[0].value.trim().replace(".", "").replace(",",".");
+                  if(cantidad=='' || parseFloat(cantidad)<=0){
+                    swal(
+                        {
+                            title: '¡Debe completar las cantidades y actualizar antes de subir el archivo!' ,
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            if(isConfirm){
+                              return;
                             }
-                        );
-                        document.getElementById('btnSubirGuia').disabled=false;
-                        return;            
-                    }
+                        }
+                    );
+                    return;            
+                  }
+                }
+                if(tabla.rows[i].cells[4].getElementsByTagName('input')[0].value.trim().replace(".", "")>parseInt(tabla.rows[i].cells[3].innerHTML)){
+                        swal(
+                        {
+                            title: 'La cantidad pedida no puede ser mayor a la solicitada',
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            return;
+                        }
+                        )
+                        return; 
                 }
             }
 

@@ -548,7 +548,7 @@
                                   <td style="width:50px">{{ $item->idPedido }}</td>
                                   <td style="width:120px ">{{ $item->tipo }}</td>
                                   <td style="width: 120px">{{ $item->motivo }}</td>
-                                  <td style="width:120px ">{{ date('d/m/Y', strtotime($item->fechaHora))  }}</td>
+                                  <td style="width:120px ">{{ date('d/m/Y h:m', strtotime($item->fechaHora))  }}</td>
                                   <td style="width: 120px">{{ $item->nombreUsuario }}</td>
                                   <td style="width: 120px">{{ $item->nombre }}</td>
                                   <td style="width:120px ">{{ $item->nombreEmpresa }}</td>

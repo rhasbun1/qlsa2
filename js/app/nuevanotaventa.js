@@ -340,6 +340,7 @@
                 var codigoPlanta = tabla.rows[i].cells[7].getElementsByTagName('select')[0].value;
                 var codigoUnidad = tabla.rows[i].cells[4].innerHTML;
                 var codigoProducto =  tabla.rows[i].cells[0].innerHTML;
+                var nombreProducto = tabla.rows[i].cells[2].innerHTML;
             $.ajax({
                 async: false,
                 url: urlApp + 'selectPlantas',
@@ -356,7 +357,7 @@
                     seguir= 0;
                     swal(
                         {
-                            title: 'El producto no esta en la planta seleccionada',
+                            title: 'El producto '+nombreProducto+' no esta en la planta seleccionada',
                             text: '',
                             type: 'warning',
                             showCancelButton: false,

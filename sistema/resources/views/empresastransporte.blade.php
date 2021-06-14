@@ -139,7 +139,7 @@
 
 
             // DataTable
-            if($("#perfil").val() == 2 || $("#perfil").val() == 19 || $("#perfil").val() == 3 || $("#perfil").val() == 12 ||  $("#perfil").val() == 18 ||  $("#perfil").val() == 4 ||  $("#perfil").val() == 11){
+            if($("#perfil").val() == 2 || $("#perfil").val() == 19 || $("#perfil").val() == 3 || $("#perfil").val() == 12 ||  $("#perfil").val() == 18 ||  $("#perfil").val() == 4 ||  $("#perfil").val() == 11 || $("#perfil").val() == 8){
                 var table=$('#tabla').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,  
