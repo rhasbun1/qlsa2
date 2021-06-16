@@ -558,9 +558,8 @@
                             if( dato[x].certificado!='' ){
                                 if(dato[x].certificado == 'S/C'){
                                       
-
-                                    cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/"' + dato[x].certificado + '">';
-                                cadena+='<img src="'+ urlApp + 'img/iconos/cerwtificado.png" border="0"></a>';
+                                 cadena+='<a target="_blank" href="'+ urlApp + 'bajarCertificado/"' + dato[x].certificado + '">';
+                                cadena+='<img src="'+ urlApp + 'img/iconos/certificado.png" border="0"></a>';
                                 }  
                                 
                                 
@@ -611,7 +610,7 @@
                             }else{
                                 if( dato[x].modificado>0){
                                     var nodo=tabla.row(ind).node();
-                                    nodo.style.backgroundColor='#F5CBA7';
+                                    nodo.style.backgroundColor='yellow';
                                 }
                             }
 
@@ -909,7 +908,7 @@
                 "scrollX": true,
                 buttons: [
                     {
-                        text: 'Atras',
+                        text: 'Atrás',
                         action: function ( e, dt, node, config ) {
                             location.href=("{{ asset('/') }}dashboard");
                         }

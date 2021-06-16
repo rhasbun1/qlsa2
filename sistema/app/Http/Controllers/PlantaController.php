@@ -37,7 +37,20 @@ class PlantaController extends Controller
         return response()->json([
             "identificador" => $planta[0]->identificador
         ]);
-    }  
+    }
+
+    public function verificarTiempoProduccion(Request $datos)
+    {     
+        $tiempoProduccion=DB::Select('call spGetVerificarTiempoProduccion(?,?,?)', array(
+            $datos->input('codigoProducto'),
+            $datos->input('codigoUnidad'),
+            $datos->input('codigoPlanta'),
+            ) 
+        );
+        return response()->json([
+            "identificador" => $tiempoProduccion[0]->identificador
+        ]);
+    }
 
    
     public function grabarPlanta(Request $datos){
