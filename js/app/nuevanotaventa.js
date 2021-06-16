@@ -353,7 +353,7 @@
                     codigoPlanta: codigoPlanta
                     },
             success:function(data){
-                if(data.identificador==0){
+                if(data.identificador==0 && codigoPlanta!=0){
                     seguir= 0;
                     swal(
                         {
@@ -379,8 +379,54 @@
                 alert('Error!, No se pudo Añadir los datos');
             }
         });
-
         }
+
+        for (var i = 1; i < tabla.rows.length; i++){
+            var codigoPlanta = tabla.rows[i].cells[7].getElementsByTagName('select')[0].value;
+            var codigoUnidad = tabla.rows[i].cells[4].innerHTML;
+            var codigoProducto =  tabla.rows[i].cells[0].innerHTML;
+            var nombreProducto = tabla.rows[i].cells[2].innerHTML;
+            $.ajax({
+                async: false,
+                url: urlApp + 'verificarTiempoProduccion',
+                headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                type: 'POST',
+                dataType: 'json',
+                data: { 
+                    codigoProducto: codigoProducto,                
+                    codigoUnidad: codigoUnidad,
+                    codigoPlanta: codigoPlanta            
+                    },
+            success:function(data){
+                if(data.identificador==0){
+                    seguir= 0;
+                    swal(
+                        {
+                            title: 'El producto '+nombreProducto+' no tiene tiempo de produccion',
+                            text: '',
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            return;
+                        }
+                    )
+                    return; 
+                }
+
+            },
+            error: function(jqXHR, text, error){
+                alert('Error!, No se pudo Añadir los datos');
+            }
+        });
+        }
+
+
         if(seguir == 1){
             crearNotaVenta();
         }else{
@@ -391,7 +437,10 @@
 
     function crearNotaVenta(){
 
-        
+
+
+       
+
         if($("#txtNumeroCotizacion").val()==''){
             swal(
                 {

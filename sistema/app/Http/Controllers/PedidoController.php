@@ -273,7 +273,7 @@ class PedidoController extends Controller
 
     public function verpedido($idPedido, $accionPedidoNota){
         $accion = explode('-', $accionPedidoNota)[0];
-        $accionNota = explode('-', $accionPedidoNota)[1];
+        $accionNota = explode('-', $accionPedidoNota)[0];
         $pedido=DB::Select('call spGetPedido(?)', array($idPedido) );
         $listaDetallePedido=DB::Select('call spGetPedidoDetalle(?)', array($idPedido) );
         $log = DB::Select('call spGetPedidoLog(?)', array($idPedido) );
