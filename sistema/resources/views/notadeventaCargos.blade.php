@@ -331,6 +331,9 @@
             
             var tabla=$('#tablaNotas').DataTable({
                 orderCellsTop: true,
+                "language": {
+                        "search": "Buscar:"
+                }, 
                 fixedHeader: true,
                 lengthMenu: [[6, 12, 20, -1], ["6", "12", "20", "Todos"]],
                 scrollX: true,

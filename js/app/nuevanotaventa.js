@@ -402,7 +402,7 @@
                     seguir= 0;
                     swal(
                         {
-                            title: 'El producto '+nombreProducto+' no tiene tiempo de produccion',
+                            title: 'El producto '+nombreProducto+' no tiene tiempo de producción',
                             text: '',
                             type: 'warning',
                             showCancelButton: false,

@@ -32,7 +32,7 @@
                         <div class="col-md-2">
                             <div class="input-group date" id="divFechaMin">
                                 <input type="text" class="form-control input-sm" id="min">
-                                <div class="input-group-addon">
+                                <div id="test" class="input-group-addon">
                                     <span class="glyphicon glyphicon-th"></span>
                                 </div>
                             </div>
@@ -480,6 +480,7 @@
                     } );                    
                 }       
             } );
+            
 
 
             $.fn.dataTable.ext.search.push(
@@ -500,6 +501,9 @@
                     return false;
                 }
             );
+
+           
+           
 
             // DataTable
             var uPerfil='{{ Session::get("idPerfil") }}';
@@ -1027,13 +1031,38 @@
                     });
                 }
                  
-            $('.date').datepicker({
+            $('#max').datepicker({
                 todayHighlight: true,
                 format: "dd/mm/yyyy",
                 weekStart: 1,
                 language: "es",
-                autoclose: true
-            }) 
+                autoclose: true,
+                
+            })
+
+            $('#divFechaMax').datepicker({
+                todayHighlight: true,
+                format: "dd/mm/yyyy",
+                weekStart: 1,
+                language: "es",
+                autoclose: true,
+                
+            })
+            
+            $('#min').datepicker({
+                format: 'dd/mm/yyyy',
+                endDate: '+0d',
+                autoclose: true,
+                language: 'es'
+                
+            });
+            $('#divFechaMin').datepicker({
+                format: 'dd/mm/yyyy',
+                endDate: '+0d',
+                autoclose: true,
+                language: 'es'
+                
+            });
 
   //          $("#min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
   //          $("#max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });

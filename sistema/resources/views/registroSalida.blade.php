@@ -142,13 +142,16 @@
             var table=$('#tablaDetalle').DataTable({
                  orderCellsTop: true,
                  fixedHeader: true, 
-                 dom: 'Bfrtip',        
+                 dom: 'Bfrtip',
+                 "language": {
+                        "search": "Buscar:"
+                  },        
                 "scrollX": true,
                 "order": [[ 0, "desc" ]],
                 "paging": false,  
                 buttons: [
                     {
-                        text: 'Atras',
+                        text: 'Atrás',
                         action: function ( e, dt, node, config ) {
                             location.href=("{{ asset('/') }}dashboard");
                         }
