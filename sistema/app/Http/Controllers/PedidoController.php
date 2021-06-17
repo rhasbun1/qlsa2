@@ -344,7 +344,10 @@ class PedidoController extends Controller
     }
     
     public function verificarFlete(Request $datos){
-        $verificarFleteYhora=DB::Select('call spGetFleteNotasDeVentas(?)', array($datos->input('idNotaVenta')));
+        $verificarFleteYhora=DB::Select('call spGetFleteNotasDeVentas(?,?)', array(
+            $datos->input('idNotaVenta'),
+            $datos->input('planta')
+    ));
         return $verificarFleteYhora;
     }
 

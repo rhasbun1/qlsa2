@@ -523,24 +523,8 @@
         }
 
         $("#btnCrearPedido").attr("disabled", true);
-        var verificadorFlete = 1;
-        var verificarRetiro = 1;
+      
        
-        
-        $.ajax({
-            async:false,
-            url: urlApp + "verificarFlete",
-            headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
-            type: 'POST',
-            dataType: 'json',
-            data: { 
-                idNotaVenta: $("#txtNumeroNotaVenta").val()
-            },
-            success:function(dato){
-                verificadorFlete = dato[0].verificador;
-
-            }
-        });
        
       
         if($("#txtFechaEntrega").val().trim()=='' ){
@@ -575,10 +559,33 @@
             var tabla=document.getElementById('tablaDetallePedidoNormal'); 
         }
 
+        var verificadorFlete = 1;
+        var verificarRetiro = 1;
+        var fletePlanta;
+        
         for (var i = 1; i < tabla.rows.length; i++){
-            console.log(verificarRetiro);
-            if(verificarRetiro==1){      
-                console.log(verificarRetiro);        
+            fletePlanta = tabla.rows[i].cells[8].getElementsByTagName('select')[0].value;
+            if(tabla.rows[i].cells[7].getElementsByTagName('input')[0].value.trim()!="" ){
+                $.ajax({
+                    async:false,
+                    url: urlApp + "verificarFlete",
+                    headers: { 'X-CSRF-TOKEN' : $("#_token").val() },
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 
+                        idNotaVenta: $("#txtNumeroNotaVenta").val(),
+                        planta: fletePlanta
+                    },
+                    success:function(dato){                 
+                        verificadorFlete = dato[0].verificador;
+        
+                    }
+                });
+            }
+        }
+
+        for (var i = 1; i < tabla.rows.length; i++){
+            if(verificarRetiro==1){         
               if(tabla.rows[i].cells[9].getElementsByTagName('select')[0].value == "2"){
                 verificarRetiro = 0;
               }
