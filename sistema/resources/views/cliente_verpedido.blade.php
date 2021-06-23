@@ -279,17 +279,16 @@
     </div>
 </div>
 
+
+@include('guiaDespacho')
+
 @endsection
 
 @section('javascript')
     <!-- Datepicker -->
-    <script src="{{ asset('/') }}js/bootstrap-datepicker.min.js"></script>
-    <script src="{{ asset('/') }}locales/bootstrap-datepicker.es.min.js"></script>  
 
-    <!-- Timepicker -->
-    <script src="{{ asset('/') }}js/bootstrap-timepicker.min.js"></script>  
-
-    <script src="{{ asset('/') }}js/app/funciones.js"></script>
+    <script src="{{ asset('/') }}js/app/funciones.js?{{$parametros[0]->version}}"></script>
+    <script src="{{ asset('/') }}js/app/guiaDespacho.js?{{$parametros[0]->version}}"></script>
     <script src="{{ asset('/') }}js/app/verpedido.js"></script>
     <!-- Datatable -->
     <script src="{{ asset('/') }}js/jquery.dataTables.min.js"></script>

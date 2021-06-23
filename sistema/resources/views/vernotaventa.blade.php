@@ -18,7 +18,10 @@
                     <div class="col-lg-3 col-md-3 col-sm-4">
                         <input class="form-control input-sm" id="txtNombreCliente" readonly value="{{ $notaventa[0]->emp_nombre }}">
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-2">
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+                        Rut
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1">
                         <input class="form-control input-sm" id="txtRutCliente" readonly value="{{ $notaventa[0]->emp_rut }}" title="Rut del Cliente">
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-1">

@@ -346,7 +346,7 @@
                     @elseif ($accionNota == 5)
                         <a href="{{ asset('/') }}guiasEnProceso/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                     @elseif ($accionNota == 6)
-                        <a href="{{ asset('/') }}modificarCertificado/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
+                        <a onclick="history.go(-1);" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                     @elseif ($accionNota == 7) <!-- MATIAS -->
                         <a href="{{ asset('/') }}listaIngresosClienteporAprobar/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                     @else

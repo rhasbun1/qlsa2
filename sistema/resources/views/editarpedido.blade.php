@@ -433,10 +433,10 @@
             
             if(tipoCarga==1){
                 if(tipoTransporte==1){
-                    if(cantidadMod>cmtten){
+                    if(cantidadMod!=cmtten){
                         swal(
                         {
-                            title: 'La cantidad de toneladas excede el máximo permitido por pedido (máx. ' + cmtten +')!!' ,
+                            title: 'no puede crear pedidos con carga mayor o menor a ' + cmtten +' !!' ,
                             text: '',
                             type: 'warning',
                             showCancelButton: false,
@@ -467,6 +467,7 @@
                     }  
                 }
             }
+            
 
             
         

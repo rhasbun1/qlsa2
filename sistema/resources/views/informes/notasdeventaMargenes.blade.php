@@ -201,7 +201,7 @@
 	            header: {
 	                headerRows: 2,
 	                rows: [
-	                    { index: 1, cells: [{ index: 1, colSpan: 5, value: 'NOTAS DE VENTA Y MARGENES', style: { fontColor: '#C25050', fontSize: 25, hAlign: 'Center', bold: true } }] }
+	                    { index: 1, cells: [{ index: 1, colSpan: 5, value: 'NOTAS DE VENTA Y MÁRGENES', style: { fontColor: '#C25050', fontSize: 25, hAlign: 'Center', bold: true } }] }
 	                ]
 	            },            
 	            fileName: "notadeventaMargenes.xlsx"
