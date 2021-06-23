@@ -5,6 +5,7 @@
 <div style="padding: 5px">
 
     <div class="panel panel-default" id="contenedor3">
+        <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
         <div class="panel-heading">
             <div class="panel-tab clearfix">
                 <input type="hidden" id="idCliente" data-idperfil="{{Session::get('idPerfil')}}">
@@ -57,7 +58,7 @@
                                             <span><img src="{{ asset('/') }}img/iconos/cargacompleta.png" border="0"></span>
                                         @endif
                                         @if ( $item->numeroGuia>0 )
-                                            <span><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0" onclick="abrirModalGuia('{{ $item->numeroGuia }}');" style="cursor:pointer; cursor: hand"></span>
+                                        <span onclick='abrirGuia(1, {{ $item->numeroGuia }}, this.parentNode.parentNode);' style="cursor:pointer; cursor: hand"><img src="{{ asset('/') }}img/iconos/guiaDespacho2.png" border="0"></span>                               
                                         @endif    
                                         @if ( $item->certificado==1 )  
                                             <span><img src="{{ asset('/') }}img/iconos/certificado.png" border="0"></span>
@@ -129,12 +130,20 @@
    
 </div>
 
+
+@include('guiaDespacho')
+
 @endsection
 
 @section('javascript')
+    <!-- Datepicker -->
 
-    
-    
+    <script src="{{ asset('/') }}js/app/funciones.js?{{$parametros[0]->version}}"></script>
+    <script src="{{ asset('/') }}js/app/guiaDespacho.js?{{$parametros[0]->version}}"></script>
+    <!-- Datatable -->
+    <script src="{{ asset('/') }}js/jquery.dataTables.min.js"></script>
+
+
     <script src="https://cdn.datatables.net/fixedcolumns/3.2.5/js/dataTables.fixedColumns.min.js"></script>
 
     <script>

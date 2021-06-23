@@ -159,11 +159,11 @@ class PedidoController extends Controller
 
     // Vista para Aprobar pedidos por Usuarios Comerciales  
     public function clientePedidos(){
-
+        $parametros=DB::table('parametros')->select('version')->get();
         $pedidos=DB::Select('call spGetPedidosClientedash(?)', array( Session::get('idUsuario') ) );
         $listaPedidoSinAprobarClientes=DB::Select('call spGetPedidoSinAprobarClientes(?)', array(Session::get('idUsuario')));
 
-        return view('cliente_pedidos')->with('pedidos', $pedidos)->with('listaPedidoSinAprobarClientes',$listaPedidoSinAprobarClientes);  
+        return view('cliente_pedidos')->with('pedidos', $pedidos)->with('listaPedidoSinAprobarClientes',$listaPedidoSinAprobarClientes)->with('parametros',$parametros);  
     }    
 
     public function programacion(){
@@ -312,6 +312,7 @@ class PedidoController extends Controller
 
     public function clienteVerPedido($idPedido, $accion){
         $pedido=DB::Select('call spGetPedido(?)', array($idPedido) );
+        $parametros=DB::table('parametros')->select('version')->get();
         $listaDetallePedido=DB::Select('call spGetPedidoDetalle(?)', array($idPedido) );
         $emptransporte = DB::table('empresastransporte')->select('idEmpresaTransporte','nombre')->get();
         $log = DB::Select('call spGetPedidoLog(?)', array($idPedido) );
@@ -319,7 +320,8 @@ class PedidoController extends Controller
                                 ->with('listaDetallePedido', $listaDetallePedido)
                                 ->with('accion', $accion)
                                 ->with('emptransporte', $emptransporte)
-                                ->with('log', $log);
+                                ->with('log', $log)
+                                ->with('parametros', $parametros);
     }
     
     public function programarpedido($idPedido){

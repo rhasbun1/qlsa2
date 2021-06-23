@@ -68,11 +68,13 @@ class Controller extends BaseController
 
         $listaPedidoSinAprobarCliente=DB::Select('call spGetClientePedidosSinAprobar(?)', array(Session::get('idUsuario')));
 
-        $listaPedidoSinAprobarClientes=DB::Select('call spGetPedidoSinAprobarClientes(?)', array(Session::get('empresaUsuario')));
+        $listaPedidoSinAprobarClientes=DB::Select('call spGetPedidoSinAprobarClientesDashboardModal(?)', array(Session::get('idUsuario')));
 
         $cantidadPedidosSinCertificado=DB::Select('call countPedidosSinCertificado(?,?)', array(Session::get('idUsuario'), Session::get('idPerfil')  ) );
 
         $CantidadPedidosEnProcesoCliente=DB::Select('call CantidadPedidosEnProcesoCliente(?)', array(Session::get('idUsuario')));
+
+        $CantidadPedidosPendienteAprobacionVB=DB::Select('call spGetPedidoSinAprobarClientesDashboard(?)', array(Session::get('idUsuario')));
 
         
         
@@ -120,7 +122,8 @@ class Controller extends BaseController
                                 ->with('listaPedidoSinAprobarClientes', $listaPedidoSinAprobarClientes)
                                 ->with('listaPedidoSinAprobarCliente', $listaPedidoSinAprobarCliente)
                                 ->with('cantidadPedidosSinCertificado', $cantidadPedidosSinCertificado)
-                                ->with('CantidadPedidosEnProcesoCliente', $CantidadPedidosEnProcesoCliente);
+                                ->with('CantidadPedidosEnProcesoCliente', $CantidadPedidosEnProcesoCliente)
+                                ->with('CantidadPedidosPendienteAprobacionVB', $CantidadPedidosPendienteAprobacionVB);
                                 
     }
     public function notaVentas(){

@@ -164,7 +164,7 @@
 
     <a href="#modalPedidosSinAprobar1" data-toggle="modal">
         <div class="panel-stat3 bg-info btn" style="width:100%">
-          <h2 class="m-top-none">{{ $datos[0]->pedidosSinAprobarClientes }}</h2>
+          <h2 class="m-top-none">{{ $CantidadPedidosPendienteAprobacionVB[0]->cantidadVB }}</h2>
           <p> <h4>Pedidos pendientes de</h4>
             <h4>Aprobación de Crédito</h4></p>
         </div>

@@ -60,7 +60,7 @@ body{
   </tr>
   <tr>
     @if ( Session::get('grupoUsuario')=='C')    
-      <th class="tg-cpu2"><b>Cond.de Pago</b></th>
+      <th class="tg-cpu2"><b>Cond.de pago</b></th>
       <th class="tg-cpu2" >{{$notaventa[0]->condiciondePago}}</th>
     @else
       <th class="tg-cpu2"><b></b></th>
