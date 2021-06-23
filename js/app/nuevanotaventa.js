@@ -699,7 +699,7 @@
                 return;
         }
 
-        if (entregaEnObra>0 && document.getElementById('idObra').selectedIndex<2){
+        if (document.getElementById('btnNuevaObra').disabled==false ){
                 swal(
                     {
                         title: 'Existe al menos un producto con entrega en obra, debe ingresar los datos de la obra o seleccionar alguna obra existente.',
@@ -718,6 +718,26 @@
                 )
                 return;            
         }
+
+        if ($("#idObra").val()){
+            swal(
+                {
+                    title: 'Existe al menos un producto con entrega en obra, debe ingresar los datos de la obra o seleccionar alguna obra existente.',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: '',
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function(isConfirm)
+                {
+                    return;
+                }
+            )
+            return;            
+    }
         
         cadena=cadena.slice(0,-2);
         cadena+=']';

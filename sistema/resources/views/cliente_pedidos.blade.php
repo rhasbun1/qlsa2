@@ -101,7 +101,9 @@
                             @foreach($listaPedidoSinAprobarClientes as $item)
                                 <tr>
                                 
-                                    <td style="width: 50px">{{ $item->idPedido }}</td>
+                                    <td style="width:150px">
+                                        <a href="{{ asset('/') }}clienteVerPedido/{{ $item->idPedido }}/7/" class="btn btn-xs btn-success">{{ $item->idPedido }}</a>                                   
+                                    </td>  
                                     <td style="width: 120px">{{ $item->fechahora_creacion }}</td>
                                     <td style="width: 120px">{{ $item->estado }}</td>
                                     <td style="width: 120px">{{ $item->emp_nombre }}</td>
