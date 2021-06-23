@@ -36,7 +36,7 @@
                     </div>
                     <div class="row" style="padding-top: 5px">
                         <div class="col-md-2">
-                            Teléfono/Movil (*)
+                            Teléfono/Móvil (*)
                         </div>
                         <div class="col-md-6">
                             <input type="text" id="txtTelefonoObra" class="form-control input-sm" maxlength="30">

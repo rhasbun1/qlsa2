@@ -177,7 +177,7 @@
 @endif
 @if ((Session::get('idPerfil') == '6' || Session::get('idPerfil') == '7' || Session::get('idPerfil') == '8' || Session::get('idPerfil') == '5'))
 	<div class="col-md-3">
-			<a href="{{ asset('/') }}#modalJefePedidosEnProceso" data-toggle="modal">
+			<a href="#modalJefePedidosEnProceso" data-toggle="modal">
 				<div class="panel-stat3 bg-info btn" style="width:100%">
 					<h2 class="m-top-none">{{ $datos1[0]->cantidadPedidosEnProceso }} </h2>
           <h4>Pedidos En Proceso</h4>
