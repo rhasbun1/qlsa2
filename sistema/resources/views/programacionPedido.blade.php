@@ -168,7 +168,11 @@
                             @if( Session::get('idPerfil')=='8' )
                                 {{ $item->nombrePlanta }}
                             @else
+                            @if( Session::get('idPerfil')=='8' || Session::get('idPerfil')=='7' )
+                            <select  id="idPlanta" class="form-control input-sm">  
+                            @else
                             <select disabled id="idPlanta" class="form-control input-sm">  
+                            @endif
                                 @foreach($plantas as $planta)
                                     @if( $item->nombrePlanta==$planta->nombre )
                                         <option value="{{ $planta->idPlanta }}" selected>{{ $planta->nombre }}</option>

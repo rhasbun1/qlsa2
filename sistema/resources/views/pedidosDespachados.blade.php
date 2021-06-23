@@ -49,7 +49,7 @@
                 @endif
 				<div class="col-md-9" style="display: inline">
 					Seleccione la(s) fecha(s) de despachos que desea consultar
-					<input id="fechaInicio" class="form-control input-sm date" style="display: inline; width: 140px">&nbsp&nbsp
+					<input id="fechaInicio" class="form-control input-sm date" style="display: inline; width: 140px" data-date-end-date="-3d">&nbsp&nbsp
 					<input id="fechaTermino" class="form-control input-sm date" style="display: inline; width: 140px" data-date-end-date="0d">
                     <button class="btn btn-success btn-sm" style="display: inline;" onclick="resumenGeneral();">Buscar</button>
 				</div>					
