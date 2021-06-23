@@ -278,7 +278,7 @@
             if($("#codigoSoftland").val()==""){
                 swal(
                         {
-                            title: 'Codigo softland no puede estar vacio',
+                            title: 'Código softland no puede estar vacío',
                             type: 'warning',
                             showCancelButton: false,
                             confirmButtonText: 'OK',

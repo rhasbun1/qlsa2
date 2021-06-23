@@ -350,7 +350,7 @@
                     @elseif ($accionNota == 7) <!-- MATIAS -->
                         <a href="{{ asset('/') }}listaIngresosClienteporAprobar/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a>
                     @else
-                        <a href="{{ asset('/') }}vernotaventa/{{ $pedido[0]->idNotaVenta }}-{{ $pedido[0]->idPedido }}/{{ $accionNota }}/" class="btn btn-sm btn-warning" style="width:80px">Atrás</a><!--MATIAS-->                    
+                        <a  onclick="history.go(-1);" class="btn btn-sm btn-warning" style="width:80px">Atrás</a><!--MATIAS-->                    
                     @endif
                 @endif
             @endif            

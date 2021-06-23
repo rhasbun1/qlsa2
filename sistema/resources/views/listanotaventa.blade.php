@@ -19,16 +19,16 @@
                         Filtro&nbsppor&nbspFecha&nbspCreación
                     </div>
                     <div class="col-md-2">
-                        <div class="input-group date" id="divFechaMin">
-                            <input type="text" class="form-control input-sm" id="min">
+                        <div class="input-group date" id="divFechaMin" data-date-end-date="-3d">
+                            <input type="text" class="form-control input-sm" id="min" >
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="input-group date" id="divFechaMax">
-                            <input type="text" class="form-control input-sm" id="max">
+                        <div class="input-group date" id="divFechaMax" data-date-end-date="0d">
+                            <input type="text" class="form-control input-sm" id="max" >
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>

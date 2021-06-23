@@ -67,8 +67,8 @@
                                 Filtrar por Fecha Salida
                             </div>
                             <div class="col-md-3">
-                                <div class="input-group date" id="divFechaMin">
-                                    <input type="text" class="form-control input-sm" id="min">
+                                <div class="input-group date" id="divFechaMin" data-date-end-date="0d">
+                                    <input type="text" class="form-control input-sm" id="min" >
                                     <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-th"></span>
                                     </div>
@@ -91,7 +91,7 @@
                                 Filtrar por Fecha de Creación (filtro para <b>ver todos los pedidos suspendidos</b>)
                             </div>
                             <div class="col-md-3">
-                                <div class="input-group date" id="divFechaCreacionMin">
+                                <div class="input-group date" id="divFechaCreacionMin" data-date-end-date="0d">
                                     <input type="text" class="form-control input-sm" id="fechaCreacionMin">
                                     <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-th"></span>
@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="input-group date" id="divFechaCreacionMax">
+                                <div class="input-group date" id="divFechaCreacionMax" data-date-end-date="0d">
                                     <input type="text" class="form-control input-sm" id="fechaCreacionMax">
                                     <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-th"></span>
@@ -737,7 +737,8 @@
                 weekStart: 1,
                 language: "es",
                 autoclose: true
-            }) 
+        
+            });
 
             $('#wrapper').toggleClass('sidebar-hide');
             $('.main-menu').find('.openable').removeClass('open');
