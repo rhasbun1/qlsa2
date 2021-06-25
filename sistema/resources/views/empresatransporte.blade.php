@@ -834,7 +834,12 @@
                       },
                 success:function(dato){
                     var tabla=document.getElementById("tablaConductores");
-
+                    var textoHabilitado;
+                    if(document.getElementById('habilitadaConductor').value==1){
+                        textoHabilitado='Si';  
+                    }else{
+                        textoHabilitado='No';
+                    }
                     if(id=='0'){
                         cadena="<tr>";
                         cadena+="<td style='display:none'>" + dato.idConductor+ "</td>";
@@ -844,8 +849,9 @@
                         cadena+="<td>" + $("#rutConductor").val() + "</td>";
                         cadena+="<td>" + $("#telefonoConductor").val() + "</td>";
                         cadena+="<td>" + $("#emailConductor").val() + "</td>";
+                        cadena+="<td style='text-align: center;'>" +textoHabilitado+ "</td>";
                         cadena+='<td><button onclick="editarConductor('+ dato.idConductor + ', this.parentNode.parentNode.rowIndex);" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-edit fa-lg"></i></button>';
-                        cadena+='<button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarConductor(' + dato.idConductor + ', this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button><td>';
+                        //cadena+='<button class="btn btn-xs btn btn-danger" title="Eliminar" onclick="eliminarConductor(' + dato.idConductor + ', this.parentNode.parentNode.rowIndex)"><i class="fa fa-trash-o fa-lg"></i></button><td>';
                         cadena+="</tr>";
                         $("#tablaConductores").append(cadena);
                     }else{
