@@ -719,10 +719,10 @@
                 return;            
         }
 
-        if ($("#idObra").val()<0){
+        if ($("#idObra").val()<0 && entregaEnObra>0){
             swal(
                 {
-                    title: 'Existe al menos un producto con entrega en obra, debe ingresar los datos de la obra o seleccionar alguna obra existente.',
+                    title: 'Existe al menos un producto con entrega en obra o esta seleccionando ingresar nueva obra, debe ingresar los datos de la obra o seleccionar alguna obra existente.',
                     text: '',
                     type: 'warning',
                     showCancelButton: false,

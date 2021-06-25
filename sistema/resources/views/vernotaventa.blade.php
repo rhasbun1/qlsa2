@@ -313,7 +313,7 @@
                 @foreach($log as $item)
                 <?php
                     $fecha = $item->fechaHora;
-                    $newDate = date("d/m/Y h:m:s", strtotime($fecha));
+                    $newDate = date("d/m/Y H:i:s", strtotime($fecha));
                     $fecha1 = $newDate
                     
                 ?>

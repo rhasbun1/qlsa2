@@ -240,8 +240,14 @@
                 </thead>
                 <tbody>
                     @foreach($log as $item)
+                    <?php
+                    $fecha = $item->fechaHora;
+                    $newDate = date("d/m/Y H:i:s", strtotime($fecha));
+                    $fecha1 = $newDate
+                    
+                  ?>
                     <tr>
-                        <td style="width:200px"> {{ $item->fechaHora }} </td>
+                        <td style="width:200px"> {{ $fecha1 }} </td>
                         <td style="width:250px"> {{ $item->nombreUsuario }} </td>
                         <td style="width:350px"> {{ $item->accion }} </td>
                         <td style="width:350px"> {{ $item->motivo }} </td>

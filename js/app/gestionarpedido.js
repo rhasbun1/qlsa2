@@ -596,7 +596,7 @@
             if(verificadorFlete==0){
                 swal(
                     {
-                        title: 'Debe ingresar los valores del costo flete y translado en el maestro',
+                        title: 'Falta ingresar costo y tiempo de flete en el maestro',
                         text: '',
                         type: 'warning',
                         showCancelButton: false,
