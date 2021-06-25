@@ -596,7 +596,7 @@
             if(verificadorFlete==0){
                 swal(
                     {
-                        title: 'Falta ingresar costo y tiempo de flete en el maestro',
+                        title: 'No se puede ingresar pedido, jefe de transporte debe ingresar la información de flete',
                         text: '',
                         type: 'warning',
                         showCancelButton: false,
