@@ -1384,11 +1384,62 @@
     
 
     <script>
-	
-	
+        function actualizarFiltros(tabla){
+            tabla.columns(0).every( function () {
+                var column = this;
+                var select = $("#selProducto" ).empty().append( '<option value=""></option>' )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+            tabla.columns(1).every( function () {
+                var column = this;
+                var select = $("#selUnidad" ).empty().append( '<option value=""></option>' )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+            tabla.columns(2).every( function () {
+                var column = this;
+                var select = $("#selPlanta" ).empty().append( '<option value=""></option>' )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
+
+
         $(document).ready(function() {
-          
-            
             // DataTable
             var table=$('#tablaModalClientePendiente').DataTable({
                 orderCellsTop: true,
@@ -1412,12 +1463,10 @@
                                 
                 "order": [[ 0, "desc" ]],
                 language:{url: "{{ asset('/') }}locales/datatables_ES.json"}
-                ,initComplete: function () {
+                ,"initComplete": function () {
                     actualizarFiltros(this.api());
                 }        
 			});
-
-
 
       // $(document).on('click','#notasVen', e=>
       // {
@@ -1953,7 +2002,10 @@
               x1 = x1.replace(rgx, '$1' + ',' + '$2'); 
             } 
             return x1 + x2; 
-        } 
+        }
+
+
+
 
     </script>
     
