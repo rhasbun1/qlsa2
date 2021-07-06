@@ -699,25 +699,6 @@
                 return;
         }
 
-        if (document.getElementById('btnNuevaObra').disabled==false ){
-                swal(
-                    {
-                        title: 'Existe al menos un producto con entrega en obra, debe ingresar los datos de la obra o seleccionar alguna obra existente.',
-                        text: '',
-                        type: 'warning',
-                        showCancelButton: false,
-                        confirmButtonText: 'OK',
-                        cancelButtonText: '',
-                        closeOnConfirm: true,
-                        closeOnCancel: false
-                    },
-                    function(isConfirm)
-                    {
-                        return;
-                    }
-                )
-                return;            
-        }
 
         if ($("#idObra").val()<0 && entregaEnObra>0){
             swal(
