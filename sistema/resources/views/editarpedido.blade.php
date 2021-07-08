@@ -431,42 +431,7 @@
             }
 
             
-            if(tipoCarga==1){
-                if(tipoTransporte==1){
-                    if(cantidadMod!=cmtten){
-                        swal(
-                        {
-                            title: 'no puede crear pedidos con carga mayor o menor a ' + cmtten +' !!' ,
-                            text: '',
-                            type: 'warning',
-                            showCancelButton: false,
-                            confirmButtonText: 'OK',
-                            cancelButtonText: '',
-                            closeOnConfirm: true,
-                            closeOnCancel: false
-                            }
-                        )
-                        return;
-                    }          
-                }else{
-                    if(cantidadMod-1>(cmttem1+cmttem2))
-                    {
-                        swal(
-                            {
-                                title: 'La cantidad total de toneladas excede el máximo permitido por pedido (máx. ' + cmtten +')!!' ,
-                                text: '',
-                                type: 'warning',
-                                showCancelButton: false,
-                                confirmButtonText: 'OK',
-                                cancelButtonText: '',
-                                closeOnConfirm: true,
-                                closeOnCancel: false
-                            }
-                        )
-                        return;
-                    }  
-                }
-            }
+           
             
 
             
