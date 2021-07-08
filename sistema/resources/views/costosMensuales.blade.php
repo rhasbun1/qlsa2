@@ -61,7 +61,7 @@
                                 @if (Session::get('idPerfil')==2 or Session::get('idPerfil')==5 or Session::get('idPerfil')==18)
                                   <button class="btn btn-xs btn btn-warning btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-file-archive-o"></i></button>                                    
                                 @endif
-                                <button type="button"  class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">Revision Costos en 0</button>
+                                <button type="button"  class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">Revisión Costos en 0</button>
                                 
 	                            </td>
 	                        </tr>
@@ -433,7 +433,8 @@
                                 "targets": [2],
                                 "orderable": false
                                 } ],                                        
-                language:{url: "{{ asset('/') }}locales/datatables_ES.json"}              
+                language:{url: "{{ asset('/') }}locales/datatables_ES.json"},
+                "order": [[ 0, "desc" ]]              
             });
 
             var productos=$('#tablaProductos').DataTable({
@@ -615,6 +616,8 @@
 
 			var table=$('#tabla').DataTable();
             var ano=$("#ano").val();
+            var mes = $("#mes").val();
+          
 
             if(ano.toString().trim().length <4 ){
                 swal(
@@ -669,9 +672,9 @@
                 var nodo=table.row.add( [
                         $("#ano").val(),
                         $("#mes option:selected").html(),
-                        '<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-file-archive-o"></i></button>' + 
-                        '<button class="btn btn-xs btn btn-success btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-file-archive-o"></i></button>' +
-                        '<button type="button" class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">revisar prueba</button>'           
+                        '<button class="btn btn-xs btn btn-warning btnEditar" title="Ver Costos" onclick="listarCostosProductos(this.parentNode.parentNode);"><i class="fa fa-search fa-lg"></i></button>&nbsp' + 
+                        '<button class="btn btn-xs btn btn-warning btnEditar" title="Subir Archivo de Costos" onclick="subirArchivoCostos(this.parentNode.parentNode);"><i class="fa fa-file-archive-o"></i></button>&nbsp' +
+                        '<button type="button"  class="btn-xs btn btn-info" onclick="verificarmes(this.parentNode.parentNode);">Revisión Costos en 0</button>'           
                         ] ).draw().node();
 
                 nodo.dataset.nummes=$("#mes").val();
@@ -681,7 +684,7 @@
       }else{
         swal(
             {
-                title: '¡Solo Puede Ingresar Costos Hasta Un Mes Mas Que El Actual!',
+                title: '¡Puede asignar costos con máximo un mes de adelanto respecto al mes actual!',
                 text: '',
                 type: 'warning',
                 showCancelButton: false,

@@ -5,8 +5,8 @@
 		<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
 		<div style="padding:20px">
 			<div class="row" style="padding:3px">
-				<div class="col-md-2">
-					Correlativo Guía Despacho
+				<div class="col-md-2" >
+					<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Numero interno de folio para sistema qlnow antes de enviar a softland"></i>	Correlativo Guía Despacho 
 				</div>
 				<div class="col-md-2 col-lg-1">
 					<input class="form-control input-sm" type="number" onkeypress='return validaNumericos(event)'  min="0" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" id="correlativoGuias" value="{{ $param[0]->numeroGuia }}">
