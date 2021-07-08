@@ -13,8 +13,8 @@
                 <ul class="tab-bar">
                                 <input type="hidden" id="idCliente" data-idperfil="{{Session::get('idPerfil')}}">
 
-                    <li class="active"><a href="#tabAprobados" data-toggle="tab"><b>pedidos Ingresados Aprobados</b></a></li> 
-                    <li><a href="#tabPendientes" data-toggle="tab"><b>pedidos pendientes de preaprobación</b></a></li>
+                    <li class="active"><a href="#tabAprobados" data-toggle="tab"><b>Pedidos en Proceso</b></a></li> 
+                    <li><a href="#tabPendientes" data-toggle="tab"><b>Pedidos Pendientes de Preaprobación</b></a></li>
 
                 </ul>
             </div>

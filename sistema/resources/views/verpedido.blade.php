@@ -304,7 +304,12 @@
                 @endif
             @elseif ($accion=='6')
                 <button class="btn btn-sm btn-primary" style="width:100px" onclick="aprobarPedidoCliente();">Aprobar</button>
-                <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>                                      
+                @if($despachado==0 && $pedido[0]->idEstadoPedido==0)
+                    <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>
+                @endif    
+                @if($despachado==0 && $pedido[0]->idEstadoPedido==-1 && ((Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6')))
+                    <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
+                @endif                                 
             @endif
             @if ($pedido[0]->idEstadoPedido==7 and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='18') )
             <button class="btn btn-sm btn-danger" onclick="abrirCajaSuspender();">Suspender</button>
@@ -314,7 +319,7 @@
             @if($plantilla!='plantilla2') 
                 @if ($accion=='3' or $accion=='1')
                     @if ( ( $pedido[0]->cerrada==0 and $pedido[0]->idEstadoPedido <= '3') and 
-                        (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6' or Session::get('idPerfil')=='7') )
+                        (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6') )
 
                         @if( $pedido[0]->idEstadoPedido <= '0' or ( $despachado>0 and $sinDespachar>0) )
                             <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
@@ -324,7 +329,7 @@
 
                     @endif
                 @endif
-            @if ($pedido[0]->idEstadoPedido==0 and (Session::get('idPerfil')=='2' or Session::get('idPerfil')=='3' or Session::get('idPerfil')=='18') )
+            @if ($pedido[0]->idEstadoPedido==0 and (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6') )
             <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
             @endif
             @endif
