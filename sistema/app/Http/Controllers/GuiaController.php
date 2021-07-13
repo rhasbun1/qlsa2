@@ -286,46 +286,33 @@ class GuiaController extends Controller
             $url = "http://webservice.quimicalatinoamericana.cl/CapturaDteExterno/CapturaDteExterno.svc?wsdl";
 
             $ruta="\\\QLSA-2012\Softland-ERP\SOFTLAND\DATOS\QLSA";
-            try{
-                $client = new SoapClient($url);
-                $respuesta = $client->CaptudaGuiaSalida( [ 
-                                'base64File'=> $base64File, 
-                                'extensionArchivo'=> 'TXT', 
-                                'areaDeDatos'=> $ruta, 
-                                'usuario'=> 'hans', 
-                                'nombreCertificadoDigital'=>'PATRICIO CLEMENTE SEGUEL  BUNSTER'
-                            ])->CaptudaGuiaSalidaResult;
-                $result = (array) $respuesta;
-
-                if($result["FolioDte"]){
+            try{             
+                if($datos->input('numeroGuia')){
                     // spUpdGuiaEmitidaActualizaCliente, esto marca al cliente la primera vez que se emite una guía de forma correcta, para que en
                     // las proximas guías solo envía el codigo de despacho y NO incluya direccion, comuna y ciudad.
                     //DB::Select('call spUpdGuiaEmitidaActualizaCliente(?)', array($datos->input('numeroGuia') ));
                      
-                    DB::Select('call spGetUpdFolioDTE(?,?,?)', array( $datos->input('numeroGuia'), $result["FolioDte"], Session::get('idUsuario') ) );
+                    DB::Select('call spGetUpdFolioDTE(?,?,?)', array( $datos->input('numeroGuia'), $datos->input('numeroGuia'), Session::get('idUsuario') ) );
                 }
 
                 $despacho=DB::Select('call spGetVerificaDespachoCompleto(?)', array($idPedido) );
                 
-                if($result["PdfenBase64"]){
+                if($base64File){
                     // a route is created, (it must already be created in its repository(pdf)).
-                    $nombrePdf=public_path().'/guias/pdf/GD'.$result["FolioDte"].'.pdf';
+                    $nombrePdf=public_path().'/guias/pdf/GD'.$datos->input('numeroGuia').'.pdf';
 
                     // decode base64
-                    $pdf_b64 = base64_decode($result["PdfenBase64"]);
+                    $pdf_b64 = base64_decode($base64File);
 
                     // you record the file in existing folder
                     file_put_contents($nombrePdf, $pdf_b64 );                    
                 }
 
                 $descripcionError="";
-                if( $result["Error"] ){
-                    $err= (array) $result["Error"];
-                    $descripcionError=$err["Descripcion"];
-                }
+               
 
                 return response()->json([
-                    "FolioDte" => $result["FolioDte"],
+                    "FolioDte" => $datos->input('numeroGuia'),
                     "Error" => $descripcionError,
                     "despachoCompleto" => $despacho[0]->despachoCompleto
                 ]);                
