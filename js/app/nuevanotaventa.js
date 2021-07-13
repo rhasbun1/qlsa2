@@ -386,6 +386,7 @@
             var codigoUnidad = tabla.rows[i].cells[4].innerHTML;
             var codigoProducto =  tabla.rows[i].cells[0].innerHTML;
             var nombreProducto = tabla.rows[i].cells[2].innerHTML;
+            if(codigoPlanta>0){
             $.ajax({
                 async: false,
                 url: urlApp + 'verificarTiempoProduccion',
@@ -424,6 +425,7 @@
                 alert('Error!, No se pudo Añadir los datos');
             }
         });
+          }   
         }
 
 

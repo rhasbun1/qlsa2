@@ -353,10 +353,10 @@
                             });
                         return;
                     }
-                    if( $("#precioReferencia").val() == 0 ){
+                    if( $("#precioReferencia").val() == "" ){
                         swal(
                             {
-                                title: 'El Precio No Puede Ser 0!',
+                                title: 'El Precio No Puede Estar Vacio!',
                                 text: '',
                                 type: 'warning',
                                 showCancelButton: false,

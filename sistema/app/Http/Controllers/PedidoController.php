@@ -78,7 +78,11 @@ class PedidoController extends Controller
         }
         
         $pedidosIngresoCliente=DB::Select('call spGetpedidosIngresadosporClientesSinAprobar');
-        $cantidadIngresoCliente=count($pedidosIngresoCliente);
+        $pedidosAgrupados = DB::Select('call spGetpedidosIngresadosporClientesSinAprobarCount');
+        
+        $cantidadIngresoCliente=count($pedidosAgrupados);
+
+
 
         $parametros=DB::table('parametros')->select('version')->get();
         return view('listaPedidos')->with('pedidos', $pedidos)

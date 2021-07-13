@@ -150,6 +150,12 @@
                 autoclose: true,
                 language: 'es'
             });
+            $('#divFechaMin').datepicker({
+                format: 'dd/mm/yyyy',
+                endDate: '+0d',
+                autoclose: true,
+                language: 'es'
+            });
            
             
 

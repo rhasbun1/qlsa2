@@ -446,6 +446,24 @@
                     success:function(dato){
                       document.getElementById('btnRegistrarSalida').style.display='none';
                       cerrarCajaGuia();
+                      swal(
+                        {
+                            title: 'Se Registro la Salida!' ,
+                            text: '',
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: '',
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        },
+                        function(isConfirm)
+                        {
+                            if(isConfirm){
+                                return;                       
+                            }
+                        }
+                    )  
                     }
                 })                
                 return;                        
@@ -524,7 +542,7 @@
             swal(
                  {
                     title: "¡Proceso realizado con éxito!" ,
-                    text: 'A continuación de actualizará la pantalla anterior con los cambios realizados',
+                    text: 'A continuación se actualizará la pantalla anterior con los cambios realizados',
                     type: 'warning',
                     showCancelButton: false,
                     confirmButtonText: 'Entendido',
