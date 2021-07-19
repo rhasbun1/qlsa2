@@ -27,9 +27,10 @@ class enviarMailPedidoCreado extends Mailable implements ShouldQueue
         $pedido = $request->idPedido;      
     }
 
-    public function __construct($pedido)
+    public function __construct($pedido,$tipo)
     {
         $this->pedido = $pedido;
+        
     }
 
     /**
