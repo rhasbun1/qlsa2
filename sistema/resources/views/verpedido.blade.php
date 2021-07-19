@@ -325,13 +325,8 @@
                             <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
                         @endif
                        
-                        
-
                     @endif
                 @endif
-            @if ($pedido[0]->idEstadoPedido==0 and (Session::get('idPerfil')=='5' or Session::get('idPerfil')=='6') )
-            <button class="btn btn-sm btn-danger" onclick="pasarHistorico();">Pasar a Histórico</button>
-            @endif
             @endif
             
             @if($plantilla=='plantilla')

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Mail\ReminderEmailDigest;
 use App\Mail\enviarMailPedidoCreado;
+use \Mailjet\Resources;
 
 class SendReminderEmails extends Command
 {
@@ -43,29 +44,120 @@ class SendReminderEmails extends Command
      */
     public function handle()
     {
-        //conseguir lor recordatorio ejemplo usar una query para traere los datos en un array
-        //$pedido = DB::Select('call spGetPedidosNoEnviados()');
+      /*
+      //Usuarios
+      $usuariosGerente=DB::Select('call spGetUsuarioPerfilesEmail(?)',array(
+        11
+      ));
+      $TodosLosUsuarios=DB::Select('call spGetUsuarios()');
+      $usuariosJefeBodegaPlanta=DB::Select('call spGetUsuarioJefePlantaBodegaCorreo()');
+     
+      //Pedidos
+      $pedidosCreadosReciente = DB::Select('call spGetPedidosCorreo(?)',array(
+        1
+      ));
 
-        $pedidosCreados = DB::Select('call spGetPedidosCorreo()'); 
+      $pedidosCreadosCliente = DB::Select('call spGetPedidosCorreo(?)',array(
+        2
+      ));
 
-        //agrupar por user
+      $pedidosPlantaBodega = DB::Select('call spGetPedidosCorreo(?)',array(
+        4
+      ));
 
-        // enviar mail
-       // $this->sendEmailtoUser($pedido);
-        $this->emailPedidoCreado($pedidosPorHabilitar);
+      //if(!empty($pedidosCreadosReciente)){
+          $this->enviarPedidoRecienCreado($pedidosCreadosReciente,$usuariosGerente);
+      //}
+     // if(!empty($pedidosCreadosCliente)){
+          $this->enviarPedidoCliente($pedidosCreadosCliente,$TodosLosUsuarios);
+   //   }
+
+         $this->enviarPedidoAprobadoJefeBodegaPlanta($pedidosPlantaBodega,$usuariosJefeBodegaPlanta);
+        
+
+        */
+        for ($i = 1; $i <= 4; $i++) {
+          $pedidosCreados = DB::Select('call spGetPedidosCorreo(?)',array(
+              $i
+          ));
+          if(!empty($pedidosCreados)){
+            $this->test($pedidosCreados,$i);
+          }
+      }
     }
 
-    private function sendEmailtoUser($pedido)
-    {
-        $usuario = "2eee28cdd9-c936e7@inbox.mailtrap.io";
 
-        Mail::to($usuario)->send(new ReminderEmailDigest($pedido));
+
+
+    public function test($pedidos,$tipoCorreo){
+      if($tipoCorreo==1){
+          $mensaje="<table>
+          <h2>Hola xxxx, tienes nuevos pedidos para ser aprobados de crédito. Ingresa por favor a qlnow.quimicalatinoamericana.cl para gestionarlos.</h2>
+          <table id='tablaDetalle' class='table table-hover table-condensed table-responsive'>
+              <th>id pedido</th>
+              <th>Cliente<th>
+          </thead>
+          <tbody>";
+      }elseif($tipoCorreo==2){
+        $mensaje="<table>
+          <h2>Hola, tu cliente  ha subido nuevos pedidos a QL now! y requieren tu atención. Ingresa por favor a qlnow.quimicalatinoamericana.cl para gestionarlos. </h2>
+          <table id='tablaDetalle' class='table table-hover table-condensed table-responsive'>
+              <th>id pedido</th>
+              <th>Cliente<th>
+          </thead>
+          <tbody>";
+      }elseif($tipoCorreo==3){
+        $mensaje="<table>
+          <h2>Pedidos aprobados para el cliente</h2>
+          <table id='tablaDetalle' class='table table-hover table-condensed table-responsive'>
+              <th>id pedido</th>
+              <th>Cliente<th>
+          </thead>
+          <tbody>";
+      }elseif($tipoCorreo==4){
+        $mensaje="<table>
+          <h2>Pedidos aprobados</h2>
+          <table id='tablaDetalle' class='table table-hover table-condensed table-responsive'>
+              <th>id pedido</th>
+              <th>Cliente<th>
+          </thead>
+          <tbody>";
+      }
+
+
+        foreach ($pedidos as $item) {
+             $mensaje=$mensaje."<tr><td>".$item->idPedido."</td><td>".$item->emp_nombre."</td></tr>";
+        }
+        $mensaje=$mensaje."</tbody>";
+
+        
+
+      $para=[];
+      $para[] = [
+        'Email' => "c.bastiasv@duocuc.cl",
+        'name' => "Carlos Ezequiel Bastias Valdes"
+      ];
+
+  
+
+        $mj = new \Mailjet\Client('c189998f90a8e631ef61bdebb25de8bc','b98b35dd33194c6797b25e372664db71',true,['version' => 'v3.1']);
+        $body = [
+          'Messages' => [
+            [
+              'From' => [
+                'Email' => "no-reply@soporteportal.cl",
+                'Name' => "no-reply@soporteportal.cl"
+              ],
+              'To' => $para,
+              'Subject' => "Pedidos creados en los ultimos 30 minutos.",
+              'TextPart' => "Pedidos",
+              'HTMLPart' => $mensaje,
+              'CustomID' => "AppGettingStartedTest"
+            ]
+          ]
+        ];
+        $response = $mj->post(Resources::$Email, ['body' => $body]);
+        $response->success() && var_dump($response->getData());
     }
 
-    private function emailPedidoCreado($pedido)
-    {
-        $usuario = "2eee28cdd9-c936e7@inbox.mailtrap.io";
-
-        Mail::to($usuario)->send(new enviarMailPedidoCreado($pedido));
-    }
 }
